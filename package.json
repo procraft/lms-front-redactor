@@ -1,6 +1,6 @@
 {
-  "name": "@prisma-cms/component-boilerplate",
-  "description": "Component for prisma-cms",
+  "name": "@procraft/lms-front-redactor",
+  "description": "WYSIWYG",
   "version": "2.0.0",
   "private": false,
   "main": "dist",
@@ -101,19 +101,19 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/prisma-cms/component-boilerplate.git"
-  },
   "keywords": [
-    "prisma-cms",
+    "WYSIWYG",
     "front",
     "components"
   ],
   "author": "Fi1osof",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/prisma-cms/component-boilerplate/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/procraft/lms-front-redactor.git"
   },
-  "homepage": "https://github.com/prisma-cms/component-boilerplate#readme"
+  "bugs": {
+    "url": "https://github.com/procraft/lms-front-redactor/issues"
+  },
+  "homepage": "https://github.com/procraft/lms-front-redactor#readme"
 }
