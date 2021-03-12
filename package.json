@@ -34,7 +34,11 @@
       "yarn format"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "@prisma-cms/front-editor": "^3.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
   "devDependencies": {
     "@babel/plugin-transform-typescript": "^7.12.1",
     "@next/bundle-analyzer": "^9.5.5",
@@ -50,8 +54,8 @@
     "@types/http-proxy-middleware": "^0.19.3",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.1",
     "@types/styled-components": "^5.1.4",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
@@ -74,8 +78,6 @@
     "next": "^10.0.1",
     "npm": "^6.14.8",
     "prettier": "^2.1.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "rimraf": "^3.0.2",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",

@@ -6,13 +6,19 @@ const MainPage: React.FC = (props) => {
   return (
     <>
       <Head>
-        <title>Component boilerplate</title>
+        <title>Front Redactor</title>
         <meta
           name="description"
           content="Component boilerplate for prisma-cms"
         />
       </Head>
-      <App {...props} />
+      <App
+        inEditMode={false}
+        object={undefined}
+        // eslint-disable-next-line no-console
+        updateObject={console.log}
+        {...props}
+      />
     </>
   )
 }
