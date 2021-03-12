@@ -1,27 +1,24 @@
-/**
- * Размеры экранов
- */
-const breakpoints = {
-  xs: 480,
-  sm: 768,
-  md: 992,
-  lg: 1200,
-  xl: 1920,
-}
 
 /**
  * Цвета
  */
 const colors = {
   primary: '#333',
+  colorYellow: '#F8E81C',
+}
+
+const zIndex = {
+  modal: 1000,
 }
 
 /**
  * Итоговая тема
  */
 const theme = {
-  colors,
-  breakpoints,
+  frontRedactor: {
+    colors,
+    zIndex,
+  },
 }
 
 export type Theme = typeof theme

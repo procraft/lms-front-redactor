@@ -1,5 +1,6 @@
 import React from 'react'
-import { render } from '../../tests/utils'
+import { render } from '../../../dev/tests/utils'
+// import render from 'react-test-renderer'
 import styled from 'styled-components'
 import theme from '..'
 
@@ -17,7 +18,7 @@ jest.mock('next/router', () => ({
 const border = '1px solid green'
 
 const DivStyled = styled.div`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.frontRedactor.colors.primary};
 
   border: ${border};
 `
@@ -38,8 +39,9 @@ describe('Theme', () => {
 
     expect(node).toMatchSnapshot()
 
-    expect(node).toHaveStyleRule('color', theme.colors.primary)
+    expect(node).toHaveStyleRule('color', theme.frontRedactor.colors.primary)
 
     expect(node).toHaveStyleRule('border', border)
+
   })
 })

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const border = '1px solid green'
 
 const AppStyled = styled(App)`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.frontRedactor.colors.primary};
 
   border: ${border};
 `

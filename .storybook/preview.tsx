@@ -1,6 +1,6 @@
 import React from 'react'
 import { addDecorator, Parameters } from '@storybook/react'
-import theme from '../dev/theme'
+import theme from '../src/theme'
 import { ThemeProvider } from 'styled-components'
 import { makeDecorator } from '@storybook/addons'
 import { linkTo } from '@storybook/addon-links'

@@ -27,7 +27,7 @@ const Button = styled.button<ButtonStyledProps>`
   border: 2px solid grey;
 
   background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
-  color: ${({ color, theme }) => color || theme.colors.primary};
+  color: ${({ color, theme }) => color || theme.frontRedactor.colors.primary};
 
   &:hover {
     border-color: 1px solid green;

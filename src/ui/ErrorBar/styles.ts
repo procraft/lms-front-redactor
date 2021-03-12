@@ -5,6 +5,6 @@ export const ErrorBarStyled = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  background: ${({ theme }) => theme.colors.colorYellow};
+  background: ${({ theme }) => theme.frontRedactor.colors.colorYellow};
   z-index: 2000;
 `

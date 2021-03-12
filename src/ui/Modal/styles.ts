@@ -35,6 +35,6 @@ export const LmsFrontRedactorModalStyled = styled.div`
   right: 0;
   bottom: 0;
   background: white;
-  z-index: ${({ theme }) => theme.zIndex.modal};
+  z-index: ${({ theme }) => theme.frontRedactor.zIndex.modal};
   padding: 10px;
 `

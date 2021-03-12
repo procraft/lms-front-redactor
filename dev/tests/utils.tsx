@@ -2,13 +2,13 @@ import React, { ReactElement, useEffect, useMemo } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { render as baseRender, RenderResult } from '@testing-library/react'
 import App from '../pages/_App'
-import theme from '../theme'
 import { ThemeProvider } from 'styled-components'
 
 // For handle css
 import 'jest-styled-components'
 
 import { HeadManagerContext } from 'next/dist/next-server/lib/head-manager-context'
+import theme from '../../src/theme'
 
 /**
  * Base renderer from @testing-library/react
