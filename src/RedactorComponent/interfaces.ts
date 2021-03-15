@@ -3,10 +3,10 @@ import React from 'react'
 import { RedactorComponentWrapperProps } from '../hooks/useRedactorComponentInit/RedactorComponentWrapper/interfaces'
 
 export interface LandingTemplateFragment {
-  component: string; 
-  description?: string | null;
-  foo?: boolean | null; 
-  name: string; 
+  component: string
+  description?: string | null
+  foo?: boolean | null
+  name: string
 }
 
 export type RedactorComponentObject<P = {}> = LandingTemplateFragment & {
@@ -47,4 +47,4 @@ export type RedactorComponentProps<P = {}> = {
 
 export type RedactorComponent<
   P extends RedactorComponentProps = RedactorComponentProps
-  > = React.FC<P>
+> = React.FC<P>

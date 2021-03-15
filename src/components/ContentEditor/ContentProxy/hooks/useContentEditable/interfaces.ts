@@ -1,4 +1,7 @@
-import { RedactorComponentObject, RedactorComponentProps } from "../../../../../RedactorComponent/interfaces"
+import {
+  RedactorComponentObject,
+  RedactorComponentProps,
+} from '../../../../../RedactorComponent/interfaces'
 
 export type useContentEditableProps = {
   element: HTMLElement | null

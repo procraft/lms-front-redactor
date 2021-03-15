@@ -1,28 +1,19 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
 import { RedactorComponentObject } from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 
-const SectionDevPage: Page = (props) => {
+const ContentEditorDevPage: Page = (props) => {
   const object = useMemo<RedactorComponentObject>(() => {
     return {
-      name: 'Section',
-      component: 'Section',
+      name: 'ContentEditor',
+      component: 'ContentEditor',
       components: [
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'Section',
-              },
-            },
-          ],
+          components: [],
           props: {
             tag: 'div',
             style: {
@@ -36,20 +27,33 @@ const SectionDevPage: Page = (props) => {
     }
   }, [])
 
+  const [inEditMode, inEditModeSetter] = useState(false)
+
+  const toggleEditMode = useCallback(() => {
+    inEditModeSetter(!inEditMode)
+  }, [inEditMode])
+
   return (
     <>
       <Head>
-        <title>Section</title>
+        <title>ContentEditor</title>
       </Head>
+
       <div
         id="component-wrapper"
         style={{
           marginBottom: 20,
         }}
       >
+        <div id="component-toolbar">
+          <button onClick={toggleEditMode} id="toggleEditMode">
+            inEditMode {inEditMode ? 'On' : 'Off'}
+          </button>
+        </div>
+
         <div id="component">
           <App
-            inEditMode={false}
+            inEditMode={inEditMode}
             object={object}
             // eslint-disable-next-line no-console
             updateObject={console.log}
@@ -61,4 +65,4 @@ const SectionDevPage: Page = (props) => {
   )
 }
 
-export default SectionDevPage
+export default ContentEditorDevPage

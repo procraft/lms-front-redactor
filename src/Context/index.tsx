@@ -4,6 +4,8 @@ export type LmsFrontRedactorContextValue = {
   inEditMode: boolean
 }
 
-const LmsFrontRedactorContext = React.createContext<LmsFrontRedactorContextValue | null>(null)
+const LmsFrontRedactorContext = React.createContext<LmsFrontRedactorContextValue | null>(
+  null
+)
 
 export default LmsFrontRedactorContext

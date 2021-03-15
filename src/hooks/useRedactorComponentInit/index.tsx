@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import Context from '../../Context'
 import { redactor2ComponentClasses } from '../../styles'
 import { useRedactorComponentInitProps } from './interfaces'

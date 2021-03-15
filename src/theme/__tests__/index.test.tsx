@@ -42,6 +42,5 @@ describe('Theme', () => {
     expect(node).toHaveStyleRule('color', theme.frontRedactor.colors.primary)
 
     expect(node).toHaveStyleRule('border', border)
-
   })
 })

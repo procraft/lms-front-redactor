@@ -100,7 +100,11 @@ const LmsFrontRedactorStateEditor: React.FC<LmsFrontRedactorStateEditorProps> = 
     <>
       {errorBar}
       <LmsFrontRedactorModalStyled>
-        <LmsFrontRedactorModal close={close} title={object.name} buttons={saveButton}>
+        <LmsFrontRedactorModal
+          close={close}
+          title={object.name}
+          buttons={saveButton}
+        >
           <pre
             // onInput={onInput}
             ref={contanerRef}

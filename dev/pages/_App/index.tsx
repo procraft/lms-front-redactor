@@ -3,13 +3,9 @@ import Head from 'next/head'
 import { ThemeProvider } from 'styled-components'
 import theme from '../../../src/theme'
 
-import {
-  AppProps,
-  MainApp,
-} from './interfaces'
+import { AppProps, MainApp } from './interfaces'
 
 export * from './interfaces'
-
 
 const App: MainApp<AppProps> = ({ Component, pageProps }) => {
   return (

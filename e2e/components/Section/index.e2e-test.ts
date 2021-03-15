@@ -1,11 +1,11 @@
-describe('App', () => {
+describe('Section', () => {
   before(() => {
-    cy.visit('/')
+    cy.visit('/components/section')
   })
 
-  describe('Load App', () => {
+  describe('Load Section', () => {
     it('Check content', () => {
-      // cy.contains('#__next > h2', 'My awesome component')
+      cy.contains('#component', 'Section')
     })
   })
 })

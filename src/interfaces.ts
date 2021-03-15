@@ -1,4 +1,3 @@
-
 import { RedactorComponentProps } from './RedactorComponent/interfaces'
 
 export type LmsFrontRedactorProps = {

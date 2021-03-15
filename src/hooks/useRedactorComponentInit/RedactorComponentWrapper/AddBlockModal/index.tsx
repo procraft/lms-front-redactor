@@ -4,7 +4,12 @@ import Button from 'material-ui/Button'
 import { AddBlockModalProps } from './interfaces'
 import IconButton from 'material-ui/IconButton'
 import SaveIcon from 'material-ui-icons/Save'
-import { LandingTemplateFragment, RedactorComponent, RedactorComponentObject, RedactorComponentProps } from '../../../../RedactorComponent/interfaces'
+import {
+  LandingTemplateFragment,
+  RedactorComponent,
+  RedactorComponentObject,
+  RedactorComponentProps,
+} from '../../../../RedactorComponent/interfaces'
 import Section from '../../../../components/Section'
 import ContentEditor from '../../../../components/ContentEditor'
 import LmsFrontRedactorModal from '../../../../ui/Modal'

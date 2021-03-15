@@ -2,12 +2,10 @@ import React from 'react'
 import { NextComponentType, NextPageContext } from 'next'
 import { AppContext, AppInitialProps } from 'next/app'
 
-
 /**
  * Extended App context
  */
-export interface NextPageContextCustom extends NextPageContext {
-}
+export interface NextPageContextCustom extends NextPageContext {}
 
 export interface PageProps extends React.PropsWithChildren<{}> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,4 +1,4 @@
-import { RedactorComponentProps } from "../../../RedactorComponent/interfaces";
+import { RedactorComponentProps } from '../../../RedactorComponent/interfaces'
 
 export type RedactorComponentWrapperProps = {
   /**
