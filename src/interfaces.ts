@@ -1,4 +1,5 @@
 import { RedactorComponentProps } from './RedactorComponent/interfaces'
+import getRedactorObjectComponent from './hooks/RedactorObjectRender'
 
 export type LmsFrontRedactorProps = {
   inEditMode: boolean
@@ -6,4 +7,6 @@ export type LmsFrontRedactorProps = {
   object: RedactorComponentProps['object'] | undefined
   updateObject: RedactorComponentProps['updateObject']
   // onChangeState: Function
+
+  getRedactorObjectComponent: typeof getRedactorObjectComponent
 }

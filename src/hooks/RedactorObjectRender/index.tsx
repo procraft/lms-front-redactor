@@ -2,7 +2,7 @@ import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { getRedactorObjectComponentProps } from './interfaces'
 
 import Section from '../../components/Section'
-import LandingLayout from '../../components/LandingLayout'
+// import LandingLayout from '../../components/LandingLayout'
 // import LandingFooter from '../../components/LandingFooter'
 // import LandingHeader from '../../components/LandingHeader'
 import ContentEditor from '../../components/ContentEditor'
@@ -12,6 +12,7 @@ import HtmlTag from '../../components/HtmlTag'
 
 /**
  * Получаем реакт-компонент для объекта
+ * @deprecated
  */
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -27,9 +28,9 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
       Component = Section
       break
 
-    case 'LandingLayout':
-      Component = LandingLayout
-      break
+    // case 'LandingLayout':
+    //   Component = LandingLayout
+    //   break
 
     // case 'LandingHeader':
     //   Component = LandingHeader

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 // import { RedactorComponent } from '../../RedactorComponent/interfaces';
 // import LandingFooter from '../../components/LandingFooter';
 // import LandingHeader from '../../components/LandingHeader';
@@ -7,9 +7,10 @@ import React, { useCallback, useMemo } from 'react'
 // import Section from '../../components/Section';
 import { useRedactorRenderComponentsProps } from './interfaces'
 // import RedactorObjectRender from '../RedactorObjectRender';
-import getRedactorObjectComponent from '../RedactorObjectRender'
+// import getRedactorObjectComponent from '../RedactorObjectRender'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
 import { useState } from 'react'
+import Context from '../../Context'
 
 /**
  * В цикле выводим дочерние компоненты
@@ -18,6 +19,8 @@ const useRedactorRenderComponents = (
   props: useRedactorRenderComponentsProps
 ) => {
   const { object, updateObject, inEditMode, wrapperContainer } = props
+
+  const context = useContext(Context);
 
   const [objectState] = useState({
     updateObject,
@@ -91,7 +94,7 @@ const useRedactorRenderComponents = (
     }
 
     return object.components.reduce<React.ReactNode[]>((curr, next, index) => {
-      const Component = getRedactorObjectComponent({
+      const Component = context?.getRedactorObjectComponent({
         object: next,
       })
 
@@ -109,12 +112,7 @@ const useRedactorRenderComponents = (
 
       return curr
     }, [])
-  }, [
-    inEditMode,
-    object.components,
-    updateObjectChildComponent,
-    wrapperContainer,
-  ])
+  }, [object.components, context, updateObjectChildComponent, inEditMode, wrapperContainer])
 }
 
 export default useRedactorRenderComponents

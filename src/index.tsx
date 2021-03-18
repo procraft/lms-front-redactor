@@ -1,19 +1,29 @@
 import React, { useMemo } from 'react'
 import Context, { LmsFrontRedactorContextValue } from './Context'
-import getRedactorObjectComponent from './hooks/RedactorObjectRender'
+import useRedactorComponentInit from './hooks/useRedactorComponentInit'
+import useRedactorRenderComponents from './hooks/useRedactorRenderComponents'
+// import getRedactorObjectComponent from './hooks/RedactorObjectRender'
 import { LmsFrontRedactorProps } from './interfaces'
-// import { RedactorComponentProps } from './RedactorComponent/interfaces'
 import { LmsFrontRedactorStyled } from './styles'
 import { LmsFrontRedactorGlobalStyle } from './styles/GlobalStyle'
 
+export * from './interfaces'
+export * from './RedactorComponent/interfaces'
+
+export {
+  useRedactorComponentInit,
+  useRedactorRenderComponents,
+}
+
 const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = (props) => {
-  const { object, inEditMode, updateObject } = props
+  const { object, inEditMode, updateObject, getRedactorObjectComponent } = props
 
   const context = useMemo<LmsFrontRedactorContextValue>(() => {
     return {
       inEditMode,
+      getRedactorObjectComponent,
     }
-  }, [inEditMode])
+  }, [getRedactorObjectComponent, inEditMode])
 
   const content = useMemo(() => {
     if (!object) {
@@ -36,7 +46,7 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = (props) => {
         wrapperContainer={undefined}
       />
     )
-  }, [object, updateObject, inEditMode])
+  }, [object, getRedactorObjectComponent, updateObject, inEditMode])
 
   const redactorContent = useMemo(() => {
     return <Context.Provider value={context}>{content}</Context.Provider>
