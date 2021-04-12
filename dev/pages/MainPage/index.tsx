@@ -1,63 +1,88 @@
-import React, { useCallback, useMemo, useState } from 'react'
+/* eslint-disable no-console */
+import React, { useCallback, useState } from 'react'
 import Head from 'next/head'
-import App from '../../../src'
+import App, { LmsFrontRedactorProps } from '../../../src'
 import { RedactorComponentObject } from '../../../src/RedactorComponent/interfaces'
 import { Page } from '../_App/interfaces'
 import getRedactorObjectComponent from '../../../src/hooks/RedactorObjectRender'
+import useStore from '@prisma-cms/react-hooks/dist/hooks/useStore'
 
 const ContentEditorDevPage: Page = (props) => {
-  const object = useMemo<RedactorComponentObject>(() => {
 
-    return {
-      name: 'Section',
-      component: 'Section',
-      components: [
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'HtmlTag content',
-              },
-            },
-          ],
-          props: {
-            tag: 'div',
-            style: {
-              border: '1px solid blue',
-              minHeight: 100,
+  const {
+    store: object,
+    updateStore,
+  } = useStore<RedactorComponentObject>({
+    name: 'Section',
+    component: 'Section',
+    components: [
+      {
+        name: 'HtmlTag',
+        component: 'HtmlTag',
+        components: [
+          {
+            name: 'HtmlTag',
+            component: 'HtmlTag',
+            components: [],
+            props: {
+              text: 'HtmlTag content',
             },
           },
+        ],
+        props: {
+          tag: 'div',
+          style: {
+            border: '1px solid blue',
+            minHeight: 100,
+          },
         },
-        {
-          name: 'ContentEditor',
-          component: 'ContentEditor',
-          components: [
-            {
+      },
+      {
+        name: 'ContentEditor',
+        component: 'ContentEditor',
+        components: [
+          {
+            name: 'HtmlTag',
+            component: 'HtmlTag',
+            components: [{
               name: 'HtmlTag',
               component: 'HtmlTag',
               components: [],
               props: {
-                tag: 'div',
-                style: {
-                  border: '1px solid green',
-                  minHeight: 100,
-                },
+                text: 'Some text',
+              },
+            },],
+            props: {
+              tag: 'div',
+              style: {
+                border: '1px solid green',
+                minHeight: 100,
               },
             },
-          ],
-          props: {},
-        },
-      ],
-      props: {},
-    }
+          },
+        ],
+        props: {},
+      },
+    ],
+    props: {},
+  });
 
 
-  }, [])
+  console.log('store object',  object);
+
+
+  const updateObject: LmsFrontRedactorProps["updateObject"] = useCallback((current, data) => {
+
+    console.log('updateObject current', current);
+    console.log('updateObject data', data);
+
+    updateStore({
+      ...current,
+      ...data,
+    });
+    // 
+  }, [updateStore]);
+
 
   const [inEditMode, inEditModeSetter] = useState(false)
 
@@ -85,12 +110,11 @@ const ContentEditorDevPage: Page = (props) => {
 
         <div id="component">
           <App
+            {...props}
             inEditMode={inEditMode}
             object={object}
-            // eslint-disable-next-line no-console
-            updateObject={console.log}
+            updateObject={updateObject}
             getRedactorObjectComponent={getRedactorObjectComponent}
-            {...props}
           />
         </div>
       </div>

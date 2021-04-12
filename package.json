@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@prisma-cms/front-editor": "^3.2.0",
+    "@prisma-cms/react-hooks": "~1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "uid": "^2.0.0"

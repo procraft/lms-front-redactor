@@ -1,11 +1,13 @@
-import React, { useCallback, useMemo, useState } from 'react'
+/* eslint-disable no-console */
+import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
-import App from '../../../../src'
+import App, { LmsFrontRedactorProps } from '../../../../src'
 import { RedactorComponent, RedactorComponentObject } from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import ContentEditor from '../../../../src/components/ContentEditor'
 import HtmlTag from '../../../../src/components/HtmlTag'
+import useStore from '@prisma-cms/react-hooks/dist/hooks/useStore'
 
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
@@ -63,9 +65,47 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   // />;
 }
 
+
 const ContentEditorDevPage: Page = (props) => {
-  const object = useMemo<RedactorComponentObject>(() => {
-    return {
+
+  const localStorageKey = 'test-content-editor-object'
+
+
+  const {
+    store: object,
+    updateStore,
+  } = useStore<RedactorComponentObject>(null);
+
+
+  /**
+   * Если сразу отдавать значение из локального хранилища (которого нет на стороне сервера),
+   * то вознивает ошибка разницы HTML-документа. 
+   * Поэтому надо обновить хранилище через useEffect, но только при первом рендеринге.
+   */
+  useEffect(() => {
+
+    console.log('useEffect', useEffect);
+
+    let initialObject: RedactorComponentObject | undefined;
+
+    try {
+
+      const item = global.localStorage?.getItem(localStorageKey)
+
+      if (item) {
+
+        console.log('item', item);
+
+        initialObject = JSON.parse(item)
+
+      }
+
+    }
+    catch (error) {
+      console.error;
+    }
+
+    initialObject = initialObject || {
       name: 'ContentEditor',
       component: 'ContentEditor',
       components: [
@@ -82,9 +122,41 @@ const ContentEditorDevPage: Page = (props) => {
           },
         },
       ],
-      props: {},
+      props: {
+        id: "test-content-id",
+      },
+    };
+
+    updateStore(initialObject)
+
+    /**
+     * Этот метод должен вызываться только один раз
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  console.log('store object', object);
+
+
+  const updateObject: LmsFrontRedactorProps["updateObject"] = useCallback((current, data) => {
+
+    console.log('ContentEditorDevPage updateObject current', current);
+    console.log('ContentEditorDevPage updateObject data', data);
+
+    const store = {
+      ...current,
+      ...data,
     }
-  }, [])
+
+    /**
+     * Сохраняем значение в локальное хранилище
+     */
+    global.localStorage?.setItem(localStorageKey, JSON.stringify(store))
+
+    updateStore(store);
+    // 
+  }, [updateStore]);
 
   const [inEditMode, inEditModeSetter] = useState(false)
 
@@ -111,14 +183,13 @@ const ContentEditorDevPage: Page = (props) => {
         </div>
 
         <div id="component">
-          <App
+          {object ? <App
             inEditMode={inEditMode}
             object={object}
-            // eslint-disable-next-line no-console
-            updateObject={console.log}
+            updateObject={updateObject}
             getRedactorObjectComponent={getRedactorObjectComponent}
             {...props}
-          />
+          /> : null}
         </div>
       </div>
     </>

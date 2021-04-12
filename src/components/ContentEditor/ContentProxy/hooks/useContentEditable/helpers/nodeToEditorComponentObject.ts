@@ -73,7 +73,7 @@ const nodeToEditorComponentObject = (
       }
     }
 
-    return
+    // return
 
     // const { reactComponent, editorComponentObject } = node
 

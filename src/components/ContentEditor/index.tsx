@@ -11,9 +11,11 @@ const ContentEditor: RedactorComponent = ({
   wrapperContainer,
   ...other
 }) => {
+
   const {
     ref,
     // element,
+    // props,
     active,
     className,
     wrapperContent,
@@ -44,6 +46,7 @@ const ContentEditor: RedactorComponent = ({
         {wrapperContent}
         <div
           {...other}
+          {...object.props}
           ref={ref}
           className={[className, 'content-editor'].join(' ')}
         >
