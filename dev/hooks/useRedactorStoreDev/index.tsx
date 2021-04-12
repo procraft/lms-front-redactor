@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import useStore from "@prisma-cms/react-hooks/dist/hooks/useStore";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { LmsFrontRedactorProps, RedactorComponentObject } from "../../../src";
 
 type useRedactorStoreDevProps = {
@@ -54,7 +54,7 @@ export const useRedactorStoreDev = ({
     catch (error) {
       console.error;
     }
- 
+
 
     objectStore.updateStore(object || initialObject)
 
@@ -84,13 +84,36 @@ export const useRedactorStoreDev = ({
     // 
   }, [key, objectStore]);
 
+
+
+  const [inEditMode, inEditModeSetter] = useState(false)
+
+  const toggleEditMode = useCallback(() => {
+    inEditModeSetter(!inEditMode)
+  }, [inEditMode])
+
+  const toolbar = useMemo(() => {
+
+    return <div id="component-toolbar"
+      style={{
+        marginBottom: 15,
+      }}
+    >
+      <button onClick={toggleEditMode} id="toggleEditMode">
+        inEditMode {inEditMode ? 'On' : 'Off'}
+      </button>
+    </div>;
+  }, [inEditMode, toggleEditMode]);
+
   return useMemo(() => {
 
     return {
       ...objectStore,
       updateObject,
+      inEditMode,
+      toolbar,
     }
-  }, [objectStore, updateObject]);
+  }, [objectStore, updateObject, inEditMode, toolbar]);
 }
 
 export default useRedactorStoreDev;

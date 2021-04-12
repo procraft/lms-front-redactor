@@ -8,6 +8,9 @@ import HtmlTag from '../../../../src/components/HtmlTag'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
 
+/**
+ * Функция вставки кастомного блока
+ */
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -65,13 +68,11 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 }
 
 
-const SectionDevPage: Page = (props) => { 
+const InsertBlockDevPage: Page = (props) => { 
 
   const {
     store: object,
     updateObject,
-    toolbar,
-    inEditMode,
   } = useRedactorStoreDev({
     key: "test-section-object",
     initialObject: {
@@ -115,10 +116,9 @@ const SectionDevPage: Page = (props) => {
           marginBottom: 20,
         }}
       >
-        {toolbar}
         <div id="component">
           {object ? <App
-            inEditMode={inEditMode}
+            inEditMode={false}
             object={object}
             updateObject={updateObject}
             getRedactorObjectComponent={getRedactorObjectComponent}
@@ -130,4 +130,4 @@ const SectionDevPage: Page = (props) => {
   )
 }
 
-export default SectionDevPage
+export default InsertBlockDevPage

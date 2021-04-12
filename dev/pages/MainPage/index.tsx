@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import App from '../../../src'
 import { Page } from '../_App/interfaces'
@@ -11,6 +11,8 @@ const ContentEditorDevPage: Page = (props) => {
   const {
     store: object,
     updateObject,
+    toolbar,
+    inEditMode,
   } = useRedactorStoreDev({
     key: "test-mainpage-object",
     initialObject: {
@@ -73,12 +75,6 @@ const ContentEditorDevPage: Page = (props) => {
   console.log('store object', object);
 
 
-  const [inEditMode, inEditModeSetter] = useState(false)
-
-  const toggleEditMode = useCallback(() => {
-    inEditModeSetter(!inEditMode)
-  }, [inEditMode])
-
   return (
     <>
       <Head>
@@ -91,11 +87,8 @@ const ContentEditorDevPage: Page = (props) => {
           marginBottom: 20,
         }}
       >
-        <div id="component-toolbar">
-          <button onClick={toggleEditMode} id="toggleEditMode">
-            inEditMode {inEditMode ? 'On' : 'Off'}
-          </button>
-        </div>
+        
+        {toolbar}
 
         <div id="component">
           {object ? <App
