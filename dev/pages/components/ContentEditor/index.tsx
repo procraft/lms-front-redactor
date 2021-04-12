@@ -9,7 +9,6 @@ import ContentEditor from '../../../../src/components/ContentEditor'
 import HtmlTag from '../../../../src/components/HtmlTag'
 import useRedactorStoreDev from '../../../hooks/useRedactorStoreDev'
 
-
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
 
@@ -65,17 +64,14 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   // />;
 }
 
-
 const ContentEditorDevPage: Page = (props) => {
-
-
   const {
     store: object,
     updateObject,
     toolbar,
     inEditMode,
   } = useRedactorStoreDev({
-    key: "test-content-editor-object",
+    key: 'test-content-editor-object',
     initialObject: {
       name: 'ContentEditor',
       component: 'ContentEditor',
@@ -94,40 +90,42 @@ const ContentEditorDevPage: Page = (props) => {
         },
       ],
       props: {
-        id: "test-content-id",
+        id: 'test-content-id',
       },
-    }
+    },
   })
 
+  console.log('store object', object)
 
-  console.log('store object', object);
- 
   return useMemo(() => {
+    return (
+      <>
+        <Head>
+          <title>ContentEditor</title>
+        </Head>
 
-    return <>
-      <Head>
-        <title>ContentEditor</title>
-      </Head>
+        <div
+          id="component-wrapper"
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          {toolbar}
 
-      <div
-        id="component-wrapper"
-        style={{
-          marginBottom: 20,
-        }}
-      >
-        {toolbar}
-
-        <div id="component">
-          {object ? <App
-            inEditMode={inEditMode}
-            object={object}
-            updateObject={updateObject}
-            getRedactorObjectComponent={getRedactorObjectComponent}
-            {...props}
-          /> : null}
+          <div id="component">
+            {object ? (
+              <App
+                inEditMode={inEditMode}
+                object={object}
+                updateObject={updateObject}
+                getRedactorObjectComponent={getRedactorObjectComponent}
+                {...props}
+              />
+            ) : null}
+          </div>
         </div>
-      </div>
-    </>;
+      </>
+    )
   }, [inEditMode, object, props, toolbar, updateObject])
 }
 

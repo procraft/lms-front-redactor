@@ -67,14 +67,14 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   // />;
 }
 
-
-const InsertBlockDevPage: Page = (props) => { 
-
+const InsertBlockDevPage: Page = (props) => {
   const {
     store: object,
     updateObject,
+    toolbar,
+    inEditMode,
   } = useRedactorStoreDev({
-    key: "test-section-object",
+    key: 'test-action-insert-block-object',
     initialObject: {
       name: 'Section',
       component: 'Section',
@@ -102,7 +102,7 @@ const InsertBlockDevPage: Page = (props) => {
         },
       ],
       props: {},
-    }
+    },
   })
 
   return (
@@ -116,14 +116,17 @@ const InsertBlockDevPage: Page = (props) => {
           marginBottom: 20,
         }}
       >
+        {toolbar}
         <div id="component">
-          {object ? <App
-            inEditMode={false}
-            object={object}
-            updateObject={updateObject}
-            getRedactorObjectComponent={getRedactorObjectComponent}
-            {...props}
-          /> : null}
+          {object ? (
+            <App
+              inEditMode={inEditMode}
+              object={object}
+              updateObject={updateObject}
+              getRedactorObjectComponent={getRedactorObjectComponent}
+              {...props}
+            />
+          ) : null}
         </div>
       </div>
     </>

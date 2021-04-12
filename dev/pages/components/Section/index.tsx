@@ -8,7 +8,6 @@ import HtmlTag from '../../../../src/components/HtmlTag'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
 
-
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
 
@@ -64,16 +63,14 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   // />;
 }
 
-
-const SectionDevPage: Page = (props) => { 
-
+const SectionDevPage: Page = (props) => {
   const {
     store: object,
     updateObject,
     toolbar,
     inEditMode,
   } = useRedactorStoreDev({
-    key: "test-section-object",
+    key: 'test-section-object',
     initialObject: {
       name: 'Section',
       component: 'Section',
@@ -101,7 +98,7 @@ const SectionDevPage: Page = (props) => {
         },
       ],
       props: {},
-    }
+    },
   })
 
   return (
@@ -117,13 +114,15 @@ const SectionDevPage: Page = (props) => {
       >
         {toolbar}
         <div id="component">
-          {object ? <App
-            inEditMode={inEditMode}
-            object={object}
-            updateObject={updateObject}
-            getRedactorObjectComponent={getRedactorObjectComponent}
-            {...props}
-          /> : null}
+          {object ? (
+            <App
+              inEditMode={inEditMode}
+              object={object}
+              updateObject={updateObject}
+              getRedactorObjectComponent={getRedactorObjectComponent}
+              {...props}
+            />
+          ) : null}
         </div>
       </div>
     </>

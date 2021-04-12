@@ -20,7 +20,7 @@ const useRedactorRenderComponents = (
 ) => {
   const { object, updateObject, inEditMode, wrapperContainer } = props
 
-  const context = useContext(Context);
+  const context = useContext(Context)
 
   const [objectState] = useState({
     updateObject,
@@ -112,7 +112,13 @@ const useRedactorRenderComponents = (
 
       return curr
     }, [])
-  }, [object.components, context, updateObjectChildComponent, inEditMode, wrapperContainer])
+  }, [
+    object.components,
+    context,
+    updateObjectChildComponent,
+    inEditMode,
+    wrapperContainer,
+  ])
 }
 
 export default useRedactorRenderComponents

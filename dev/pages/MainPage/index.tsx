@@ -1,24 +1,47 @@
 /* eslint-disable no-console */
-import React from 'react'
+import React, { useMemo } from 'react'
 import Head from 'next/head'
-import App from '../../../src'
+import App, { RedactorComponentObject } from '../../../src'
 import { Page } from '../_App/interfaces'
 import getRedactorObjectComponent from '../../../src/hooks/RedactorObjectRender'
 import { useRedactorStoreDev } from '../../hooks/useRedactorStoreDev'
 
 const ContentEditorDevPage: Page = (props) => {
 
-  const {
-    store: object,
-    updateObject,
-    toolbar,
-    inEditMode,
-  } = useRedactorStoreDev({
-    key: "test-mainpage-object",
-    initialObject: {
+  const initialObject = useMemo<RedactorComponentObject>(() => {
+
+    return {
       name: 'Section',
       component: 'Section',
       components: [
+        {
+          name: 'ContentEditor',
+          component: 'ContentEditor',
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [],
+                  props: {
+                    text: 'Some text',
+                  },
+                },
+              ],
+              props: {
+                tag: 'div',
+                style: {
+                  border: '1px solid green',
+                  minHeight: 100,
+                },
+              },
+            },
+          ],
+          props: {},
+        },
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
@@ -47,14 +70,16 @@ const ContentEditorDevPage: Page = (props) => {
             {
               name: 'HtmlTag',
               component: 'HtmlTag',
-              components: [{
-                name: 'HtmlTag',
-                component: 'HtmlTag',
-                components: [],
-                props: {
-                  text: 'Some text',
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [],
+                  props: {
+                    text: 'Some text',
+                  },
                 },
-              },],
+              ],
               props: {
                 tag: 'div',
                 style: {
@@ -66,14 +91,57 @@ const ContentEditorDevPage: Page = (props) => {
           ],
           props: {},
         },
+        {
+          name: 'Section',
+          component: 'Section',
+          components: [
+            {
+              name: 'ContentEditor',
+              component: 'ContentEditor',
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      components: [],
+                      props: {
+                        text: 'Some text',
+                      },
+                    },
+                  ],
+                  props: {
+                    tag: 'div',
+                    style: {
+                      border: '1px solid green',
+                      minHeight: 100,
+                    },
+                  },
+                },
+              ],
+              props: {},
+            },
+          ],
+          props: {},
+        },
       ],
       props: {},
     }
+  }, []);
+
+  const {
+    store: object,
+    updateObject,
+    toolbar,
+    inEditMode,
+  } = useRedactorStoreDev({
+    key: 'test-mainpage-object',
+    initialObject,
   })
 
-
-  console.log('store object', object);
-
+  console.log('store object', object)
 
   return (
     <>
@@ -87,17 +155,18 @@ const ContentEditorDevPage: Page = (props) => {
           marginBottom: 20,
         }}
       >
-        
         {toolbar}
 
         <div id="component">
-          {object ? <App
-            {...props}
-            inEditMode={inEditMode}
-            object={object}
-            updateObject={updateObject}
-            getRedactorObjectComponent={getRedactorObjectComponent}
-          /> : null}
+          {object ? (
+            <App
+              {...props}
+              inEditMode={inEditMode}
+              object={object}
+              updateObject={updateObject}
+              getRedactorObjectComponent={getRedactorObjectComponent}
+            />
+          ) : null}
         </div>
       </div>
     </>

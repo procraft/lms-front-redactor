@@ -11,7 +11,6 @@ const ContentEditor: RedactorComponent = ({
   wrapperContainer,
   ...other
 }) => {
-
   const {
     ref,
     // element,

@@ -3,8 +3,8 @@ import { LmsFrontRedactorProps } from '../interfaces'
 
 export type LmsFrontRedactorContextValue = {
   inEditMode: boolean
-  
-  getRedactorObjectComponent: LmsFrontRedactorProps["getRedactorObjectComponent"]
+
+  getRedactorObjectComponent: LmsFrontRedactorProps['getRedactorObjectComponent']
 }
 
 const LmsFrontRedactorContext = React.createContext<LmsFrontRedactorContextValue | null>(

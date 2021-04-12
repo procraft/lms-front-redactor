@@ -10,10 +10,7 @@ import { LmsFrontRedactorGlobalStyle } from './styles/GlobalStyle'
 export * from './interfaces'
 export * from './RedactorComponent/interfaces'
 
-export {
-  useRedactorComponentInit,
-  useRedactorRenderComponents,
-}
+export { useRedactorComponentInit, useRedactorRenderComponents }
 
 const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = (props) => {
   const { object, inEditMode, updateObject, getRedactorObjectComponent } = props
