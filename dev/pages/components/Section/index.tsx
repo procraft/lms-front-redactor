@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
-import { RedactorComponent, RedactorComponentObject } from '../../../../src/RedactorComponent/interfaces'
+import { RedactorComponent } from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 import Section from '../../../../src/components/Section'
 import HtmlTag from '../../../../src/components/HtmlTag'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
+import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
 
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
@@ -64,9 +65,14 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 }
 
 
-const SectionDevPage: Page = (props) => {
-  const object = useMemo<RedactorComponentObject>(() => {
-    return {
+const SectionDevPage: Page = (props) => { 
+
+  const {
+    store: object,
+    updateObject,
+  } = useRedactorStoreDev({
+    key: "test-section-object",
+    initialObject: {
       name: 'Section',
       component: 'Section',
       components: [
@@ -94,7 +100,7 @@ const SectionDevPage: Page = (props) => {
       ],
       props: {},
     }
-  }, [])
+  })
 
   return (
     <>
@@ -108,14 +114,13 @@ const SectionDevPage: Page = (props) => {
         }}
       >
         <div id="component">
-          <App
+          {object ? <App
             inEditMode={false}
             object={object}
-            // eslint-disable-next-line no-console
-            updateObject={console.log}
+            updateObject={updateObject}
             getRedactorObjectComponent={getRedactorObjectComponent}
             {...props}
-          />
+          /> : null}
         </div>
       </div>
     </>
