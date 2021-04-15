@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
-import { RedactorComponent } from '../../../../src/RedactorComponent/interfaces'
+import {
+  RedactorComponent,
+  RedactorComponentObject,
+} from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 import Section from '../../../../src/components/Section'
 import HtmlTag from '../../../../src/components/HtmlTag'
@@ -68,14 +71,8 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 }
 
 const InsertBlockDevPage: Page = (props) => {
-  const {
-    store: object,
-    updateObject,
-    toolbar,
-    inEditMode,
-  } = useRedactorStoreDev({
-    key: 'test-action-insert-block-object',
-    initialObject: {
+  const initialObject = useMemo<RedactorComponentObject>(() => {
+    return {
       name: 'Section',
       component: 'Section',
       components: [
@@ -102,7 +99,18 @@ const InsertBlockDevPage: Page = (props) => {
         },
       ],
       props: {},
-    },
+    }
+  }, [])
+
+  const {
+    store: object,
+    updateObject,
+    toolbar,
+    inEditMode,
+    objectTemplates,
+  } = useRedactorStoreDev({
+    key: 'test-action-insert-block-object',
+    initialObject,
   })
 
   return (
@@ -124,6 +132,7 @@ const InsertBlockDevPage: Page = (props) => {
               object={object}
               updateObject={updateObject}
               getRedactorObjectComponent={getRedactorObjectComponent}
+              objectTemplates={objectTemplates}
               {...props}
             />
           ) : null}

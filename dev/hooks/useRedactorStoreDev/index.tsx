@@ -1,7 +1,10 @@
 /* eslint-disable no-console */
 import useStore from '@prisma-cms/react-hooks/dist/hooks/useStore'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { LmsFrontRedactorProps, RedactorComponentObject } from '../../../src'
+import ContentEditor from '../../../src/components/ContentEditor'
+import Section from '../../../src/components/Section'
+import { RedactorObjectTemplate } from '../../../src/Context'
 
 type useRedactorStoreDevProps = {
   /**
@@ -79,7 +82,6 @@ export const useRedactorStoreDev = ({
     inEditModeSetter(!inEditMode)
   }, [inEditMode])
 
-
   /**
    * Сброс измененного хранилища
    */
@@ -88,9 +90,9 @@ export const useRedactorStoreDev = ({
     objectStore.updateStore(initialObject)
   }, [initialObject, objectStore, key])
 
-  console.log('objectStore.store', objectStore.store);
-  console.log('initialObject', initialObject);
-  console.log('objectStore.store === ', objectStore.store === initialObject);
+  console.log('objectStore.store', objectStore.store)
+  console.log('initialObject', initialObject)
+  console.log('objectStore.store === ', objectStore.store === initialObject)
 
   const toolbar = useMemo(() => {
     return (
@@ -104,15 +106,37 @@ export const useRedactorStoreDev = ({
           inEditMode {inEditMode ? 'On' : 'Off'}
         </button>
 
-        {objectStore.store !== initialObject ? <button 
-          onClick={resetStore}
-        >
-          Reset store
-        </button> : null}
-
+        {objectStore.store !== initialObject ? (
+          <button onClick={resetStore}>Reset store</button>
+        ) : null}
       </div>
     )
   }, [inEditMode, initialObject, objectStore.store, resetStore, toggleEditMode])
+
+  const objectTemplates = useMemo<RedactorObjectTemplate[]>(() => {
+    return [
+      {
+        Component: Section,
+        template: {
+          name: 'Блок',
+          description: 'Произвольный блок',
+          component: 'Section',
+          props: {},
+          components: [],
+        },
+      },
+      {
+        Component: ContentEditor,
+        template: {
+          name: 'HTML редактор',
+          description: 'HTML редактор',
+          component: 'ContentEditor',
+          props: {},
+          components: [],
+        },
+      },
+    ]
+  }, [])
 
   return useMemo(() => {
     return {
@@ -121,8 +145,16 @@ export const useRedactorStoreDev = ({
       resetStore,
       inEditMode,
       toolbar,
+      objectTemplates,
     }
-  }, [objectStore, updateObject, resetStore, inEditMode, toolbar])
+  }, [
+    objectStore,
+    updateObject,
+    resetStore,
+    inEditMode,
+    toolbar,
+    objectTemplates,
+  ])
 }
 
 export default useRedactorStoreDev

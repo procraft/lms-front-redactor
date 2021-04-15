@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import Button from 'material-ui/Button'
 import { AddBlockModalProps } from './interfaces'
@@ -6,18 +6,10 @@ import IconButton from 'material-ui/IconButton'
 import SaveIcon from 'material-ui-icons/Save'
 import {
   LandingTemplateFragment,
-  RedactorComponent,
   RedactorComponentObject,
-  RedactorComponentProps,
 } from '../../../../RedactorComponent/interfaces'
-import Section from '../../../../components/Section'
-import ContentEditor from '../../../../components/ContentEditor'
 import LmsFrontRedactorModal from '../../../../ui/Modal'
-
-type ComponentData = {
-  Component: RedactorComponent
-  template: RedactorComponentProps['object']
-}
+import Context, { RedactorObjectTemplate } from '../../../../Context'
 
 /**
  * Модалка для добавления нового блока
@@ -27,72 +19,30 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
   closeAddBlockModal,
   updateObject,
 }) => {
+  const context = useContext(Context)
+
   /**
    * Этот контейнер нужен, чтобы рендерить врапперы именно в модалку,
    * а не в боди (иначе перекрывается модалкой)
    */
   const [wrapperContainer, containerRef] = useState<HTMLDivElement | null>(null)
 
-  const objectTemplates = useMemo<ComponentData[]>(() => {
-    // return [{
-    //   name: 'Section',
-    //   description: "Произвольный блок",
-    //   component: 'Section',
-    //   props: {
-    //     style: {
-    //       border: '2px solid red',
-    //     },
-    //   },
-    //   components: [],
-    // }]
-
-    return [
-      {
-        Component: Section,
-        template: {
-          name: 'Блок',
-          description: 'Произвольный блок',
-          component: 'Section',
-          props: {},
-          components: [],
-        },
-      },
-      {
-        Component: ContentEditor,
-        template: {
-          name: 'HTML редактор',
-          description: 'HTML редактор',
-          component: 'ContentEditor',
-          props: {},
-          components: [],
-        },
-      },
-      // {
-      //   Component: CourseOrder,
-      //   template: {
-      //     name: 'Виджет заказа курса',
-      //     description: 'Виджет заказа курса',
-      //     component: 'CourseOrder',
-      //     props: {},
-      //     components: [],
-      //   },
-      // },
-    ]
-  }, [])
-
-  const [componentData, setComponentData] = useState<ComponentData | null>(null)
+  const [
+    componentData,
+    setComponentData,
+  ] = useState<RedactorObjectTemplate | null>(null)
 
   const choseComponent = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       const index = parseInt(event.currentTarget.value)
 
-      const componentData = objectTemplates[index]
+      const componentData = (context?.objectTemplates || [])[index]
 
       if (componentData) {
         setComponentData(componentData)
       }
     },
-    [objectTemplates]
+    [context?.objectTemplates]
   )
 
   /**
@@ -160,17 +110,6 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
 
       const components = [...object.components]
 
-      // components.push({
-      //   name: 'New Section',
-      //   component: 'Section',
-      //   props: {
-      //     style: {
-      //       border: '2px solid red',
-      //     },
-      //   },
-      //   components: [],
-      // })
-
       components.push(componentData.template)
 
       /**
@@ -201,7 +140,7 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
   }, [addObjectHandler, componentData])
 
   const secondaryButtons = useMemo(() => {
-    return objectTemplates.map((n, index) => {
+    return (context?.objectTemplates || []).map((n, index) => {
       return (
         <div key={index}>
           <Button
@@ -216,50 +155,10 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
         </div>
       )
     })
-  }, [choseComponent, objectTemplates])
+  }, [choseComponent, context?.objectTemplates])
 
   return useMemo(() => {
     const wrapper = document.body
-
-    // return ReactDOM.createPortal(
-    //   <LmsFrontRedactorModalStyled ref={containerRef}>
-    //     <LmsFrontRedactorModalHeaderStyled>
-    //       <h2 className="title">
-    //         Добавить блок в компонент {object.name}{' '}
-    //         {object.name !== object.component ? `(${object.component})` : null}
-    //       </h2>
-
-    //       <div className="buttons">
-    //         {saveButton}
-
-    //         <IconButton onClick={closeAddBlockModal}>
-    //           <CloseIcon />
-    //         </IconButton>
-    //       </div>
-    //     </LmsFrontRedactorModalHeaderStyled>
-
-    //     <LmsFrontRedactorModalComponentsButtonsStyled>
-    //       {objectTemplates.map((n, index) => {
-    //         return (
-    //           <div key={index}>
-    //             <Button
-    //               variant="raised"
-    //               size="small"
-    //               title={n.template.description || ''}
-    //               value={index}
-    //               onClick={choseComponent}
-    //             >
-    //               {n.template.name}
-    //             </Button>
-    //           </div>
-    //         )
-    //       })}
-    //     </LmsFrontRedactorModalComponentsButtonsStyled>
-
-    //     {componentDataContent}
-    //   </LmsFrontRedactorModalStyled>,
-    //   wrapper
-    // )
 
     return ReactDOM.createPortal(
       <LmsFrontRedactorModal

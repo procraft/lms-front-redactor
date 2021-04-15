@@ -1,5 +1,6 @@
 import { RedactorComponentProps } from './RedactorComponent/interfaces'
 import getRedactorObjectComponent from './hooks/RedactorObjectRender'
+import { LmsFrontRedactorContextValue } from './Context'
 
 export type LmsFrontRedactorProps = {
   inEditMode: boolean
@@ -9,4 +10,6 @@ export type LmsFrontRedactorProps = {
   // onChangeState: Function
 
   getRedactorObjectComponent: typeof getRedactorObjectComponent
+
+  objectTemplates: LmsFrontRedactorContextValue['objectTemplates']
 }

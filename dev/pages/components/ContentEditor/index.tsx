@@ -2,12 +2,16 @@
 import React, { useMemo } from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
-import { RedactorComponent } from '../../../../src/RedactorComponent/interfaces'
+import {
+  RedactorComponent,
+  RedactorComponentObject,
+} from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import ContentEditor from '../../../../src/components/ContentEditor'
 import HtmlTag from '../../../../src/components/HtmlTag'
 import useRedactorStoreDev from '../../../hooks/useRedactorStoreDev'
+import Section from '../../../../src/components/Section'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -19,9 +23,9 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   let Component: RedactorComponent | undefined
 
   switch (object.component) {
-    // case 'Section':
-    //   Component = Section
-    //   break
+    case 'Section':
+      Component = Section
+      break
 
     // case 'LandingLayout':
     //   Component = LandingLayout
@@ -65,21 +69,65 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 }
 
 const ContentEditorDevPage: Page = (props) => {
-  const {
-    store: object,
-    updateObject,
-    toolbar,
-    inEditMode,
-  } = useRedactorStoreDev({
-    key: 'test-content-editor-object',
-    initialObject: {
+  const initialObject = useMemo<RedactorComponentObject>(() => {
+    return {
       name: 'ContentEditor',
       component: 'ContentEditor',
       components: [
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
-          components: [],
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'P content',
+              },
+            },
+          ],
+          props: {
+            tag: 'p',
+            style: {
+              border: '1px dashed blue',
+              minHeight: 50,
+            },
+          },
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          components: [
+            {
+              name: 'Section',
+              component: 'Section',
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      components: [],
+                      props: {
+                        text: 'Section content',
+                      },
+                    },
+                  ],
+                  props: {
+                    tag: 'div',
+                    style: {
+                      border: '1px solid blue',
+                      minHeight: 100,
+                    },
+                  },
+                },
+              ],
+              props: {},
+            },
+          ],
           props: {
             tag: 'div',
             style: {
@@ -92,7 +140,18 @@ const ContentEditorDevPage: Page = (props) => {
       props: {
         id: 'test-content-id',
       },
-    },
+    }
+  }, [])
+
+  const {
+    store: object,
+    updateObject,
+    toolbar,
+    inEditMode,
+    objectTemplates,
+  } = useRedactorStoreDev({
+    key: 'test-content-editor-object',
+    initialObject,
   })
 
   console.log('store object', object)
@@ -119,6 +178,7 @@ const ContentEditorDevPage: Page = (props) => {
                 object={object}
                 updateObject={updateObject}
                 getRedactorObjectComponent={getRedactorObjectComponent}
+                objectTemplates={objectTemplates}
                 {...props}
               />
             ) : null}
@@ -126,7 +186,7 @@ const ContentEditorDevPage: Page = (props) => {
         </div>
       </>
     )
-  }, [inEditMode, object, props, toolbar, updateObject])
+  }, [inEditMode, object, props, toolbar, updateObject, objectTemplates])
 }
 
 export default ContentEditorDevPage

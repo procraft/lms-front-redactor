@@ -13,14 +13,21 @@ export * from './RedactorComponent/interfaces'
 export { useRedactorComponentInit, useRedactorRenderComponents }
 
 const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = (props) => {
-  const { object, inEditMode, updateObject, getRedactorObjectComponent } = props
+  const {
+    object,
+    inEditMode,
+    updateObject,
+    getRedactorObjectComponent,
+    objectTemplates,
+  } = props
 
   const context = useMemo<LmsFrontRedactorContextValue>(() => {
     return {
       inEditMode,
       getRedactorObjectComponent,
+      objectTemplates,
     }
-  }, [getRedactorObjectComponent, inEditMode])
+  }, [getRedactorObjectComponent, inEditMode, objectTemplates])
 
   const content = useMemo(() => {
     if (!object) {

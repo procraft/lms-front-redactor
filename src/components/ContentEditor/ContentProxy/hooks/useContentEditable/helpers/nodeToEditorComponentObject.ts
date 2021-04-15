@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
 import { RedactorComponentObject } from '../../../../../../RedactorComponent/interfaces'
-import Section from '../../../../../Section'
 import { FiberNode } from '../interfaces'
 
 /**
@@ -32,14 +30,12 @@ const nodeToEditorComponentObject = (
   if (node instanceof HTMLElement) {
     // TODO Здесь надо реализовать логику вычленения данных реакт-компонента
 
-    console.log('nodeToEditorComponentObject node', node)
+    // console.log('nodeToEditorComponentObject node', node)
 
     /**
      * Пытаемся получить данные реакт-компонента
      */
     const keys = Object.keys(node)
-
-    console.log('nodeToEditorComponentObject keys', keys)
 
     const reactFiberKey = keys.find((n) =>
       n.startsWith('__reactFiber$')
@@ -52,16 +48,7 @@ const nodeToEditorComponentObject = (
     if (reactFiber && reactFiber.return) {
       // !(reactFiber.return.elementType === HtmlTag)
 
-      console.log('nodeToEditorComponentObject reactFiberKey', reactFiberKey)
-      console.log('nodeToEditorComponentObject node 2', { ...node })
-
-      console.log('nodeToEditorComponentObject reactFiber', reactFiber)
-
-      console.log(
-        'nodeToEditorComponentObject reactFiber',
-        reactFiber.return.elementType,
-        reactFiber.return.elementType === Section
-      )
+      // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
 
       // Если компонент не доступен для редактирования, возвращаем его текущее состояние
       if (node.isContentEditable === false) {

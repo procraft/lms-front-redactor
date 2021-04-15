@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
-import { RedactorComponent } from '../../../../src/RedactorComponent/interfaces'
+import {
+  RedactorComponent,
+  RedactorComponentObject,
+} from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 import Section from '../../../../src/components/Section'
 import HtmlTag from '../../../../src/components/HtmlTag'
@@ -64,14 +67,8 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 }
 
 const SectionDevPage: Page = (props) => {
-  const {
-    store: object,
-    updateObject,
-    toolbar,
-    inEditMode,
-  } = useRedactorStoreDev({
-    key: 'test-section-object',
-    initialObject: {
+  const initialObject = useMemo<RedactorComponentObject>(() => {
+    return {
       name: 'Section',
       component: 'Section',
       components: [
@@ -98,7 +95,18 @@ const SectionDevPage: Page = (props) => {
         },
       ],
       props: {},
-    },
+    }
+  }, [])
+
+  const {
+    store: object,
+    updateObject,
+    toolbar,
+    inEditMode,
+    objectTemplates,
+  } = useRedactorStoreDev({
+    key: 'test-section-object',
+    initialObject,
   })
 
   return (
@@ -120,6 +128,7 @@ const SectionDevPage: Page = (props) => {
               object={object}
               updateObject={updateObject}
               getRedactorObjectComponent={getRedactorObjectComponent}
+              objectTemplates={objectTemplates}
               {...props}
             />
           ) : null}

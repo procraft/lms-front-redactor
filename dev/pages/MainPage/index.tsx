@@ -7,9 +7,7 @@ import getRedactorObjectComponent from '../../../src/hooks/RedactorObjectRender'
 import { useRedactorStoreDev } from '../../hooks/useRedactorStoreDev'
 
 const ContentEditorDevPage: Page = (props) => {
-
   const initialObject = useMemo<RedactorComponentObject>(() => {
-
     return {
       name: 'Section',
       component: 'Section',
@@ -129,13 +127,14 @@ const ContentEditorDevPage: Page = (props) => {
       ],
       props: {},
     }
-  }, []);
+  }, [])
 
   const {
     store: object,
     updateObject,
     toolbar,
     inEditMode,
+    objectTemplates,
   } = useRedactorStoreDev({
     key: 'test-mainpage-object',
     initialObject,
@@ -165,6 +164,7 @@ const ContentEditorDevPage: Page = (props) => {
               object={object}
               updateObject={updateObject}
               getRedactorObjectComponent={getRedactorObjectComponent}
+              objectTemplates={objectTemplates}
             />
           ) : null}
         </div>
