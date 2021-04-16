@@ -39,6 +39,7 @@
   "dependencies": {
     "@prisma-cms/front-editor": "^3.2.0",
     "@prisma-cms/react-hooks": "~1.0.0",
+    "next": "10.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "uid": "^2.0.0"
@@ -84,7 +85,6 @@
     "lint-staged": "^10.5.1",
     "moment": "^2.29.1",
     "moment-locales-webpack-plugin": "^1.2.0",
-    "next": "^10.0.8",
     "npm": "^6.14.8",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useMemo } from 'react'
 import Head from 'next/head'
 import App, { RedactorComponentObject } from '../../../src'
@@ -12,6 +11,71 @@ const ContentEditorDevPage: Page = (props) => {
       name: 'Section',
       component: 'Section',
       components: [
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'div',
+            style: {
+              display: "flex",
+              marginBottom: 20,
+            },
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: "a",
+                href: '/components/contenteditor',
+              },
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [],
+                  props: {
+                    text: 'Content Editor',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'style',
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'body {color: purple;}',
+              },
+            },
+          ],
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'script',
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'console.log("Test... Script console");',
+              },
+            },
+          ],
+        },
         {
           name: 'ContentEditor',
           component: 'ContentEditor',
@@ -139,8 +203,6 @@ const ContentEditorDevPage: Page = (props) => {
     key: 'test-mainpage-object',
     initialObject,
   })
-
-  console.log('store object', object)
 
   return (
     <>

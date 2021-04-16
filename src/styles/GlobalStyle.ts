@@ -6,15 +6,15 @@ import { redactor2ComponentClasses } from '.'
  */
 export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
-  * {
+  /* * {
     &:focus {
       outline: none;
     }
-  }
+  } */
 
   .${redactor2ComponentClasses.component} {
       border: 1px solid #dfdfdf;
-      min-height: 30px;
+      min-height: 20px;
       cursor: pointer;
       padding: 2px 4px;
 
@@ -48,6 +48,9 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
       &:before {
         display: block;
+        color: #333;
+        font-size: 14px;
+        font-style: italic;
       }
 
       &.landing-router {

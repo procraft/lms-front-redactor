@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useMemo } from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
@@ -153,8 +152,6 @@ const ContentEditorDevPage: Page = (props) => {
     key: 'test-content-editor-object',
     initialObject,
   })
-
-  console.log('store object', object)
 
   return useMemo(() => {
     return (

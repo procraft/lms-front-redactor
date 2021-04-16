@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import useStore from '@prisma-cms/react-hooks/dist/hooks/useStore'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { LmsFrontRedactorProps, RedactorComponentObject } from '../../../src'
@@ -39,8 +38,6 @@ export const useRedactorStoreDev = ({
       const item = global.localStorage?.getItem(key)
 
       if (item) {
-        console.log('item', item)
-
         object = JSON.parse(item)
       }
     } catch (error) {
@@ -57,8 +54,6 @@ export const useRedactorStoreDev = ({
 
   const updateObject: LmsFrontRedactorProps['updateObject'] = useCallback(
     (current, data) => {
-      console.log('ContentEditorDevPage updateObject current', current)
-      console.log('ContentEditorDevPage updateObject data', data)
 
       const store = {
         ...current,
@@ -89,10 +84,6 @@ export const useRedactorStoreDev = ({
     global.localStorage?.removeItem(key)
     objectStore.updateStore(initialObject)
   }, [initialObject, objectStore, key])
-
-  console.log('objectStore.store', objectStore.store)
-  console.log('initialObject', initialObject)
-  console.log('objectStore.store === ', objectStore.store === initialObject)
 
   const toolbar = useMemo(() => {
     return (
