@@ -95,7 +95,7 @@ addDecorator(
                 events: {} as MittEmitter,
                 isReady: true,
                 isLocaleDomain: false,
-                isPreview: false,
+                // isPreview: false,
               }}
             >
               {storyFn(context)}
