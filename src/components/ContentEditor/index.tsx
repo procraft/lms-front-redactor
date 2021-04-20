@@ -9,6 +9,7 @@ const ContentEditor: RedactorComponent = ({
   updateObject,
   inEditMode,
   wrapperContainer,
+  removeComponent,
   ...other
 }) => {
   const {
@@ -22,6 +23,7 @@ const ContentEditor: RedactorComponent = ({
     object,
     updateObject,
     wrapperContainer,
+    removeComponent,
   })
 
   const childrenContent = useRedactorRenderComponents({

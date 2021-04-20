@@ -14,4 +14,6 @@ export type useRedactorComponentInitProps = {
   updateObject: RedactorComponentProps['updateObject']
 
   wrapperContainer: RedactorComponentWrapperProps['container']
+
+  removeComponent: RedactorComponentWrapperProps["removeComponent"]
 }

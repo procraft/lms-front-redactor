@@ -43,6 +43,8 @@ export type RedactorComponentProps<P = {}> = {
   // updateObject: (current: RedactorComponentProps["object"], data: Partial<EditorComponentObject>) => void
 
   wrapperContainer: RedactorComponentWrapperProps['container']
+
+  removeComponent?: RedactorComponentWrapperProps["removeComponent"]
 }
 
 export type RedactorComponent<

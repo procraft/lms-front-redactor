@@ -27,4 +27,9 @@ export type RedactorComponentWrapperProps = {
    * Выходим из режима редактирования
    */
   closeEditor: () => void
+
+  /**
+   * Удаление компонента в родительском объекте
+   */
+   removeComponent: ((component: RedactorComponentProps['object']) => void) | undefined
 }

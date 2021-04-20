@@ -17,6 +17,7 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
   object,
   updateObject,
   wrapperContainer,
+  removeComponent,
 }: useRedactorComponentInitProps) => {
   const context = useContext(Context)
 
@@ -171,9 +172,10 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         object={object}
         closeEditor={closeEditor}
         container={wrapperContainer}
+        removeComponent={removeComponent}
       />
     )
-  }, [active, closeEditor, element, object, updateObject, wrapperContainer])
+  }, [active, closeEditor, element, object, updateObject, wrapperContainer, removeComponent])
 
   return useMemo(() => {
     const className = []

@@ -44,14 +44,27 @@ describe('RemoveBlock action', () => {
 
         console.log('redactorComponentWrapper', node[0]?.redactorComponentWrapper);
         // node.redactorComponentWrapper
-        
+
         expect(node[0]?.redactorComponentWrapper).not.null;
 
-        if(node[0]?.redactorComponentWrapper) {
-          node[0]?.redactorComponentWrapper.querySelector<HTMLButtonElement>('.buttons button[role=showState]')?.click()
-        }
+        /**
+         * Get remove button
+         */
+
+        const removeButton = node[0]?.redactorComponentWrapper?.querySelector<HTMLButtonElement>('.buttons button[role=removeComponent]') ?? null;
+
+        expect(removeButton).not.null;
+
+        removeButton?.click()
+
       })
     })
+
+
+    it("Check that component has been removed", () => {
+      cy.get<HTMLDivElement>('#component #test-content-id').should('not.exist');
+    })
+
   })
 })
 

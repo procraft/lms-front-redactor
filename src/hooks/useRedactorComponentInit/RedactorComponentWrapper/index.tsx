@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import AddBlockModal from './AddBlockModal'
@@ -20,6 +21,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
   updateObject,
   closeEditor,
   container = global.window?.document.body,
+  removeComponent,
 }) => {
   const wrapper = useMemo(() => document.createElement('div'), [])
 
@@ -189,6 +191,16 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
     setShowAddBlockModal(false)
   }, [])
 
+
+  /**
+   * Удаление элемента
+   */
+  const removeObjectHandler = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation()
+
+    removeComponent && removeComponent(object);
+  }, [object, removeComponent])
+
   // const addObjectHandler = useCallback(
   //   (event: React.MouseEvent) => {
   //     event.preventDefault()
@@ -269,6 +281,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
               {debug ? (
                 <button onClick={showContentHandler} role="showState">Show state</button>
               ) : null}
+              {removeComponent ? <button onClick={removeObjectHandler} role="removeComponent" title="Удалить элемент">␡</button> : null}
               {/* <button onClick={showInnerHtmlHandler}>Show HTML</button> */}
               {/* <button>Delete</button> */}
               <button onClick={closeEditor} role="close">Close</button>
@@ -278,17 +291,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
         )}
       </>
     )
-  }, [
-    stateEditor,
-    showAddBlockModal,
-    object,
-    closeAddBlockModal,
-    updateObject,
-    addObjectHandler,
-    showContentHandler,
-    closeEditor,
-    wrapper,
-  ])
+  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, addObjectHandler, showContentHandler, removeObjectHandler, closeEditor, wrapper, removeComponent])
 }
 
 export default RedactorComponentWrapper

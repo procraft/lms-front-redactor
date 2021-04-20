@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useContext, useMemo } from 'react'
 // import { RedactorComponent } from '../../RedactorComponent/interfaces';
 // import LandingFooter from '../../components/LandingFooter';
@@ -11,6 +12,7 @@ import { useRedactorRenderComponentsProps } from './interfaces'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
 import { useState } from 'react'
 import Context from '../../Context'
+import { useRedactorComponentInitProps } from '../useRedactorComponentInit/interfaces'
 
 /**
  * В цикле выводим дочерние компоненты
@@ -83,6 +85,48 @@ const useRedactorRenderComponents = (
     [object, objectState]
   )
 
+
+  /**
+   * Удаление компонента
+   */
+  const removeComponent: NonNullable<useRedactorComponentInitProps["removeComponent"]> = useCallback((component) => {
+
+    console.log('removeComponent component', component);
+
+    /**
+     * Находим объект в массиве компонентов
+     */
+
+    const components = [...object.components]
+
+    const componentIndex = components.indexOf(component)
+
+    if (componentIndex === -1) {
+      console.error('Не был найден текущий компонент в массиве компонентов')
+      return
+    }
+
+    // const component = components[componentIndex];
+
+    /**
+     * Обновляем данные объекта в массиве данных
+     */
+    components.splice(componentIndex, 1) 
+
+    /**
+     * Обновлять мы будем именно текущий объект.
+     * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
+     */
+
+    objectState.updateObject(object, {
+      components,
+    })
+
+    return
+
+  }, [object, objectState])
+
+
   return useMemo(() => {
     /**
      * Важно не возвращать пустой массив, так как есть компоненты,
@@ -106,19 +150,14 @@ const useRedactorRenderComponents = (
             updateObject={updateObjectChildComponent}
             inEditMode={inEditMode}
             wrapperContainer={wrapperContainer}
+            removeComponent={removeComponent}
           />
         )
       }
 
       return curr
     }, [])
-  }, [
-    object.components,
-    context,
-    updateObjectChildComponent,
-    inEditMode,
-    wrapperContainer,
-  ])
+  }, [object.components, context, updateObjectChildComponent, inEditMode, wrapperContainer, removeComponent])
 }
 
 export default useRedactorRenderComponents
