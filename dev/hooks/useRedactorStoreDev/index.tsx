@@ -2,6 +2,7 @@ import useStore from '@prisma-cms/react-hooks/dist/hooks/useStore'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { LmsFrontRedactorProps, RedactorComponentObject } from '../../../src'
 import ContentEditor from '../../../src/components/ContentEditor'
+import HtmlTag from '../../../src/components/HtmlTag'
 import Section from '../../../src/components/Section'
 import { RedactorObjectTemplate } from '../../../src/Context'
 
@@ -54,7 +55,6 @@ export const useRedactorStoreDev = ({
 
   const updateObject: LmsFrontRedactorProps['updateObject'] = useCallback(
     (current, data) => {
-
       const store = {
         ...current,
         ...data,
@@ -98,7 +98,7 @@ export const useRedactorStoreDev = ({
         </button>
 
         {objectStore.store !== initialObject ? (
-          <button onClick={resetStore}>Reset store</button>
+          <button onClick={resetStore} role="reset-store">Reset store</button>
         ) : null}
       </div>
     )
@@ -124,6 +124,27 @@ export const useRedactorStoreDev = ({
           component: 'ContentEditor',
           props: {},
           components: [],
+        },
+      },
+      {
+        Component: HtmlTag,
+        template: {
+          name: 'Test HTML tag',
+          description: 'Test HTML tag',
+          component: 'HtmlTag',
+          props: {
+            tag: "div",
+            className: "test-html-tag",
+          },
+          components: [{
+            name: 'Test HTML tag content',
+            description: 'Test HTML tag content',
+            component: 'HtmlTag',
+            props: {
+              text: "Test HTML tag content",
+            },
+            components: [],
+          }],
         },
       },
     ]

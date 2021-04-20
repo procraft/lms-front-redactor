@@ -79,6 +79,14 @@ const InsertBlockDevPage: Page = (props) => {
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
+          props: {
+            tag: 'div',
+            id: "test-content-id",
+            style: {
+              border: '1px solid blue',
+              minHeight: 100,
+            },
+          },
           components: [
             {
               name: 'HtmlTag',
@@ -89,13 +97,6 @@ const InsertBlockDevPage: Page = (props) => {
               },
             },
           ],
-          props: {
-            tag: 'div',
-            style: {
-              border: '1px solid blue',
-              minHeight: 100,
-            },
-          },
         },
       ],
       props: {},

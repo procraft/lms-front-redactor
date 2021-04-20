@@ -20,20 +20,20 @@ const LmsFrontRedactorModal: React.FC<LmsFrontRedactorModalProps> = ({
   return useMemo(() => {
     return (
       <>
-        <LmsFrontRedactorModalStyled ref={containerRef} {...other}>
+        <LmsFrontRedactorModalStyled ref={containerRef} role="redactor--modal" {...other}>
           <LmsFrontRedactorModalHeaderStyled>
             <h2 className="title">{title}</h2>
 
             <div className="buttons">
               {buttons}
 
-              <IconButton onClick={close}>
+              <IconButton onClick={close} role="modal-close">
                 <CloseIcon />
               </IconButton>
             </div>
           </LmsFrontRedactorModalHeaderStyled>
 
-          <LmsFrontRedactorModalComponentsButtonsStyled>
+          <LmsFrontRedactorModalComponentsButtonsStyled role="secondaryButtons">
             {secondaryButtons}
           </LmsFrontRedactorModalComponentsButtonsStyled>
 

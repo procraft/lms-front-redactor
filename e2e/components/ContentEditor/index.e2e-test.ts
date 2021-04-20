@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
-
-import { expect } from 'chai'
+import { redactorStartEdit } from '../../helpers/component'
 
 describe('ContentEditor', () => {
   before(() => {
@@ -8,19 +6,10 @@ describe('ContentEditor', () => {
   })
 
   describe('Load ContentEditor', () => {
-    it('Get component container', () => {
-      cy.get<HTMLDivElement>('#component').then((node) => {
-        const container = node[0]
-
-        expect(container).not.null
-      })
-    })
-
-    it('Switch inEditMode On', () => {
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000)
-      cy.get('#component-toolbar #toggleEditMode').click()
-    })
+    /**
+     * Включаем редактирование компонента
+     */
+    redactorStartEdit()
 
     it('Focus editable content', () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -41,8 +30,8 @@ describe('ContentEditor', () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000)
 
-      // cy.get('.view-line:last-child').click().type('// Some comment{enter}')
-      cy.get('#component #test-content-id')
+      // TODO Сейчас на интер добавляются новые элементы, но курсор не смещается туда.
+      cy.get('#component #test-content-id p')
         .click()
         .type('A{enter}', {
           delay: 100,

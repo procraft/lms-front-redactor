@@ -72,6 +72,9 @@ const ContentEditorDevPage: Page = (props) => {
     return {
       name: 'ContentEditor',
       component: 'ContentEditor',
+      props: {
+        id: 'test-content-id',
+      },
       components: [
         {
           name: 'HtmlTag',
@@ -136,9 +139,6 @@ const ContentEditorDevPage: Page = (props) => {
           },
         },
       ],
-      props: {
-        id: 'test-content-id',
-      },
     }
   }, [])
 

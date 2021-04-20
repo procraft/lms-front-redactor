@@ -1,1 +1,1 @@
-export { default } from '../../dev/pages/actions/InsertBlock'
+export { default } from '../../dev/pages/actions/insertBlock'

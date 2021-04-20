@@ -24,6 +24,23 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
   const wrapper = useMemo(() => document.createElement('div'), [])
 
   /**
+   * Корневому элементу компонента присываиваем ссылку на текущий враппер.
+   * Это надо, потому что мы не можем заранее знать куда будет отрисован враппер,
+   * потому искать мы его будем не через DOM, а напрямую через свойство элемента.
+   */
+  useEffect(() => {
+    if (!element || !wrapper) {
+      return
+    }
+
+    element.redactorComponentWrapper = wrapper
+
+    return () => {
+      delete element.redactorComponentWrapper
+    }
+  }, [element, wrapper])
+
+  /**
    * Вывод элементов управления.
    * Данная логика при переключении active срабатывает только наз
    * на одно изменение.
@@ -248,13 +265,13 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
                   : ''}
               </span>
               <span>{object.props.tag}</span>
-              <button onClick={addObjectHandler}>Add block</button>
+              <button onClick={addObjectHandler} role="addBlock">Add block</button>
               {debug ? (
-                <button onClick={showContentHandler}>Show state</button>
+                <button onClick={showContentHandler} role="showState">Show state</button>
               ) : null}
               {/* <button onClick={showInnerHtmlHandler}>Show HTML</button> */}
               {/* <button>Delete</button> */}
-              <button onClick={closeEditor}>Close</button>
+              <button onClick={closeEditor} role="close">Close</button>
             </div>
           </RedactorComponentWrapperStyled>,
           wrapper

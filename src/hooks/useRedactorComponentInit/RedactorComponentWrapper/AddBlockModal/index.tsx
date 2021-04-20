@@ -133,7 +133,7 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
     }
 
     return (
-      <IconButton color="secondary" onClick={addObjectHandler} key="save">
+      <IconButton color="secondary" onClick={addObjectHandler} key="save" role="save">
         <SaveIcon />
       </IconButton>
     )

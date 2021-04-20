@@ -1,4 +1,5 @@
 import { RedactorComponentProps } from '../../../RedactorComponent/interfaces'
+import { RedactorHtmlElement } from '../interfaces'
 
 export type RedactorComponentWrapperProps = {
   /**
@@ -7,8 +8,14 @@ export type RedactorComponentWrapperProps = {
    */
   container: HTMLElement | undefined
 
-  element: HTMLElement
+  /**
+   * HTML-элемент, для которого прорисовывается враппер
+   */
+  element: RedactorHtmlElement
 
+  /**
+   * Данные Редактор-компонента
+   */
   object: RedactorComponentProps['object']
 
   /**

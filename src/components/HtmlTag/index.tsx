@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
-import Link from 'next/link';
+import Link from 'next/link'
 
 const HtmlTag: RedactorComponent = ({
   object,
@@ -42,8 +42,8 @@ const HtmlTag: RedactorComponent = ({
     ...otherProps
   } = object.props
 
-  _query;
-  _first;
+  _query
+  _first
 
   const content = useMemo(() => {
     if (!Tag) {
@@ -74,35 +74,40 @@ const HtmlTag: RedactorComponent = ({
           ...otherProps,
           dangerouslySetInnerHTML: object.components[0]?.props.text
             ? {
-              __html: object.components[0]?.props.text,
-            }
+                __html: object.components[0]?.props.text,
+              }
             : undefined,
         })
       }
       case 'a': {
-        return <Link
-          href={object.props.href || ''}
-        >
-          <a
-            {...tagProps}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            ref={ref}
-          >
-            {childrenContent}
-          </a>
-        </Link >
+        return (
+          <Link href={object.props.href || ''}>
+            <a
+              {...tagProps}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              ref={ref}
+            >
+              {childrenContent}
+            </a>
+          </Link>
+        )
       }
 
       default:
     }
 
-    return (
-      <Tag {...tagProps}>
-        {childrenContent}
-      </Tag>
-    )
-  }, [Tag, childrenContent, componentClassName, object.components, object.props.href, otherProps, ref, text])
+    return <Tag {...tagProps}>{childrenContent}</Tag>
+  }, [
+    Tag,
+    childrenContent,
+    componentClassName,
+    object.components,
+    object.props.href,
+    otherProps,
+    ref,
+    text,
+  ])
 
   const preventDefault = useCallback((event: React.MouseEvent) => {
     event.preventDefault()
@@ -141,7 +146,6 @@ const HtmlTag: RedactorComponent = ({
 
     // console.log('content', content);
 
-
     const renderProps = {
       ref,
       className: [
@@ -154,26 +158,25 @@ const HtmlTag: RedactorComponent = ({
       onClick: preventDefault,
     }
 
-    let elementContent: JSX.Element = React.cloneElement(content, renderProps);
+    let elementContent: JSX.Element = React.cloneElement(content, renderProps)
 
     switch (object.props.tag) {
-
       case 'script':
       case 'style':
-
-        elementContent = <div
-          {...renderProps}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          ref={renderProps.ref}
-        >
-          {content}
-        </div >
-        break;
+        elementContent = (
+          <div
+            {...renderProps}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            ref={renderProps.ref}
+          >
+            {content}
+          </div>
+        )
+        break
 
       default:
     }
-
 
     return (
       <>
@@ -197,7 +200,17 @@ const HtmlTag: RedactorComponent = ({
     //     </div>
     //   </>
     // )
-  }, [className, componentClassName, content, inEditMode, object.props.tag, otherProps, preventDefault, wrapperContent, ref])
+  }, [
+    className,
+    componentClassName,
+    content,
+    inEditMode,
+    object.props.tag,
+    otherProps,
+    preventDefault,
+    wrapperContent,
+    ref,
+  ])
 }
 
 export default HtmlTag

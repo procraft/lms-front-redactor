@@ -17,7 +17,7 @@ const ContentEditorDevPage: Page = (props) => {
           props: {
             tag: 'div',
             style: {
-              display: "flex",
+              display: 'flex',
               marginBottom: 20,
             },
           },
@@ -26,7 +26,7 @@ const ContentEditorDevPage: Page = (props) => {
               name: 'HtmlTag',
               component: 'HtmlTag',
               props: {
-                tag: "a",
+                tag: 'a',
                 href: '/components/contenteditor',
               },
               components: [
