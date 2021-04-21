@@ -20,7 +20,11 @@ const LmsFrontRedactorModal: React.FC<LmsFrontRedactorModalProps> = ({
   return useMemo(() => {
     return (
       <>
-        <LmsFrontRedactorModalStyled ref={containerRef} role="redactor--modal" {...other}>
+        <LmsFrontRedactorModalStyled
+          ref={containerRef}
+          role="redactor--modal"
+          {...other}
+        >
           <LmsFrontRedactorModalHeaderStyled>
             <h2 className="title">{title}</h2>
 

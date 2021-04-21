@@ -83,7 +83,6 @@ const useRedactorRenderComponents = (
     [object, objectState]
   )
 
-
   return useMemo(() => {
     /**
      * Важно не возвращать пустой массив, так как есть компоненты,
@@ -115,7 +114,14 @@ const useRedactorRenderComponents = (
 
       return curr
     }, [])
-  }, [object, context, updateObjectChildComponent, inEditMode, wrapperContainer, updateObject])
+  }, [
+    object,
+    context,
+    updateObjectChildComponent,
+    inEditMode,
+    wrapperContainer,
+    updateObject,
+  ])
 }
 
 export default useRedactorRenderComponents

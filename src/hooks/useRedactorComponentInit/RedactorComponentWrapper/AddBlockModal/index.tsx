@@ -122,7 +122,6 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
        * Если вставка в текущий компонент
        */
       if (place === InsertPlace.Child) {
-
         const components = [...object.components]
 
         components.push(componentData.template)
@@ -133,30 +132,33 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
         updateObject(object, {
           components,
         })
-
-      }
+      } else {
 
       /**
        * Иначе в До или После
        */
-      else {
-
         if (parent && updateParent) {
-
           const components = [...parent.components]
 
           const currentComponentIndex = components.indexOf(object)
 
           // TODO add snackbar
           if (currentComponentIndex === -1) {
-            throw new Error("Can not find current object");
+            throw new Error('Can not find current object')
           }
 
           if (place === InsertPlace.Before) {
-            components.splice(currentComponentIndex > 0 ? currentComponentIndex - 1 : 0, 0, componentData.template)
-          }
-          else if (place === InsertPlace.After) {
-            components.splice(currentComponentIndex + 1, 0, componentData.template)
+            components.splice(
+              currentComponentIndex > 0 ? currentComponentIndex - 1 : 0,
+              0,
+              componentData.template
+            )
+          } else if (place === InsertPlace.After) {
+            components.splice(
+              currentComponentIndex + 1,
+              0,
+              componentData.template
+            )
           }
 
           /**
@@ -165,18 +167,23 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
           updateParent(parent, {
             components,
           })
-
         }
-
       }
-
 
       /**
        * Закрываем модалку
        */
       closeAddBlockModal()
     },
-    [closeAddBlockModal, componentData, object, parent, place, updateObject, updateParent]
+    [
+      closeAddBlockModal,
+      componentData,
+      object,
+      parent,
+      place,
+      updateObject,
+      updateParent,
+    ]
   )
 
   const saveButton = useMemo(() => {
@@ -185,7 +192,12 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
     }
 
     return (
-      <IconButton color="secondary" onClick={addObjectHandler} key="save" role="save">
+      <IconButton
+        color="secondary"
+        onClick={addObjectHandler}
+        key="save"
+        role="save"
+      >
         <SaveIcon />
       </IconButton>
     )
@@ -209,18 +221,17 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
     })
   }, [choseComponent, context?.objectTemplates])
 
-
   const changePlace = useCallback(() => {
     /**
      * Делаем следующий индекс
      */
-    let nextIndex = place + 1;
+    let nextIndex = place + 1
 
     /**
      * Если элемента с таким индексом нет, то начинаем с нулевого
      */
     if (!InsertPlace[nextIndex]) {
-      nextIndex = 0;
+      nextIndex = 0
     }
 
     /**
@@ -230,33 +241,33 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
   }, [place])
 
   const placeButton = useMemo(() => {
-
-    let title: string | undefined;
+    let title: string | undefined
 
     switch (InsertPlace[place]) {
-
       case InsertPlace[InsertPlace.After]:
-        title = "после"
-        break;
+        title = 'после'
+        break
 
       case InsertPlace[InsertPlace.Before]:
-        title = "перед"
-        break;
+        title = 'перед'
+        break
 
       case InsertPlace[InsertPlace.Child]:
-        title = "в"
-        break;
+        title = 'в'
+        break
     }
 
-    return <button
-      onClick={changePlace}
-      style={{
-        cursor: "pointer",
-      }}
-    >
-      {title}
-    </button>
-  }, [changePlace, place]);
+    return (
+      <button
+        onClick={changePlace}
+        style={{
+          cursor: 'pointer',
+        }}
+      >
+        {title}
+      </button>
+    )
+  }, [changePlace, place])
 
   return useMemo(() => {
     const wrapper = document.body
@@ -278,7 +289,15 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
       </LmsFrontRedactorModal>,
       wrapper
     )
-  }, [placeButton, object.name, object.component, saveButton, closeAddBlockModal, secondaryButtons, componentDataContent])
+  }, [
+    placeButton,
+    object.name,
+    object.component,
+    saveButton,
+    closeAddBlockModal,
+    secondaryButtons,
+    componentDataContent,
+  ])
 }
 
 export default AddBlockModal

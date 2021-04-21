@@ -43,96 +43,100 @@ describe('InsertBlock action', () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000)
 
-      cy.get<RedactorHtmlElement>('#component #test-content-id').then((node) => {
+      cy.get<RedactorHtmlElement>('#component #test-content-id').then(
+        (node) => {
+          console.log(
+            'redactorComponentWrapper',
+            node[0]?.redactorComponentWrapper
+          )
+          // node.redactorComponentWrapper
 
-        console.log('redactorComponentWrapper', node[0]?.redactorComponentWrapper);
-        // node.redactorComponentWrapper
+          expect(node[0]?.redactorComponentWrapper).not.null
 
-        expect(node[0]?.redactorComponentWrapper).not.null;
-
-        if (node[0]?.redactorComponentWrapper) {
-
-          /**
-           * Click add block
-           */
-          node[0]?.redactorComponentWrapper.querySelector<HTMLButtonElement>('.buttons button[role=addBlock]')?.click()
+          if (node[0]?.redactorComponentWrapper) {
+            /**
+             * Click add block
+             */
+            node[0]?.redactorComponentWrapper
+              .querySelector<HTMLButtonElement>(
+                '.buttons button[role=addBlock]'
+              )
+              ?.click()
+          }
         }
-      })
+      )
     })
 
-    it("Add new component", () => {
+    it('Add new component', () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000)
 
       /**
        * Get Modal
        */
-      cy.get<HTMLDivElement>('[role=redactor--modal]')
-        .then((node) => {
+      cy.get<HTMLDivElement>('[role=redactor--modal]').then((node) => {
+        const modalNode = node[0]
 
-          const modalNode = node[0]
+        console.log('redactorModal', modalNode)
 
-          console.log('redactorModal', modalNode);
+        expect(modalNode).not.null
 
-          expect(modalNode).not.null;
+        /**
+         * Buttons
+         */
+        const buttons = modalNode.querySelector<HTMLDivElement>(
+          '[role=secondaryButtons]'
+        )
 
+        expect(buttons).not.null
 
-          /**
-           * Buttons
-           */
-          const buttons = modalNode.querySelector<HTMLDivElement>('[role=secondaryButtons]')
+        /**
+         * Get insert button
+         */
+        const insertComponentButton =
+          buttons?.children[2]?.querySelector<HTMLButtonElement>('button') ??
+          null
 
-          expect(buttons).not.null;
+        expect(insertComponentButton).not.null
 
-          /**
-           * Get insert button
-           */
-          const insertComponentButton = buttons?.children[2]?.querySelector<HTMLButtonElement>('button') ?? null;
+        /**
+         * Click insert button
+         */
+        insertComponentButton?.click()
 
-          expect(insertComponentButton).not.null;
+        /**
+         * Click save button
+         */
+        const saveButton = modalNode.querySelector<HTMLButtonElement>(
+          'button[role=save]'
+        )
 
-          /**
-           * Click insert button
-           */
-          insertComponentButton?.click()
+        expect(saveButton).not.null
 
-          /**
-           * Click save button
-           */
-          const saveButton = modalNode.querySelector<HTMLButtonElement>('button[role=save]');
-
-          expect(saveButton).not.null;
-
-          saveButton?.click();
-
-        })
+        saveButton?.click()
+      })
     })
 
-
-    it("Check new component inserted", () => {
+    it('Check new component inserted', () => {
       /**
        * Get inserted component
        */
-      cy.get<HTMLDivElement>('.test-html-tag')
-        .then((node) => {
-
-          expect(node.length).be.eq(1)
-        })
+      cy.get<HTMLDivElement>('.test-html-tag').then((node) => {
+        expect(node.length).be.eq(1)
+      })
     })
 
-    it("Check store updated", () => {
+    it('Check store updated', () => {
       /**
        * Get Reset store button
        */
-      cy.get<HTMLButtonElement>('#component-toolbar button[role=reset-store]')
-        .then((node) => {
-
-          expect(node.length).be.eq(1)
-        })
+      cy.get<HTMLButtonElement>(
+        '#component-toolbar button[role=reset-store]'
+      ).then((node) => {
+        expect(node.length).be.eq(1)
+      })
     })
-
   })
-
 })
 
 export default true

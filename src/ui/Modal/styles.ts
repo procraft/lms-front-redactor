@@ -9,7 +9,7 @@ export const LmsFrontRedactorModalHeaderStyled = styled.header`
     margin: 0;
     flex: 1;
     display: flex;
-    
+
     > * {
       margin: 0 3px;
     }

@@ -192,54 +192,57 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
     setShowAddBlockModal(false)
   }, [])
 
-
   /**
    * Удаление компонента
    */
-   const removeComponent  = useCallback((component: RedactorComponentObject) => {
+  const removeComponent = useCallback(
+    (component: RedactorComponentObject) => {
+      if (!parent || !updateParent) {
+        return
+      }
 
-    if(!parent || !updateParent) {
-      return;
-    }
+      /**
+       * Находим объект в массиве компонентов
+       */
 
-    /**
-     * Находим объект в массиве компонентов
-     */
+      const components = [...parent.components]
 
-    const components = [...parent.components]
+      const componentIndex = components.indexOf(component)
 
-    const componentIndex = components.indexOf(component)
+      if (componentIndex === -1) {
+        console.error('Не был найден текущий компонент в массиве компонентов')
+        return
+      }
 
-    if (componentIndex === -1) {
-      console.error('Не был найден текущий компонент в массиве компонентов')
+      // const component = components[componentIndex];
+
+      /**
+       * Обновляем данные объекта в массиве данных
+       */
+      components.splice(componentIndex, 1)
+
+      /**
+       * Обновлять мы будем именно текущий объект.
+       * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
+       */
+
+      updateParent(parent, {
+        components,
+      })
+
       return
-    }
+    },
+    [parent, updateParent]
+  )
 
-    // const component = components[componentIndex];
+  const removeObjectHandler = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation()
 
-    /**
-     * Обновляем данные объекта в массиве данных
-     */
-    components.splice(componentIndex, 1) 
-
-    /**
-     * Обновлять мы будем именно текущий объект.
-     * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
-     */
-
-    updateParent(parent, {
-      components,
-    })
-
-    return
-
-  }, [parent, updateParent])
-
-  const removeObjectHandler = useCallback((event: React.MouseEvent) => {
-    event.stopPropagation()
-
-    removeComponent(object);
-  }, [object, removeComponent])
+      removeComponent(object)
+    },
+    [object, removeComponent]
+  )
 
   // const addObjectHandler = useCallback(
   //   (event: React.MouseEvent) => {
@@ -319,21 +322,48 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
                   : ''}
               </span>
               <span>{object.props.tag}</span>
-              <button onClick={addObjectHandler} role="addBlock">Add block</button>
+              <button onClick={addObjectHandler} role="addBlock">
+                Add block
+              </button>
               {debug ? (
-                <button onClick={showContentHandler} role="showState">Show state</button>
+                <button onClick={showContentHandler} role="showState">
+                  Show state
+                </button>
               ) : null}
-              {parent ? <button onClick={removeObjectHandler} role="removeComponent" title="Удалить элемент">␡</button> : null}
+              {parent ? (
+                <button
+                  onClick={removeObjectHandler}
+                  role="removeComponent"
+                  title="Удалить элемент"
+                >
+                  ␡
+                </button>
+              ) : null}
               {/* <button onClick={showInnerHtmlHandler}>Show HTML</button> */}
               {/* <button>Delete</button> */}
-              <button onClick={closeEditor} role="close">Close</button>
+              <button onClick={closeEditor} role="close">
+                Close
+              </button>
             </div>
           </RedactorComponentWrapperStyled>,
           wrapper
         )}
       </>
     )
-  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, parent, updateParent, addObjectHandler, showContentHandler, removeObjectHandler, closeEditor, wrapper])
+  }, [
+    stateEditor,
+    showAddBlockModal,
+    object,
+    closeAddBlockModal,
+    updateObject,
+    parent,
+    updateParent,
+    addObjectHandler,
+    showContentHandler,
+    removeObjectHandler,
+    closeEditor,
+    wrapper,
+  ])
 }
 
 export default RedactorComponentWrapper

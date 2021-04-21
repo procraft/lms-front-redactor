@@ -177,7 +177,16 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         updateParent={updateParent}
       />
     )
-  }, [element, active, updateObject, object, closeEditor, wrapperContainer, parent, updateParent])
+  }, [
+    element,
+    active,
+    updateObject,
+    object,
+    closeEditor,
+    wrapperContainer,
+    parent,
+    updateParent,
+  ])
 
   return useMemo(() => {
     const className = []

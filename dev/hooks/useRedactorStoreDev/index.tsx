@@ -98,7 +98,9 @@ export const useRedactorStoreDev = ({
         </button>
 
         {objectStore.store !== initialObject ? (
-          <button onClick={resetStore} role="reset-store">Reset store</button>
+          <button onClick={resetStore} role="reset-store">
+            Reset store
+          </button>
         ) : null}
       </div>
     )
@@ -133,18 +135,20 @@ export const useRedactorStoreDev = ({
           description: 'Test HTML tag',
           component: 'HtmlTag',
           props: {
-            tag: "div",
-            className: "test-html-tag",
+            tag: 'div',
+            className: 'test-html-tag',
           },
-          components: [{
-            name: 'Test HTML tag content',
-            description: 'Test HTML tag content',
-            component: 'HtmlTag',
-            props: {
-              text: "Test HTML tag content",
+          components: [
+            {
+              name: 'Test HTML tag content',
+              description: 'Test HTML tag content',
+              component: 'HtmlTag',
+              props: {
+                text: 'Test HTML tag content',
+              },
+              components: [],
             },
-            components: [],
-          }],
+          ],
         },
       },
     ]

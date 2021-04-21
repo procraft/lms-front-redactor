@@ -40,31 +40,35 @@ describe('RemoveBlock action', () => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000)
 
-      cy.get<RedactorHtmlElement>('#component #test-content-id').then((node) => {
+      cy.get<RedactorHtmlElement>('#component #test-content-id').then(
+        (node) => {
+          console.log(
+            'redactorComponentWrapper',
+            node[0]?.redactorComponentWrapper
+          )
+          // node.redactorComponentWrapper
 
-        console.log('redactorComponentWrapper', node[0]?.redactorComponentWrapper);
-        // node.redactorComponentWrapper
+          expect(node[0]?.redactorComponentWrapper).not.null
 
-        expect(node[0]?.redactorComponentWrapper).not.null;
+          /**
+           * Get remove button
+           */
 
-        /**
-         * Get remove button
-         */
+          const removeButton =
+            node[0]?.redactorComponentWrapper?.querySelector<HTMLButtonElement>(
+              '.buttons button[role=removeComponent]'
+            ) ?? null
 
-        const removeButton = node[0]?.redactorComponentWrapper?.querySelector<HTMLButtonElement>('.buttons button[role=removeComponent]') ?? null;
+          expect(removeButton).not.null
 
-        expect(removeButton).not.null;
-
-        removeButton?.click()
-
-      })
+          removeButton?.click()
+        }
+      )
     })
 
-
-    it("Check that component has been removed", () => {
-      cy.get<HTMLDivElement>('#component #test-content-id').should('not.exist');
+    it('Check that component has been removed', () => {
+      cy.get<HTMLDivElement>('#component #test-content-id').should('not.exist')
     })
-
   })
 })
 
