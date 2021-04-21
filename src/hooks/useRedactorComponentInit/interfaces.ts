@@ -15,5 +15,6 @@ export type useRedactorComponentInitProps = {
 
   wrapperContainer: RedactorComponentWrapperProps['container']
 
-  removeComponent: RedactorComponentWrapperProps["removeComponent"]
+  parent: RedactorComponentWrapperProps["parent"]
+  updateParent: RedactorComponentWrapperProps["updateParent"]
 }

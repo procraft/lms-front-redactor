@@ -29,7 +29,12 @@ export type RedactorComponentWrapperProps = {
   closeEditor: () => void
 
   /**
-   * Удаление компонента в родительском объекте
+   * Родительский JSON-объект
    */
-   removeComponent: ((component: RedactorComponentProps['object']) => void) | undefined
+  parent: RedactorComponentProps['object'] | undefined
+
+  /**
+   * Редактирование родительского объекта
+   */
+  updateParent: RedactorComponentProps['updateObject'] | undefined
 }

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { RedactorComponentObject } from '../../../RedactorComponent/interfaces'
 import AddBlockModal from './AddBlockModal'
 import { RedactorComponentWrapperProps } from './interfaces'
 import LmsFrontRedactorStateEditor from './StateEditor'
@@ -21,7 +22,8 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
   updateObject,
   closeEditor,
   container = global.window?.document.body,
-  removeComponent,
+  parent,
+  updateParent,
 }) => {
   const wrapper = useMemo(() => document.createElement('div'), [])
 
@@ -193,12 +195,53 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
 
 
   /**
-   * Удаление элемента
+   * Удаление компонента
    */
+   const removeComponent  = useCallback((component: RedactorComponentObject) => {
+
+    console.log('removeComponent component', component);
+
+    if(!parent || !updateParent) {
+      return;
+    }
+
+    /**
+     * Находим объект в массиве компонентов
+     */
+
+    const components = [...parent.components]
+
+    const componentIndex = components.indexOf(component)
+
+    if (componentIndex === -1) {
+      console.error('Не был найден текущий компонент в массиве компонентов')
+      return
+    }
+
+    // const component = components[componentIndex];
+
+    /**
+     * Обновляем данные объекта в массиве данных
+     */
+    components.splice(componentIndex, 1) 
+
+    /**
+     * Обновлять мы будем именно текущий объект.
+     * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
+     */
+
+    updateParent(parent, {
+      components,
+    })
+
+    return
+
+  }, [parent, updateParent])
+
   const removeObjectHandler = useCallback((event: React.MouseEvent) => {
     event.stopPropagation()
 
-    removeComponent && removeComponent(object);
+    removeComponent(object);
   }, [object, removeComponent])
 
   // const addObjectHandler = useCallback(
@@ -281,7 +324,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
               {debug ? (
                 <button onClick={showContentHandler} role="showState">Show state</button>
               ) : null}
-              {removeComponent ? <button onClick={removeObjectHandler} role="removeComponent" title="Удалить элемент">␡</button> : null}
+              {parent ? <button onClick={removeObjectHandler} role="removeComponent" title="Удалить элемент">␡</button> : null}
               {/* <button onClick={showInnerHtmlHandler}>Show HTML</button> */}
               {/* <button>Delete</button> */}
               <button onClick={closeEditor} role="close">Close</button>
@@ -291,7 +334,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
         )}
       </>
     )
-  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, addObjectHandler, showContentHandler, removeObjectHandler, closeEditor, wrapper, removeComponent])
+  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, addObjectHandler, showContentHandler, parent, removeObjectHandler, closeEditor, wrapper])
 }
 
 export default RedactorComponentWrapper

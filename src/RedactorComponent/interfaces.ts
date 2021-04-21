@@ -44,7 +44,8 @@ export type RedactorComponentProps<P = {}> = {
 
   wrapperContainer: RedactorComponentWrapperProps['container']
 
-  removeComponent?: RedactorComponentWrapperProps["removeComponent"]
+  parent?: RedactorComponentWrapperProps["parent"]
+  updateParent?: RedactorComponentWrapperProps["updateParent"]
 }
 
 export type RedactorComponent<

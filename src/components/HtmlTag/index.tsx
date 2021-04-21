@@ -11,7 +11,8 @@ const HtmlTag: RedactorComponent = ({
   inEditMode,
   wrapperContainer,
   children: childrenNull,
-  removeComponent,
+  parent,
+  updateParent,
   // ...other
 }) => {
   childrenNull
@@ -25,7 +26,8 @@ const HtmlTag: RedactorComponent = ({
     object,
     updateObject,
     wrapperContainer,
-    removeComponent,
+    parent,
+    updateParent,
   })
 
   const childrenContent = useRedactorRenderComponents({
