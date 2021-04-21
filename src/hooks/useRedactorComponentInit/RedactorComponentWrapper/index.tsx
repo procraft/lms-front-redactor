@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { RedactorComponentObject } from '../../../RedactorComponent/interfaces'
@@ -199,8 +198,6 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
    */
    const removeComponent  = useCallback((component: RedactorComponentObject) => {
 
-    console.log('removeComponent component', component);
-
     if(!parent || !updateParent) {
       return;
     }
@@ -308,6 +305,8 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
             object={object}
             closeAddBlockModal={closeAddBlockModal}
             updateObject={updateObject}
+            parent={parent}
+            updateParent={updateParent}
           />
         ) : null}
         {ReactDOM.createPortal(
@@ -334,7 +333,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
         )}
       </>
     )
-  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, addObjectHandler, showContentHandler, parent, removeObjectHandler, closeEditor, wrapper])
+  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, parent, updateParent, addObjectHandler, showContentHandler, removeObjectHandler, closeEditor, wrapper])
 }
 
 export default RedactorComponentWrapper

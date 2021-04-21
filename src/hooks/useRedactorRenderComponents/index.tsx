@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useContext, useMemo } from 'react'
 // import { RedactorComponent } from '../../RedactorComponent/interfaces';
 // import LandingFooter from '../../components/LandingFooter';

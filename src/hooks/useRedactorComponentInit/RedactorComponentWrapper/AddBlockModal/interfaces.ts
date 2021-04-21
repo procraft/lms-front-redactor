@@ -9,4 +9,7 @@ export type AddBlockModalProps = {
   closeAddBlockModal: () => void
 
   updateObject: RedactorComponentWrapperProps['updateObject']
+
+  parent: RedactorComponentWrapperProps['parent']
+  updateParent: RedactorComponentWrapperProps['updateParent']
 }

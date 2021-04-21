@@ -5,9 +5,14 @@ export const LmsFrontRedactorModalHeaderStyled = styled.header`
   align-items: baseline;
 
   .title {
-    font-size: 2.2rem;
+    font-size: 20px;
     margin: 0;
     flex: 1;
+    display: flex;
+    
+    > * {
+      margin: 0 3px;
+    }
   }
 
   .buttons {
