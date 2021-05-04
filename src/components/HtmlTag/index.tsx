@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 const HtmlTag: RedactorComponent = ({
   object,
@@ -78,23 +78,24 @@ const HtmlTag: RedactorComponent = ({
           ...otherProps,
           dangerouslySetInnerHTML: object.components[0]?.props.text
             ? {
-                __html: object.components[0]?.props.text,
-              }
+              __html: object.components[0]?.props.text,
+            }
             : undefined,
         })
       }
       case 'a': {
         return (
-          <Link href={object.props.href || ''}>
-            <a
-              {...tagProps}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              ref={ref}
-            >
-              {childrenContent}
-            </a>
-          </Link>
+          // <Link href={object.props.href || ''}>
+          <a
+            href={object.props.href || ''}
+            {...tagProps}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            ref={ref}
+          >
+            {childrenContent}
+          </a>
+          // </Link>
         )
       }
 
