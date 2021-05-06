@@ -8,15 +8,13 @@ import { FiberNode } from '../interfaces'
 const nodeToEditorComponentObject = (
   // node: NonNullable<ElementWithReactComponent | Text | ChildNode>,
   node: NonNullable<Text | ChildNode>,
-  content?: RedactorComponentObject
-) => {
-  if (!content) {
-    content = {
-      name: 'HtmlTag',
-      component: 'HtmlTag',
-      props: {},
-      components: [],
-    }
+  object?: RedactorComponentObject
+): RedactorComponentObject | undefined => {
+  const content = object || {
+    name: 'HtmlTag',
+    component: 'HtmlTag',
+    props: {},
+    components: [],
   }
 
   // eslint-disable-next-line no-constant-condition
@@ -73,6 +71,16 @@ const nodeToEditorComponentObject = (
 
     //   return component
     // }
+
+    // TODO Временный хак, чтобы
+    if (node.getAttribute("data-redactor--fake-wrapper") === "true") {
+
+      if (node.firstChild) {
+        return nodeToEditorComponentObject(node.firstChild, object);
+      }
+
+      return;
+    }
   }
 
   const nodes = node.childNodes
@@ -97,6 +105,13 @@ const nodeToEditorComponentObject = (
 
       let value: string | Record<string, unknown> | undefined =
         attributes.getNamedItem(name)?.value ?? undefined
+
+      /**
+       * Пропускаем технические атрибуты редактора
+       */
+      if (name.startsWith("data-redactor--")) {
+        return null;
+      }
 
       switch (name) {
         // case "id":

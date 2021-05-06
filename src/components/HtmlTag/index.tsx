@@ -168,12 +168,24 @@ const HtmlTag: RedactorComponent = ({
     switch (object.props.tag) {
       case 'script':
       case 'style':
+
+        // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
+        // при обновлении контента они попадают в стейт.
+        // Надо исключить такое поведение
         elementContent = (
           <div
             {...renderProps}
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             ref={renderProps.ref}
+            // contentEditable={false}
+
+            /**
+             * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
+             * а не технический, иначе возникает дублирование вложенности.
+             * Важно! Дочерний элемент тогда должен быть только один.
+             */
+            data-redactor--fake-wrapper
           >
             {content}
           </div>
