@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useMemo } from 'react'
 // import Script from './Script'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
@@ -15,7 +16,10 @@ const HtmlTag: RedactorComponent = ({
   updateParent,
   // ...other
 }) => {
+
   childrenNull
+
+  console.log('object.props.children', object.props.children);
 
   const {
     ref,
@@ -102,17 +106,12 @@ const HtmlTag: RedactorComponent = ({
       default:
     }
 
-    return <Tag {...tagProps}>{childrenContent}</Tag>
-  }, [
-    Tag,
-    childrenContent,
-    componentClassName,
-    object.components,
-    object.props.href,
-    otherProps,
-    ref,
-    text,
-  ])
+    // TODO надо будет перепроверить логику на предмет ошибок
+    /**
+     * Если у компонента есть props.children, то выводим props.children
+     */
+    return <Tag {...tagProps}>{object.props.children || childrenContent}</Tag>
+  }, [Tag, childrenContent, componentClassName, object.components, object.props.children, object.props.href, otherProps, ref, text])
 
   const preventDefault = useCallback((event: React.MouseEvent) => {
     event.preventDefault()

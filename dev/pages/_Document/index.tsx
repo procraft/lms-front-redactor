@@ -16,7 +16,7 @@ export default class Document extends NextDocument {
         <Head>
           <meta charSet="utf-8" />
           <meta name="theme-color" content="#000000" />
-          <link rel="icon" href="/favicon.ico" />
+          {/* <link rel="icon" href="/favicon.ico" /> */}
         </Head>
         <body>
           <Main />

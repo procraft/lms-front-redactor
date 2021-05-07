@@ -8,6 +8,7 @@ import {
 import { Page } from '../../_App/interfaces'
 import Section from '../../../../src/components/Section'
 import HtmlTag from '../../../../src/components/HtmlTag'
+import Head from '../../../../src/components/Head'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
 
@@ -28,6 +29,10 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
     case 'HtmlTag':
       Component = HtmlTag
       break
+
+    case 'Head':
+      Component = Head
+      break
   }
 
   if (!Component) {
@@ -37,17 +42,49 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 
   return Component
 
-  // return <Component
-  //   object={object}
-  // />;
 }
 
-const SectionDevPage: Page = (props) => {
+const HeadDevPage: Page = (props) => {
   const initialObject = useMemo<RedactorComponentObject>(() => {
     return {
       name: 'Section',
       component: 'Section',
       components: [
+        {
+          name: 'Head',
+          component: 'Head',
+          components: [
+            // {
+            //   name: 'HtmlTag',
+            //   component: 'HtmlTag',
+            //   props: {
+            //     tag: 'ttttttt',
+            //   },
+            //   components: [
+            //     {
+            //       name: 'HtmlTag',
+            //       component: 'HtmlTag',
+            //       components: [],
+            //       props: {
+            //         text: 'Custom title',
+            //       },
+            //     },
+            //   ],
+            // },
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'link',
+                rel: "shortcut icon",
+                href: "https://fs03.getcourse.ru/fileservice/file/download/a/98234/sc/123/h/60822dfd0cb2941dc1024c337af83d02.ico",
+              },
+              components: [ ],
+            },
+          ],
+          props: {
+          },
+        },
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
@@ -88,7 +125,10 @@ const SectionDevPage: Page = (props) => {
   return (
     <>
       <NextHead>
-        <title>Section</title>
+        <title>Head</title>
+      </NextHead>
+      <NextHead>
+        <title>Head2</title>
       </NextHead>
       <div
         id="component-wrapper"
@@ -114,4 +154,4 @@ const SectionDevPage: Page = (props) => {
   )
 }
 
-export default SectionDevPage
+export default HeadDevPage
