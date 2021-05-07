@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useMemo } from 'react'
 // import Script from './Script'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
@@ -18,8 +17,6 @@ const HtmlTag: RedactorComponent = ({
 }) => {
 
   childrenNull
-
-  console.log('object.props.children', object.props.children);
 
   const {
     ref,
