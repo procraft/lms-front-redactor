@@ -10,13 +10,13 @@ const HtmlTag: RedactorComponent = ({
   updateObject,
   inEditMode,
   wrapperContainer,
-  children: childrenNull,
+  children: _children,
   parent,
   updateParent,
   // ...other
 }) => {
 
-  childrenNull
+  _children
 
   const {
     ref,
@@ -135,6 +135,7 @@ const HtmlTag: RedactorComponent = ({
         'a',
         'script',
         'style',
+        'link',
       ].includes(object.props.tag) ||
       typeof content !== 'object'
     ) {
@@ -182,6 +183,35 @@ const HtmlTag: RedactorComponent = ({
              * Важно! Дочерний элемент тогда должен быть только один.
              */
             data-redactor--fake-wrapper
+            data-redactor--src={object.props.src}
+            data-redactor--content-length={object.components[0]?.props.text?.length}
+          >
+            {content}
+          </div>
+        )
+        break
+
+      case 'link':
+
+        // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
+        // при обновлении контента они попадают в стейт.
+        // Надо исключить такое поведение
+        elementContent = (
+          <div
+            {...renderProps}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            ref={renderProps.ref}
+            // contentEditable={false}
+
+            /**
+             * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
+             * а не технический, иначе возникает дублирование вложенности.
+             * Важно! Дочерний элемент тогда должен быть только один.
+             */
+            data-redactor--fake-wrapper
+            data-redactor--rel={object.props.rel}
+            data-redactor--href={object.props.href}
           >
             {content}
           </div>
@@ -213,17 +243,7 @@ const HtmlTag: RedactorComponent = ({
     //     </div>
     //   </>
     // )
-  }, [
-    className,
-    componentClassName,
-    content,
-    inEditMode,
-    object.props.tag,
-    otherProps,
-    preventDefault,
-    wrapperContent,
-    ref,
-  ])
+  }, [className, componentClassName, content, inEditMode, object.components, object.props.href, object.props.rel, object.props.src, object.props.tag, otherProps, preventDefault, ref, wrapperContent])
 }
 
 export default HtmlTag

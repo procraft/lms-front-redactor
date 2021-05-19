@@ -80,6 +80,72 @@ const ContentEditorDevPage: Page = (props) => {
           name: 'HtmlTag',
           component: 'HtmlTag',
           components: [
+          ],
+          props: {
+            tag: 'script',
+            src: "./test.js",
+          },
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'script',
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'console.log("test")',
+              },
+            },
+          ],
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          components: [
+          ],
+          props: {
+            tag: 'style',
+            src: "./test.css",
+          },
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'style',
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'body {color: #333;}',
+              },
+            },
+          ],
+        },
+        // <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&amp;subset=latin,cyrillic"/>
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          components: [
+          ],
+          props: {
+            tag: 'link',
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&amp;subset=latin,cyrillic",
+          },
+        },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          components: [
             {
               name: 'HtmlTag',
               component: 'HtmlTag',

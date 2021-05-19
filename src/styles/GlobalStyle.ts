@@ -25,19 +25,19 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
         &.script {
           &:before {
-            content: 'JS';
+            content: "JS " attr(data-redactor--src) ' ' attr(data-redactor--content-length);
           }
         }
 
         &.style {
           &:before {
-            content: 'CSS';
+            content: 'STYLE ' attr(data-redactor--content-length);
           }
         }
 
         &.link {
           &:before {
-            content: 'Link';
+            content: 'LINK '  attr(data-redactor--rel) ' ' attr(data-redactor--href);
           }
         }
       }
