@@ -73,13 +73,12 @@ const nodeToEditorComponentObject = (
     // }
 
     // TODO Временный хак, чтобы
-    if (node.getAttribute("data-redactor--fake-wrapper") === "true") {
-
+    if (node.getAttribute('data-redactor--fake-wrapper') === 'true') {
       if (node.firstChild) {
-        return nodeToEditorComponentObject(node.firstChild, object);
+        return nodeToEditorComponentObject(node.firstChild, object)
       }
 
-      return;
+      return
     }
   }
 
@@ -109,8 +108,8 @@ const nodeToEditorComponentObject = (
       /**
        * Пропускаем технические атрибуты редактора
        */
-      if (name.startsWith("data-redactor--")) {
-        return null;
+      if (name.startsWith('data-redactor--')) {
+        return null
       }
 
       switch (name) {

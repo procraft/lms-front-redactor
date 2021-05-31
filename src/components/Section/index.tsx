@@ -14,8 +14,10 @@ const Section: RedactorComponent = ({
 }) => {
   const {
     ref,
-    className,
+    // className,
     wrapperContent,
+    active: _active,
+    ...otherInitProps
   } = useRedactorComponentInit<HTMLDivElement>({
     object,
     updateObject,
@@ -23,6 +25,9 @@ const Section: RedactorComponent = ({
     parent,
     updateParent,
   })
+
+  // null
+  _active
 
   const childrenContent = useRedactorRenderComponents({
     object,
@@ -86,8 +91,9 @@ const Section: RedactorComponent = ({
         {wrapperContent}
         <div
           {...other}
+          {...otherInitProps}
           ref={ref}
-          className={className}
+          // className={className}
           contentEditable="false"
           suppressContentEditableWarning
         >
@@ -95,7 +101,7 @@ const Section: RedactorComponent = ({
         </div>
       </>
     )
-  }, [inEditMode, wrapperContent, other, ref, className, content])
+  }, [inEditMode, wrapperContent, other, otherInitProps, ref, content])
 }
 
 export default Section

@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
+import { redactor2ComponentAttributes } from '../../styles'
 // import Link from 'next/link'
 
 const HtmlTag: RedactorComponent = ({
@@ -15,13 +16,14 @@ const HtmlTag: RedactorComponent = ({
   updateParent,
   // ...other
 }) => {
-
   _children
 
   const {
     ref,
-    className,
+    // className,
     wrapperContent,
+    active: _active,
+    ...otherInitProps
     // TODO этот кух не понимает HTMLDivElement | HTMLAnchorElement, а HTMLElement дает ошибку типа при передачи в анкор
   } = useRedactorComponentInit<HTMLElement>({
     object,
@@ -30,6 +32,9 @@ const HtmlTag: RedactorComponent = ({
     parent,
     updateParent,
   })
+
+  // Null
+  _active
 
   const childrenContent = useRedactorRenderComponents({
     object,
@@ -79,8 +84,8 @@ const HtmlTag: RedactorComponent = ({
           ...otherProps,
           dangerouslySetInnerHTML: object.components[0]?.props.text
             ? {
-              __html: object.components[0]?.props.text,
-            }
+                __html: object.components[0]?.props.text,
+              }
             : undefined,
         })
       }
@@ -108,7 +113,17 @@ const HtmlTag: RedactorComponent = ({
      * Если у компонента есть props.children, то выводим props.children
      */
     return <Tag {...tagProps}>{object.props.children || childrenContent}</Tag>
-  }, [Tag, childrenContent, componentClassName, object.components, object.props.children, object.props.href, otherProps, ref, text])
+  }, [
+    Tag,
+    childrenContent,
+    componentClassName,
+    object.components,
+    object.props.children,
+    object.props.href,
+    otherProps,
+    ref,
+    text,
+  ])
 
   const preventDefault = useCallback((event: React.MouseEvent) => {
     event.preventDefault()
@@ -150,13 +165,16 @@ const HtmlTag: RedactorComponent = ({
 
     const renderProps = {
       ref,
-      className: [
-        componentClassName,
-        className,
-        'HtmlTag',
-        object.props.tag,
-      ].join(' '),
+      // className: [
+      //   componentClassName,
+      //   className,
+      //   'HtmlTag',
+      //   object.props.tag,
+      // ].join(' '),
       ...otherProps,
+      ...otherInitProps,
+      [redactor2ComponentAttributes.component]: 'HtmlTag',
+      [redactor2ComponentAttributes.tag]: object.props.tag,
       onClick: preventDefault,
     }
 
@@ -165,7 +183,6 @@ const HtmlTag: RedactorComponent = ({
     switch (object.props.tag) {
       case 'script':
       case 'style':
-
         // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
         // при обновлении контента они попадают в стейт.
         // Надо исключить такое поведение
@@ -184,7 +201,9 @@ const HtmlTag: RedactorComponent = ({
              */
             data-redactor--fake-wrapper
             data-redactor--src={object.props.src}
-            data-redactor--content-length={object.components[0]?.props.text?.length}
+            data-redactor--content-length={
+              object.components[0]?.props.text?.length
+            }
           >
             {content}
           </div>
@@ -192,7 +211,6 @@ const HtmlTag: RedactorComponent = ({
         break
 
       case 'link':
-
         // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
         // при обновлении контента они попадают в стейт.
         // Надо исключить такое поведение
@@ -243,7 +261,20 @@ const HtmlTag: RedactorComponent = ({
     //     </div>
     //   </>
     // )
-  }, [className, componentClassName, content, inEditMode, object.components, object.props.href, object.props.rel, object.props.src, object.props.tag, otherProps, preventDefault, ref, wrapperContent])
+  }, [
+    content,
+    inEditMode,
+    object.components,
+    object.props.href,
+    object.props.rel,
+    object.props.src,
+    object.props.tag,
+    otherInitProps,
+    otherProps,
+    preventDefault,
+    ref,
+    wrapperContent,
+  ])
 }
 
 export default HtmlTag

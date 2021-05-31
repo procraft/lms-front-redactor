@@ -77,6 +77,16 @@ const ContentEditorDevPage: Page = (props) => {
           ],
         },
         {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'link',
+            rel: 'stylesheet',
+            href: 'style.css',
+          },
+          components: [],
+        },
+        {
           name: 'ContentEditor',
           component: 'ContentEditor',
           components: [

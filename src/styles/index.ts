@@ -3,46 +3,16 @@ import styled from 'styled-components'
 // className.push("redactor--redactor-component");
 // className.push("redactor--inEditMode");
 
-export const redactor2ComponentClasses = {
-  component: 'redactor--redactor-component',
-  hovered: 'hovered',
-}
+// export const redactor2ComponentClasses = {
+//   // component: 'redactor--redactor-component',
+//   hovered: 'hovered',
+// }
 
-export const LmsFrontRedactorStyled = styled.div`
-  &.inEditMode {
-    /* .${redactor2ComponentClasses.component} {
-      border: 1px solid #dfdfdf;
-      min-height: 30px;
-      cursor: pointer;
-      padding: 2px 4px;
+export const redactor2ComponentAttributes = {
+  component: 'data-redactor--component',
+  tag: 'data-redactor--component-tag',
+  active: 'data-redactor--component-active',
+  hovered: 'data-redactor--component-hovered',
+} as const
 
-      margin: 10px;
-
-      &.HtmlTag {
-        font-size: 1rem;
-
-        &.script {
-          &:before {
-            content: 'JS';
-          }
-        }
-
-        &.style {
-          &:before {
-            content: 'CSS';
-          }
-        }
-
-        &.link {
-          &:before {
-            content: 'Link';
-          }
-        }
-      }
-
-      &.${redactor2ComponentClasses.hovered} {
-        border-color: grey;
-      }
-    } */
-  }
-`
+export const LmsFrontRedactorStyled = styled.div``

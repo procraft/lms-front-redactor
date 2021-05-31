@@ -37,51 +37,52 @@ const useRedactorRenderComponents = (
   // TODO: Надо учитывать, что у нас выполняется цикл для вывода отдельных компонентов.
   // При этом изменение любого из этих компонентов должно отправляться в родительский объект.
   // TODO: Из-за этого метода у нас происходит ререндеринг всех компонентов.
-  const updateObjectChildComponent: RedactorComponentProps['updateObject'] = useCallback(
-    (current, data) => {
-      // console.log('useRedactorRenderComponents updateObject object', object)
+  const updateObjectChildComponent: RedactorComponentProps['updateObject'] =
+    useCallback(
+      (current, data) => {
+        // console.log('useRedactorRenderComponents updateObject object', object)
 
-      // console.log('useRedactorRenderComponents updateObject current', current)
-      // console.log('useRedactorRenderComponents updateObject data', data)
+        // console.log('useRedactorRenderComponents updateObject current', current)
+        // console.log('useRedactorRenderComponents updateObject data', data)
 
-      /**
-       * Находим объект в массиве компонентов
-       */
+        /**
+         * Находим объект в массиве компонентов
+         */
 
-      const components = [...object.components]
+        const components = [...object.components]
 
-      const componentIndex = components.indexOf(current)
+        const componentIndex = components.indexOf(current)
 
-      if (componentIndex === -1) {
-        console.error('Не был найден текущий компонент в массиве компонентов')
+        if (componentIndex === -1) {
+          console.error('Не был найден текущий компонент в массиве компонентов')
+          return
+        }
+
+        // const component = components[componentIndex];
+
+        /**
+         * Обновляем данные объекта в массиве данных
+         */
+        components[componentIndex] = {
+          ...current,
+          ...data,
+        }
+
+        // console.log('useRedactorRenderComponents updateObject component', component)
+
+        /**
+         * Обновлять мы будем именно текущий объект.
+         * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
+         */
+
+        objectState.updateObject(object, {
+          components,
+        })
+
         return
-      }
-
-      // const component = components[componentIndex];
-
-      /**
-       * Обновляем данные объекта в массиве данных
-       */
-      components[componentIndex] = {
-        ...current,
-        ...data,
-      }
-
-      // console.log('useRedactorRenderComponents updateObject component', component)
-
-      /**
-       * Обновлять мы будем именно текущий объект.
-       * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
-       */
-
-      objectState.updateObject(object, {
-        components,
-      })
-
-      return
-    },
-    [object, objectState]
-  )
+      },
+      [object, objectState]
+    )
 
   return useMemo(() => {
     /**

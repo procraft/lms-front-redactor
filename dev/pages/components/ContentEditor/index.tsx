@@ -79,11 +79,10 @@ const ContentEditorDevPage: Page = (props) => {
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
-          components: [
-          ],
+          components: [],
           props: {
             tag: 'script',
-            src: "./test.js",
+            src: './test.js',
           },
         },
         {
@@ -106,11 +105,10 @@ const ContentEditorDevPage: Page = (props) => {
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
-          components: [
-          ],
+          components: [],
           props: {
             tag: 'style',
-            src: "./test.css",
+            src: './test.css',
           },
         },
         {
@@ -134,12 +132,11 @@ const ContentEditorDevPage: Page = (props) => {
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
-          components: [
-          ],
+          components: [],
           props: {
             tag: 'link',
-            rel: "stylesheet",
-            href: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&amp;subset=latin,cyrillic",
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&amp;subset=latin,cyrillic',
           },
         },
         {

@@ -20,8 +20,10 @@ const Head: RedactorComponent = ({
 }) => {
   const {
     ref,
-    className,
+    // className,
     wrapperContent,
+    active: _active,
+    ...otherInitProps
   } = useRedactorComponentInit<HTMLDivElement>({
     object,
     updateObject,
@@ -29,6 +31,9 @@ const Head: RedactorComponent = ({
     parent,
     updateParent,
   })
+
+  // Null
+  _active
 
   const childrenContent = useRedactorRenderComponents({
     object,
@@ -38,9 +43,7 @@ const Head: RedactorComponent = ({
   })
 
   const content = useMemo(() => {
-    return <NextHead>
-      {childrenContent}
-    </NextHead>
+    return <NextHead>{childrenContent}</NextHead>
   }, [childrenContent])
 
   return useMemo(() => {
@@ -53,8 +56,9 @@ const Head: RedactorComponent = ({
         {wrapperContent}
         <div
           {...other}
+          {...otherInitProps}
           ref={ref}
-          className={className}
+          // className={className}
           contentEditable="false"
           suppressContentEditableWarning
         >
@@ -62,7 +66,7 @@ const Head: RedactorComponent = ({
         </div>
       </>
     )
-  }, [inEditMode, wrapperContent, other, ref, className, content])
+  }, [inEditMode, wrapperContent, other, otherInitProps, ref, content])
 }
 
 export default Head

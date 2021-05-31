@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
+import { redactor2ComponentAttributes } from '../../styles'
 import EditableContentProxy from './ContentProxy'
 
 const ContentEditor: RedactorComponent = ({
@@ -18,8 +19,9 @@ const ContentEditor: RedactorComponent = ({
     // element,
     // props,
     active,
-    className,
+    // className,
     wrapperContent,
+    ...otherInitProps
   } = useRedactorComponentInit<HTMLDivElement>({
     object,
     updateObject,
@@ -50,8 +52,10 @@ const ContentEditor: RedactorComponent = ({
         <div
           {...other}
           {...object.props}
+          {...otherInitProps}
+          {...{ [redactor2ComponentAttributes.component]: 'content-editor' }}
           ref={ref}
-          className={[className, 'content-editor'].join(' ')}
+          // className={[className, 'content-editor'].join(' ')}
         >
           <EditableContentProxy
             key={active.toString()}
@@ -69,11 +73,11 @@ const ContentEditor: RedactorComponent = ({
     wrapperContent,
     other,
     ref,
-    className,
     active,
     object,
     updateObject,
     content,
+    otherInitProps,
   ])
 }
 

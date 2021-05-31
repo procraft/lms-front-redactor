@@ -107,9 +107,8 @@ describe('InsertBlock action', () => {
         /**
          * Click save button
          */
-        const saveButton = modalNode.querySelector<HTMLButtonElement>(
-          'button[role=save]'
-        )
+        const saveButton =
+          modalNode.querySelector<HTMLButtonElement>('button[role=save]')
 
         expect(saveButton).not.null
 

@@ -1,5 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
-import { redactor2ComponentClasses } from '.'
+import {
+  redactor2ComponentAttributes,
+  // redactor2ComponentClasses,
+} from '.'
 
 /**
  * Эти стили выводятся и должны выводиться только в режиме редактирования
@@ -12,7 +15,7 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
     }
   } */
 
-  .${redactor2ComponentClasses.component} {
+  [${redactor2ComponentAttributes.component}] {
       border: 1px solid #dfdfdf;
       min-height: 20px;
       cursor: pointer;
@@ -20,29 +23,34 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
       margin: 10px;
 
-      &.HtmlTag {
+      /* &.HtmlTag { */
+      &[${redactor2ComponentAttributes.component}=HtmlTag] {
         /* font-size: 1rem; */
 
-        &.script {
+        /* &.script { */
+        &[${redactor2ComponentAttributes.tag}=script] {
           &:before {
             content: "JS " attr(data-redactor--src) ' ' attr(data-redactor--content-length);
           }
         }
 
-        &.style {
+        /* &.style { */
+        &[${redactor2ComponentAttributes.tag}=style] {
           &:before {
             content: 'STYLE ' attr(data-redactor--content-length);
           }
         }
 
-        &.link {
+        /* &.link { */
+        &[${redactor2ComponentAttributes.tag}=link] {
           &:before {
             content: 'LINK '  attr(data-redactor--rel) ' ' attr(data-redactor--href);
           }
         }
       }
 
-      &.${redactor2ComponentClasses.hovered} {
+      /* &.{redactor2ComponentClasses.hovered} { */
+      &[${redactor2ComponentAttributes.hovered}=true] {
         border-color: grey;
       }
 
@@ -53,19 +61,22 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
         font-style: italic;
       }
 
-      &.landing-router {
+      /* &.landing-router { */
+      &[${redactor2ComponentAttributes.component}=landing-router] {
         border-color: green;
         &:before {
           content: "Router";
         }
       }
 
-      &.content-editor {
+      /* &.content-editor { */
+      &[${redactor2ComponentAttributes.component}=content-editor] {
         border-color: lightgreen;
         &:before {
           content: "HTML Editor";
 
-          .active& {
+          /* .active& { */
+          [${redactor2ComponentAttributes.active}=true]& {
             content: none;
           }
         }

@@ -41,7 +41,6 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   }
 
   return Component
-
 }
 
 const HeadDevPage: Page = (props) => {
@@ -76,14 +75,13 @@ const HeadDevPage: Page = (props) => {
               component: 'HtmlTag',
               props: {
                 tag: 'link',
-                rel: "shortcut icon",
-                href: "https://fs03.getcourse.ru/fileservice/file/download/a/98234/sc/123/h/60822dfd0cb2941dc1024c337af83d02.ico",
+                rel: 'shortcut icon',
+                href: 'https://fs03.getcourse.ru/fileservice/file/download/a/98234/sc/123/h/60822dfd0cb2941dc1024c337af83d02.ico',
               },
-              components: [ ],
+              components: [],
             },
           ],
-          props: {
-          },
+          props: {},
         },
         {
           name: 'HtmlTag',

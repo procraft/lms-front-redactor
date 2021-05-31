@@ -6,7 +6,10 @@ import React, {
   useState,
 } from 'react'
 import Context from '../../Context'
-import { redactor2ComponentClasses } from '../../styles'
+import {
+  redactor2ComponentAttributes,
+  // redactor2ComponentClasses,
+} from '../../styles'
 import { useRedactorComponentInitProps } from './interfaces'
 import RedactorComponentWrapper from './RedactorComponentWrapper'
 
@@ -102,7 +105,15 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         event.currentTarget instanceof HTMLElement
       ) {
         const el = event.currentTarget as El
-        el.classList.add(redactor2ComponentClasses.hovered)
+        // el.classList.add(redactor2ComponentClasses.hovered)
+
+        const attr = document.createAttribute(
+          redactor2ComponentAttributes.hovered
+        )
+        attr.value = 'true'
+        el.attributes.setNamedItem(attr)
+
+        el.attributes.setNamedItem
       }
     }
 
@@ -115,7 +126,8 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         event.currentTarget instanceof HTMLElement
       ) {
         const el = event.currentTarget as El
-        el.classList.remove(redactor2ComponentClasses.hovered)
+        // el.classList.remove(redactor2ComponentClasses.hovered)
+        el.removeAttribute(redactor2ComponentAttributes.hovered)
       }
     }
 
@@ -189,28 +201,56 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
   ])
 
   return useMemo(() => {
-    const className = []
+    // const className = []
 
-    if (context?.inEditMode) {
-      className.push(redactor2ComponentClasses.component)
-    }
+    // if (context?.inEditMode) {
+    //   className.push(redactor2ComponentClasses.component)
+    // }
 
-    if (active) {
-      className.push('active')
-    }
+    // if (active) {
+    //   className.push('active')
+    // }
 
     // if (active) {
     //   className.push(redactor2ComponentClasses.active)
     // }
 
-    return {
+    type ComponentWrapperProps = {
+      ref: (el: El) => void
+      // className: string | undefined
+      active: boolean
+      wrapperContent: JSX.Element | undefined
+      // "data-redactor--redactor-component": "true" | undefined
+    } & Omit<
+      Record<
+        typeof redactor2ComponentAttributes[keyof typeof redactor2ComponentAttributes],
+        'true' | undefined
+      >,
+      | typeof redactor2ComponentAttributes.hovered
+      | typeof redactor2ComponentAttributes.tag
+    >
+
+    const props: ComponentWrapperProps = {
       ref,
-      className: className.length ? className.join(' ') : undefined,
+      // className: className.length ? className.join(' ') : undefined,
       active,
       wrapperContent,
-      element,
+      // element,
+      // [redactor2ComponentAttributes.component]: "true",
+      [redactor2ComponentAttributes.component]: context?.inEditMode
+        ? 'true'
+        : undefined,
+      [redactor2ComponentAttributes.active]: active ? 'true' : undefined,
+      // [redactor2ComponentAttributes.hovered]: context?.inEditMode ? "true" : undefined,
+      // "data-redactor--redactor-component": "true",
     }
-  }, [context?.inEditMode, ref, active, wrapperContent, element])
+
+    // if (context?.inEditMode) {
+    //   props[redactor2ComponentAttributes.component] = 'true';
+    // }
+
+    return props
+  }, [active, ref, wrapperContent, context?.inEditMode])
 }
 
 export default useRedactorComponentInit

@@ -26,8 +26,7 @@ export type LmsFrontRedactorContextValue = {
   objectTemplates: RedactorObjectTemplate[]
 }
 
-const LmsFrontRedactorContext = React.createContext<LmsFrontRedactorContextValue | null>(
-  null
-)
+const LmsFrontRedactorContext =
+  React.createContext<LmsFrontRedactorContextValue | null>(null)
 
 export default LmsFrontRedactorContext

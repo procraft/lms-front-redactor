@@ -37,10 +37,8 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
    */
   const [wrapperContainer, containerRef] = useState<HTMLDivElement | null>(null)
 
-  const [
-    componentData,
-    setComponentData,
-  ] = useState<RedactorObjectTemplate | null>(null)
+  const [componentData, setComponentData] =
+    useState<RedactorObjectTemplate | null>(null)
 
   const choseComponent = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -133,10 +131,9 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
           components,
         })
       } else {
-
-      /**
-       * Иначе в До или После
-       */
+        /**
+         * Иначе в До или После
+         */
         if (parent && updateParent) {
           const components = [...parent.components]
 
