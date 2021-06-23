@@ -7,6 +7,7 @@ import { normalizeFileName } from '../../helpers/normalizeFileName'
 export const useUploader = ({
   active,
   onUpload,
+  inputProps,
 }: useUploaderProps) => {
   const client = useApolloClient()
 
@@ -68,10 +69,10 @@ export const useUploader = ({
 
     return (
       <div>
-        <input type="file" onChange={onChange} accept="text/javascript" />
+        <input type="file" onChange={onChange} {...inputProps} />
       </div>
     )
-  }, [active, onChange])
+  }, [active, inputProps, onChange])
 
   return useMemo(() => {
     return {

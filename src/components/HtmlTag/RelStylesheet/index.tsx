@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, } from 'react'
 import { RelStylesheetProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
@@ -28,6 +29,9 @@ export const RelStylesheet: React.FC<RelStylesheetProps> = ({
   const { uploader } = useUploader({
     active,
     onUpload,
+    inputProps: {
+      accept: 'text/css',
+    },
   })
 
   return (

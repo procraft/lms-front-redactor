@@ -1,3 +1,6 @@
+import { AllHTMLAttributes } from "react"
+
+export type UploaderInputProps = AllHTMLAttributes<HTMLInputElement>
 
 export type useUploaderProps = {
   /**
@@ -9,4 +12,6 @@ export type useUploaderProps = {
    * Колбэк на загрузку
    */
   onUpload: (url: string) => void
+
+  inputProps?: UploaderInputProps
 }

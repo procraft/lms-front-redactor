@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import React, { useCallback } from 'react'
+import { useMonacoEditor } from '../../../hooks/useMonacoEditor'
 import { useUploader } from '../../../hooks/useUploader'
 import { ScriptProps } from './interfaces'
 
@@ -27,6 +29,33 @@ export const Script: React.FC<ScriptProps> = ({
   const { uploader } = useUploader({
     active,
     onUpload,
+    inputProps: {
+      accept: 'text/javascript',
+    },
+  })
+
+
+  /**
+   * Editor
+   */
+
+   const saveEditorContent = useCallback((data: string) => {
+
+    console.log('saveEditorContent data', data);
+  }, [])
+
+  const updateFile = useCallback((data: string) => {
+
+    console.log('updateFile data', data);
+  }, [])
+
+  const {
+    editor,
+  } = useMonacoEditor({
+    contents: 'body{color: red;}',
+    ext: 'css',
+    saveEditorContent,
+    updateFile,
   })
 
   return (
@@ -54,6 +83,8 @@ export const Script: React.FC<ScriptProps> = ({
         data-redactor--content-length={object.components[0]?.props.text?.length}
       >
         {uploader}
+
+        {editor}
 
         {/* {content} */}
         {children}

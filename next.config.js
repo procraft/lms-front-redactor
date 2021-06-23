@@ -4,11 +4,21 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+
 const webpack = (config, options) => {
   // Note: we provide webpack above so you should not `require` it
   // Perform customizations to webpack config
 
   // console.log('config', config);
+
+  config.plugins.push(
+    new MonacoWebpackPlugin({
+      // Add languages as needed...
+      languages: ['html', 'css', 'javascript', 'typescript'],
+      filename: 'static/[name].worker.js',
+    })
+  )
 
   /**
    * Fix locales issue
