@@ -131,24 +131,38 @@ export const useRedactorStoreDev = ({
       {
         Component: HtmlTag,
         template: {
-          name: 'Test HTML tag',
-          description: 'Test HTML tag',
+          name: 'JavaScript',
+          description: 'JavaScript code',
           component: 'HtmlTag',
           props: {
-            tag: 'div',
-            className: 'test-html-tag',
+            tag: 'script',
           },
-          components: [
-            {
-              name: 'Test HTML tag content',
-              description: 'Test HTML tag content',
-              component: 'HtmlTag',
-              props: {
-                text: 'Test HTML tag content',
-              },
-              components: [],
-            },
-          ],
+          components: [],
+        },
+      },
+      {
+        Component: HtmlTag,
+        template: {
+          name: 'CSS Link',
+          description: 'Loadable cascading styles sheets',
+          component: 'HtmlTag',
+          props: {
+            tag: 'link',
+            rel: "stylesheet",
+          },
+          components: [],
+        },
+      },
+      {
+        Component: HtmlTag,
+        template: {
+          name: 'CSS Inline',
+          description: 'Inline cascading styles sheets',
+          component: 'HtmlTag',
+          props: {
+            tag: 'style',
+          },
+          components: [],
         },
       },
     ]

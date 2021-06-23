@@ -1,6 +1,6 @@
 import { RedactorComponentObject, RedactorComponentProps } from "../../../RedactorComponent/interfaces";
 
-export type ScriptProps = {
+export type RelStylesheetProps = {
   // innerHTML: string | null | undefined
   // src: string | undefined
 

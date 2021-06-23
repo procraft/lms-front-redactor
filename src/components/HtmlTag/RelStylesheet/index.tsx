@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, } from 'react'
+import { RelStylesheetProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
-import { ScriptProps } from './interfaces'
 
-export const Script: React.FC<ScriptProps> = ({
+
+export const RelStylesheet: React.FC<RelStylesheetProps> = ({
   // src,
   children,
   object,
@@ -17,7 +18,7 @@ export const Script: React.FC<ScriptProps> = ({
         components: [],
         props: {
           ...object.props,
-          src: url,
+          href: url,
         },
       })
     },
@@ -50,8 +51,9 @@ export const Script: React.FC<ScriptProps> = ({
          * Важно! Дочерний элемент тогда должен быть только один.
          */
         data-redactor--fake-wrapper
-        data-redactor--src={object.props.src}
-        data-redactor--content-length={object.components[0]?.props.text?.length}
+        data-redactor--rel={object.props.rel}
+        data-redactor--href={object.props.href}
+        // data-redactor--content-length={object.components[0]?.props.text?.length}
       >
         {uploader}
 
