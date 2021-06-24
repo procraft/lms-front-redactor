@@ -1,22 +1,32 @@
+/* eslint-disable no-console */
 import React, { useMemo } from 'react'
 
-// import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic'
 
-// const Editor = dynamic(import('./Editor'), { ssr: false })
-
-// import Editor from './Editor'
-
-
+const MonacoEditor = dynamic(import('./MonacoEditor'), { ssr: false })
 
 import { useMonacoEditorProps } from './interfaces'
 
-export const useMonacoEditor = (props: useMonacoEditorProps) => {
+export const useMonacoEditor = ({
+  active,
+  editorProps,
+}: useMonacoEditorProps) => {
   const editor = useMemo(() => {
+    // const Editor = require('./Editor');
 
-    const Editor = require('./Editor');
+    // return <Editor
+    //   code="efwefwef"
+    //   onChange={console.log}
+    // />
 
-    return <Editor {...props} />
-  }, [props])
+    if (!active) {
+      return null
+    }
+
+    return <MonacoEditor {...editorProps} />
+
+    // return <></>
+  }, [active, editorProps])
 
   return useMemo(() => {
     return {

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import React, { useCallback } from 'react'
-import { useMonacoEditor } from '../../../hooks/useMonacoEditor'
+import React, { useCallback, useMemo } from 'react'
 import { useUploader } from '../../../hooks/useUploader'
+import { InlineScript } from './InlineScript'
 import { ScriptProps } from './interfaces'
 
 export const Script: React.FC<ScriptProps> = ({
@@ -34,29 +34,21 @@ export const Script: React.FC<ScriptProps> = ({
     },
   })
 
+  console.log('script object', object)
+  console.log('script children', children)
 
-  /**
-   * Editor
-   */
-
-   const saveEditorContent = useCallback((data: string) => {
-
-    console.log('saveEditorContent data', data);
-  }, [])
-
-  const updateFile = useCallback((data: string) => {
-
-    console.log('updateFile data', data);
-  }, [])
-
-  const {
-    editor,
-  } = useMonacoEditor({
-    contents: 'body{color: red;}',
-    ext: 'css',
-    saveEditorContent,
-    updateFile,
-  })
+  const editor = useMemo(() => {
+    if (object.components[0]) {
+      return (
+        <InlineScript
+          active={active}
+          source={object.components[0].props.text || ''}
+        />
+      )
+    } else {
+      return null
+    }
+  }, [active, object.components])
 
   return (
     <>
