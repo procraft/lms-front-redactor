@@ -37,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@prisma-cms/front-editor": "^3.2.0",
+    "@prisma-cms/front-editor": "~3.10.0",
     "@prisma-cms/react-hooks": "~1.0.0",
     "latinize": "^0.5.0",
     "monaco-editor": "~0.25.0",
