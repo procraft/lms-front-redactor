@@ -13,27 +13,40 @@ export const Style: React.FC<StyleProps> = ({
 }) => {
   const onChange = useCallback(
     (content: string) => {
+      try {
+        if (!object.components) {
+          console.error('object.components is empty', { ...object })
+          return
+        }
 
-      const contentElement = object.components[0] || {
-        name: 'HtmlTag',
-        component: 'HtmlTag',
-        components: [],
-        props: {
-          text: '',
-        },
-      }
-
-      updateObject(object, {
-        components: [
-          {
-            ...contentElement,
-            props: {
-              ...contentElement.props,
-              text: content,
-            },
+        const contentElement = object.components[0] || {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          components: [],
+          props: {
+            text: '',
           },
-        ],
-      })
+        }
+
+        if (!contentElement) {
+          console.error('contentElement is null')
+          return
+        }
+
+        updateObject(object, {
+          components: [
+            {
+              ...contentElement,
+              props: {
+                ...contentElement.props,
+                text: content,
+              },
+            },
+          ],
+        })
+      } catch (error) {
+        console.error('Style onChange error, object', error, { ...object })
+      }
     },
     [object, updateObject]
   )
@@ -41,7 +54,7 @@ export const Style: React.FC<StyleProps> = ({
   const { editor } = useMonacoEditor({
     active,
     editorProps: {
-      contents: object.components[0].props.text || '',
+      source: object.components[0]?.props.text || '',
       // ext: 'css',
       // saveEditorContent,
       // updateFile,

@@ -5,7 +5,7 @@ import loader from '@monaco-editor/loader'
 import { MonacoEditorProps } from './interfaces'
 
 export const Editor: React.FC<MonacoEditorProps> = ({
-  contents,
+  source,
   language,
   onChange,
 }) => {
@@ -30,7 +30,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
 
     loader.init().then((monaco: typeof monacoEditor) => {
       editorInstance = monaco.editor.create(editorContainer, {
-        value: contents,
+        value: source,
         language,
       })
 
@@ -52,7 +52,11 @@ export const Editor: React.FC<MonacoEditorProps> = ({
        * Если есть измененный контент, сохраняем его
        */
       if (model) {
-        onChange(model.getValue())
+        const value = model.getValue()
+
+        if (value !== source) {
+          onChange(value)
+        }
       }
 
       /**
@@ -61,7 +65,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       editorInstance?.dispose()
       model?.dispose()
     }
-  }, [contents, editorContainer, language, onChange])
+  }, [source, editorContainer, language, onChange])
 
   return useMemo(() => {
     return (

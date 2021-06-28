@@ -1,5 +1,5 @@
 export type MonacoEditorProps = {
-  contents: string
+  source: string
   language: 'javascript' | 'css' | 'html'
 
   /**

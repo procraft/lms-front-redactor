@@ -49,7 +49,7 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
   const { editor } = useMonacoEditor({
     active,
     editorProps: {
-      contents: source,
+      source,
       // ext: 'css',
       // saveEditorContent,
       // updateFile,
