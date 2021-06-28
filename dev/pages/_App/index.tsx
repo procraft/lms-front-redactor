@@ -10,7 +10,6 @@ import { useApollo } from '../../lib/apolloClient'
 export * from './interfaces'
 
 const App: MainApp<AppProps> = ({ Component, pageProps }) => {
-
   const apolloClient = useApollo(pageProps.initialApolloState, false)
 
   return (

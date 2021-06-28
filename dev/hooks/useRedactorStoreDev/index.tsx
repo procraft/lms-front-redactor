@@ -148,7 +148,7 @@ export const useRedactorStoreDev = ({
           component: 'HtmlTag',
           props: {
             tag: 'link',
-            rel: "stylesheet",
+            rel: 'stylesheet',
           },
           components: [],
         },
@@ -161,6 +161,18 @@ export const useRedactorStoreDev = ({
           component: 'HtmlTag',
           props: {
             tag: 'style',
+          },
+          components: [],
+        },
+      },
+      {
+        Component: HtmlTag,
+        template: {
+          name: 'Image',
+          description: 'Insert image',
+          component: 'HtmlTag',
+          props: {
+            tag: 'img',
           },
           components: [],
         },

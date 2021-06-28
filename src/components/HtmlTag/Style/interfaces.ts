@@ -3,7 +3,7 @@ import {
   RedactorComponentProps,
 } from '../../../RedactorComponent/interfaces'
 
-export type RelStylesheetProps = {
+export type StyleProps = {
   // innerHTML: string | null | undefined
   // src: string | undefined
 

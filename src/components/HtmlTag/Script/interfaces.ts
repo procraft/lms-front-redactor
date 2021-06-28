@@ -1,4 +1,7 @@
-import { RedactorComponentObject, RedactorComponentProps } from "../../../RedactorComponent/interfaces";
+import {
+  RedactorComponentObject,
+  RedactorComponentProps,
+} from '../../../RedactorComponent/interfaces'
 
 export type ScriptProps = {
   // innerHTML: string | null | undefined
@@ -9,7 +12,7 @@ export type ScriptProps = {
 
   object: Readonly<RedactorComponentObject>
 
-  updateObject: RedactorComponentProps["updateObject"]
+  updateObject: RedactorComponentProps['updateObject']
 
   active: boolean
 }

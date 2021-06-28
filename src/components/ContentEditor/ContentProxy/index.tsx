@@ -18,11 +18,13 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
   children,
   ...other
 }) => {
-  const [contentWrapper, setContentWrapper] =
-    useState<HTMLDivElement | null>(null)
+  const [contentWrapper, setContentWrapper] = useState<HTMLDivElement | null>(
+    null
+  )
 
-  const [newContent, setNewContent] =
-    useState<RedactorComponentObject['components'] | null>(null)
+  const [newContent, setNewContent] = useState<
+    RedactorComponentObject['components'] | null
+  >(null)
 
   const [state] = useState({
     newContent,

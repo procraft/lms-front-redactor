@@ -1,6 +1,6 @@
-import { MonacoEditorProps } from "./MonacoEditor/interfaces";
+import { MonacoEditorProps } from './MonacoEditor/interfaces'
 
-export type useMonacoEditorProps =  {
+export type useMonacoEditorProps = {
   active: boolean
   editorProps: MonacoEditorProps
 }

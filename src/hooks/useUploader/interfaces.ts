@@ -1,4 +1,4 @@
-import { AllHTMLAttributes } from "react"
+import { AllHTMLAttributes } from 'react'
 
 export type UploaderInputProps = AllHTMLAttributes<HTMLInputElement>
 

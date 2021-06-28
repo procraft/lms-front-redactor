@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useMonacoEditor } from '../../../../hooks/useMonacoEditor'
 import { InlineScriptProps } from './interfaces'
 
 export const InlineScript: React.FC<InlineScriptProps> = ({
   active,
   source,
+  object,
+  updateObject,
 }) => {
   /**
    * Editor
@@ -18,6 +20,32 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
   //   console.log('updateFile data', data)
   // }, [])
 
+  const onChange = useCallback(
+    (content: string) => {
+      const contentElement = object.components[0] || {
+        name: 'HtmlTag',
+        component: 'HtmlTag',
+        components: [],
+        props: {
+          text: '',
+        },
+      }
+
+      updateObject(object, {
+        components: [
+          {
+            ...contentElement,
+            props: {
+              ...contentElement.props,
+              text: content,
+            },
+          },
+        ],
+      })
+    },
+    [object, updateObject]
+  )
+
   const { editor } = useMonacoEditor({
     active,
     editorProps: {
@@ -26,6 +54,7 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
       // saveEditorContent,
       // updateFile,
       language: 'javascript',
+      onChange,
     },
   })
 

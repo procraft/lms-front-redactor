@@ -6,6 +6,7 @@ import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
 import { RelStylesheet } from './RelStylesheet'
 import { Script } from './Script'
+import { Style } from './Style'
 // import Link from 'next/link'
 
 const HtmlTag: RedactorComponent = ({
@@ -125,9 +126,9 @@ const HtmlTag: RedactorComponent = ({
   ])
 
   const preventDefault = useCallback((event: React.MouseEvent) => {
-    if(process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
-      console.log('preventDefault event', event);
+      console.log('preventDefault event', event)
     }
     event.preventDefault()
   }, [])
@@ -182,34 +183,61 @@ const HtmlTag: RedactorComponent = ({
         // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
         // при обновлении контента они попадают в стейт.
         // Надо исключить такое поведение
-        elementContent = (
-          <div
-            {...renderProps}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            ref={renderProps.ref}
-            // contentEditable={false}
+        // elementContent = (
+        //   <div
+        //     {...renderProps}
+        //     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        //     // @ts-ignore
+        //     ref={renderProps.ref}
+        //     // contentEditable={false}
 
-            /**
-             * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
-             * а не технический, иначе возникает дублирование вложенности.
-             * Важно! Дочерний элемент тогда должен быть только один.
-             */
-            data-redactor--fake-wrapper
-            data-redactor--src={object.props.src}
-            data-redactor--content-length={
-              object.components[0]?.props.text?.length
-            }
+        //     /**
+        //      * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
+        //      * а не технический, иначе возникает дублирование вложенности.
+        //      * Важно! Дочерний элемент тогда должен быть только один.
+        //      */
+        //     data-redactor--fake-wrapper
+        //     data-redactor--src={object.props.src}
+        //     data-redactor--content-length={
+        //       object.components[0]?.props.text?.length
+        //     }
+        //   >
+        //     {content}
+        //   </div>
+        // )
+        elementContent = (
+          <Style
+            {...renderProps}
+            ref={undefined}
+            forwardedRef={renderProps.ref}
+            object={object}
+            // // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // // @ts-ignore
+            // ref={renderProps.ref}
+            // // contentEditable={false}
+
+            // /**
+            //  * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
+            //  * а не технический, иначе возникает дублирование вложенности.
+            //  * Важно! Дочерний элемент тогда должен быть только один.
+            //  */
+            // data-redactor--fake-wrapper
+            // data-redactor--src={object.props.src}
+            // data-redactor--content-length={
+            //   object.components[0]?.props.text?.length
+            // }
+            updateObject={updateObject}
+            active={active}
           >
             {content}
-          </div>
+          </Style>
         )
+
         break
 
       case 'script':
         elementContent = (
           <>
-
             <Script
               {...renderProps}
               ref={undefined}
@@ -266,7 +294,6 @@ const HtmlTag: RedactorComponent = ({
 
         elementContent = (
           <>
-
             <RelStylesheet
               {...renderProps}
               ref={undefined}

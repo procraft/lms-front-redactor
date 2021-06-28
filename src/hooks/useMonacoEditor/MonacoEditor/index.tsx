@@ -1,13 +1,14 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 
 import loader from '@monaco-editor/loader'
 import { MonacoEditorProps } from './interfaces'
 
-console.log('loader', loader)
-
-export const Editor: React.FC<MonacoEditorProps> = ({ contents, language }) => {
+export const Editor: React.FC<MonacoEditorProps> = ({
+  contents,
+  language,
+  onChange,
+}) => {
   const [editorContainer, editorContainerSetter] =
     useState<HTMLDivElement | null>(null)
 
@@ -15,37 +16,52 @@ export const Editor: React.FC<MonacoEditorProps> = ({ contents, language }) => {
     editorContainerSetter(el)
   }, [])
 
+  /**
+   * Init editor
+   */
+  // TODO Сейчас у нас редактор не реагирует на зименения извне
   useEffect(() => {
-    console.log('useEffect loader.init', loader)
-
     if (!editorContainer) {
       return
     }
 
     let editorInstance: monacoEditor.editor.IStandaloneCodeEditor | null = null
+    let model: monacoEditor.editor.ITextModel | null = null
 
     loader.init().then((monaco: typeof monacoEditor) => {
-      console.log('monaco', monaco)
-
       editorInstance = monaco.editor.create(editorContainer, {
         value: contents,
         language,
       })
 
-      console.log('editorInstance', editorInstance)
+      // model = monaco.editor.getModels()[0]
+      model = editorInstance.getModel()
 
-      const model = monaco.editor.getModels()[0]
-
-      model &&
-        model.onDidChangeContent((event) => {
-          console.log('onDidChangeContent event', event)
-          console.log(
-            'onDidChangeContent editorInstance',
-            editorInstance?.getValue()
-          )
-        })
+      // model?.onDidChangeContent((_event) => {
+      //   // console.log('onDidChangeContent event', event)
+      //   // console.log(
+      //   //   'onDidChangeContent editorInstance',
+      //   //   editorInstance?.getValue()
+      //   // )
+      //   editorInstance && onChange(editorInstance.getValue())
+      // })
     })
-  }, [contents, editorContainer, language])
+
+    return () => {
+      /**
+       * Если есть измененный контент, сохраняем его
+       */
+      if (model) {
+        onChange(model.getValue())
+      }
+
+      /**
+       * Destroy editor
+       */
+      editorInstance?.dispose()
+      model?.dispose()
+    }
+  }, [contents, editorContainer, language, onChange])
 
   return useMemo(() => {
     return (

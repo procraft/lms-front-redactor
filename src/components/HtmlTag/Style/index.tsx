@@ -1,9 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
-import { useUploader } from '../../../hooks/useUploader'
-import { InlineScript } from './InlineScript'
-import { ScriptProps } from './interfaces'
+import React, { useCallback } from 'react'
+import { StyleProps } from './interfaces'
+import { useMonacoEditor } from '../../../hooks/useMonacoEditor'
 
-export const Script: React.FC<ScriptProps> = ({
+export const Style: React.FC<StyleProps> = ({
   // src,
   children,
   object,
@@ -12,41 +11,44 @@ export const Script: React.FC<ScriptProps> = ({
   active,
   ...other
 }) => {
-  const onUpload = useCallback(
-    (url: string) => {
-      updateObject(object, {
+  const onChange = useCallback(
+    (content: string) => {
+
+      const contentElement = object.components[0] || {
+        name: 'HtmlTag',
+        component: 'HtmlTag',
         components: [],
         props: {
-          ...object.props,
-          src: url,
+          text: '',
         },
+      }
+
+      updateObject(object, {
+        components: [
+          {
+            ...contentElement,
+            props: {
+              ...contentElement.props,
+              text: content,
+            },
+          },
+        ],
       })
     },
     [object, updateObject]
   )
 
-  const { uploader } = useUploader({
+  const { editor } = useMonacoEditor({
     active,
-    onUpload,
-    inputProps: {
-      accept: 'text/javascript',
+    editorProps: {
+      contents: object.components[0].props.text || '',
+      // ext: 'css',
+      // saveEditorContent,
+      // updateFile,
+      language: 'css',
+      onChange,
     },
   })
-
-  const editor = useMemo(() => {
-    if (object.components[0]) {
-      return (
-        <InlineScript
-          active={active}
-          source={object.components[0].props.text || ''}
-          object={object}
-          updateObject={updateObject}
-        />
-      )
-    } else {
-      return null
-    }
-  }, [active, object, updateObject])
 
   return (
     <>
@@ -71,13 +73,9 @@ export const Script: React.FC<ScriptProps> = ({
         data-redactor--fake-wrapper
         data-redactor--src={object.props.src}
         data-redactor--content-length={object.components[0]?.props.text?.length}
+        // data-redactor--content-length={object.components[0]?.props.text?.length}
       >
-        {uploader}
-
-        {editor}
-
-        {/* {content} */}
-        {children}
+        {active ? editor : children}
       </div>
     </>
   )
