@@ -1,7 +1,7 @@
 {
   "name": "@procraft/lms-front-redactor",
   "description": "WYSIWYG",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "private": false,
   "main": "dist",
   "scripts": {
