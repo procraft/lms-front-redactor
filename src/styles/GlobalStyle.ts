@@ -16,12 +16,13 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
   } */
 
   [${redactor2ComponentAttributes.component}] {
-      border: 1px solid #dfdfdf;
+      /* border: 1px solid #dfdfdf; */
+      border: 1px solid transparent;
       min-height: 20px;
       cursor: pointer;
-      padding: 2px 4px;
+      /* padding: 2px 4px; */
 
-      margin: 10px;
+      /* margin: 10px; */
 
       /* &.HtmlTag { */
       &[${redactor2ComponentAttributes.component}=HtmlTag] {
@@ -72,6 +73,8 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
       /* &.content-editor { */
       &[${redactor2ComponentAttributes.component}=content-editor] {
         border-color: lightgreen;
+        padding: 5px 10px;
+
         &:before {
           content: "HTML Editor";
 

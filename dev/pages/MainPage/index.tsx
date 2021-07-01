@@ -1,9 +1,48 @@
 import React, { useMemo } from 'react'
 import Head from 'next/head'
-import App, { RedactorComponentObject } from '../../../src'
+import App, { RedactorComponent, RedactorComponentObject } from '../../../src'
 import { Page } from '../_App/interfaces'
-import getRedactorObjectComponent from '../../../src/hooks/RedactorObjectRender'
 import { useRedactorStoreDev } from '../../hooks/useRedactorStoreDev'
+import { getRedactorObjectComponentProps } from '../../../src/hooks/RedactorObjectRender/interfaces'
+import Section from '../../../src/components/Section'
+import HtmlTag from '../../../src/components/HtmlTag'
+import ContentEditor from '../../../src/components/ContentEditor'
+
+
+const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
+  const { object } = props
+
+  if (!object) {
+    return null
+  }
+
+  let Component: RedactorComponent | undefined
+
+  switch (object.component) {
+    case 'Section':
+      Component = Section
+      break
+
+    case 'HtmlTag':
+      Component = HtmlTag
+      break
+
+    case 'ContentEditor':
+      Component = ContentEditor
+      break
+  }
+
+  if (!Component) {
+    console.error('Unknown component', object.component)
+    return null
+  }
+
+  return Component
+
+  // return <Component
+  //   object={object}
+  // />;
+}
 
 const ContentEditorDevPage: Page = (props) => {
   const initialObject = useMemo<RedactorComponentObject>(() => {

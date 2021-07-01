@@ -140,22 +140,22 @@ const HtmlTag: RedactorComponent = ({
       !content ||
       !inEditMode ||
       !object.props.tag ||
-      ![
-        'div',
-        'ul',
-        'ol',
-        'li',
-        'table',
-        'thead',
-        'tbody',
-        'tr',
-        'th',
-        'td',
-        'a',
-        'script',
-        'style',
-        'link',
-      ].includes(object.props.tag) ||
+      // ![
+      //   'div',
+      //   'ul',
+      //   'ol',
+      //   'li',
+      //   'table',
+      //   'thead',
+      //   'tbody',
+      //   'tr',
+      //   'th',
+      //   'td',
+      //   'a',
+      //   'script',
+      //   'style',
+      //   'link',
+      // ].includes(object.props.tag) ||
       typeof content !== 'object'
     ) {
       return <>{content}</>

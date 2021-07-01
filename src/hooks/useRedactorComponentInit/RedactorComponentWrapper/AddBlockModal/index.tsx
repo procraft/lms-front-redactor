@@ -10,6 +10,7 @@ import {
 } from '../../../../RedactorComponent/interfaces'
 import LmsFrontRedactorModal from '../../../../ui/Modal'
 import Context, { RedactorObjectTemplate } from '../../../../Context'
+import { AddBlockModalStyled } from './styles'
 
 enum InsertPlace {
   Child,
@@ -87,8 +88,8 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
     const { Component, template } = componentData
 
     return (
-      <div>
-        Component:
+      <>
+        {/* <div>Component:</div> */}
         {/* <pre>
         {JSON.stringify(template, undefined, 2)}
       </pre> */}
@@ -98,7 +99,7 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
           updateObject={updateTemplateObject}
           wrapperContainer={wrapperContainer || undefined}
         />
-      </div>
+      </>
     )
   }, [componentData, updateTemplateObject, wrapperContainer])
 
@@ -282,7 +283,7 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
         close={closeAddBlockModal}
         secondaryButtons={secondaryButtons}
       >
-        {componentDataContent}
+        <AddBlockModalStyled>{componentDataContent}</AddBlockModalStyled>
       </LmsFrontRedactorModal>,
       wrapper
     )

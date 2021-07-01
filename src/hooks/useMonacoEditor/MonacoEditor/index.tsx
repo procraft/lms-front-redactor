@@ -17,6 +17,14 @@ export const Editor: React.FC<MonacoEditorProps> = ({
   }, [])
 
   /**
+   * Флаг того, что редактор инициализирован.
+   * Проблема просто в том, что редактор загружается из CDN не сразу,
+   * а когда мы начинаем редактирование. На слобом интернете задержка очень ощутимая,
+   * долгое время редактор выглядит пустым.
+   */
+  const [editorEnited, editorEnitedSetter] = useState(false)
+
+  /**
    * Init editor
    */
   // TODO Сейчас у нас редактор не реагирует на зименения извне
@@ -29,6 +37,8 @@ export const Editor: React.FC<MonacoEditorProps> = ({
     let model: monacoEditor.editor.ITextModel | null = null
 
     loader.init().then((monaco: typeof monacoEditor) => {
+      editorEnitedSetter(true)
+
       editorInstance = monaco.editor.create(editorContainer, {
         value: source,
         language,
@@ -42,6 +52,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       //   // console.log(
       //   //   'onDidChangeContent editorInstance',
       //   //   editorInstance?.getValue()
+      editorEnitedSetter(true)
       //   // )
       //   editorInstance && onChange(editorInstance.getValue())
       // })
@@ -76,9 +87,25 @@ export const Editor: React.FC<MonacoEditorProps> = ({
           height: '60vh',
           border: '1px solid',
         }}
-      ></div>
+      >
+        {/* 
+        Пока редактор не загрузился, выводим исходный код
+        */}
+        {!editorEnited ? (
+          <>
+            <div
+              style={{
+                marginBottom: 15,
+              }}
+            >
+              Редактор загружается...
+            </div>
+            {source}
+          </>
+        ) : null}
+      </div>
     )
-  }, [editorContainerRef])
+  }, [editorContainerRef, editorEnited, source])
 }
 
 export default Editor
