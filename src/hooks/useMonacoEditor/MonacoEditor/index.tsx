@@ -8,6 +8,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
   source,
   language,
   onChange,
+  onEditorInit,
 }) => {
   const [editorContainer, editorContainerSetter] =
     useState<HTMLDivElement | null>(null)
@@ -28,6 +29,12 @@ export const Editor: React.FC<MonacoEditorProps> = ({
    * Init editor
    */
   // TODO Сейчас у нас редактор не реагирует на зименения извне
+
+  /**
+   * Очень важно: если извне передаются переменные, обновляемые при каждом изменении в редакторе,
+   * то контент редактора перерисовывается повторно и возникают проблемы (курсор сбрасывается, контент не изменяется).
+   * Поэтому надо четко следить за каждым изменением
+   */
   useEffect(() => {
     if (!editorContainer) {
       return
@@ -56,9 +63,12 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       //   // )
       //   editorInstance && onChange(editorInstance.getValue())
       // })
+
+      onEditorInit && onEditorInit(editorInstance)
     })
 
     return () => {
+
       /**
        * Если есть измененный контент, сохраняем его
        */
@@ -66,7 +76,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
         const value = model.getValue()
 
         if (value !== source) {
-          onChange(value)
+          onChange && onChange(value)
         }
       }
 
@@ -76,7 +86,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       editorInstance?.dispose()
       model?.dispose()
     }
-  }, [source, editorContainer, language, onChange])
+  }, [source, editorContainer, language, onChange, onEditorInit])
 
   return useMemo(() => {
     return (

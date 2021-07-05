@@ -72,11 +72,11 @@ export const ContentEditor: RedactorComponent = ({
     inEditMode,
     wrapperContent,
     other,
+    object,
+    otherInitProps,
     ref,
     active,
-    object,
     updateObject,
     content,
-    otherInitProps,
   ])
 }

@@ -87,10 +87,16 @@ const nodeToEditorComponentObject = (
   let NodeName = node.nodeName.toLowerCase() as
     | keyof JSX.IntrinsicElements
     | '#text'
+    | '#comment'
     | undefined
 
   if (NodeName === '#text') {
     NodeName = undefined
+  }
+
+  // TODO Надо проработать обработку комментариев
+  if (NodeName === '#comment') {
+    return undefined;
   }
 
   if (node.nodeType === Node.TEXT_NODE) {
