@@ -1,9 +1,9 @@
 import useStore from '@prisma-cms/react-hooks/dist/hooks/useStore'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { LmsFrontRedactorProps, RedactorComponentObject } from '../../../src'
-import ContentEditor from '../../../src/components/ContentEditor'
-import HtmlTag from '../../../src/components/HtmlTag'
-import Section from '../../../src/components/Section'
+import { ContentEditor } from '../../../src/components/ContentEditor'
+import { HtmlTag } from '../../../src/components/HtmlTag'
+import { Section } from '../../../src/components/Section'
 import { RedactorObjectTemplate } from '../../../src/Context'
 
 type useRedactorStoreDevProps = {

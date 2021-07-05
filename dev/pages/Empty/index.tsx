@@ -4,9 +4,9 @@ import { Page } from '../_App'
 import App, { RedactorComponent, RedactorComponentObject } from '../../../src'
 import useRedactorStoreDev from '../../hooks/useRedactorStoreDev'
 import { getRedactorObjectComponentProps } from '../../../src/hooks/RedactorObjectRender/interfaces'
-import Section from '../../../src/components/Section'
-import HtmlTag from '../../../src/components/HtmlTag'
-import ContentEditor from '../../../src/components/ContentEditor'
+import { Section } from '../../../src/components/Section'
+import { HtmlTag } from '../../../src/components/HtmlTag'
+import { ContentEditor } from '../../../src/components/ContentEditor'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props

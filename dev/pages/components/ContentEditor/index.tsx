@@ -7,10 +7,10 @@ import {
 } from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
-import ContentEditor from '../../../../src/components/ContentEditor'
-import HtmlTag from '../../../../src/components/HtmlTag'
+import { ContentEditor } from '../../../../src/components/ContentEditor'
+import { HtmlTag } from '../../../../src/components/HtmlTag'
 import useRedactorStoreDev from '../../../hooks/useRedactorStoreDev'
-import Section from '../../../../src/components/Section'
+import { Section } from '../../../../src/components/Section'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props

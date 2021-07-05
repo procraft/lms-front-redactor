@@ -1,12 +1,12 @@
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { getRedactorObjectComponentProps } from './interfaces'
 
-import Section from '../../components/Section'
+import { Section } from '../../components/Section'
 // import LandingLayout from '../../components/LandingLayout'
 // import LandingFooter from '../../components/LandingFooter'
 // import LandingHeader from '../../components/LandingHeader'
-import ContentEditor from '../../components/ContentEditor'
-import HtmlTag from '../../components/HtmlTag'
+import { ContentEditor } from '../../components/ContentEditor'
+import { HtmlTag } from '../../components/HtmlTag'
 // import LandingRouter from '../../components/LandingRouter'
 // import CourseOrder from '../../components/CourseOrder'
 

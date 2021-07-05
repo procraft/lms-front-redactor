@@ -9,7 +9,7 @@ import { RedactorComponent } from '../../RedactorComponent/interfaces'
  */
 // TODO: Пока это не работает как надо. На стороне сервера отрисовывает ОК, на фронте нет (исчезают отрисованные теги).
 // Вероятнее всего надо будет пилить свое решение.
-const Head: RedactorComponent = ({
+export const Head: RedactorComponent = ({
   object,
   updateObject,
   inEditMode,
@@ -68,5 +68,3 @@ const Head: RedactorComponent = ({
     )
   }, [inEditMode, wrapperContent, other, otherInitProps, ref, content])
 }
-
-export default Head

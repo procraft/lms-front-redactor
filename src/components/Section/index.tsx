@@ -3,7 +3,7 @@ import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 
-const Section: RedactorComponent = ({
+export const Section: RedactorComponent = ({
   object,
   updateObject,
   inEditMode,
@@ -103,5 +103,3 @@ const Section: RedactorComponent = ({
     )
   }, [inEditMode, wrapperContent, other, otherInitProps, ref, content])
 }
-
-export default Section

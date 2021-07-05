@@ -9,7 +9,7 @@ import { Script } from './Script'
 import { Style } from './Style'
 // import Link from 'next/link'
 
-const HtmlTag: RedactorComponent = ({
+export const HtmlTag: RedactorComponent = ({
   object,
   updateObject,
   inEditMode,
@@ -361,5 +361,3 @@ const HtmlTag: RedactorComponent = ({
     active,
   ])
 }
-
-export default HtmlTag

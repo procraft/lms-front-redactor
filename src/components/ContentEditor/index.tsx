@@ -5,7 +5,7 @@ import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
 import EditableContentProxy from './ContentProxy'
 
-const ContentEditor: RedactorComponent = ({
+export const ContentEditor: RedactorComponent = ({
   object,
   updateObject,
   inEditMode,
@@ -80,5 +80,3 @@ const ContentEditor: RedactorComponent = ({
     otherInitProps,
   ])
 }
-
-export default ContentEditor

@@ -6,8 +6,8 @@ import {
   RedactorComponentObject,
 } from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
-import Section from '../../../../src/components/Section'
-import HtmlTag from '../../../../src/components/HtmlTag'
+import { Section } from '../../../../src/components/Section'
+import { HtmlTag } from '../../../../src/components/HtmlTag'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
 
