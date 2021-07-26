@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useCallback, useEffect } from 'react'
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 import { useMonacoEditor } from '../../../../hooks/useMonacoEditor'
@@ -47,15 +46,14 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
 
       const model = editorInstance.getModel()
 
-      console.log('onEditorInit model', model)
-
       const modelOnChange = model?.onDidChangeContent((_event) => {
+
         const value = model.getValue()
 
-        console.log(
-          'ContentEditorHTMLEditorMonacoEditor onDidChangeContent event',
-          event
-        )
+        // console.log(
+        //   'ContentEditorHTMLEditorMonacoEditor onDidChangeContent event',
+        //   event
+        // )
         // console.log(
         //   'ContentEditorHTMLEditorMonacoEditor onDidChangeContent editorInstance',
         //   value
