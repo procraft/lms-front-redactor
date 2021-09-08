@@ -16,8 +16,7 @@ export const useRedactorComponentRef = <
   /**
    * Элемент активный, то есть в режиме редактирования, в фокусе
    */
-   const [active, activeSetter] = useState(false)
-
+  const [active, activeSetter] = useState(false)
 
   const ref = useCallback((el: El) => {
     setElement(el)

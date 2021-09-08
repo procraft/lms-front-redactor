@@ -10,7 +10,9 @@ export type RedactorHtmlElement = HTMLElement & {
   redactorComponentWrapper?: HTMLElement
 }
 
-export type useRedactorComponentInitProps<El extends HTMLElement = HTMLElement> = {
+export type useRedactorComponentInitProps<
+  El extends HTMLElement = HTMLElement
+> = {
   object: RedactorComponentProps['object']
 
   updateObject: RedactorComponentProps['updateObject']
@@ -24,7 +26,6 @@ export type useRedactorComponentInitProps<El extends HTMLElement = HTMLElement> 
   active: boolean
   activeSetter: Dispatch<SetStateAction<boolean>>
 }
-
 
 export type ComponentWrapperProps = {
   // ref: (el: El) => void

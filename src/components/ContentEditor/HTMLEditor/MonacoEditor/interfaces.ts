@@ -1,4 +1,4 @@
-import { RedactorComponentProps } from "../../../../RedactorComponent/interfaces";
+import { RedactorComponentProps } from '../../../../RedactorComponent/interfaces'
 
 export type ContentEditorHTMLEditorMonacoEditorProps = {
   active: boolean
@@ -9,6 +9,6 @@ export type ContentEditorHTMLEditorMonacoEditorProps = {
    */
   element: HTMLElement
 
-  object: RedactorComponentProps["object"]
-  updateObject: RedactorComponentProps["updateObject"]
+  object: RedactorComponentProps['object']
+  updateObject: RedactorComponentProps['updateObject']
 }

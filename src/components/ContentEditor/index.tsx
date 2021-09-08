@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
@@ -27,22 +26,22 @@ export const ContentEditor: RedactorComponent = ({
     }
 
     const onClick = (event: MouseEvent) => {
-      console.log('ContentEditor onClick event', event)
+      // console.log('ContentEditor onClick event', event)
 
       // Внешний объект
-      console.log(
-        'ContentEditor onClick event.currentTarget',
-        event.currentTarget
-      )
+      // console.log(
+      //   'ContentEditor onClick event.currentTarget',
+      //   event.currentTarget
+      // )
 
       // Внутренний объект
-      console.log('ContentEditor onClick event.target', event.target)
+      // console.log('ContentEditor onClick event.target', event.target)
 
       // if (
       //   event.target === event.currentTarget &&
       //   event.currentTarget instanceof HTMLElement
       // ) {
-        event.stopPropagation()
+      event.stopPropagation()
       //   event.preventDefault()
       //   // const el: HTMLDivElement = event.currentTarget as El;
       //   // el.classList.toggle("active")

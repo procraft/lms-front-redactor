@@ -26,7 +26,7 @@ export const Head: RedactorComponent = ({
     // ref,
     // className,
     wrapperContent,
-    active: _active,
+    // active: _active,
     ...otherInitProps
   } = useRedactorComponentInit({
     object,
@@ -40,7 +40,7 @@ export const Head: RedactorComponent = ({
   })
 
   // Null
-  _active
+  // _active
 
   const childrenContent = useRedactorRenderComponents({
     object,

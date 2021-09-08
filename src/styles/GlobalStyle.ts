@@ -66,7 +66,7 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
       } */
 
       &[${redactor2ComponentAttributes.component}=content-editor] {
-        /* border-color: lightgreen; */
+        border-color: lightgrey;
         /* padding: 5px 10px; */
         padding: 10px;
 

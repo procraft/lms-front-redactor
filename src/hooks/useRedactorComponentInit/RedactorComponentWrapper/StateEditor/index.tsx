@@ -80,7 +80,7 @@ const LmsFrontRedactorStateEditor: React.FC<LmsFrontRedactorStateEditorProps> =
 
         close()
       } catch (error) {
-        addError(error)
+        addError(error as Error)
       }
     }, [addError, close, container?.textContent, object, updateObject])
 

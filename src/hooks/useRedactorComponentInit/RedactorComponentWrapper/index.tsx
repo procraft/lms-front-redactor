@@ -57,36 +57,33 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
         alignment: 'bottom right',
       })
     )
- 
 
     // if(wrapperTitle) {
-      const titleNode = document.createElement("span")
-      titleNode.innerHTML = `
+    const titleNode = document.createElement('span')
+    titleNode.innerHTML = `
       <span>
-                  ${object.name} ${object.name !== object.component
-                    ? ` (${object.component})`
-                    : ''}
+                  ${object.name} ${
+      object.name !== object.component ? ` (${object.component})` : ''
+    }
                 </span>
                 <span>${object.props.tag || ''}</span>
-      `;
-  
-      const titleStyle: Partial<CSSStyleDeclaration> = {
-        position: 'absolute',
-        backgroundColor: '#252424',
-        color: 'white',
-        padding: '2px 5px',
-        fontSize: '12px',
-        top: '-25px',
-        // bottom: '0px',
-        // marginBottom: (element.offsetHeight + 10) + 'px',
-      }
-  
-      Object.assign(titleNode.style, titleStyle)
-  
-      wrapper.appendChild(titleNode)
+      `
+
+    const titleStyle: Partial<CSSStyleDeclaration> = {
+      position: 'absolute',
+      backgroundColor: '#252424',
+      color: 'white',
+      padding: '2px 5px',
+      fontSize: '12px',
+      top: '-25px',
+      // bottom: '0px',
+      // marginBottom: (element.offsetHeight + 10) + 'px',
+    }
+
+    Object.assign(titleNode.style, titleStyle)
+
+    wrapper.appendChild(titleNode)
     // }
-
-
 
     return wrapper
   }, [object.component, object.name, object.props.tag])
@@ -415,7 +412,21 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
         )}
       </>
     )
-  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, parent, updateParent, active, addObjectHandler, showContentHandler, removeObjectHandler, closeEditor, wrapper])
+  }, [
+    stateEditor,
+    showAddBlockModal,
+    object,
+    closeAddBlockModal,
+    updateObject,
+    parent,
+    updateParent,
+    active,
+    addObjectHandler,
+    showContentHandler,
+    removeObjectHandler,
+    closeEditor,
+    wrapper,
+  ])
 }
 
 export default RedactorComponentWrapper

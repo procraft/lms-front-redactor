@@ -47,7 +47,6 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
       const model = editorInstance.getModel()
 
       const modelOnChange = model?.onDidChangeContent((_event) => {
-
         const value = model.getValue()
 
         // console.log(

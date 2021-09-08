@@ -23,12 +23,16 @@ export const ContentEditorHTMLEditor: React.FC<ContentEditorHTMLEditorProps> =
     )
 
     const button = useMemo(() => {
-      return (
-        <button onClick={toggleEditMode}>
-          {!inEditMode ? 'Редактировать как HTML' : 'Закрыть редактор'}
-        </button>
-      )
-    }, [inEditMode, toggleEditMode])
+      // return (
+      //   <button onClick={toggleEditMode}>
+      //     {!inEditMode ? 'Редактировать как HTML' : 'Закрыть редактор'}
+      //   </button>
+      // )
+
+      toggleEditMode
+
+      return null
+    }, [toggleEditMode])
 
     return useMemo(() => {
       return (

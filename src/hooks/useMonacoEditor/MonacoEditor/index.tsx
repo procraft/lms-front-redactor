@@ -68,7 +68,6 @@ export const Editor: React.FC<MonacoEditorProps> = ({
     })
 
     return () => {
-
       /**
        * Если есть измененный контент, сохраняем его
        */

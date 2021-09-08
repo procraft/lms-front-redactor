@@ -96,7 +96,7 @@ const nodeToEditorComponentObject = (
 
   // TODO Надо проработать обработку комментариев
   if (NodeName === '#comment') {
-    return undefined;
+    return undefined
   }
 
   if (node.nodeType === Node.TEXT_NODE) {

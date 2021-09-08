@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { RedactorComponentObject } from '../../../RedactorComponent/interfaces'
 import { ContentEditorHTMLEditor } from '../HTMLEditor'
+import { ContentEditorTextToolbar } from './ContentEditorTextToolbar'
 import useContentEditable from './hooks/useContentEditable'
 import { EditableContentProxyProps } from './interfaces'
 import { EditableContentProxyStyled } from './styles'
@@ -60,6 +61,9 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
 
   return (
     <>
+      {active ? (
+        <ContentEditorTextToolbar contentEditableContainer={contentWrapper} />
+      ) : null}
       <EditableContentProxyStyled
         ref={setContentWrapper}
         contentEditable={active}

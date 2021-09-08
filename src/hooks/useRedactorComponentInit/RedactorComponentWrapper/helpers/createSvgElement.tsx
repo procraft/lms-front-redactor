@@ -1,4 +1,3 @@
-
 type createSvgElementProps = {
   alignment: 'top left' | 'top right' | 'bottom left' | 'bottom right'
 }
@@ -14,18 +13,18 @@ export const createSvgElement = ({ alignment }: createSvgElementProps) => {
   svg.setAttributeNS(null, 'height', boxHeight + 'px')
   svg.style.display = 'block'
   svg.style.position = 'absolute'
-  
+
   switch (alignment) {
     case 'top left':
       svg.style.top = '0'
       svg.style.left = '0'
       svg.style.transform = `rotate(270deg)`
       break
-      
-      case 'top right':
-        svg.style.top = '0'
-        svg.style.right = '0'
-        svg.style.transform = `rotate(0deg)`
+
+    case 'top right':
+      svg.style.top = '0'
+      svg.style.right = '0'
+      svg.style.transform = `rotate(0deg)`
       break
 
     case 'bottom left':
@@ -33,11 +32,11 @@ export const createSvgElement = ({ alignment }: createSvgElementProps) => {
       svg.style.left = '0'
       svg.style.transform = `rotate(180deg)`
       break
-      
-      case 'bottom right':
-        svg.style.bottom = '0'
-        svg.style.right = '0'
-        svg.style.transform = `rotate(90deg)`
+
+    case 'bottom right':
+      svg.style.bottom = '0'
+      svg.style.right = '0'
+      svg.style.transform = `rotate(90deg)`
       break
   }
 

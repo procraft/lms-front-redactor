@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, {
   useCallback,
   useContext,
@@ -19,10 +18,11 @@ import {
   redactor2ComponentAttributes,
   // redactor2ComponentClasses,
 } from '../../styles'
-import { ComponentWrapperProps, useRedactorComponentInitProps } from './interfaces'
+import {
+  ComponentWrapperProps,
+  useRedactorComponentInitProps,
+} from './interfaces'
 import RedactorComponentWrapper from './RedactorComponentWrapper'
-
-
 
 /**
  * Инициализируем редактор-компонент
@@ -153,8 +153,6 @@ const useRedactorComponentInit = ({
     const onClick = (event: MouseEvent) => {
       // TODO Здесь, если прерывать ивент, не кликаются внутренние элементы.
       // Возможно надо сбрасывать ивент, если уже активный элемент.
-
-      console.log('hook onClick event', event)
 
       if (
         event.target === event.currentTarget &&
@@ -394,7 +392,6 @@ const useRedactorComponentInit = ({
     // if (active) {
     //   className.push(redactor2ComponentClasses.active)
     // }
-
 
     const props: ComponentWrapperProps = {
       // ref,
