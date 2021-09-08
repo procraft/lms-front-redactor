@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { RedactorComponentObject } from '../../../RedactorComponent/interfaces'
 import AddBlockModal from './AddBlockModal'
+import { createSvgElement } from './helpers/createSvgElement'
 import { RedactorComponentWrapperProps } from './interfaces'
 import LmsFrontRedactorStateEditor from './StateEditor'
 import { RedactorComponentWrapperStyled } from './styles'
@@ -23,11 +24,75 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
   container = global.window?.document.body,
   parent,
   updateParent,
+  active,
+  // wrapperTitle,
 }) => {
-  const wrapper = useMemo(() => document.createElement('div'), [])
+  const wrapper = useMemo(() => {
+    const wrapper = document.createElement('div')
+
+    /**
+     * Createsvg
+     */
+
+    wrapper.appendChild(
+      createSvgElement({
+        alignment: 'top left',
+      })
+    )
+
+    wrapper.appendChild(
+      createSvgElement({
+        alignment: 'top right',
+      })
+    )
+
+    wrapper.appendChild(
+      createSvgElement({
+        alignment: 'bottom left',
+      })
+    )
+
+    wrapper.appendChild(
+      createSvgElement({
+        alignment: 'bottom right',
+      })
+    )
+ 
+
+    // if(wrapperTitle) {
+      const titleNode = document.createElement("span")
+      titleNode.innerHTML = `
+      <span>
+                  ${object.name} ${object.name !== object.component
+                    ? ` (${object.component})`
+                    : ''}
+                </span>
+                <span>${object.props.tag || ''}</span>
+      `;
+  
+      const titleStyle: Partial<CSSStyleDeclaration> = {
+        position: 'absolute',
+        backgroundColor: '#252424',
+        color: 'white',
+        padding: '2px 5px',
+        fontSize: '12px',
+        top: '-25px',
+        // bottom: '0px',
+        // marginBottom: (element.offsetHeight + 10) + 'px',
+      }
+  
+      Object.assign(titleNode.style, titleStyle)
+  
+      wrapper.appendChild(titleNode)
+    // }
+
+
+
+    return wrapper
+  }, [object.component, object.name, object.props.tag])
 
   /**
-   * Корневому элементу компонента присываиваем ссылку на текущий враппер.
+   * Корневому элементу компонента присваиваем ссылку на текущий враппер.
    * Это надо, потому что мы не можем заранее знать куда будет отрисован враппер,
    * потому искать мы его будем не через DOM, а напрямую через свойство элемента.
    */
@@ -61,7 +126,7 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
     // wrapper.style.left = "30px";
 
     const style: Partial<CSSStyleDeclaration> = {
-      border: '1px solid indigo',
+      // border: '1px solid indigo',
       position: 'fixed',
       zIndex: '1000',
       pointerEvents: 'none',
@@ -314,56 +379,43 @@ const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
         ) : null}
         {ReactDOM.createPortal(
           <RedactorComponentWrapperStyled>
-            <div className="buttons">
-              <span>
-                {object.name}{' '}
-                {object.name !== object.component
-                  ? ` (${object.component})`
-                  : ''}
-              </span>
-              <span>{object.props.tag}</span>
-              <button onClick={addObjectHandler} role="addBlock">
-                Add block
-              </button>
-              {debug ? (
-                <button onClick={showContentHandler} role="showState">
-                  Show state
+            {active ? (
+              <div className="buttons">
+                {/* <span>
+                  {object.name}{' '}
+                  {object.name !== object.component
+                    ? ` (${object.component})`
+                    : ''}
+                </span>
+                <span>{object.props.tag}</span> */}
+                <button onClick={addObjectHandler} role="addBlock">
+                  Add block
                 </button>
-              ) : null}
-              {parent ? (
-                <button
-                  onClick={removeObjectHandler}
-                  role="removeComponent"
-                  title="Удалить элемент"
-                >
-                  ␡
+                {debug ? (
+                  <button onClick={showContentHandler} role="showState">
+                    Show state
+                  </button>
+                ) : null}
+                {parent ? (
+                  <button
+                    onClick={removeObjectHandler}
+                    role="removeComponent"
+                    title="Удалить элемент"
+                  >
+                    ␡
+                  </button>
+                ) : null}
+                <button onClick={closeEditor} role="close">
+                  Close
                 </button>
-              ) : null}
-              {/* <button onClick={showInnerHtmlHandler}>Show HTML</button> */}
-              {/* <button>Delete</button> */}
-              <button onClick={closeEditor} role="close">
-                Close
-              </button>
-            </div>
+              </div>
+            ) : null}
           </RedactorComponentWrapperStyled>,
           wrapper
         )}
       </>
     )
-  }, [
-    stateEditor,
-    showAddBlockModal,
-    object,
-    closeAddBlockModal,
-    updateObject,
-    parent,
-    updateParent,
-    addObjectHandler,
-    showContentHandler,
-    removeObjectHandler,
-    closeEditor,
-    wrapper,
-  ])
+  }, [stateEditor, showAddBlockModal, object, closeAddBlockModal, updateObject, parent, updateParent, active, addObjectHandler, showContentHandler, removeObjectHandler, closeEditor, wrapper])
 }
 
 export default RedactorComponentWrapper

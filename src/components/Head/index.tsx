@@ -3,6 +3,7 @@ import NextHead from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
+import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 
 /**
  * Выводит содержимое в <head></head>
@@ -18,18 +19,24 @@ export const Head: RedactorComponent = ({
   updateParent,
   ...other
 }) => {
+  const { ref, element, active, activeSetter } =
+    useRedactorComponentRef<HTMLDivElement>()
+
   const {
-    ref,
+    // ref,
     // className,
     wrapperContent,
     active: _active,
     ...otherInitProps
-  } = useRedactorComponentInit<HTMLDivElement>({
+  } = useRedactorComponentInit({
     object,
     updateObject,
     wrapperContainer,
     parent,
     updateParent,
+    element,
+    active,
+    activeSetter,
   })
 
   // Null

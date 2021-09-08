@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {
   useCallback,
   useContext,
@@ -7,31 +8,100 @@ import React, {
 } from 'react'
 import Context from '../../Context'
 import {
+  RedactorComponentActiveEvent,
+  RedactorComponentActiveEventDetail,
+  RedactorComponentHoveredEvent,
+  RedactorComponentHoveredEventDetail,
+  // RedactorComponentClickEvent,
+  // RedactorComponentClickEventDetail,
+} from '../../FrontEditor/Context'
+import {
   redactor2ComponentAttributes,
   // redactor2ComponentClasses,
 } from '../../styles'
-import { useRedactorComponentInitProps } from './interfaces'
+import { ComponentWrapperProps, useRedactorComponentInitProps } from './interfaces'
 import RedactorComponentWrapper from './RedactorComponentWrapper'
+
+
 
 /**
  * Инициализируем редактор-компонент
  */
-const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
+// const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
+const useRedactorComponentInit = ({
   object,
   updateObject,
   wrapperContainer,
   parent,
   updateParent,
-}: useRedactorComponentInitProps) => {
+  element,
+  active,
+  activeSetter,
+}: useRedactorComponentInitProps): ComponentWrapperProps => {
   const context = useContext(Context)
 
-  const [element, setElement] = useState<El | null>(null)
+  /**
+   * Наведена мышка
+   */
+  const [hovered, hoveredSetter] = useState(false)
 
-  const ref = useCallback((el: El) => {
-    setElement(el)
-  }, [])
+  useEffect(() => {
+    if (!element || !context?.inEditMode) {
+      return
+    }
 
-  const [active, setActive] = useState(false)
+    const hoveredEvent = new CustomEvent<RedactorComponentHoveredEventDetail>(
+      'redactorComponentHovered',
+      {
+        detail: {
+          element,
+          hovered,
+        },
+      }
+    )
+
+    global.document.dispatchEvent(hoveredEvent)
+  }, [context?.inEditMode, element, hovered])
+
+  useEffect(() => {
+    if (!element || !context?.inEditMode) {
+      return
+    }
+
+    /**
+     * Коллбэк на смену указанного элемента
+     */
+
+    const onHovered = (event: RedactorComponentHoveredEvent) => {
+      if (event.detail.element === element) {
+        //
+        // if (event.detail.hovered) {
+        //   // const el = event.currentTarget as El
+        //   // el.classList.add(redactor2ComponentClasses.hovered)
+        //   const attr = document.createAttribute(
+        //     redactor2ComponentAttributes.hovered
+        //   )
+        //   attr.value = 'true'
+        //   element.attributes.setNamedItem(attr)
+        // } else {
+        //   element.removeAttribute(redactor2ComponentAttributes.hovered)
+        // }
+      } else {
+        if (event.detail.hovered) {
+          hoveredSetter(false)
+        }
+      }
+      // else if(active) {
+      //   activeSetter(false)
+      // }
+    }
+
+    global.document.addEventListener('redactorComponentHovered', onHovered)
+
+    return () => {
+      global.document.removeEventListener('redactorComponentHovered', onHovered)
+    }
+  }, [context?.inEditMode, element])
 
   /**
    * Здесь сбрасываем все возможные артифакты,
@@ -42,6 +112,23 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
       return
     }
 
+    /**
+     * Если стал активным, выкидваем событие
+     */
+    if (active) {
+      // create and dispatch the event
+      const activeEvent = new CustomEvent<RedactorComponentActiveEventDetail>(
+        'redactorComponentActive',
+        {
+          detail: {
+            element,
+          },
+        }
+      )
+
+      global.document.dispatchEvent(activeEvent)
+    }
+
     return () => {
       // console.log('Component will unmount');
 
@@ -50,10 +137,10 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
        * поэтому если не сбросить, останутся элементы управления в документе.
        */
       if (active) {
-        setActive(false)
+        activeSetter(false)
       }
     }
-  }, [active, context?.inEditMode, element])
+  }, [active, activeSetter, context?.inEditMode, element])
 
   /**
    * По клику делаем компонент активным
@@ -67,6 +154,8 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
       // TODO Здесь, если прерывать ивент, не кликаются внутренние элементы.
       // Возможно надо сбрасывать ивент, если уже активный элемент.
 
+      console.log('hook onClick event', event)
+
       if (
         event.target === event.currentTarget &&
         event.currentTarget instanceof HTMLElement
@@ -77,7 +166,23 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         // el.classList.toggle("active")
         // event.target
         // event.currentTarget
-        setActive(true)
+        // create and dispatch the event
+        // const event2 = new CustomEvent<RedactorComponentClickEventDetail>(
+        //   'redactorComponentActive',
+        //   {
+        //     // detail: {
+        //     //   hazcheeseburger: true,
+        //     // },
+        //     // target: element,
+        //     // currentTarget: element,
+        //     detail: {
+        //       element,
+        //     },
+        //   }
+        // )
+        // event2.preventDefault()
+        // global.document.dispatchEvent(event2)
+        activeSetter(true)
       }
     }
 
@@ -86,7 +191,73 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
     return () => {
       element.removeEventListener('click', onClick)
     }
-  }, [active, context?.inEditMode, element])
+  }, [active, activeSetter, context?.inEditMode, element])
+
+  /**
+   * Глобальные обработчики, когда компонент активный
+   */
+  useEffect(() => {
+    if (!element || !context?.inEditMode || !active) {
+      return
+    }
+
+    /**
+     * Коллбэк на смену активного элемента
+     */
+
+    const onActive = (event: RedactorComponentActiveEvent) => {
+      /**
+       * Если это не текущий элемент, снимаем активность
+       */
+      if (event.detail.element !== element) {
+        activeSetter(false)
+      }
+      // else if(active) {
+      //   activeSetter(false)
+      // }
+    }
+
+    global.document.addEventListener('redactorComponentActive', onActive)
+
+    return () => {
+      global.document.removeEventListener('redactorComponentActive', onActive)
+    }
+  }, [active, activeSetter, context?.inEditMode, element])
+  // useEffect(() => {
+  //   if (!element || !context?.inEditMode) {
+  //     return
+  //   }
+
+  //   /**
+  //    * Коллбэк на смену активного элемента
+  //    */
+
+  //   const onCat = (event: RedactorComponentClickEvent) => {
+  //     console.log(
+  //       'onCat event',
+  //       // event,
+  //       // event.defaultPrevented,
+  //       event.detail.element
+  //     )
+  //     // console.log('onCat this', this)
+
+  //     /**
+  //      * Если это текущий элемент, выставляем активность
+  //      */
+  //     if (event.detail.element === element) {
+  //       activeSetter(true)
+  //     }
+  //     else if(active) {
+  //       activeSetter(false)
+  //     }
+  //   }
+
+  //   global.document.addEventListener('redactorComponentClick', onCat)
+
+  //   return () => {
+  //     global.document.removeEventListener('redactorComponentClick', onCat)
+  //   }
+  // }, [active, context?.inEditMode, element])
 
   /**
    * Здесь навешиваем различные ивенты
@@ -104,16 +275,18 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         event.target === event.currentTarget &&
         event.currentTarget instanceof HTMLElement
       ) {
-        const el = event.currentTarget as El
-        // el.classList.add(redactor2ComponentClasses.hovered)
+        // const el = event.currentTarget as El
+        // // el.classList.add(redactor2ComponentClasses.hovered)
 
-        const attr = document.createAttribute(
-          redactor2ComponentAttributes.hovered
-        )
-        attr.value = 'true'
-        el.attributes.setNamedItem(attr)
+        // const attr = document.createAttribute(
+        //   redactor2ComponentAttributes.hovered
+        // )
+        // attr.value = 'true'
+        // el.attributes.setNamedItem(attr)
 
-        el.attributes.setNamedItem
+        // el
+
+        hoveredSetter(true)
       }
     }
 
@@ -125,9 +298,13 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         event.target === event.currentTarget &&
         event.currentTarget instanceof HTMLElement
       ) {
-        const el = event.currentTarget as El
+        // const el = event.currentTarget as El
         // el.classList.remove(redactor2ComponentClasses.hovered)
-        el.removeAttribute(redactor2ComponentAttributes.hovered)
+        // el.removeAttribute(redactor2ComponentAttributes.hovered)
+
+        // el
+
+        hoveredSetter(false)
       }
     }
 
@@ -167,14 +344,14 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
   // }, []);
 
   const closeEditor = useCallback(() => {
-    setActive(false)
-  }, [])
+    activeSetter(false)
+  }, [activeSetter])
 
   /**
    * Выводит обертку управления компонентом
    */
   const wrapperContent = useMemo(() => {
-    if (!element || !active) {
+    if (!element || (!active && !hovered)) {
       return
     }
 
@@ -187,11 +364,14 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
         container={wrapperContainer}
         parent={parent}
         updateParent={updateParent}
+        active={active}
+        hovered={hovered}
       />
     )
   }, [
     element,
     active,
+    hovered,
     updateObject,
     object,
     closeEditor,
@@ -215,27 +395,12 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
     //   className.push(redactor2ComponentClasses.active)
     // }
 
-    type ComponentWrapperProps = {
-      ref: (el: El) => void
-      // className: string | undefined
-      active: boolean
-      wrapperContent: JSX.Element | undefined
-      // "data-redactor--redactor-component": "true" | undefined
-    } & Omit<
-      Record<
-        typeof redactor2ComponentAttributes[keyof typeof redactor2ComponentAttributes],
-        'true' | undefined
-      >,
-      | typeof redactor2ComponentAttributes.hovered
-      | typeof redactor2ComponentAttributes.tag
-    >
 
     const props: ComponentWrapperProps = {
-      ref,
+      // ref,
       // className: className.length ? className.join(' ') : undefined,
-      active,
+      // active,
       wrapperContent,
-      // element,
       // [redactor2ComponentAttributes.component]: "true",
       [redactor2ComponentAttributes.component]: context?.inEditMode
         ? 'true'
@@ -250,7 +415,7 @@ const useRedactorComponentInit = <El extends HTMLElement = HTMLElement>({
     // }
 
     return props
-  }, [active, ref, wrapperContent, context?.inEditMode])
+  }, [active, wrapperContent, context?.inEditMode])
 }
 
 export default useRedactorComponentInit

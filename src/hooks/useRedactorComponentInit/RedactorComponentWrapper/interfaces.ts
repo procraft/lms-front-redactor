@@ -37,4 +37,8 @@ export type RedactorComponentWrapperProps = {
    * Редактирование родительского объекта
    */
   updateParent: RedactorComponentProps['updateObject'] | undefined
+
+  active: boolean
+  hovered: boolean
+  // wrapperTitle: string
 }

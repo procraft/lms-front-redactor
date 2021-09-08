@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 // import Script from './Script'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
+import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
@@ -21,19 +22,25 @@ export const HtmlTag: RedactorComponent = ({
 }) => {
   _children
 
+  const { ref, element, active, activeSetter } =
+    useRedactorComponentRef<HTMLElement>()
+
   const {
-    ref,
+    // ref,
     // className,
     wrapperContent,
-    active,
+    // active,
     ...otherInitProps
     // TODO этот кух не понимает HTMLDivElement | HTMLAnchorElement, а HTMLElement дает ошибку типа при передачи в анкор
-  } = useRedactorComponentInit<HTMLElement>({
+  } = useRedactorComponentInit({
     object,
     updateObject,
     wrapperContainer,
     parent,
     updateParent,
+    element,
+    active,
+    activeSetter,
   })
 
   const childrenContent = useRedactorRenderComponents({

@@ -46,169 +46,122 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 const ContentEditorDevPage: Page = (props) => {
   const initialObject = useMemo<RedactorComponentObject>(() => {
     return {
-      name: 'Section',
-      component: 'Section',
+      name: 'ContentEditor',
+      component: 'ContentEditor',
+      props: {},
       components: [
         {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          props: {
-            tag: 'div',
-            style: {
-              display: 'flex',
-              marginBottom: 20,
-            },
-          },
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              props: {
-                tag: 'a',
-                href: '/components/contenteditor',
-              },
-              components: [
-                {
-                  name: 'HtmlTag',
-                  component: 'HtmlTag',
-                  components: [],
-                  props: {
-                    text: 'Content Editor',
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          props: {
-            tag: 'style',
-          },
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'body {color: purple;}',
-              },
-            },
-          ],
-        },
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          props: {
-            tag: 'script',
-          },
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'console.log("Test... Script console");',
-              },
-            },
-          ],
-        },
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          props: {
-            tag: 'link',
-            rel: 'stylesheet',
-            href: 'style.css',
-          },
-          components: [],
-        },
-        {
           name: 'ContentEditor',
           component: 'ContentEditor',
+          props: {},
           components: [
             {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
+              name: 'Section',
+              component: 'Section',
               components: [
                 {
                   name: 'HtmlTag',
                   component: 'HtmlTag',
-                  components: [],
                   props: {
-                    text: 'Some text',
+                    tag: 'div',
+                    style: {
+                      display: 'flex',
+                      marginBottom: 20,
+                    },
                   },
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      props: {
+                        tag: 'a',
+                        href: '/components/contenteditor',
+                      },
+                      components: [
+                        {
+                          name: 'HtmlTag',
+                          component: 'HtmlTag',
+                          components: [],
+                          props: {
+                            text: 'Content Editor',
+                          },
+                        },
+                      ],
+                    },
+                  ],
                 },
-              ],
-              props: {
-                tag: 'div',
-                style: {
-                  border: '1px solid green',
-                  minHeight: 100,
-                },
-              },
-            },
-          ],
-          props: {},
-        },
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'HtmlTag content',
-              },
-            },
-          ],
-          props: {
-            tag: 'div',
-            style: {
-              border: '1px solid blue',
-              minHeight: 100,
-            },
-          },
-        },
-        {
-          name: 'ContentEditor',
-          component: 'ContentEditor',
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [
                 {
                   name: 'HtmlTag',
                   component: 'HtmlTag',
-                  components: [],
                   props: {
-                    text: 'Some text',
+                    tag: 'style',
                   },
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      components: [],
+                      props: {
+                        text: 'body {color: purple;}',
+                      },
+                    },
+                  ],
                 },
-              ],
-              props: {
-                tag: 'div',
-                style: {
-                  border: '1px solid green',
-                  minHeight: 100,
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'script',
+                  },
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      components: [],
+                      props: {
+                        text: 'console.log("Test... Script console");',
+                      },
+                    },
+                  ],
                 },
-              },
-            },
-          ],
-          props: {},
-        },
-        {
-          name: 'Section',
-          component: 'Section',
-          components: [
-            {
-              name: 'ContentEditor',
-              component: 'ContentEditor',
-              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  props: {
+                    tag: 'link',
+                    rel: 'stylesheet',
+                    href: 'style.css',
+                  },
+                  components: [],
+                },
+                {
+                  name: 'ContentEditor',
+                  component: 'ContentEditor',
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      components: [
+                        {
+                          name: 'HtmlTag',
+                          component: 'HtmlTag',
+                          components: [],
+                          props: {
+                            text: 'Some text',
+                          },
+                        },
+                      ],
+                      props: {
+                        tag: 'div',
+                        style: {
+                          // border: '1px solid green',
+                          minHeight: 100,
+                        },
+                      },
+                    },
+                  ],
+                  props: {},
+                },
                 {
                   name: 'HtmlTag',
                   component: 'HtmlTag',
@@ -218,26 +171,87 @@ const ContentEditorDevPage: Page = (props) => {
                       component: 'HtmlTag',
                       components: [],
                       props: {
-                        text: 'Some text',
+                        text: 'HtmlTag content',
                       },
                     },
                   ],
                   props: {
                     tag: 'div',
                     style: {
-                      border: '1px solid green',
+                      // border: '1px solid blue',
                       minHeight: 100,
                     },
                   },
+                },
+                {
+                  name: 'ContentEditor',
+                  component: 'ContentEditor',
+                  components: [
+                    {
+                      name: 'HtmlTag',
+                      component: 'HtmlTag',
+                      components: [
+                        {
+                          name: 'HtmlTag',
+                          component: 'HtmlTag',
+                          components: [],
+                          props: {
+                            text: 'Some text',
+                          },
+                        },
+                      ],
+                      props: {
+                        tag: 'div',
+                        style: {
+                          // border: '1px solid green',
+                          minHeight: 100,
+                        },
+                      },
+                    },
+                  ],
+                  props: {},
+                },
+                {
+                  name: 'Section',
+                  component: 'Section',
+                  components: [
+                    {
+                      name: 'ContentEditor',
+                      component: 'ContentEditor',
+                      components: [
+                        {
+                          name: 'HtmlTag',
+                          component: 'HtmlTag',
+                          components: [
+                            {
+                              name: 'HtmlTag',
+                              component: 'HtmlTag',
+                              components: [],
+                              props: {
+                                text: 'Some text',
+                              },
+                            },
+                          ],
+                          props: {
+                            tag: 'div',
+                            style: {
+                              // border: '1px solid green',
+                              minHeight: 100,
+                            },
+                          },
+                        },
+                      ],
+                      props: {},
+                    },
+                  ],
+                  props: {},
                 },
               ],
               props: {},
             },
           ],
-          props: {},
         },
       ],
-      props: {},
     }
   }, [])
 

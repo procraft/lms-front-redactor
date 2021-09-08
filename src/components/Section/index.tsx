@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
+import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 
@@ -12,22 +13,28 @@ export const Section: RedactorComponent = ({
   updateParent,
   ...other
 }) => {
+  const { ref, element, active, activeSetter } =
+    useRedactorComponentRef<HTMLDivElement>()
+
   const {
-    ref,
+    // ref,
     // className,
     wrapperContent,
-    active: _active,
+    // active: _active,
     ...otherInitProps
-  } = useRedactorComponentInit<HTMLDivElement>({
+  } = useRedactorComponentInit({
     object,
     updateObject,
     wrapperContainer,
     parent,
     updateParent,
+    element,
+    active,
+    activeSetter,
   })
 
   // null
-  _active
+  // _active
 
   const childrenContent = useRedactorRenderComponents({
     object,

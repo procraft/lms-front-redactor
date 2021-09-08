@@ -1,5 +1,7 @@
-import React, { useMemo } from 'react'
+/* eslint-disable no-console */
+import React, { useEffect, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
+import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
@@ -14,20 +16,86 @@ export const ContentEditor: RedactorComponent = ({
   updateParent,
   ...other
 }) => {
+  const { ref, element, active, activeSetter } =
+    useRedactorComponentRef<HTMLDivElement>()
+
+  // console.log('element', element);
+
+  useEffect(() => {
+    if (!element || !active) {
+      return
+    }
+
+    const onClick = (event: MouseEvent) => {
+      console.log('ContentEditor onClick event', event)
+
+      // Внешний объект
+      console.log(
+        'ContentEditor onClick event.currentTarget',
+        event.currentTarget
+      )
+
+      // Внутренний объект
+      console.log('ContentEditor onClick event.target', event.target)
+
+      // if (
+      //   event.target === event.currentTarget &&
+      //   event.currentTarget instanceof HTMLElement
+      // ) {
+        event.stopPropagation()
+      //   event.preventDefault()
+      //   // const el: HTMLDivElement = event.currentTarget as El;
+      //   // el.classList.toggle("active")
+      //   // event.target
+      //   // event.currentTarget
+
+      //   // create and dispatch the event
+      //   // const event2 = new CustomEvent<RedactorComponentClickEventDetail>(
+      //   //   'redactorComponentActive',
+      //   //   {
+      //   //     // detail: {
+      //   //     //   hazcheeseburger: true,
+      //   //     // },
+      //   //     // target: element,
+      //   //     // currentTarget: element,
+      //   //     detail: {
+      //   //       element,
+      //   //     },
+      //   //   }
+      //   // )
+
+      //   // event2.preventDefault()
+
+      //   // global.document.dispatchEvent(event2)
+
+      //   activeSetter(true)
+      // }
+    }
+
+    element.addEventListener('click', onClick, true)
+
+    return () => {
+      element.removeEventListener('click', onClick, true)
+    }
+  }, [active, element])
+
   const {
-    ref,
+    // ref,
     // element,
     // props,
-    active,
+    // active,
     // className,
     wrapperContent,
     ...otherInitProps
-  } = useRedactorComponentInit<HTMLDivElement>({
+  } = useRedactorComponentInit({
     object,
     updateObject,
     wrapperContainer,
     parent,
     updateParent,
+    element,
+    active,
+    activeSetter,
   })
 
   const childrenContent = useRedactorRenderComponents({

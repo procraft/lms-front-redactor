@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import dynamic from 'next/dynamic'
 import Context, { LmsFrontRedactorContextValue } from './Context'
 import useRedactorComponentInit from './hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from './hooks/useRedactorRenderComponents'
@@ -6,6 +7,8 @@ import useRedactorRenderComponents from './hooks/useRedactorRenderComponents'
 import { LmsFrontRedactorProps } from './interfaces'
 import { LmsFrontRedactorStyled } from './styles'
 import { LmsFrontRedactorGlobalStyle } from './styles/GlobalStyle'
+
+const FrontEditor = dynamic(() => import('./FrontEditor'))
 
 export * from './interfaces'
 export * from './RedactorComponent/interfaces'
@@ -68,6 +71,8 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = (props) => {
           >
             {redactorContent}
           </LmsFrontRedactorStyled>
+
+          <FrontEditor />
         </>
       )
     }
