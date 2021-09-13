@@ -11,12 +11,8 @@ import {
 import LmsFrontRedactorModal from '../../../../ui/Modal'
 import Context, { RedactorObjectTemplate } from '../../../../Context'
 import { AddBlockModalStyled } from './styles'
-
-enum InsertPlace {
-  Child,
-  Before,
-  After,
-}
+import { InsertPlace } from '../../../useAddComponent/interfaces'
+import { useAddComponent } from '../../../useAddComponent'
 
 /**
  * Модалка для добавления нового блока
@@ -103,6 +99,8 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
     )
   }, [componentData, updateTemplateObject, wrapperContainer])
 
+  const addComponent = useAddComponent()
+
   // TODO Возможно надо будет переделать логику, чтобы новый компонент сразу
   // добавлялся в родительский компонент
   /**
@@ -110,9 +108,9 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
    */
   const addObjectHandler = useCallback(
     (event: React.MouseEvent) => {
-      if (!componentData) {
-        return
-      }
+      // if (!componentData) {
+      //   return
+      // }
 
       event.preventDefault()
       event.stopPropagation()
@@ -120,53 +118,62 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
       /**
        * Если вставка в текущий компонент
        */
-      if (place === InsertPlace.Child) {
-        const components = [...object.components]
+      // if (place === InsertPlace.Child) {
+      //   const components = [...object.components]
 
-        components.push(componentData.template)
+      //   components.push(componentData.template)
 
-        /**
-         * Добавляем новый компонент в родительский
-         */
-        updateObject(object, {
-          components,
-        })
-      } else {
-        /**
-         * Иначе в До или После
-         */
-        if (parent && updateParent) {
-          const components = [...parent.components]
+      //   /**
+      //    * Добавляем новый компонент в родительский
+      //    */
+      //   updateObject(object, {
+      //     components,
+      //   })
+      // } else {
+      //   /**
+      //    * Иначе в До или После
+      //    */
+      //   if (parent && updateParent) {
+      //     const components = [...parent.components]
 
-          const currentComponentIndex = components.indexOf(object)
+      //     const currentComponentIndex = components.indexOf(object)
 
-          // TODO add snackbar
-          if (currentComponentIndex === -1) {
-            throw new Error('Can not find current object')
-          }
+      //     // TODO add snackbar
+      //     if (currentComponentIndex === -1) {
+      //       throw new Error('Can not find current object')
+      //     }
 
-          if (place === InsertPlace.Before) {
-            components.splice(
-              currentComponentIndex > 0 ? currentComponentIndex - 1 : 0,
-              0,
-              componentData.template
-            )
-          } else if (place === InsertPlace.After) {
-            components.splice(
-              currentComponentIndex + 1,
-              0,
-              componentData.template
-            )
-          }
+      //     if (place === InsertPlace.Before) {
+      //       components.splice(
+      //         currentComponentIndex > 0 ? currentComponentIndex - 1 : 0,
+      //         0,
+      //         componentData.template
+      //       )
+      //     } else if (place === InsertPlace.After) {
+      //       components.splice(
+      //         currentComponentIndex + 1,
+      //         0,
+      //         componentData.template
+      //       )
+      //     }
 
-          /**
-           * Добавляем новый компонент в родительский
-           */
-          updateParent(parent, {
-            components,
-          })
-        }
-      }
+      //     /**
+      //      * Добавляем новый компонент в родительский
+      //      */
+      //     updateParent(parent, {
+      //       components,
+      //     })
+      //   }
+      // }
+
+      addComponent({
+        componentData,
+        object,
+        parent,
+        place,
+        updateObject,
+        updateParent,
+      })
 
       /**
        * Закрываем модалку
@@ -174,6 +181,7 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
       closeAddBlockModal()
     },
     [
+      addComponent,
       closeAddBlockModal,
       componentData,
       object,

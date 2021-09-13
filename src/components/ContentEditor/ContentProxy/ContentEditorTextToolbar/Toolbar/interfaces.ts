@@ -1,7 +1,4 @@
-// import EditorComponent from '../../../../EditorComponent'
-// import { RedactorComponentProps } from '../../../../..'
-// import { HtmlTagProps } from '../../../Tag/HtmlTag'
-// import { ContentProxyEditMode } from '../interfaces'
+import { RedactorComponentProps } from '../../../../..'
 
 export type ContentEditorToolbarButton = {
   key?: string | number | undefined
@@ -12,6 +9,26 @@ export type ContentEditorToolbarButton = {
   color?: 'default' | 'inherit' | 'primary' | 'secondary' | undefined
   onClick?: () => boolean
   className?: string
+}
+
+export type ToolbarButtonProps = {
+  name: string
+  title: string
+  disabled: boolean
+  icon: JSX.Element
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  className?: string
+}
+
+export type ReactFiber = {
+  return?: {
+    pendingProps: {
+      object?: RedactorComponentProps['object']
+      parent?: RedactorComponentProps['object']
+      updateObject?: RedactorComponentProps['updateObject']
+      updateParent?: RedactorComponentProps['updateParent']
+    }
+  }
 }
 
 export interface ContentEditorToolbarProps {

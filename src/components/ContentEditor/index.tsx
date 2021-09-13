@@ -1,8 +1,11 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
-import { RedactorComponent } from '../../RedactorComponent/interfaces'
+import {
+  RedactorComponent,
+  RedactorComponentObject,
+} from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
 import EditableContentProxy from './ContentProxy'
 
@@ -108,6 +111,16 @@ export const ContentEditor: RedactorComponent = ({
     return <>{childrenContent}</>
   }, [childrenContent])
 
+  const updateObjectCustom = useCallback(
+    (
+      current: Readonly<RedactorComponentObject<{}>>,
+      data: Partial<RedactorComponentObject<{}>>
+    ) => {
+      return updateObject(current, data)
+    },
+    [updateObject]
+  )
+
   return useMemo(() => {
     if (!inEditMode) {
       return content
@@ -125,10 +138,11 @@ export const ContentEditor: RedactorComponent = ({
           // className={[className, 'content-editor'].join(' ')}
         >
           <EditableContentProxy
-            key={active.toString()}
+            // key={active.toString()}
             active={active}
             object={object}
-            updateObject={updateObject}
+            // updateObject={updateObject}
+            updateObject={updateObjectCustom}
           >
             {content}
           </EditableContentProxy>
@@ -143,7 +157,7 @@ export const ContentEditor: RedactorComponent = ({
     otherInitProps,
     ref,
     active,
-    updateObject,
+    updateObjectCustom,
     content,
   ])
 }

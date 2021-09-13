@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -27,6 +28,8 @@ import { TagEditorToolbarStyled } from './styles'
 import {
   ContentEditorToolbarButton,
   ContentEditorToolbarProps,
+  ReactFiber,
+  ToolbarButtonProps,
 } from './interfaces'
 // import { ContentProxyEditMode } from '../interfaces'
 // import { nodeChildsToEditorComponentObjectComponents } from '../../hooks/useContentEditable/helpers/nodeToEditorComponentObject'
@@ -62,6 +65,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
 
   selectionType
   // console.log('selectionType', selectionType);
+  // console.log('selection', selection)
 
   const [
     contentEditableContainerSelected,
@@ -162,12 +166,106 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     [insertTableCell]
   )
 
-  const renderToolbarButtons = useMemo(() => {
-    const hasSelection = contentEditableContainerSelected
-      ? // && editMode === ContentProxyEditMode.HTML
-        true
-      : null
+  const hasSelection = contentEditableContainerSelected
+    ? // && editMode === ContentProxyEditMode.HTML
+      true
+    : null
 
+  const insertSectionButtonOnClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault()
+      event.stopPropagation()
+
+      if (!selection) {
+        return
+      }
+
+      // console.log('insertSectionButtonOnClick event', event)
+      console.log('insertSectionButtonOnClick selection', selection)
+
+      /**
+       * Фокусный элемент. Может быть как тег, так и текст
+       */
+      const focusNode = selection.focusNode
+
+      if (!focusNode) {
+        return
+      }
+
+      console.log('insertSectionButtonOnClick focusNode', focusNode)
+
+      /**
+       * Находим реакт-файбер
+       */
+
+      let reactFiber: ReactFiber | undefined | null
+
+      for (const i in focusNode) {
+        console.log('insertSectionButtonOnClick i', i)
+
+        if (i.startsWith('__reactFiber')) {
+          //
+
+          reactFiber = focusNode[i as keyof Node] as ReactFiber
+
+          break
+        }
+      }
+
+      console.log(
+        'insertSectionButtonOnClick reactFiber',
+        reactFiber?.return?.pendingProps
+      )
+      console.log(
+        'insertSectionButtonOnClick reactFiber?.return?.pendingProps',
+        reactFiber?.return?.pendingProps
+      )
+
+      if (reactFiber) {
+        reactFiber.return?.pendingProps.object
+        reactFiber.return?.pendingProps.updateParent
+
+        if (
+          reactFiber.return?.pendingProps.object &&
+          reactFiber.return?.pendingProps.updateParent &&
+          reactFiber.return?.pendingProps.updateObject
+        ) {
+          const newComponents = [
+            ...reactFiber.return?.pendingProps.object.components,
+          ]
+          newComponents.push({
+            name: 'test section',
+            component: 'Section',
+            props: {},
+            components: [],
+          })
+
+          reactFiber.return?.pendingProps.updateObject(
+            reactFiber.return?.pendingProps.object,
+            {
+              components: newComponents,
+            }
+          )
+        }
+      }
+    },
+    [selection]
+  )
+
+  const insertSectionButton = useMemo<ToolbarButtonProps>(() => {
+    const button: ToolbarButtonProps = {
+      name: 'insertSection',
+      title: 'Вставить блок',
+      disabled: hasSelection && selection?.type === 'Caret' ? false : true,
+      // icon: <FormatClearIcon />,
+      icon: <i>IS</i>,
+      onClick: insertSectionButtonOnClick,
+    }
+
+    return button
+  }, [hasSelection, insertSectionButtonOnClick, selection?.type])
+
+  const renderToolbarButtons = useMemo(() => {
     const tableControls: ContentEditorToolbarButton[] = [
       {
         key: 'insertTable',
@@ -322,14 +420,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     //   icon: <ModeEditHtmlIcon />,
     // }
 
-    const buttons: {
-      name: string
-      title: string
-      disabled: boolean
-      icon: JSX.Element
-      onClick?: () => void
-      className?: string
-    }[] = [
+    const buttons: ToolbarButtonProps[] = [
       /**
        * Первый элемент выносим в отдельную переменную, чтобы TS правильно понял
        * массив каких типов используется.
@@ -420,6 +511,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         disabled: hasSelection ? false : true,
         icon: <FormatClearIcon />,
       },
+      insertSectionButton,
     ]
       // .concat(tableControls)
       .concat([
@@ -488,8 +580,9 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     })
   }, [
     closestInSelection,
-    contentEditableContainerSelected,
     execCommand,
+    hasSelection,
+    insertSectionButton,
     insertTableCell,
     insertTableRow,
     onButtonClick,
