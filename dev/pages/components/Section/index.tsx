@@ -10,6 +10,7 @@ import { Section } from '../../../../src/components/Section'
 import { HtmlTag } from '../../../../src/components/HtmlTag'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
+import { linksList } from '../../MainPage'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -105,6 +106,7 @@ const SectionDevPage: Page = (props) => {
               updateObject={updateObject}
               getRedactorObjectComponent={getRedactorObjectComponent}
               objectTemplates={objectTemplates}
+              linksList={linksList}
               {...props}
             />
           ) : null}

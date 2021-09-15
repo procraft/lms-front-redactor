@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect, useMemo } from 'react'
 import { RedactorComponentObject } from '../../../RedactorComponent/interfaces'
 import { ContentEditorHTMLEditor } from '../HTMLEditor'
@@ -19,10 +18,9 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
   object,
   updateObject,
   children,
+  activeSetter,
   ...other
 }) => {
-  console.log('EditableContentProxy object.components', object.components)
-
   // useEffect(() => {
   //   console.log(
   //     '3 EditableContentProxy useEffect mounted',
@@ -152,7 +150,10 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
     return (
       <>
         {active ? (
-          <ContentEditorTextToolbar contentEditableContainer={contentWrapper} />
+          <ContentEditorTextToolbar
+            contentEditableContainer={contentWrapper}
+            activeSetter={activeSetter}
+          />
         ) : null}
         <EditableContentProxyStyled
           ref={setContentWrapper}
@@ -173,7 +174,15 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
         ) : null}
       </>
     )
-  }, [active, children, contentWrapper, object, other, updateObject])
+  }, [
+    active,
+    activeSetter,
+    children,
+    contentWrapper,
+    object,
+    other,
+    updateObject,
+  ])
 }
 
 export default EditableContentProxy

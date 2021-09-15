@@ -8,6 +8,9 @@ import {
   LmsFrontRedactorModalStyled,
 } from './styles'
 
+/**
+ * @deprecated
+ */
 const LmsFrontRedactorModal: React.FC<LmsFrontRedactorModalProps> = ({
   title,
   close,

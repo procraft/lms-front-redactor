@@ -11,6 +11,7 @@ import { ContentEditor } from '../../../../src/components/ContentEditor'
 import { HtmlTag } from '../../../../src/components/HtmlTag'
 import useRedactorStoreDev from '../../../hooks/useRedactorStoreDev'
 import { Section } from '../../../../src/components/Section'
+import { linksList } from '../../MainPage'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -239,6 +240,7 @@ const ContentEditorDevPage: Page = (props) => {
                 updateObject={updateObject}
                 getRedactorObjectComponent={getRedactorObjectComponent}
                 objectTemplates={objectTemplates}
+                linksList={linksList}
                 {...props}
               />
             ) : null}

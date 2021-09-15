@@ -18,12 +18,23 @@ export type RedactorObjectTemplate = {
   template: RedactorComponentObject
 }
 
+/**
+ * Список ссылок, которые можно использовать для вставки (в компоненте создания ссылок)
+ */
+export type RedactorLinkData = {
+  id: string
+  uri: string
+  name?: string | null
+}
+
 export type LmsFrontRedactorContextValue = {
   inEditMode: boolean
 
   getRedactorObjectComponent: LmsFrontRedactorProps['getRedactorObjectComponent']
 
   objectTemplates: RedactorObjectTemplate[]
+
+  linksList: RedactorLinkData[]
 }
 
 const LmsFrontRedactorContext =

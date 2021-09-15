@@ -11,7 +11,7 @@ import { ContentEditorToolbar } from './Toolbar'
  * Модалка-туллбар для визуального редактирования текста (WYSIWYG)
  */
 export const ContentEditorTextToolbar: React.FC<ContentEditorTextToolbarProps> =
-  ({ contentEditableContainer }) => {
+  ({ contentEditableContainer, activeSetter }) => {
     // const buttons = useMemo(() => {
     //   const buttons: JSX.Element[] = []
 
@@ -71,11 +71,12 @@ export const ContentEditorTextToolbar: React.FC<ContentEditorTextToolbarProps> =
               <ContentEditorToolbar
                 closestInSelection={closestInSelection}
                 contentEditableContainer={contentEditableContainer}
+                activeSetter={activeSetter}
               />
             </div>
           </ContentEditorTextToolbarStyled>
         </>,
         global.document.body
       )
-    }, [closestInSelection, contentEditableContainer])
+    }, [closestInSelection, contentEditableContainer, activeSetter])
   }

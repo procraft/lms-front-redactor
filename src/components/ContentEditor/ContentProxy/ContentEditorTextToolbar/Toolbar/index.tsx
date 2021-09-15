@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -35,6 +34,8 @@ import {
 // import { nodeChildsToEditorComponentObjectComponents } from '../../hooks/useContentEditable/helpers/nodeToEditorComponentObject'
 // import { ElementWithReactComponent } from '@prisma-cms/front-editor'
 import Grid from 'material-ui/Grid'
+import { useCreateLinkButton } from './buttons/CreateLink'
+import { Modal2 } from '../../../../../ui/Modal2'
 
 export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   props
@@ -49,6 +50,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     contentEditableContainer,
     // updateObject,
     // experimental,
+    activeSetter,
   } = props
 
   // const setEditModeHTML = useCallback(() => {
@@ -118,12 +120,14 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
 
   // console.log('ContentEditorToolbar selection', selection);
 
-  const execCommand = useCallback(
-    (commandId: string, showUI?: boolean, value?: string) => {
-      return document.execCommand(commandId, showUI, value)
-    },
-    []
-  )
+  // const execCommand = useCallback(
+  //   (commandId: string, showUI?: boolean, value?: string) => {
+  //     return document.execCommand(commandId, showUI, value)
+  //   },
+  //   []
+  // )
+
+  const execCommand = document.execCommand
 
   const onButtonClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -169,7 +173,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   const hasSelection = contentEditableContainerSelected
     ? // && editMode === ContentProxyEditMode.HTML
       true
-    : null
+    : false
 
   const insertSectionButtonOnClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -180,9 +184,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         return
       }
 
-      // console.log('insertSectionButtonOnClick event', event)
-      console.log('insertSectionButtonOnClick selection', selection)
-
       /**
        * Фокусный элемент. Может быть как тег, так и текст
        */
@@ -192,8 +193,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         return
       }
 
-      console.log('insertSectionButtonOnClick focusNode', focusNode)
-
       /**
        * Находим реакт-файбер
        */
@@ -201,8 +200,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
       let reactFiber: ReactFiber | undefined | null
 
       for (const i in focusNode) {
-        console.log('insertSectionButtonOnClick i', i)
-
         if (i.startsWith('__reactFiber')) {
           //
 
@@ -211,15 +208,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
           break
         }
       }
-
-      console.log(
-        'insertSectionButtonOnClick reactFiber',
-        reactFiber?.return?.pendingProps
-      )
-      console.log(
-        'insertSectionButtonOnClick reactFiber?.return?.pendingProps',
-        reactFiber?.return?.pendingProps
-      )
 
       if (reactFiber) {
         reactFiber.return?.pendingProps.object
@@ -252,6 +240,9 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     [selection]
   )
 
+  /**
+   * Тест. Вставка блока.
+   */
   const insertSectionButton = useMemo<ToolbarButtonProps>(() => {
     const button: ToolbarButtonProps = {
       name: 'insertSection',
@@ -264,6 +255,14 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
 
     return button
   }, [hasSelection, insertSectionButtonOnClick, selection?.type])
+
+  // TODO Cleanup
+  insertSectionButton
+
+  const createLinkButton = useCreateLinkButton({
+    hasSelection,
+    selection,
+  })
 
   const renderToolbarButtons = useMemo(() => {
     const tableControls: ContentEditorToolbarButton[] = [
@@ -499,6 +498,14 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         disabled: hasSelection ? false : true,
         icon: <FormatIndentIncreaseIcon />,
       },
+      // {
+      //   name: 'createLink',
+      //   title: 'Создать ссылку',
+      //   disabled: hasSelection && selection?.type === "Range" ? false : true,
+      //   icon: <i>Link</i>,
+      //   onClick: createLink,
+      // },
+      createLinkButton,
       {
         name: 'selectAll',
         title: 'Выделить все',
@@ -511,7 +518,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         disabled: hasSelection ? false : true,
         icon: <FormatClearIcon />,
       },
-      insertSectionButton,
+      // insertSectionButton,
     ]
       // .concat(tableControls)
       .concat([
@@ -580,18 +587,18 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     })
   }, [
     closestInSelection,
+    createLinkButton,
     execCommand,
     hasSelection,
-    insertSectionButton,
     insertTableCell,
     insertTableRow,
     onButtonClick,
     selection,
   ])
 
-  const onMouseDown = useCallback((event: React.MouseEvent) => {
-    event.preventDefault()
-  }, [])
+  // const onMouseDown = useCallback((event: React.MouseEvent) => {
+  //   event.preventDefault()
+  // }, [])
 
   // const addSection = useCallback(() => {
   //   /**
@@ -680,6 +687,10 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   //   }
   // }, [contentEditableContainer, contentEditableContainerSelected, updateObject])
 
+  const closeHandler = useCallback(() => {
+    activeSetter(false)
+  }, [activeSetter])
+
   return useMemo(() => {
     const editModes = (
       <>
@@ -734,15 +745,17 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
 
     return (
       <TagEditorToolbarStyled
-        contentEditable={false}
-        onMouseDown={onMouseDown}
-        className="ContentEditorToolbar"
+      // contentEditable={false}
+      // onMouseDown={onMouseDown}
+      // className="ContentEditorToolbar"
       >
-        <Grid container>
-          {renderToolbarButtons}
-          {editModes}
-        </Grid>
+        <Modal2 title="Редактирование текста" closeHandler={closeHandler}>
+          <Grid container className="buttons">
+            {renderToolbarButtons}
+            {editModes}
+          </Grid>
+        </Modal2>
       </TagEditorToolbarStyled>
     )
-  }, [onMouseDown, renderToolbarButtons])
+  }, [renderToolbarButtons, closeHandler])
 }

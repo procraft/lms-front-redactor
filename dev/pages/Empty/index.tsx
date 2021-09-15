@@ -7,6 +7,7 @@ import { getRedactorObjectComponentProps } from '../../../src/hooks/RedactorObje
 import { Section } from '../../../src/components/Section'
 import { HtmlTag } from '../../../src/components/HtmlTag'
 import { ContentEditor } from '../../../src/components/ContentEditor'
+import { linksList } from '../MainPage'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -88,6 +89,7 @@ export const EmptyPage: Page = () => {
                 updateObject={updateObject}
                 getRedactorObjectComponent={getRedactorObjectComponent}
                 objectTemplates={objectTemplates}
+                linksList={linksList}
               />
             ) : null}
           </div>

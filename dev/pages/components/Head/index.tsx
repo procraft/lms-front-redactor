@@ -11,6 +11,7 @@ import { HtmlTag } from '../../../../src/components/HtmlTag'
 import { Head } from '../../../../src/components/Head'
 import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
+import { linksList } from '../../MainPage'
 
 const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   const { object } = props
@@ -143,6 +144,7 @@ const HeadDevPage: Page = (props) => {
               updateObject={updateObject}
               getRedactorObjectComponent={getRedactorObjectComponent}
               objectTemplates={objectTemplates}
+              linksList={linksList}
               {...props}
             />
           ) : null}
