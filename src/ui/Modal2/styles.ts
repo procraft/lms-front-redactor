@@ -24,37 +24,36 @@ export const Modal2TitleStyled = styled.div`
   }
 `
 
-export const Modal2ContentStyled = styled.div``
+export const Modal2ContentStyled = styled.div`
+  padding: 5px;
+`
 
-export const Modal2Styled = styled.div`
+export const ModalContainerStyled = styled.div`
+  padding: 8px;
+  box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 15%);
+  background-color: #fff;
+  border-radius: 10px;
+  animation: fade-in 0.3s linear forwards;
+  font-size: 13px;
+`
+
+export const Modal2Styled = styled(ModalContainerStyled)`
   position: fixed;
   z-index: 900;
   top: 20px;
   left: 150px;
-  min-width: 320px;
 
   display: flex;
   flex-direction: column;
-  padding: 8px;
   max-height: calc(100% - 40px);
-  box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 15%);
   margin: 0;
-  background-color: #fff;
-  border-radius: 10px;
   list-style: none;
   user-select: none;
-  font-size: 13px;
   /* opacity: 0; */
-  animation: fade-in 0.3s linear forwards;
 
-  > ${Modal2TitleStyled} {
-  }
+  /* > ${Modal2TitleStyled} {
+  } */
 
-  > ${Modal2ContentStyled} {
-    padding: 0 10px 10px;
-    /* > .buttons {
-      display: flex;
-      flex-wrap: wrap;
-    } */
-  }
+  /* > ${Modal2ContentStyled} {
+  } */
 `

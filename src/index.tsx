@@ -65,7 +65,7 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
     } else {
       return (
         <>
-          {inEditMode ? <LmsFrontRedactorGlobalStyle /> : null}
+          <LmsFrontRedactorGlobalStyle />
           <LmsFrontRedactorStyled
           // className={inEditMode ? 'inEditMode' : undefined}
           >
