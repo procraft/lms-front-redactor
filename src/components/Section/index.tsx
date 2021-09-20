@@ -31,6 +31,7 @@ export const Section: RedactorComponent = ({
     element,
     active,
     activeSetter,
+    hoverable: true,
   })
 
   // null

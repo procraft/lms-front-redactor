@@ -22,8 +22,42 @@ export const HtmlTag: RedactorComponent = ({
 }) => {
   _children
 
+  const {
+    tag: Tag,
+    text,
+    className: componentClassName,
+    query: _query,
+    first: _first,
+    ...otherProps
+  } = object.props
+
+  _query
+  _first
+
   const { ref, element, active, activeSetter } =
     useRedactorComponentRef<HTMLElement>()
+
+  const hoverable = useMemo(() => {
+    if (!inEditMode) {
+      return false
+    }
+
+    let hoverable = false
+
+    if (Tag) {
+      switch (Tag.toLowerCase()) {
+        case 'script':
+        case 'style':
+        case 'link':
+          hoverable = true
+          break
+
+        default:
+      }
+    }
+
+    return hoverable
+  }, [Tag, inEditMode])
 
   const {
     // ref,
@@ -41,6 +75,7 @@ export const HtmlTag: RedactorComponent = ({
     element,
     active,
     activeSetter,
+    hoverable,
   })
 
   const childrenContent = useRedactorRenderComponents({
@@ -49,18 +84,6 @@ export const HtmlTag: RedactorComponent = ({
     inEditMode,
     wrapperContainer,
   })
-
-  const {
-    tag: Tag,
-    text,
-    className: componentClassName,
-    query: _query,
-    first: _first,
-    ...otherProps
-  } = object.props
-
-  _query
-  _first
 
   const content = useMemo(() => {
     if (!Tag) {

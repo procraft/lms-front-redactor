@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+// import { RedactorComponentHoveredEvent } from './Context';
 
 /**
  * Новый фронт-редактор.
@@ -27,6 +28,20 @@ export const FrontEditor: React.FC = () => {
   //   return () => {
   //     // document.removeEventListener('mouseover', onMouseOver)
   //     document.removeEventListener('redactorComponentActive', onComponentActive)
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+
+  //   const callback = (event: RedactorComponentHoveredEvent) => {
+
+  //     console.log('FrontEditor redactorComponentHovered event', event);
+  //   }
+
+  //   global.document.addEventListener("redactorComponentHovered", callback);
+
+  //   return () => {
+  //     global.document.removeEventListener('redactorComponentHovered', callback)
   //   }
   // }, [])
 

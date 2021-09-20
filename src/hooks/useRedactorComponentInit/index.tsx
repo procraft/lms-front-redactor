@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {
   useCallback,
   useContext,
@@ -37,6 +38,7 @@ const useRedactorComponentInit = ({
   element,
   active,
   activeSetter,
+  hoverable,
 }: useRedactorComponentInitProps): ComponentWrapperProps => {
   const context = useContext(Context)
 
@@ -146,7 +148,7 @@ const useRedactorComponentInit = ({
    * По клику делаем компонент активным
    */
   useEffect(() => {
-    if (!element || !context?.inEditMode || active) {
+    if (!element || !context?.inEditMode || active || !hovered) {
       return
     }
 
@@ -154,34 +156,38 @@ const useRedactorComponentInit = ({
       // TODO Здесь, если прерывать ивент, не кликаются внутренние элементы.
       // Возможно надо сбрасывать ивент, если уже активный элемент.
 
-      if (
-        event.target === event.currentTarget &&
-        event.currentTarget instanceof HTMLElement
-      ) {
-        event.stopPropagation()
-        event.preventDefault()
-        // const el: HTMLDivElement = event.currentTarget as El;
-        // el.classList.toggle("active")
-        // event.target
-        // event.currentTarget
-        // create and dispatch the event
-        // const event2 = new CustomEvent<RedactorComponentClickEventDetail>(
-        //   'redactorComponentActive',
-        //   {
-        //     // detail: {
-        //     //   hazcheeseburger: true,
-        //     // },
-        //     // target: element,
-        //     // currentTarget: element,
-        //     detail: {
-        //       element,
-        //     },
-        //   }
-        // )
-        // event2.preventDefault()
-        // global.document.dispatchEvent(event2)
-        activeSetter(true)
-      }
+      /**
+       * Упростил логику. Теперь, только если элемент в режиме наведенной мышки,
+       * только в этом случае клик перехватываем и выставляем активность
+       */
+      // if (
+      //   event.target === event.currentTarget &&
+      //   event.currentTarget instanceof HTMLElement
+      // ) {
+      event.stopPropagation()
+      event.preventDefault()
+      // const el: HTMLDivElement = event.currentTarget as El;
+      // el.classList.toggle("active")
+      // event.target
+      // event.currentTarget
+      // create and dispatch the event
+      // const event2 = new CustomEvent<RedactorComponentClickEventDetail>(
+      //   'redactorComponentActive',
+      //   {
+      //     // detail: {
+      //     //   hazcheeseburger: true,
+      //     // },
+      //     // target: element,
+      //     // currentTarget: element,
+      //     detail: {
+      //       element,
+      //     },
+      //   }
+      // )
+      // event2.preventDefault()
+      // global.document.dispatchEvent(event2)
+      activeSetter(true)
+      // }
     }
 
     element.addEventListener('click', onClick)
@@ -189,7 +195,7 @@ const useRedactorComponentInit = ({
     return () => {
       element.removeEventListener('click', onClick)
     }
-  }, [active, activeSetter, context?.inEditMode, element])
+  }, [active, activeSetter, context?.inEditMode, element, hovered])
 
   /**
    * Глобальные обработчики, когда компонент активный
@@ -261,65 +267,48 @@ const useRedactorComponentInit = ({
    * Здесь навешиваем различные ивенты
    */
   useEffect(() => {
-    if (!element || !context?.inEditMode) {
+    if (!element || !context?.inEditMode || !hoverable) {
       return
     }
 
     const onMouseOver = (event: MouseEvent) => {
-      // event.preventDefault();
+      // console.log('onMouseOver event', event);
+      // console.log('onMouseOver event.target', event.target);
+      // console.log('onMouseOver event.currentTarget', event.currentTarget);
+
+      // if (
+      //   event.target === event.currentTarget &&
+      //   event.currentTarget instanceof HTMLElement
+      // ) {
       event.stopPropagation()
-
-      if (
-        event.target === event.currentTarget &&
-        event.currentTarget instanceof HTMLElement
-      ) {
-        // const el = event.currentTarget as El
-        // // el.classList.add(redactor2ComponentClasses.hovered)
-
-        // const attr = document.createAttribute(
-        //   redactor2ComponentAttributes.hovered
-        // )
-        // attr.value = 'true'
-        // el.attributes.setNamedItem(attr)
-
-        // el
-
-        hoveredSetter(true)
-      }
+      hoveredSetter(true)
+      // }
     }
 
     const onMouseLeave = (event: MouseEvent) => {
-      // event.preventDefault();
+      // if (
+      //   event.target === event.currentTarget &&
+      //   event.currentTarget instanceof HTMLElement
+      // ) {
       event.stopPropagation()
-
-      if (
-        event.target === event.currentTarget &&
-        event.currentTarget instanceof HTMLElement
-      ) {
-        // const el = event.currentTarget as El
-        // el.classList.remove(redactor2ComponentClasses.hovered)
-        // el.removeAttribute(redactor2ComponentAttributes.hovered)
-
-        // el
-
-        hoveredSetter(false)
-      }
+      hoveredSetter(false)
+      // }
     }
 
     /**
      * Add events
      */
     element.addEventListener('mouseover', onMouseOver)
-    element.addEventListener('mouseout', onMouseLeave)
+    element.addEventListener('mouseleave', onMouseLeave)
 
     return () => {
       /**
        * Remove events
        */
       element.removeEventListener('mouseover', onMouseOver)
-      element.removeEventListener('mouseout', onMouseLeave)
+      element.removeEventListener('mouseleave', onMouseLeave)
     }
-  }, [context?.inEditMode, element])
+  }, [context?.inEditMode, element, hoverable])
 
   /**
    * Обновление текущуего объекта компонента.

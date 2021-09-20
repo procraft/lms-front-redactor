@@ -98,6 +98,7 @@ export const ContentEditor: RedactorComponent = ({
     element,
     active,
     activeSetter,
+    hoverable: true,
   })
 
   const childrenContent = useRedactorRenderComponents({

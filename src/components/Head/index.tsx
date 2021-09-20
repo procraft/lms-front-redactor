@@ -37,6 +37,7 @@ export const Head: RedactorComponent = ({
     element,
     active,
     activeSetter,
+    hoverable: true,
   })
 
   // Null

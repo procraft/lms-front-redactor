@@ -25,6 +25,13 @@ export type useRedactorComponentInitProps<
   element: El | null
   active: boolean
   activeSetter: Dispatch<SetStateAction<boolean>>
+
+  // TODO скорее всего надо написать более хитрый метод, а не просто свойство,
+  // чтобы обрабатывать наведение мышью и решать перехватывать его или дальше пробрасывать
+  /**
+   * Используется ли перехват при наводе мышкой, чтобы подсветить элемент
+   */
+  hoverable: boolean
 }
 
 export type ComponentWrapperProps = {
