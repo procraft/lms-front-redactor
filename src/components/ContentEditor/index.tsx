@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -23,63 +23,63 @@ export const ContentEditor: RedactorComponent = ({
 
   // console.log('element', element);
 
-  useEffect(() => {
-    if (!element || !active) {
-      return
-    }
+  // useEffect(() => {
+  //   if (!element || !active) {
+  //     return
+  //   }
 
-    const onClick = (event: MouseEvent) => {
-      // console.log('ContentEditor onClick event', event)
+  //   const onClick = (event: MouseEvent) => {
+  //     // console.log('ContentEditor onClick event', event)
 
-      // Внешний объект
-      // console.log(
-      //   'ContentEditor onClick event.currentTarget',
-      //   event.currentTarget
-      // )
+  //     // Внешний объект
+  //     // console.log(
+  //     //   'ContentEditor onClick event.currentTarget',
+  //     //   event.currentTarget
+  //     // )
 
-      // Внутренний объект
-      // console.log('ContentEditor onClick event.target', event.target)
+  //     // Внутренний объект
+  //     // console.log('ContentEditor onClick event.target', event.target)
 
-      // if (
-      //   event.target === event.currentTarget &&
-      //   event.currentTarget instanceof HTMLElement
-      // ) {
-      event.stopPropagation()
-      //   event.preventDefault()
-      //   // const el: HTMLDivElement = event.currentTarget as El;
-      //   // el.classList.toggle("active")
-      //   // event.target
-      //   // event.currentTarget
+  //     // if (
+  //     //   event.target === event.currentTarget &&
+  //     //   event.currentTarget instanceof HTMLElement
+  //     // ) {
+  //     event.stopPropagation()
+  //     //   event.preventDefault()
+  //     //   // const el: HTMLDivElement = event.currentTarget as El;
+  //     //   // el.classList.toggle("active")
+  //     //   // event.target
+  //     //   // event.currentTarget
 
-      //   // create and dispatch the event
-      //   // const event2 = new CustomEvent<RedactorComponentClickEventDetail>(
-      //   //   'redactorComponentActive',
-      //   //   {
-      //   //     // detail: {
-      //   //     //   hazcheeseburger: true,
-      //   //     // },
-      //   //     // target: element,
-      //   //     // currentTarget: element,
-      //   //     detail: {
-      //   //       element,
-      //   //     },
-      //   //   }
-      //   // )
+  //     //   // create and dispatch the event
+  //     //   // const event2 = new CustomEvent<RedactorComponentClickEventDetail>(
+  //     //   //   'redactorComponentActive',
+  //     //   //   {
+  //     //   //     // detail: {
+  //     //   //     //   hazcheeseburger: true,
+  //     //   //     // },
+  //     //   //     // target: element,
+  //     //   //     // currentTarget: element,
+  //     //   //     detail: {
+  //     //   //       element,
+  //     //   //     },
+  //     //   //   }
+  //     //   // )
 
-      //   // event2.preventDefault()
+  //     //   // event2.preventDefault()
 
-      //   // global.document.dispatchEvent(event2)
+  //     //   // global.document.dispatchEvent(event2)
 
-      //   activeSetter(true)
-      // }
-    }
+  //     //   activeSetter(true)
+  //     // }
+  //   }
 
-    element.addEventListener('click', onClick, true)
+  //   element.addEventListener('click', onClick, true)
 
-    return () => {
-      element.removeEventListener('click', onClick, true)
-    }
-  }, [active, element])
+  //   return () => {
+  //     element.removeEventListener('click', onClick, true)
+  //   }
+  // }, [active, element])
 
   const {
     // ref,

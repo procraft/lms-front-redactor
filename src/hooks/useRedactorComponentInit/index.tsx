@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, {
   useCallback,
   useContext,
@@ -153,6 +152,9 @@ const useRedactorComponentInit = ({
     }
 
     const onClick = (event: MouseEvent) => {
+      // console.log('editor onClick event.target', event.target);
+      // console.log('editor onClick event.currentTarget', event.currentTarget);
+
       // TODO Здесь, если прерывать ивент, не кликаются внутренние элементы.
       // Возможно надо сбрасывать ивент, если уже активный элемент.
 
