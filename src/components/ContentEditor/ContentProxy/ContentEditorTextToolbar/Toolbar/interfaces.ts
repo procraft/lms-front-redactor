@@ -16,7 +16,8 @@ export type ToolbarButtonProps = {
   title: string
   disabled: boolean
   icon: JSX.Element
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  // onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (event: MouseEvent) => void
   className?: string
 }
 
@@ -37,6 +38,10 @@ export interface ContentEditorToolbarProps {
   // selection: Selection | null;
 
   closestInSelection: <E extends HTMLElement>(selector: string) => E | null
+
+  object: RedactorComponentProps['object']
+  updateObject: RedactorComponentProps['updateObject']
+  contentWrapper: HTMLDivElement
 
   // updateObject: EditorComponent['updateObject']
   // updateObject: RedactorComponentProps['updateObject']

@@ -38,10 +38,10 @@ export const CreateLinkButton: React.FC<CreateLinkButtonProps> = ({
     openedSetter(false)
   }, [openedSetter])
 
-  const preventDefault = useCallback((event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
-  }, [])
+  // const preventDefault = useCallback((event: React.MouseEvent) => {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  // }, [])
 
   // const onMouseDown = useCallback(
   //   (event: React.MouseEvent) => {
@@ -106,14 +106,15 @@ export const CreateLinkButton: React.FC<CreateLinkButtonProps> = ({
           left: clickCoords.x,
           top: clickCoords.y,
         }}
-        onClick={preventDefault}
+        // onClick={preventDefault}
         // onMouseUp={onMouseUp}
+        preventClickEvent={true}
       >
         <LinkForm opened={opened} closePopover={closePopover} />
       </Modal2>,
       document.body
     )
-  }, [clickCoords, closePopover, opened, preventDefault])
+  }, [clickCoords, closePopover, opened])
 
   return useMemo(() => {
     return (
@@ -142,7 +143,7 @@ export const useCreateLinkButton: (
   >(null)
 
   const onClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: MouseEvent) => {
       // console.log('onClick event', event)
 
       openedSetter(!opened)

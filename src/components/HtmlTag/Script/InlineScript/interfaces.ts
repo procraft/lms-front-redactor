@@ -8,4 +8,9 @@ export type InlineScriptProps = {
   object: ScriptProps['object']
 
   updateObject: ScriptProps['updateObject']
+
+  /**
+   * Закрытие компонента
+   */
+  closeHandler: () => void
 }

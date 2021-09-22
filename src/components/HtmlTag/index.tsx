@@ -78,6 +78,10 @@ export const HtmlTag: RedactorComponent = ({
     hoverable,
   })
 
+  const closeHandler = useCallback(() => {
+    return activeSetter(false)
+  }, [activeSetter])
+
   const childrenContent = useRedactorRenderComponents({
     object,
     updateObject,
@@ -258,6 +262,7 @@ export const HtmlTag: RedactorComponent = ({
             // }
             updateObject={updateObject}
             active={active}
+            closeHandler={closeHandler}
           >
             {content}
           </Style>
@@ -290,6 +295,7 @@ export const HtmlTag: RedactorComponent = ({
               // }
               updateObject={updateObject}
               active={active}
+              closeHandler={closeHandler}
             >
               {content}
             </Script>
@@ -382,12 +388,13 @@ export const HtmlTag: RedactorComponent = ({
     content,
     inEditMode,
     object,
-    otherInitProps,
-    otherProps,
-    preventDefault,
     ref,
-    updateObject,
+    otherProps,
+    otherInitProps,
+    preventDefault,
     wrapperContent,
+    updateObject,
     active,
+    closeHandler,
   ])
 }

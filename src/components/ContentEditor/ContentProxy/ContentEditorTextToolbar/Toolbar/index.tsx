@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-import IconButton from 'material-ui/IconButton'
+// import IconButton from 'material-ui/IconButton'
 // import Button from 'material-ui/Button'
 
 // import ModeEditHtmlIcon from 'material-ui-icons/ModeEdit'
@@ -36,6 +36,8 @@ import {
 import Grid from 'material-ui/Grid'
 import { useCreateLinkButton } from './buttons/CreateLink'
 import { Modal2 } from '../../../../../ui/Modal2'
+import { useHTMLEditorModeButton } from './buttons/HTMLEditorMode'
+import { UiIconButton } from '../../../../../ui/UiIconButton'
 
 export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   props
@@ -48,9 +50,11 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     // editMode,
     // setEditMode,
     contentEditableContainer,
-    // updateObject,
+    object,
+    updateObject,
     // experimental,
     activeSetter,
+    contentWrapper,
   } = props
 
   // const setEditModeHTML = useCallback(() => {
@@ -127,15 +131,38 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   //   []
   // )
 
-  const execCommand = document.execCommand
+  // const execCommand = document.execCommand
 
-  const onButtonClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      // return document.execCommand(event.currentTarget.name)
-      return execCommand(event.currentTarget.name)
-    },
-    [execCommand]
-  )
+  const onButtonClick = useCallback((event: MouseEvent) => {
+    // return document.execCommand(event.currentTarget.name)
+
+    // event.preventDefault();
+    // event.stopPropagation();
+
+    // document.execCommand('bold')
+
+    // console.log('onButtonClick on click event', event)
+    // // console.log('onButtonClick on click event.target', event.target)
+    // // console.log('onButtonClick on click event.target.name', event.target.name)
+    // // console.log(
+    // //   'onButtonClick on click event.currentTarget',
+    // //   event.currentTarget
+    // // )
+    // // console.log(
+    // //   'onButtonClick on click event.currentTarget.name',
+    // //   event.currentTarget.name
+    // // )
+
+    const currentTarget = event.currentTarget as HTMLDivElement
+
+    const name = currentTarget.dataset.name
+
+    // // return name && execCommand(event.currentTarget.name)
+
+    if (name) {
+      document.execCommand(name)
+    }
+  }, [])
 
   /**
    * Вставляем колонку
@@ -176,7 +203,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     : false
 
   const insertSectionButtonOnClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: MouseEvent) => {
       event.preventDefault()
       event.stopPropagation()
 
@@ -264,6 +291,14 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     selection,
   })
 
+  const HTMLEditorModeButton = useHTMLEditorModeButton({
+    hasSelection,
+    selection,
+    object,
+    updateObject,
+    contentWrapper,
+  })
+
   const renderToolbarButtons = useMemo(() => {
     const tableControls: ContentEditorToolbarButton[] = [
       {
@@ -272,7 +307,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         title: 'Вставить таблицу',
         disabled: hasSelection ? false : true,
         onClick: () =>
-          execCommand(
+          document.execCommand(
             'insertHTML',
             true,
             `<table><tbody><tr><td></td></tr></tbody></table>`
@@ -506,6 +541,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
       //   onClick: createLink,
       // },
       createLinkButton,
+      HTMLEditorModeButton,
       {
         name: 'selectAll',
         title: 'Выделить все',
@@ -573,27 +609,27 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
 
       return (
         <Grid key={name || index} item>
-          <IconButton
+          <UiIconButton
             className={['TagEditorToolbar--iconButton', className].join(' ')}
             name={name}
-            onClick={onClick ? onClick : onButtonClick}
+            callback={onClick ? onClick : onButtonClick}
             disabled={disabled}
             {...other}
           >
             {icon}
-          </IconButton>
+          </UiIconButton>
         </Grid>
       )
     })
   }, [
     closestInSelection,
     createLinkButton,
-    execCommand,
     hasSelection,
     insertTableCell,
     insertTableRow,
     onButtonClick,
     selection,
+    HTMLEditorModeButton,
   ])
 
   // const onMouseDown = useCallback((event: React.MouseEvent) => {
@@ -749,7 +785,11 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
       // onMouseDown={onMouseDown}
       // className="ContentEditorToolbar"
       >
-        <Modal2 title="Редактирование текста" closeHandler={closeHandler}>
+        <Modal2
+          title="Редактирование текста"
+          closeHandler={closeHandler}
+          preventClickEvent={true}
+        >
           <Grid container className="buttons">
             {renderToolbarButtons}
             {editModes}

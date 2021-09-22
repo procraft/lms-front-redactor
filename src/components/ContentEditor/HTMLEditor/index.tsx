@@ -8,6 +8,7 @@ import { ContentEditorHTMLEditorStyled } from './styles'
 /**
  * Компонент для редактирования HTML-кода.
  * Только надо учитывать, что если в коде
+ * @deprecated
  */
 export const ContentEditorHTMLEditor: React.FC<ContentEditorHTMLEditorProps> =
   ({ element, object, updateObject }) => {
@@ -23,16 +24,16 @@ export const ContentEditorHTMLEditor: React.FC<ContentEditorHTMLEditorProps> =
     )
 
     const button = useMemo(() => {
-      // return (
-      //   <button onClick={toggleEditMode}>
-      //     {!inEditMode ? 'Редактировать как HTML' : 'Закрыть редактор'}
-      //   </button>
-      // )
+      return (
+        <button onClick={toggleEditMode}>
+          {!inEditMode ? 'Редактировать как HTML' : 'Закрыть редактор'}
+        </button>
+      )
 
-      toggleEditMode
+      // toggleEditMode
 
-      return null
-    }, [toggleEditMode])
+      // return null
+    }, [inEditMode, toggleEditMode])
 
     return useMemo(() => {
       return (

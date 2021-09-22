@@ -10,6 +10,7 @@ export const Script: React.FC<ScriptProps> = ({
   forwardedRef,
   updateObject,
   active,
+  closeHandler,
   ...other
 }) => {
   const onUpload = useCallback(
@@ -41,12 +42,13 @@ export const Script: React.FC<ScriptProps> = ({
           source={object.components[0].props.text || ''}
           object={object}
           updateObject={updateObject}
+          closeHandler={closeHandler}
         />
       )
     } else {
       return null
     }
-  }, [active, object, updateObject])
+  }, [active, object, updateObject, closeHandler])
 
   return (
     <>

@@ -15,4 +15,9 @@ export type ScriptProps = {
   updateObject: RedactorComponentProps['updateObject']
 
   active: boolean
+
+  /**
+   * Закрытие компонента
+   */
+  closeHandler: () => void
 }
