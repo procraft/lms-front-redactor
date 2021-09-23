@@ -789,6 +789,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
           title="Редактирование текста"
           closeHandler={closeHandler}
           preventClickEvent={true}
+          modal={false}
         >
           <Grid container className="buttons">
             {renderToolbarButtons}

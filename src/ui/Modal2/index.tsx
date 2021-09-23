@@ -1,8 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 // import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui-icons/Close'
 import { Modal2Props } from './interfaces'
-import { Modal2ContentStyled, Modal2Styled, Modal2TitleStyled } from './styles'
+import {
+  Modal2ContentStyled,
+  Modal2ModalWrapperStyled,
+  Modal2Styled,
+  Modal2TitleStyled,
+} from './styles'
 import { UiIconButton } from '../UiIconButton'
 
 export * from './interfaces'
@@ -15,9 +20,36 @@ export const Modal2: React.FC<Modal2Props> = ({
   children,
   closeHandler,
   preventClickEvent,
+  modal,
   ...other
 }) => {
   const elementState = useState<HTMLDivElement | null>(null)
+  const wrapperState = useState<HTMLDivElement | null>(null)
+
+  const preventEvents = useCallback((event: MouseEvent) => {
+    event.stopPropagation()
+  }, [])
+
+  useEffect(() => {
+    if (!wrapperState[0] || !preventClickEvent) {
+      return
+    }
+
+    const wrapper = wrapperState[0]
+
+    /**
+     * Обрываем все события, чтобы в элементы под окном не проходили
+     */
+    wrapper.addEventListener('mouseenter', preventEvents)
+    wrapper.addEventListener('mousemove', preventEvents)
+    wrapper.addEventListener('mouseover', preventEvents)
+
+    return () => {
+      wrapper.removeEventListener('mouseenter', preventEvents)
+      wrapper.removeEventListener('mousemove', preventEvents)
+      wrapper.removeEventListener('mouseover', preventEvents)
+    }
+  }, [preventClickEvent, preventEvents, wrapperState])
 
   /**
    * Навешиваем прерыватель событий.
@@ -49,7 +81,7 @@ export const Modal2: React.FC<Modal2Props> = ({
   }, [elementState, preventClickEvent])
 
   return useMemo(() => {
-    return (
+    const modalWindow = (
       <Modal2Styled ref={elementState[1]} {...other}>
         {title ? (
           <Modal2TitleStyled>
@@ -66,5 +98,13 @@ export const Modal2: React.FC<Modal2Props> = ({
         <Modal2ContentStyled>{children}</Modal2ContentStyled>
       </Modal2Styled>
     )
-  }, [other, title, closeHandler, children, elementState])
+
+    return modal ? (
+      <Modal2ModalWrapperStyled ref={wrapperState[1]}>
+        {modalWindow}
+      </Modal2ModalWrapperStyled>
+    ) : (
+      modalWindow
+    )
+  }, [elementState, other, title, closeHandler, children, modal, wrapperState])
 }

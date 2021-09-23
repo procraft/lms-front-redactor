@@ -18,27 +18,35 @@ const title = 'UI/Modal2'
 
 interface ContainerProps extends ComponentProps {}
 
-export const Modal2: React.FC<ContainerProps> = ({ children, ...other }) => {
+export const Modal2: React.FC<Partial<ContainerProps>> = ({
+  children,
+  modal,
+  preventClickEvent,
+  ...other
+}) => {
   const [opened, openedSetter] = useState(true)
 
   const closeHandler = useCallback(() => {
     openedSetter(false)
   }, [])
 
-  return (
-    <div>
-      {opened ? (
-        <Component closeHandler={closeHandler} {...other}>
-          {children}
-        </Component>
-      ) : null}
-    </div>
-  )
+  return opened ? (
+    <Component
+      closeHandler={closeHandler}
+      modal={modal || false}
+      preventClickEvent={preventClickEvent || false}
+      {...other}
+    >
+      {children}
+    </Component>
+  ) : null
 }
 
 const args: React.PropsWithChildren<Partial<ContainerProps>> = {
   title: 'Title',
   children: 'Some content',
+  modal: true,
+  preventClickEvent: true,
 }
 
 export default {

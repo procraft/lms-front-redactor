@@ -2,10 +2,16 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { RedactorComponentObject } from '../../../RedactorComponent/interfaces'
 import AddBlockModal from './AddBlockModal'
+import AddBlockModal2 from './AddBlockModal2'
 import { createSvgElement } from './helpers/createSvgElement'
+import { useAddBlockButton } from './hooks/useAddBlockButton'
+import { useAddBlockButtonProps } from './hooks/useAddBlockButton/interfaces'
 import { RedactorComponentWrapperProps } from './interfaces'
 import LmsFrontRedactorStateEditor from './StateEditor'
-import { RedactorComponentWrapperStyled } from './styles'
+import {
+  RedactorComponentWrapperGlobalStyled,
+  RedactorComponentWrapperStyled,
+} from './styles'
 
 /**
  * Выводить дополнительные отладочные инструменты
@@ -16,417 +22,497 @@ const debug = true
  * Враппер для компонентов редактора.
  * Рендерит элементы управления.
  */
-const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> = ({
-  element,
-  object,
-  updateObject,
-  closeEditor,
-  container = global.window?.document.body,
-  parent,
-  updateParent,
-  active,
-  // wrapperTitle,
-}) => {
-  const wrapper = useMemo(() => {
-    const wrapper = document.createElement('div')
+export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
+  ({
+    element,
+    object,
+    updateObject,
+    closeEditor,
+    container = global.window?.document.body,
+    parent,
+    updateParent,
+    active,
+    // wrapperTitle,
+    hovered,
+  }) => {
+    const wrapper = useMemo(() => {
+      const wrapper = document.createElement('div')
+
+      /**
+       * Createsvg
+       */
+
+      wrapper.appendChild(
+        createSvgElement({
+          alignment: 'top left',
+        })
+      )
+
+      wrapper.appendChild(
+        createSvgElement({
+          alignment: 'top right',
+        })
+      )
+
+      wrapper.appendChild(
+        createSvgElement({
+          alignment: 'bottom left',
+        })
+      )
+
+      wrapper.appendChild(
+        createSvgElement({
+          alignment: 'bottom right',
+        })
+      )
+
+      // if(wrapperTitle) {
+      const titleNode = document.createElement('span')
+      titleNode.innerHTML = `
+      <span>${object.name} ${
+        object.name !== object.component ? ` (${object.component})` : ''
+      }</span>
+      <span>${object.props.tag || ''}</span>
+    `
+
+      const titleStyle: Partial<CSSStyleDeclaration> = {
+        position: 'absolute',
+        backgroundColor: '#252424',
+        color: 'white',
+        padding: '2px 5px',
+        fontSize: '12px',
+        top: '-25px',
+        // bottom: '0px',
+        // marginBottom: (element.offsetHeight + 10) + 'px',
+      }
+
+      Object.assign(titleNode.style, titleStyle)
+
+      wrapper.appendChild(titleNode)
+      // }
+
+      return wrapper
+    }, [object.component, object.name, object.props.tag])
+
+    const [addBlockButtonDirection, addBlockButtonDirectionSetter] =
+      useState<useAddBlockButtonProps['direction']>()
 
     /**
-     * Createsvg
+     * При наведении мышью будем определять куда выводить кнопки добавления блоков (вверх или вниз)
      */
+    useEffect(() => {
+      if (!element) {
+        return
+      }
 
-    wrapper.appendChild(
-      createSvgElement({
-        alignment: 'top left',
-      })
-    )
+      const onMouseMove = (event: MouseEvent) => {
+        // console.log('onMouseOver', event)
 
-    wrapper.appendChild(
-      createSvgElement({
-        alignment: 'top right',
-      })
-    )
+        const {
+          // target,
+          // offsetX,
+          offsetY,
+        } = event
 
-    wrapper.appendChild(
-      createSvgElement({
-        alignment: 'bottom left',
-      })
-    )
+        /**
+         * Сверяем с половиной высоты элемента. Если меньше, то вверх. Если больше, то вниз
+         */
+        if (offsetY < element.offsetHeight / 2) {
+          //
+          addBlockButtonDirectionSetter('Top')
+        } else {
+          addBlockButtonDirectionSetter('Bottom')
+        }
+      }
 
-    wrapper.appendChild(
-      createSvgElement({
-        alignment: 'bottom right',
-      })
-    )
+      // const onMouse = (event: MouseEvent) => {
+      //   console.log('onMouse leave', event)
+      // }
 
-    // if(wrapperTitle) {
-    const titleNode = document.createElement('span')
-    titleNode.innerHTML = `
-      <span>
-                  ${object.name} ${
-      object.name !== object.component ? ` (${object.component})` : ''
-    }
-                </span>
-                <span>${object.props.tag || ''}</span>
-      `
+      element.addEventListener('mousemove', onMouseMove)
+      // element.addEventListener('mouseleave', onMouse)
 
-    const titleStyle: Partial<CSSStyleDeclaration> = {
-      position: 'absolute',
-      backgroundColor: '#252424',
-      color: 'white',
-      padding: '2px 5px',
-      fontSize: '12px',
-      top: '-25px',
-      // bottom: '0px',
-      // marginBottom: (element.offsetHeight + 10) + 'px',
-    }
+      // wrapper.addEventListener('mouseover', onMouseOver)
+      // wrapper.addEventListener('mouseenter', onMouseOver)
+      // wrapper.addEventListener('mousemove', onMouseOver)
 
-    Object.assign(titleNode.style, titleStyle)
+      return () => {
+        element.removeEventListener('mousemove', onMouseMove)
+        // element.removeEventListener('mouseleave', onMouse)
+        // wrapper.removeEventListener('mouseover', onMouseOver)
+        // wrapper.removeEventListener('mouseenter', onMouseOver)
+        // wrapper.removeEventListener('mousemove', onMouseOver)
+      }
+    }, [element])
 
-    wrapper.appendChild(titleNode)
-    // }
+    const [addBlockOpened, addBlockOpenedSetter] = useState(false)
 
-    return wrapper
-  }, [object.component, object.name, object.props.tag])
+    const closeAddddBlockModal = useCallback(() => {
+      addBlockOpenedSetter(false)
+    }, [])
 
-  /**
-   * Корневому элементу компонента присваиваем ссылку на текущий враппер.
-   * Это надо, потому что мы не можем заранее знать куда будет отрисован враппер,
-   * потому искать мы его будем не через DOM, а напрямую через свойство элемента.
-   */
-  useEffect(() => {
-    if (!element || !wrapper) {
-      return
-    }
+    const addBlockButtonOnClick = useCallback(() => {
+      addBlockOpenedSetter(true)
+    }, [])
 
-    element.redactorComponentWrapper = wrapper
-
-    return () => {
-      delete element.redactorComponentWrapper
-    }
-  }, [element, wrapper])
-
-  /**
-   * Вывод элементов управления.
-   * Данная логика при переключении active срабатывает только наз
-   * на одно изменение.
-   */
-  useEffect(() => {
-    if (!container) {
-      return
-    }
-
-    // console.log('useEffect wrapper element', element)
-    // console.log('useEffect wrapper active', active)
-
-    // wrapper.style.position = "absolute";
-    // wrapper.style.top = "30px";
-    // wrapper.style.left = "30px";
-
-    const style: Partial<CSSStyleDeclaration> = {
-      // border: '1px solid indigo',
-      position: 'fixed',
-      zIndex: '1000',
-      pointerEvents: 'none',
-    }
-
-    Object.assign(wrapper.style, style)
+    useAddBlockButton({
+      wrapper,
+      hovered,
+      direction: addBlockButtonDirection,
+      onClick: addBlockButtonOnClick,
+    })
 
     /**
-     * Устанавливаем размеры контейнера
+     * Корневому элементу компонента присваиваем ссылку на текущий враппер.
+     * Это надо, потому что мы не можем заранее знать куда будет отрисован враппер,
+     * потому искать мы его будем не через DOM, а напрямую через свойство элемента.
      */
-    const setRect = () => {
-      const { left, top, width, height } = element.getBoundingClientRect()
+    useEffect(() => {
+      if (!element || !wrapper) {
+        return
+      }
 
-      // console.log('setRect', element.getBoundingClientRect());
+      element.redactorComponentWrapper = wrapper
+
+      return () => {
+        delete element.redactorComponentWrapper
+      }
+    }, [element, wrapper])
+
+    /**
+     * Вывод элементов управления.
+     * Данная логика при переключении active срабатывает только наз
+     * на одно изменение.
+     */
+    useEffect(() => {
+      if (!container) {
+        return
+      }
+
+      // console.log('useEffect wrapper element', element)
+      // console.log('useEffect wrapper active', active)
+
+      // wrapper.style.position = "absolute";
+      // wrapper.style.top = "30px";
+      // wrapper.style.left = "30px";
 
       const style: Partial<CSSStyleDeclaration> = {
-        left: `${left - 2}px`,
-        top: `${top - 2}px`,
-        width: `${width + 2}px`,
-        height: `${height + 2}px`,
+        // border: '1px solid indigo',
+        position: 'fixed',
+        zIndex: '1000',
+        pointerEvents: 'none',
       }
 
       Object.assign(wrapper.style, style)
-    }
 
-    setRect()
+      /**
+       * Устанавливаем размеры контейнера
+       */
+      const setRect = () => {
+        const { left, top, width, height } = element.getBoundingClientRect()
 
-    // wrapper.innerHTML = Math.random().toString()
+        // console.log('setRect', element.getBoundingClientRect());
 
-    // document.body.appendChild(wrapper)
-    container.appendChild(wrapper)
+        const style: Partial<CSSStyleDeclaration> = {
+          left: `${left - 2}px`,
+          top: `${top - 2}px`,
+          width: `${width + 2}px`,
+          height: `${height + 2}px`,
+        }
 
-    /**
-     * Навешиваем
-     */
-    // const timeout = setInterval(setRect, 10);
-
-    /**
-     * Обсервер на изменение размеров элемента.
-     * В целом работал, но совсем не реагирует на скролл и изменение других элементов.
-     */
-    // const resizeObserver = ResizeObserver ? new ResizeObserver(() => {
-
-    //   console.log('resizeObserver element', element);
-
-    //   setRect();
-    // }) : null;
-
-    // // resizeObserver?.observe(element);
-    // resizeObserver?.observe(window.document.body);
-
-    // const options = {
-    //   // root: document.querySelector('#scrollArea'),
-    //   root: null,
-    //   rootMargin: '0px',
-    //   threshold: 0
-    // }
-    // const callback = function (entries, observer) {
-    //   /* Content excerpted, show below */
-    //   console.log("IntersectionObserver callback", entries);
-    // };
-    // const observer = new IntersectionObserver(callback, options);
-
-    // observer.observe(element)
-
-    const config: MutationObserverInit = {
-      attributes: true,
-      childList: true,
-      subtree: true,
-      characterData: true,
-    }
-
-    /**
-     * Слушаем все изменения на документе,
-     * чтобы ресайзить враппер
-     */
-    const mutationObserver = new MutationObserver((_changes, _observer) => {
-      // console.log("mutationObserver _changes", _changes);
+        Object.assign(wrapper.style, style)
+      }
 
       setRect()
-    })
 
-    // Start observing the target node for configured mutations
-    // mutationObserver.observe(window.document.body, config)
-    mutationObserver.observe(container, config)
+      // wrapper.innerHTML = Math.random().toString()
 
-    window.addEventListener('resize', setRect)
+      // document.body.appendChild(wrapper)
+      container.appendChild(wrapper)
 
-    // true - handle any scrolls, not event window
-    window.addEventListener('scroll', setRect, true)
+      /**
+       * Навешиваем
+       */
+      // const timeout = setInterval(setRect, 10);
 
-    return () => {
-      // document.body.removeChild(wrapper)
-      container.removeChild(wrapper)
+      /**
+       * Обсервер на изменение размеров элемента.
+       * В целом работал, но совсем не реагирует на скролл и изменение других элементов.
+       */
+      // const resizeObserver = ResizeObserver ? new ResizeObserver(() => {
 
-      // clearTimeout(timeout);
+      //   console.log('resizeObserver element', element);
 
-      // resizeObserver?.disconnect();
+      //   setRect();
+      // }) : null;
 
-      // observer.disconnect();
+      // // resizeObserver?.observe(element);
+      // resizeObserver?.observe(window.document.body);
 
-      mutationObserver.disconnect()
+      // const options = {
+      //   // root: document.querySelector('#scrollArea'),
+      //   root: null,
+      //   rootMargin: '0px',
+      //   threshold: 0
+      // }
+      // const callback = function (entries, observer) {
+      //   /* Content excerpted, show below */
+      //   console.log("IntersectionObserver callback", entries);
+      // };
+      // const observer = new IntersectionObserver(callback, options);
 
-      window.removeEventListener('resize', setRect)
-      window.removeEventListener('scroll', setRect)
-    }
-  }, [container, element, wrapper])
+      // observer.observe(element)
 
-  /**
-   * Показать модалку добавления блока
-   */
-  const [showAddBlockModal, setShowAddBlockModal] = useState(false)
-
-  /**
-   * Добавляем новый блок
-   */
-  const addObjectHandler = useCallback((event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    setShowAddBlockModal(true)
-  }, [])
-
-  /**
-   * Закрытие модалки
-   */
-  const closeAddBlockModal = useCallback(() => {
-    setShowAddBlockModal(false)
-  }, [])
-
-  /**
-   * Удаление компонента
-   */
-  const removeComponent = useCallback(
-    (component: RedactorComponentObject) => {
-      if (!parent || !updateParent) {
-        return
+      const config: MutationObserverInit = {
+        attributes: true,
+        childList: true,
+        subtree: true,
+        characterData: true,
       }
 
       /**
-       * Находим объект в массиве компонентов
+       * Слушаем все изменения на документе,
+       * чтобы ресайзить враппер
        */
+      const mutationObserver = new MutationObserver((_changes, _observer) => {
+        // console.log("mutationObserver _changes", _changes);
 
-      const components = [...parent.components]
-
-      const componentIndex = components.indexOf(component)
-
-      if (componentIndex === -1) {
-        console.error('Не был найден текущий компонент в массиве компонентов')
-        return
-      }
-
-      // const component = components[componentIndex];
-
-      /**
-       * Обновляем данные объекта в массиве данных
-       */
-      components.splice(componentIndex, 1)
-
-      /**
-       * Обновлять мы будем именно текущий объект.
-       * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
-       */
-
-      updateParent(parent, {
-        components,
+        setRect()
       })
 
-      return
-    },
-    [parent, updateParent]
-  )
+      // Start observing the target node for configured mutations
+      // mutationObserver.observe(window.document.body, config)
+      mutationObserver.observe(container, config)
 
-  const removeObjectHandler = useCallback(
-    (event: React.MouseEvent) => {
+      window.addEventListener('resize', setRect)
+
+      // true - handle any scrolls, not event window
+      window.addEventListener('scroll', setRect, true)
+
+      return () => {
+        // document.body.removeChild(wrapper)
+        container.removeChild(wrapper)
+
+        // clearTimeout(timeout);
+
+        // resizeObserver?.disconnect();
+
+        // observer.disconnect();
+
+        mutationObserver.disconnect()
+
+        window.removeEventListener('resize', setRect)
+        window.removeEventListener('scroll', setRect)
+      }
+    }, [container, element, wrapper])
+
+    /**
+     * Показать модалку добавления блока
+     */
+    const [showAddBlockModal, setShowAddBlockModal] = useState(false)
+
+    /**
+     * Добавляем новый блок
+     */
+    const addObjectHandler = useCallback((event: React.MouseEvent) => {
+      event.preventDefault()
       event.stopPropagation()
 
-      removeComponent(object)
-    },
-    [object, removeComponent]
-  )
+      setShowAddBlockModal(true)
+    }, [])
 
-  // const addObjectHandler = useCallback(
-  //   (event: React.MouseEvent) => {
-  //     event.preventDefault()
-  //     event.stopPropagation()
+    /**
+     * Закрытие модалки
+     */
+    const closeAddBlockModal = useCallback(() => {
+      setShowAddBlockModal(false)
+    }, [])
 
-  //     const components = [...object.components]
+    /**
+     * Удаление компонента
+     */
+    const removeComponent = useCallback(
+      (component: RedactorComponentObject) => {
+        if (!parent || !updateParent) {
+          return
+        }
 
-  //     components.push({
-  //       name: 'New Section',
-  //       component: 'Section',
-  //       props: {
-  //         style: {
-  //           border: '2px solid red',
-  //         },
-  //       },
-  //       components: [],
-  //     })
+        /**
+         * Находим объект в массиве компонентов
+         */
 
-  //     updateObject(object, {
-  //       components,
-  //     })
-  //   },
-  //   [object, updateObject]
-  // )
+        const components = [...parent.components]
 
-  const [stateEditorOpened, setStateEditorOpened] = useState(false)
+        const componentIndex = components.indexOf(component)
 
-  const showContentHandler = useCallback(() => {
-    setStateEditorOpened(true)
-  }, [])
+        if (componentIndex === -1) {
+          console.error('Не был найден текущий компонент в массиве компонентов')
+          return
+        }
 
-  const closeContentEditor = useCallback(() => {
-    setStateEditorOpened(false)
-  }, [])
+        // const component = components[componentIndex];
 
-  const stateEditor = useMemo(() => {
-    if (!stateEditorOpened) {
-      return null
-    }
+        /**
+         * Обновляем данные объекта в массиве данных
+         */
+        components.splice(componentIndex, 1)
 
-    return (
-      <LmsFrontRedactorStateEditor
-        object={object}
-        updateObject={updateObject}
-        close={closeContentEditor}
-      />
+        /**
+         * Обновлять мы будем именно текущий объект.
+         * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
+         */
+
+        updateParent(parent, {
+          components,
+        })
+
+        return
+      },
+      [parent, updateParent]
     )
-  }, [closeContentEditor, object, stateEditorOpened, updateObject])
 
-  // const showInnerHtmlHandler = useCallback(() => {
-  //   // eslint-disable-next-line no-console
-  //   console.log(`EditorComponent element`, element);
+    const removeObjectHandler = useCallback(
+      (event: React.MouseEvent) => {
+        event.stopPropagation()
 
-  // }, [element]);
+        removeComponent(object)
+      },
+      [object, removeComponent]
+    )
 
-  return useMemo(() => {
-    return (
-      <>
-        {stateEditor}
-        {showAddBlockModal ? (
-          <AddBlockModal
-            object={object}
-            closeAddBlockModal={closeAddBlockModal}
-            updateObject={updateObject}
-            parent={parent}
-            updateParent={updateParent}
-          />
-        ) : null}
-        {ReactDOM.createPortal(
-          <RedactorComponentWrapperStyled>
-            {active ? (
-              <div className="buttons">
-                {/* <span>
+    // const addObjectHandler = useCallback(
+    //   (event: React.MouseEvent) => {
+    //     event.preventDefault()
+    //     event.stopPropagation()
+
+    //     const components = [...object.components]
+
+    //     components.push({
+    //       name: 'New Section',
+    //       component: 'Section',
+    //       props: {
+    //         style: {
+    //           border: '2px solid red',
+    //         },
+    //       },
+    //       components: [],
+    //     })
+
+    //     updateObject(object, {
+    //       components,
+    //     })
+    //   },
+    //   [object, updateObject]
+    // )
+
+    const [stateEditorOpened, setStateEditorOpened] = useState(false)
+
+    const showContentHandler = useCallback(() => {
+      setStateEditorOpened(true)
+    }, [])
+
+    const closeContentEditor = useCallback(() => {
+      setStateEditorOpened(false)
+    }, [])
+
+    const stateEditor = useMemo(() => {
+      if (!stateEditorOpened) {
+        return null
+      }
+
+      return (
+        <LmsFrontRedactorStateEditor
+          object={object}
+          updateObject={updateObject}
+          close={closeContentEditor}
+        />
+      )
+    }, [closeContentEditor, object, stateEditorOpened, updateObject])
+
+    // const showInnerHtmlHandler = useCallback(() => {
+    //   // eslint-disable-next-line no-console
+    //   console.log(`EditorComponent element`, element);
+
+    // }, [element]);
+
+    return useMemo(() => {
+      return (
+        <>
+          <RedactorComponentWrapperGlobalStyled />
+          {stateEditor}
+          {showAddBlockModal ? (
+            <AddBlockModal
+              object={object}
+              closeAddBlockModal={closeAddBlockModal}
+              updateObject={updateObject}
+              parent={parent}
+              updateParent={updateParent}
+            />
+          ) : null}
+          {ReactDOM.createPortal(
+            <RedactorComponentWrapperStyled>
+              {active ? (
+                <div className="buttons">
+                  {/* <span>
                   {object.name}{' '}
                   {object.name !== object.component
                     ? ` (${object.component})`
                     : ''}
                 </span>
                 <span>{object.props.tag}</span> */}
-                <button onClick={addObjectHandler} role="addBlock">
-                  Add block
-                </button>
-                {debug ? (
-                  <button onClick={showContentHandler} role="showState">
-                    Show state
+                  <button onClick={addObjectHandler} role="addBlock">
+                    Add block
                   </button>
-                ) : null}
-                {parent ? (
-                  <button
-                    onClick={removeObjectHandler}
-                    role="removeComponent"
-                    title="Удалить элемент"
-                  >
-                    ␡
+                  {debug ? (
+                    <button onClick={showContentHandler} role="showState">
+                      Show state
+                    </button>
+                  ) : null}
+                  {parent ? (
+                    <button
+                      onClick={removeObjectHandler}
+                      role="removeComponent"
+                      title="Удалить элемент"
+                    >
+                      ␡
+                    </button>
+                  ) : null}
+                  <button onClick={closeEditor} role="close">
+                    Close
                   </button>
-                ) : null}
-                <button onClick={closeEditor} role="close">
-                  Close
-                </button>
-              </div>
-            ) : null}
-          </RedactorComponentWrapperStyled>,
-          wrapper
-        )}
-      </>
-    )
-  }, [
-    stateEditor,
-    showAddBlockModal,
-    object,
-    closeAddBlockModal,
-    updateObject,
-    parent,
-    updateParent,
-    active,
-    addObjectHandler,
-    showContentHandler,
-    removeObjectHandler,
-    closeEditor,
-    wrapper,
-  ])
-}
+                </div>
+              ) : null}
+            </RedactorComponentWrapperStyled>,
+            wrapper
+          )}
 
-export default RedactorComponentWrapper
+          {addBlockOpened && addBlockButtonDirection ? (
+            <AddBlockModal2
+              closeHandler={closeAddddBlockModal}
+              direction={addBlockButtonDirection}
+              object={object}
+              updateParent={updateParent}
+              parent={parent}
+            />
+          ) : null}
+        </>
+      )
+    }, [
+      active,
+      addBlockButtonDirection,
+      addBlockOpened,
+      addObjectHandler,
+      closeAddBlockModal,
+      closeAddddBlockModal,
+      closeEditor,
+      object,
+      parent,
+      removeObjectHandler,
+      showAddBlockModal,
+      showContentHandler,
+      stateEditor,
+      updateObject,
+      updateParent,
+      wrapper,
+    ])
+  }

@@ -71,6 +71,7 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
           title="Javascript"
           closeHandler={closeHandler}
           preventClickEvent={true}
+          modal={true}
         >
           {editor}
         </MonacoEditorModal>

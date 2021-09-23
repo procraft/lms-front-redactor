@@ -45,6 +45,7 @@ export const HTMLEditorModeButton: React.FC<HTMLEditorModeButtonProps> = ({
         title="Редактор HTML кода"
         closeHandler={closePopover}
         preventClickEvent={true}
+        modal={true}
       >
         <ContentEditorHTMLEditorMonacoEditor
           active

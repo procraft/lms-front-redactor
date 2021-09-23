@@ -40,7 +40,7 @@ export const ModalContainerStyled = styled.div`
 
 export const Modal2Styled = styled(ModalContainerStyled)`
   position: fixed;
-  z-index: 900;
+  z-index: 1100;
   top: 20px;
   left: 150px;
 
@@ -57,4 +57,14 @@ export const Modal2Styled = styled(ModalContainerStyled)`
 
   /* > ${Modal2ContentStyled} {
   } */
+`
+
+export const Modal2ModalWrapperStyled = styled.div`
+  position: fixed;
+  z-index: 1100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(0 0 0 / 4%);
 `

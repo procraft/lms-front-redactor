@@ -95,6 +95,7 @@ export const Style: React.FC<StyleProps> = ({
             title="CSS"
             closeHandler={closeHandler}
             preventClickEvent={true}
+            modal={true}
           >
             {editor}
           </MonacoEditorModal>

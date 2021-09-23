@@ -6,6 +6,7 @@ export type Modal2Props = React.HTMLAttributes<HTMLDivElement> & {
   style?: CSSProperties
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
   onMouseDown?: (event: React.MouseEvent<HTMLDivElement>) => void
+  modal: boolean
 
   /**
    * Прерываем обработчики на клик (чтобы за пределами окна ничего не срабатывало)

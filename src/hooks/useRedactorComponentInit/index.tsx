@@ -22,7 +22,7 @@ import {
   ComponentWrapperProps,
   useRedactorComponentInitProps,
 } from './interfaces'
-import RedactorComponentWrapper from './RedactorComponentWrapper'
+import { RedactorComponentWrapper } from './RedactorComponentWrapper'
 
 /**
  * Инициализируем редактор-компонент
@@ -287,28 +287,34 @@ const useRedactorComponentInit = ({
       // }
     }
 
-    const onMouseLeave = (event: MouseEvent) => {
-      // if (
-      //   event.target === event.currentTarget &&
-      //   event.currentTarget instanceof HTMLElement
-      // ) {
-      event.stopPropagation()
-      hoveredSetter(false)
-      // }
-    }
+    // TODO Сейчас не получается использователь это событие,
+    // так как снимается активность при наведении на вспомогающие кнопки
+    // const onMouseLeave = (event: MouseEvent) => {
+
+    //   console.log('onMouseLeave', event)
+
+    //   // if (
+    //   //   event.target === event.currentTarget &&
+    //   //   event.currentTarget instanceof HTMLElement
+    //   // ) {
+    //   event.stopPropagation()
+    //   hoveredSetter(false)
+    //   // }
+    // }
 
     /**
      * Add events
      */
     element.addEventListener('mouseover', onMouseOver)
-    element.addEventListener('mouseleave', onMouseLeave)
+    // element.addEventListener('mouseenter', onMouseOver)
+    // element.addEventListener('mouseleave', onMouseLeave)
 
     return () => {
       /**
        * Remove events
        */
       element.removeEventListener('mouseover', onMouseOver)
-      element.removeEventListener('mouseleave', onMouseLeave)
+      // element.removeEventListener('mouseleave', onMouseLeave)
     }
   }, [context?.inEditMode, element, hoverable])
 
