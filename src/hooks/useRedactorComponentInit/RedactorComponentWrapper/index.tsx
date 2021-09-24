@@ -487,13 +487,15 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
           )}
 
           {addBlockOpened && addBlockButtonDirection ? (
-            <AddBlockModal2
-              closeHandler={closeAddddBlockModal}
-              direction={addBlockButtonDirection}
-              object={object}
-              updateParent={updateParent}
-              parent={parent}
-            />
+            updateParent && parent ? (
+              <AddBlockModal2
+                closeHandler={closeAddddBlockModal}
+                direction={addBlockButtonDirection}
+                // object={object}
+                updateParent={updateParent}
+                parent={parent}
+              />
+            ) : null
           ) : null}
         </>
       )

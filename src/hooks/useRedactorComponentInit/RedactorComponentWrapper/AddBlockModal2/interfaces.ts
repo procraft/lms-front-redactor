@@ -1,8 +1,8 @@
-import { useAddBlockButtonProps } from '../hooks/useAddBlockButton/interfaces'
-import { RedactorComponentWrapperProps } from '../interfaces'
+// import { RedactorComponentWrapperProps } from '../interfaces'
+import { AddBlockModal2ButtonProps } from './Button/interfaces'
 
 export type AddBlockModal2Props = {
-  object: RedactorComponentWrapperProps['object']
+  // object: RedactorComponentWrapperProps['object']
 
   /**
    * Закрытие модалки
@@ -11,8 +11,8 @@ export type AddBlockModal2Props = {
 
   // updateObject: RedactorComponentWrapperProps['updateObject']
 
-  parent: RedactorComponentWrapperProps['parent']
-  updateParent: RedactorComponentWrapperProps['updateParent']
+  parent: AddBlockModal2ButtonProps['parent']
+  updateParent: AddBlockModal2ButtonProps['updateParent']
 
-  direction: useAddBlockButtonProps['direction']
+  direction: AddBlockModal2ButtonProps['direction']
 }

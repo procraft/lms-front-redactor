@@ -1,178 +1,91 @@
 import React, { useMemo } from 'react'
 import ReactDOM from 'react-dom'
-import { Section } from '../../../../components/Section'
+import { RedactorComponentObject } from '../../../../RedactorComponent/interfaces'
+import { AddBlockModal2Button } from './Button'
 import { AddBlockModal2Props } from './interfaces'
-import {
-  AddBlockModal2BlockStyled,
-  AddBlockModal2ContentStyled,
-  AddBlockModal2Styled,
-} from './styles'
+import { AddBlockModal2ContentStyled, AddBlockModal2Styled } from './styles'
 
 /**
  * Модалка для добавления нового блока
  */
-const AddBlockModal2: React.FC<AddBlockModal2Props> = ({ closeHandler }) => {
+const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
+  closeHandler,
+  direction,
+  // object,
+  parent,
+  updateParent,
+}) => {
   const blocks = useMemo<JSX.Element[]>(() => {
     const blocks: JSX.Element[] = []
 
-    blocks.push(
-      <AddBlockModal2BlockStyled key="block-1">
-        <Section
-          inEditMode={false}
-          // eslint-disable-next-line no-console
-          updateObject={console.log}
-          wrapperContainer={undefined}
-          object={{
+    const blocksObjects: RedactorComponentObject[] = [
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 3,
+              },
+            },
+            components: [],
+          },
+          {
             name: 'Section',
             component: 'Section',
             props: {},
-            components: [
-              {
-                name: 'HtmlTag',
-                component: 'HtmlTag',
-                components: [
-                  // {
-                  //   name: 'HtmlTag',
-                  //   component: 'HtmlTag',
-                  //   components: [],
-                  //   props: {
-                  //     text: 'Some text',
-                  //   },
-                  // },
-                ],
-                props: {
-                  tag: 'div',
-                  style: {
-                    // border: '1px solid green',
-                    // minHeight: 100,
-                  },
-                },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 2,
+                gridRowEnd: 3,
+                gridColumnStart: 2,
+                gridColumnEnd: 4,
               },
-            ],
-          }}
-        />
-      </AddBlockModal2BlockStyled>
-    )
+            },
+            components: [],
+          },
+        ],
+      },
+    ]
 
-    blocks.push(
-      <AddBlockModal2BlockStyled key="block-2">
-        <Section
-          inEditMode={false}
-          // eslint-disable-next-line no-console
-          updateObject={console.log}
-          wrapperContainer={undefined}
-          object={{
-            name: 'Section',
-            component: 'Section',
-            props: {},
-            components: [
-              {
-                name: 'HtmlTag',
-                component: 'HtmlTag',
-                components: [
-                  // {
-                  //   name: 'HtmlTag',
-                  //   component: 'HtmlTag',
-                  //   components: [],
-                  //   props: {
-                  //     text: 'Some text',
-                  //   },
-                  // },
-                ],
-                props: {
-                  tag: 'div',
-                  style: {
-                    // border: '1px solid green',
-                    // minHeight: 100,
-                  },
-                },
-              },
-            ],
-          }}
+    blocksObjects.forEach((object, index) => {
+      blocks.push(
+        <AddBlockModal2Button
+          key={index}
+          object={object}
+          direction={direction}
+          parent={parent}
+          updateParent={updateParent}
+          closeHandler={closeHandler}
         />
-      </AddBlockModal2BlockStyled>
-    )
-
-    blocks.push(
-      <AddBlockModal2BlockStyled key="block-3">
-        <Section
-          inEditMode={false}
-          // eslint-disable-next-line no-console
-          updateObject={console.log}
-          wrapperContainer={undefined}
-          object={{
-            name: 'Section',
-            component: 'Section',
-            props: {},
-            components: [
-              {
-                name: 'HtmlTag',
-                component: 'HtmlTag',
-                components: [
-                  // {
-                  //   name: 'HtmlTag',
-                  //   component: 'HtmlTag',
-                  //   components: [],
-                  //   props: {
-                  //     text: 'Some text',
-                  //   },
-                  // },
-                ],
-                props: {
-                  tag: 'div',
-                  style: {
-                    // border: '1px solid green',
-                    // minHeight: 100,
-                  },
-                },
-              },
-            ],
-          }}
-        />
-      </AddBlockModal2BlockStyled>
-    )
-
-    blocks.push(
-      <AddBlockModal2BlockStyled key="block-4">
-        <Section
-          inEditMode={false}
-          // eslint-disable-next-line no-console
-          updateObject={console.log}
-          wrapperContainer={undefined}
-          object={{
-            name: 'Section',
-            component: 'Section',
-            props: {},
-            components: [
-              {
-                name: 'HtmlTag',
-                component: 'HtmlTag',
-                components: [
-                  // {
-                  //   name: 'HtmlTag',
-                  //   component: 'HtmlTag',
-                  //   components: [],
-                  //   props: {
-                  //     text: 'Some text',
-                  //   },
-                  // },
-                ],
-                props: {
-                  tag: 'div',
-                  style: {
-                    // border: '1px solid green',
-                    // minHeight: 100,
-                  },
-                },
-              },
-            ],
-          }}
-        />
-      </AddBlockModal2BlockStyled>
-    )
+      )
+    })
 
     return blocks
-  }, [])
+  }, [closeHandler, direction, parent, updateParent])
 
   return useMemo(() => {
     return ReactDOM.createPortal(

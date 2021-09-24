@@ -3,6 +3,7 @@ import {
   redactor2ComponentAttributes,
   // redactor2ComponentClasses,
 } from '.'
+import { SectionStyled } from '../components/Section/styles'
 
 /**
  * Эти стили выводятся и должны выводиться только в режиме редактирования
@@ -17,9 +18,9 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
   [${redactor2ComponentAttributes.component}] {
       /* border: 1px solid #dfdfdf; */
-      border: 1px solid transparent;
+      /* border: 1px solid transparent; */
       min-height: 20px;
-      cursor: pointer;
+      /* cursor: pointer; */
       /* padding: 2px 4px; */
 
       /* margin: 10px; */
@@ -82,6 +83,20 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
   img {
     max-width: 100%;
+  }
+
+  ${SectionStyled} {
+    /* border: 1px solid red; */
+    /* min-height: 50px; */
+    
+    padding: 15px;
+
+    &:empty {
+      border: 1px solid #ccc;
+      background: #ddd;
+      min-height: 20px;
+      /* margin: 2px; */
+    }
   }
 
 `

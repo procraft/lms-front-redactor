@@ -11,21 +11,17 @@ export const AddBlockModal2Styled = styled(Modal2)`
 `
 
 export const AddBlockModal2ContentStyled = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
   width: 480px;
 
-  > * {
+  /* > * {
     flex-basis: 25%;
-    /* padding: 10px; */
-  }
-`
+    padding: 10px;
+  } */
 
-export const AddBlockModal2BlockStyled = styled.div`
   display: grid;
-
-  > * {
-    border: 1px solid green;
-    /* height: 20px; */
-  }
+  grid-gap: 10px;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
 `

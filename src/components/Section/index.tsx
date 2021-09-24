@@ -3,6 +3,7 @@ import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
+import { SectionStyled } from './styles'
 
 export const Section: RedactorComponent = ({
   object,
@@ -86,8 +87,20 @@ export const Section: RedactorComponent = ({
   // }, [childrenContent, object.props]);
 
   const content = useMemo(() => {
-    return <>{childrenContent}</>
-  }, [childrenContent])
+    return (
+      <SectionStyled
+        {...other}
+        {...otherInitProps}
+        ref={inEditMode ? ref : undefined}
+        // className={className}
+        contentEditable="false"
+        suppressContentEditableWarning
+        {...object.props}
+      >
+        {childrenContent}
+      </SectionStyled>
+    )
+  }, [childrenContent, inEditMode, object.props, other, otherInitProps, ref])
 
   return useMemo(() => {
     if (!inEditMode) {
@@ -97,17 +110,8 @@ export const Section: RedactorComponent = ({
     return (
       <>
         {wrapperContent}
-        <div
-          {...other}
-          {...otherInitProps}
-          ref={ref}
-          // className={className}
-          contentEditable="false"
-          suppressContentEditableWarning
-        >
-          {content}
-        </div>
+        {content}
       </>
     )
-  }, [inEditMode, wrapperContent, other, otherInitProps, ref, content])
+  }, [inEditMode, wrapperContent, content])
 }
