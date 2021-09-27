@@ -158,8 +158,10 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
     useAddBlockButton({
       wrapper,
       hovered,
+      active,
       direction: addBlockButtonDirection,
       onClick: addBlockButtonOnClick,
+      parent,
     })
 
     /**

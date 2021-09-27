@@ -1,3 +1,5 @@
+import { RedactorComponentObject } from '../../../../..'
+
 export type useAddBlockButtonProps = {
   /**
    * Враппер компонента
@@ -9,7 +11,14 @@ export type useAddBlockButtonProps = {
    */
   hovered: boolean
 
+  /**
+   * Если элемент активный, не выводим кнопки
+   */
+  active: boolean
+
   direction: 'Top' | 'Bottom' | undefined
 
   onClick: (event: MouseEvent) => void
+
+  parent: RedactorComponentObject | undefined
 }

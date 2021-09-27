@@ -10,10 +10,20 @@ export const useAddBlockButton: (props: useAddBlockButtonProps) => void = ({
   hovered,
   direction,
   onClick,
+  parent,
+  active,
 }) => {
   const [button, buttonSetter] = useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
+    /**
+     * Если нет родительского компонента, то не выводим кнопку, так как сейчас она расчитана
+     * только на добавление в родителя
+     */
+    if (!parent || active) {
+      return
+    }
+
     const button = document.createElement('button')
 
     button.className = `RedactorComponentWrapper--addBlock-button ${direction}`
@@ -33,7 +43,11 @@ export const useAddBlockButton: (props: useAddBlockButtonProps) => void = ({
     // button.addEventListener('mouseleave', onMouseOver)
 
     buttonSetter(button)
-  }, [direction])
+
+    return () => {
+      buttonSetter(null)
+    }
+  }, [direction, parent, active])
 
   useEffect(() => {
     if (!button) {

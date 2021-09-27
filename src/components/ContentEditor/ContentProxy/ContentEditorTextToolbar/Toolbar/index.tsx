@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import ReactDOM from 'react-dom'
 
 // import IconButton from 'material-ui/IconButton'
 // import Button from 'material-ui/Button'
@@ -779,7 +780,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
       </>
     )
 
-    return (
+    return ReactDOM.createPortal(
       <TagEditorToolbarStyled
       // contentEditable={false}
       // onMouseDown={onMouseDown}
@@ -796,7 +797,8 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
             {editModes}
           </Grid>
         </Modal2>
-      </TagEditorToolbarStyled>
+      </TagEditorToolbarStyled>,
+      document.body
     )
   }, [renderToolbarButtons, closeHandler])
 }

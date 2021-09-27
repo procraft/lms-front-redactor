@@ -13,7 +13,14 @@ export const AddBlockModal2Styled = styled(Modal2)`
 export const AddBlockModal2ContentStyled = styled.div`
   /* display: flex;
   flex-wrap: wrap; */
-  width: 480px;
+  /* width: 480px; */
+
+  /* border: 1px solid red; */
+  /* transform-origin: top left;
+  width: 200%;
+  transform: scale(0.5);  */
+  /* 
+  */
 
   /* > * {
     flex-basis: 25%;
@@ -21,7 +28,7 @@ export const AddBlockModal2ContentStyled = styled.div`
   } */
 
   display: grid;
-  grid-gap: 10px;
+  /* grid-gap: 10px; */
   grid-template-rows: auto;
   grid-template-columns: repeat(4, 1fr);
 `

@@ -41,7 +41,7 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
     line-height: ${buttonHeight - 2}px;
     
     position: absolute;
-    left: calc(50% - ${buttonHeight - 2}px);
+    left: calc(50% - ${buttonHeight / 2}px);
     
     &:hover {
       transform: scale(1.2);

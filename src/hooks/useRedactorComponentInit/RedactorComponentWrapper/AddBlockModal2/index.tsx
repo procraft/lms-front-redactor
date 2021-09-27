@@ -26,7 +26,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
           style: {
             display: 'grid',
             gridTemplateRows: '1fr 1fr',
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
         },
@@ -65,6 +65,448 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
                 gridColumnEnd: 4,
               },
             },
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 2,
+                gridRowEnd: 3,
+                gridColumnStart: 1,
+                gridColumnEnd: 3,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 3,
+              },
+            },
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 3,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 2,
+                gridColumnStart: 2,
+                gridColumnEnd: 4,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 2,
+                gridColumnStart: 1,
+                gridColumnEnd: 3,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 3,
+              },
+            },
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 2,
+                gridRowEnd: 3,
+                gridColumnStart: 1,
+                gridColumnEnd: 4,
+              },
+            },
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 2,
+                gridColumnStart: 1,
+                gridColumnEnd: 4,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 3,
+                gridColumnStart: 2,
+                gridColumnEnd: 4,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: 3,
+                gridColumnStart: 1,
+                gridColumnEnd: 3,
+              },
+            },
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 4fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateColumns: '2fr 8fr 2fr',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 3fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+        ],
+      },
+      {
+        name: 'Section',
+        component: 'Section',
+        props: {
+          style: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 6fr)',
+            gridGap: '10px',
+          },
+        },
+        components: [
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
+            components: [],
+          },
+          {
+            name: 'Section',
+            component: 'Section',
+            props: {},
             components: [],
           },
         ],
