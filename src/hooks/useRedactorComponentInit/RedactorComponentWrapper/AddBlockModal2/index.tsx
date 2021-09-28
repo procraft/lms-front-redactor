@@ -25,7 +25,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -75,7 +75,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -125,7 +125,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -175,7 +175,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -225,7 +225,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -270,7 +270,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -315,7 +315,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },
@@ -354,7 +354,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
         props: {
           style: {
             display: 'grid',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gridTemplateColumns: 'repeat(3, 4fr)',
             gridGap: '10px',
           },

@@ -38,6 +38,8 @@ export type ComponentWrapperProps = {
   // ref: (el: El) => void
   // className: string | undefined
   // active: boolean
+
+  hovered: boolean
   wrapperContent: JSX.Element | undefined
   // "data-redactor--redactor-component": "true" | undefined
 } & Omit<

@@ -3,6 +3,7 @@ import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
+import { AddWidgetButton } from '../../ui/AddWidgetButton'
 import { SectionStyled } from './styles'
 
 export const Section: RedactorComponent = ({
@@ -22,6 +23,7 @@ export const Section: RedactorComponent = ({
     // className,
     wrapperContent,
     // active: _active,
+    hovered,
     ...otherInitProps
   } = useRedactorComponentInit({
     object,
@@ -111,7 +113,27 @@ export const Section: RedactorComponent = ({
       <>
         {wrapperContent}
         {content}
+
+        {/* Если дочерних элементов нет, то даем возможность вставлять дочерние виджеты */}
+        {!content.props.children && hovered === true && element ? (
+          <AddWidgetButton
+            hovered={hovered}
+            element={element}
+            object={object}
+            updateObject={updateObject}
+            activeSetter={activeSetter}
+          />
+        ) : null}
       </>
     )
-  }, [inEditMode, wrapperContent, content])
+  }, [
+    inEditMode,
+    content,
+    wrapperContent,
+    hovered,
+    element,
+    object,
+    updateObject,
+    activeSetter,
+  ])
 }

@@ -402,6 +402,7 @@ const useRedactorComponentInit = ({
       [redactor2ComponentAttributes.active]: active ? 'true' : undefined,
       // [redactor2ComponentAttributes.hovered]: context?.inEditMode ? "true" : undefined,
       // "data-redactor--redactor-component": "true",
+      hovered,
     }
 
     // if (context?.inEditMode) {
@@ -409,7 +410,7 @@ const useRedactorComponentInit = ({
     // }
 
     return props
-  }, [active, wrapperContent, context?.inEditMode])
+  }, [active, wrapperContent, context?.inEditMode, hovered])
 }
 
 export default useRedactorComponentInit
