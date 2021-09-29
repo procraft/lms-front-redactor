@@ -32,6 +32,20 @@ export const TagEditorToolbarStyled = styled.div`
               fill: rgba(0, 0, 0, 0.26);
             }
           }
+
+          .svg-icon {
+            * {
+              fill: rgba(0, 0, 0, 0.54);
+            }
+          }
+
+          &:disabled {
+            .svg-icon {
+              * {
+                fill: rgba(0, 0, 0, 0.26);
+              }
+            }
+          }
         }
 
         i {

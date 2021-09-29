@@ -26,7 +26,7 @@ export const AddBlockModal2ButtonStyled = styled.div`
       background: #ddd;
       /* border: 1px solid #ccc;
     */
-      /* min-height: 20px; */
+      min-height: 20px;
       /* margin: 2px; */
       padding: 5px;
     }

@@ -10,6 +10,10 @@ import { SectionStyled } from '../components/Section/styles'
  */
 export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
+  * {
+    box-sizing: border-box;
+  }
+
   /* * {
     &:focus {
       outline: none;
@@ -95,7 +99,7 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
       border: 1px solid #ccc;
       background: repeating-linear-gradient(
 45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0.05) 10px, rgba(0, 0, 0, 0.05) 20px);
-      min-height: 30px;
+      min-height: 60px;
       /* margin: 2px; */
     }
   }

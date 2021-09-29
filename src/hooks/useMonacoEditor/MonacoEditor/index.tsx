@@ -49,7 +49,15 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       editorInstance = monaco.editor.create(editorContainer, {
         value: source,
         language,
+        formatOnPaste: true,
+        // formatOnType: true,
+        automaticLayout: true,
+        insertSpaces: true,
+        tabSize: 2,
+        wordWrap: 'on',
       })
+
+      // console.log('editorInstance._actions["editor.action.formatDocument"]', editorInstance._actions["editor.action.formatDocument"]);
 
       // model = monaco.editor.getModels()[0]
       model = editorInstance.getModel()
