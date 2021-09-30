@@ -55,6 +55,9 @@ export const Editor: React.FC<MonacoEditorProps> = ({
         insertSpaces: true,
         tabSize: 2,
         wordWrap: 'on',
+        minimap: {
+          enabled: false,
+        },
       })
 
       // console.log('editorInstance._actions["editor.action.formatDocument"]', editorInstance._actions["editor.action.formatDocument"]);

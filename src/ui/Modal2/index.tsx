@@ -41,12 +41,17 @@ export const Modal2: React.FC<Modal2Props> = ({
      * Обрываем все события, чтобы в элементы под окном не проходили
      */
     wrapper.addEventListener('mouseenter', preventEvents)
-    wrapper.addEventListener('mousemove', preventEvents)
+
+    /**
+     * Внимание! Нельзя обрывать событие mousemove, потому что не работают тогда
+     * выделения текста и скролл в monaco-editor
+     */
+    // wrapper.addEventListener('mousemove', preventEvents)
     wrapper.addEventListener('mouseover', preventEvents)
 
     return () => {
       wrapper.removeEventListener('mouseenter', preventEvents)
-      wrapper.removeEventListener('mousemove', preventEvents)
+      // wrapper.removeEventListener('mousemove', preventEvents)
       wrapper.removeEventListener('mouseover', preventEvents)
     }
   }, [preventClickEvent, preventEvents, wrapperState])

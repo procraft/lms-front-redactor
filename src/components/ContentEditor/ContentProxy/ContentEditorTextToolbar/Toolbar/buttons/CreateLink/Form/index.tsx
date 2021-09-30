@@ -124,13 +124,6 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
               label="Адрес ссылки"
               fullWidth
             />
-            {/* <input
-              value={link || ''}
-              onChange={onChangeLink}
-              // label="Адрес ссылки"
-              // fullWidth
-              onMouseDown={onMouseDown}
-            /> */}
 
             <LinkFormLinksListStyled>
               {context?.linksList.map((n) => {
