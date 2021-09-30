@@ -23,7 +23,7 @@ export type RedactorObjectTemplate = {
  */
 export type RedactorLinkData = {
   id: string
-  uri: string
+  uri?: string | null
   name?: string | null
 }
 

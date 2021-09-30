@@ -13,7 +13,7 @@ export type RedactorComponentObject<P = {}> = LandingTemplateFragment & {
   components: RedactorComponentObject<P>[]
   props: EditorComponentObject<P>['props']
   id?: string
-  uri?: string
+  uri?: string | null
 }
 
 export type RedactorComponentProps<P = {}> = {
