@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import ReactDOM from 'react-dom'
+// import ReactDOM from 'react-dom'
 import { ContentEditorTextToolbarProps } from './interfaces'
 import {
   ContentEditorTextToolbarStyled,
@@ -64,29 +64,31 @@ export const ContentEditorTextToolbar: React.FC<ContentEditorTextToolbarProps> =
     )
 
     return useMemo(() => {
-      return ReactDOM.createPortal(
-        <>
-          <ContentEditorTextToolbarStyled>
-            <div className="title">
-              <h1>Text</h1>
-              <hr />
-            </div>
+      // return ReactDOM.createPortal(
+      //   <>
+      return (
+        <ContentEditorTextToolbarStyled>
+          <div className="title">
+            <h1>Text</h1>
+            <hr />
+          </div>
 
-            <div className="content">
-              {/* {buttons} */}
-              <ContentEditorToolbar
-                closestInSelection={closestInSelection}
-                contentEditableContainer={contentEditableContainer}
-                activeSetter={activeSetter}
-                contentWrapper={contentWrapper}
-                object={object}
-                updateObject={updateObject}
-              />
-            </div>
-          </ContentEditorTextToolbarStyled>
-        </>,
-        global.document.body
+          <div className="content">
+            {/* {buttons} */}
+            <ContentEditorToolbar
+              closestInSelection={closestInSelection}
+              contentEditableContainer={contentEditableContainer}
+              activeSetter={activeSetter}
+              contentWrapper={contentWrapper}
+              object={object}
+              updateObject={updateObject}
+            />
+          </div>
+        </ContentEditorTextToolbarStyled>
       )
+      //   </>,
+      //   global.document.body
+      // )
     }, [
       closestInSelection,
       contentEditableContainer,

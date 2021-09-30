@@ -88,6 +88,7 @@ export const ContentEditor: RedactorComponent = ({
     // active,
     // className,
     wrapperContent,
+    hovered: _hovered,
     ...otherInitProps
   } = useRedactorComponentInit({
     object,
@@ -100,6 +101,8 @@ export const ContentEditor: RedactorComponent = ({
     activeSetter,
     hoverable: true,
   })
+
+  _hovered
 
   const childrenContent = useRedactorRenderComponents({
     object,

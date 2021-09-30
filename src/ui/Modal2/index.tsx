@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import ReactDOM from 'react-dom'
 // import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui-icons/Close'
 import { Modal2Props } from './interfaces'
@@ -23,6 +24,15 @@ export const Modal2: React.FC<Modal2Props> = ({
   modal,
   ...other
 }) => {
+  /**
+   * Так как у нас рендерится через портал, учитываем загрузку на стороне фронта
+   */
+  const [loaded, loadedSetter] = useState(false)
+
+  useEffect(() => {
+    loadedSetter(true)
+  }, [])
+
   const elementState = useState<HTMLDivElement | null>(null)
   const wrapperState = useState<HTMLDivElement | null>(null)
 
@@ -86,6 +96,10 @@ export const Modal2: React.FC<Modal2Props> = ({
   }, [elementState, preventClickEvent])
 
   return useMemo(() => {
+    if (!loaded) {
+      return null
+    }
+
     const modalWindow = (
       <Modal2Styled ref={elementState[1]} {...other}>
         {title ? (
@@ -104,12 +118,23 @@ export const Modal2: React.FC<Modal2Props> = ({
       </Modal2Styled>
     )
 
-    return modal ? (
+    const content = modal ? (
       <Modal2ModalWrapperStyled ref={wrapperState[1]}>
         {modalWindow}
       </Modal2ModalWrapperStyled>
     ) : (
       modalWindow
     )
-  }, [elementState, other, title, closeHandler, children, modal, wrapperState])
+
+    return ReactDOM.createPortal(content, document.body)
+  }, [
+    loaded,
+    elementState,
+    other,
+    title,
+    closeHandler,
+    children,
+    modal,
+    wrapperState,
+  ])
 }

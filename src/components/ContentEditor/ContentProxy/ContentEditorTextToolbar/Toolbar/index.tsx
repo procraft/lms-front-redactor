@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import ReactDOM from 'react-dom'
+// import ReactDOM from 'react-dom'
 
 // import IconButton from 'material-ui/IconButton'
 // import Button from 'material-ui/Button'
@@ -36,7 +36,7 @@ import {
 // import { ElementWithReactComponent } from '@prisma-cms/front-editor'
 import Grid from 'material-ui/Grid'
 import { useCreateLinkButton } from './buttons/CreateLink'
-import { Modal2 } from '../../../../../ui/Modal2'
+// import { Modal2 } from '../../../../../ui/Modal2'
 import { useHTMLEditorModeButton } from './buttons/HTMLEditorMode'
 import { UiIconButton } from '../../../../../ui/UiIconButton'
 
@@ -780,25 +780,24 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
       </>
     )
 
-    return ReactDOM.createPortal(
+    return (
       <TagEditorToolbarStyled
-      // contentEditable={false}
-      // onMouseDown={onMouseDown}
-      // className="ContentEditorToolbar"
+        // contentEditable={false}
+        // onMouseDown={onMouseDown}
+        // className="ContentEditorToolbar"
+        title="Редактирование текста"
+        closeHandler={closeHandler}
+        preventClickEvent={true}
+        modal={false}
       >
-        <Modal2
-          title="Редактирование текста"
-          closeHandler={closeHandler}
-          preventClickEvent={true}
-          modal={false}
-        >
-          <Grid container className="buttons">
-            {renderToolbarButtons}
-            {editModes}
-          </Grid>
-        </Modal2>
-      </TagEditorToolbarStyled>,
-      document.body
+        {/* <Modal2
+        > */}
+        <Grid container className="buttons">
+          {renderToolbarButtons}
+          {editModes}
+        </Grid>
+        {/* </Modal2> */}
+      </TagEditorToolbarStyled>
     )
   }, [renderToolbarButtons, closeHandler])
 }

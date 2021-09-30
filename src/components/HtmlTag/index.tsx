@@ -64,6 +64,7 @@ export const HtmlTag: RedactorComponent = ({
     // className,
     wrapperContent,
     // active,
+    hovered: _hovered,
     ...otherInitProps
     // TODO этот кух не понимает HTMLDivElement | HTMLAnchorElement, а HTMLElement дает ошибку типа при передачи в анкор
   } = useRedactorComponentInit({
@@ -77,6 +78,8 @@ export const HtmlTag: RedactorComponent = ({
     activeSetter,
     hoverable,
   })
+
+  _hovered
 
   const closeHandler = useCallback(() => {
     return activeSetter(false)

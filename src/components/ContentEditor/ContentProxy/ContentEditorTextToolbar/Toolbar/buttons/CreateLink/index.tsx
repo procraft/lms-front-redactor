@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import ReactDOM from 'react-dom'
 import LinkIcon from 'material-ui-icons/Link'
 import { ToolbarButtonProps } from '../../interfaces'
 import { CreateLinkButtonProps, useCreateLinkButtonProps } from './interfaces'
@@ -98,7 +97,7 @@ export const CreateLinkButton: React.FC<CreateLinkButtonProps> = ({
       return null
     }
 
-    return ReactDOM.createPortal(
+    return (
       <Modal2
         title="Ссылка"
         closeHandler={closePopover}
@@ -112,8 +111,7 @@ export const CreateLinkButton: React.FC<CreateLinkButtonProps> = ({
         modal={false}
       >
         <LinkForm opened={opened} closePopover={closePopover} />
-      </Modal2>,
-      document.body
+      </Modal2>
     )
   }, [clickCoords, closePopover, opened])
 

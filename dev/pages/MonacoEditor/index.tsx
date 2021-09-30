@@ -41,11 +41,17 @@ export const DevMonacoPage: Page = () => {
   return useMemo(() => {
     return (
       <>
-        <Modal2 modal preventClickEvent>
+        <Modal2
+          modal
+          preventClickEvent
+          style={{
+            right: 20,
+          }}
+        >
           <div
             style={{
-              height: 700,
-              width: 1000,
+              // height: 700,
+              // width: 1000,
               border: '1px solid green',
             }}
             ref={containerSetter}

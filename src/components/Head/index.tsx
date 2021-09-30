@@ -26,6 +26,7 @@ export const Head: RedactorComponent = ({
     // ref,
     // className,
     wrapperContent,
+    hovered: _hovered,
     // active: _active,
     ...otherInitProps
   } = useRedactorComponentInit({
@@ -39,6 +40,8 @@ export const Head: RedactorComponent = ({
     activeSetter,
     hoverable: true,
   })
+
+  _hovered
 
   // Null
   // _active
