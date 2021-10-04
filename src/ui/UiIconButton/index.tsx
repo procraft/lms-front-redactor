@@ -18,12 +18,12 @@ export const UiIconButton: React.FC<UiIconButtonProps> = ({
   const elementState = useState<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (!elementState[0]) {
+    if (!elementState[0] || !callback) {
       return
     }
 
     const onClick = (event: MouseEvent) => {
-      event.preventDefault()
+      // event.preventDefault()
       event.stopPropagation()
 
       callback(event)

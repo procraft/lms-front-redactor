@@ -102,7 +102,7 @@ export const Modal2: React.FC<Modal2Props> = ({
 
     const modalWindow = (
       <Modal2Styled ref={elementState[1]} {...other}>
-        {title ? (
+        {title || closeHandler ? (
           <Modal2TitleStyled>
             <h1>{title}</h1>
 

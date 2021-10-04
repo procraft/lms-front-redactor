@@ -104,4 +104,10 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
     }
   }
 
+  img {
+    border: 1px solid ;
+    min-height: 40px;
+    min-width: 20px;
+  }
+
 `

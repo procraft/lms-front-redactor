@@ -13,11 +13,12 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
   updateObject,
   activeSetter,
 }) => {
+  const [opened, openedSetter] = useState(false)
+
   const closeHandler = useCallback(() => {
     activeSetter(false)
+    openedSetter(false)
   }, [activeSetter])
-
-  const [opened, openedSetter] = useState(false)
 
   const onClick = useCallback((event: MouseEvent) => {
     event.stopPropagation()

@@ -5,6 +5,7 @@ import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
+import { ImgWrapper } from './ImgWrapper'
 import { RelStylesheet } from './RelStylesheet'
 import { Script } from './Script'
 import { Style } from './Style'
@@ -49,6 +50,7 @@ export const HtmlTag: RedactorComponent = ({
         case 'script':
         case 'style':
         case 'link':
+        case 'img':
           hoverable = true
           break
 
@@ -126,21 +128,20 @@ export const HtmlTag: RedactorComponent = ({
             : undefined,
         })
       }
-      case 'a': {
-        return (
-          // <Link href={object.props.href || ''}>
-          <a
-            href={object.props.href || ''}
-            {...tagProps}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            ref={ref}
-          >
-            {childrenContent}
-          </a>
-          // </Link>
-        )
-      }
+      // case 'a': {
+      //   return (
+      //     // <Link href={object.props.href || ''}>
+      //     <a
+      //       href={object.props.href || ''}
+      //       {...tagProps}
+
+      //       ref={ref as React.LegacyRef<HTMLAnchorElement> | undefined}
+      //     >
+      //       {childrenContent}
+      //     </a>
+      //     // </Link>
+      //   )
+      // }
 
       default:
     }
@@ -149,17 +150,24 @@ export const HtmlTag: RedactorComponent = ({
     /**
      * Если у компонента есть props.children, то выводим props.children
      */
-    return <Tag {...tagProps}>{object.props.children || childrenContent}</Tag>
+    return (
+      <Tag
+        // @ts-expect-error
+        ref={ref as (el: any) => void}
+        {...tagProps}
+      >
+        {object.props.children || childrenContent}
+      </Tag>
+    )
   }, [
     Tag,
     childrenContent,
     componentClassName,
     object.components,
     object.props.children,
-    object.props.href,
     otherProps,
-    ref,
     text,
+    ref,
   ])
 
   const preventDefault = useCallback((event: React.MouseEvent) => {
@@ -217,52 +225,12 @@ export const HtmlTag: RedactorComponent = ({
 
     switch (object.props.tag) {
       case 'style':
-        // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
-        // при обновлении контента они попадают в стейт.
-        // Надо исключить такое поведение
-        // elementContent = (
-        //   <div
-        //     {...renderProps}
-        //     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        //     // @ts-ignore
-        //     ref={renderProps.ref}
-        //     // contentEditable={false}
-
-        //     /**
-        //      * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
-        //      * а не технический, иначе возникает дублирование вложенности.
-        //      * Важно! Дочерний элемент тогда должен быть только один.
-        //      */
-        //     data-redactor--fake-wrapper
-        //     data-redactor--src={object.props.src}
-        //     data-redactor--content-length={
-        //       object.components[0]?.props.text?.length
-        //     }
-        //   >
-        //     {content}
-        //   </div>
-        // )
         elementContent = (
           <Style
             {...renderProps}
             ref={undefined}
             forwardedRef={renderProps.ref}
             object={object}
-            // // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // // @ts-ignore
-            // ref={renderProps.ref}
-            // // contentEditable={false}
-
-            // /**
-            //  * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
-            //  * а не технический, иначе возникает дублирование вложенности.
-            //  * Важно! Дочерний элемент тогда должен быть только один.
-            //  */
-            // data-redactor--fake-wrapper
-            // data-redactor--src={object.props.src}
-            // data-redactor--content-length={
-            //   object.components[0]?.props.text?.length
-            // }
             updateObject={updateObject}
             active={active}
             closeHandler={closeHandler}
@@ -281,21 +249,6 @@ export const HtmlTag: RedactorComponent = ({
               ref={undefined}
               forwardedRef={renderProps.ref}
               object={object}
-              // // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // // @ts-ignore
-              // ref={renderProps.ref}
-              // // contentEditable={false}
-
-              // /**
-              //  * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
-              //  * а не технический, иначе возникает дублирование вложенности.
-              //  * Важно! Дочерний элемент тогда должен быть только один.
-              //  */
-              // data-redactor--fake-wrapper
-              // data-redactor--src={object.props.src}
-              // data-redactor--content-length={
-              //   object.components[0]?.props.text?.length
-              // }
               updateObject={updateObject}
               active={active}
               closeHandler={closeHandler}
@@ -307,30 +260,6 @@ export const HtmlTag: RedactorComponent = ({
         break
 
       case 'link':
-        // TODO Сейчас из-за того, что мы обрамляем эти теги техническим враппером,
-        // при обновлении контента они попадают в стейт.
-        // Надо исключить такое поведение
-        // elementContent = (
-        //   <div
-        //     {...renderProps}
-        //     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        //     // @ts-ignore
-        //     ref={renderProps.ref}
-        //     // contentEditable={false}
-
-        //     /**
-        //      * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
-        //      * а не технический, иначе возникает дублирование вложенности.
-        //      * Важно! Дочерний элемент тогда должен быть только один.
-        //      */
-        //     data-redactor--fake-wrapper
-        //     data-redactor--rel={object.props.rel}
-        //     data-redactor--href={object.props.href}
-        //   >
-        //     {content}
-        //   </div>
-        // )
-
         elementContent = (
           <>
             <RelStylesheet
@@ -338,26 +267,29 @@ export const HtmlTag: RedactorComponent = ({
               ref={undefined}
               forwardedRef={renderProps.ref}
               object={object}
-              // // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // // @ts-ignore
-              // ref={renderProps.ref}
-              // // contentEditable={false}
-
-              // /**
-              //  * Добавляем атрибут, чтобы при обработке измененного контента возвращался дочерний элемент,
-              //  * а не технический, иначе возникает дублирование вложенности.
-              //  * Важно! Дочерний элемент тогда должен быть только один.
-              //  */
-              // data-redactor--fake-wrapper
-              // data-redactor--src={object.props.src}
-              // data-redactor--content-length={
-              //   object.components[0]?.props.text?.length
-              // }
               updateObject={updateObject}
               active={active}
             >
               {content}
             </RelStylesheet>
+          </>
+        )
+        break
+
+      case 'img':
+        elementContent = (
+          <>
+            <ImgWrapper
+              {...renderProps}
+              ref={undefined}
+              forwardedRef={renderProps.ref}
+              object={object}
+              updateObject={updateObject}
+              active={active}
+              closeHandler={closeHandler}
+            >
+              {content}
+            </ImgWrapper>
           </>
         )
         break
@@ -371,22 +303,6 @@ export const HtmlTag: RedactorComponent = ({
         {elementContent}
       </>
     )
-
-    // return (
-    //   <>
-    //     {wrapperContent}
-    //     <div
-    //       ref={ref}
-    //       className={[
-    //         className,
-    //         'HtmlTag',
-    //         object.props.tag?.toLowerCase(),
-    //       ].join(' ')}
-    //     >
-    //       {content}
-    //     </div>
-    //   </>
-    // )
   }, [
     content,
     inEditMode,
