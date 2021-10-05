@@ -17,4 +17,6 @@ export type ImgProps = {
    * Закрытие компонента
    */
   closeHandler: () => void
+
+  element: HTMLElement | null
 }

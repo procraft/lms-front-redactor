@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
 import { Modal2 } from '../../../ui/Modal2'
@@ -13,9 +12,34 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
     updateObject,
     active,
     closeHandler,
+    element,
   } = props
 
-  console.log('ImgWrapper props', props)
+  const [opened, openedSetter] = useState(false)
+
+  const closeModal = useCallback(() => {
+    openedSetter(false)
+    closeHandler()
+  }, [closeHandler])
+
+  useEffect(() => {
+    if (!element || !active) {
+      return
+    }
+
+    /**
+     * Навешиваем событие, чтобы по клику открывался интерфейс выбор медиа
+     */
+    const onClick = () => {
+      openedSetter(true)
+    }
+
+    element.addEventListener('click', onClick)
+
+    return () => {
+      element.removeEventListener('click', onClick)
+    }
+  }, [element, active])
 
   const onUpload = useCallback(
     (url: string) => {
@@ -26,9 +50,9 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
           src: url,
         },
       })
-      closeHandler()
+      closeModal()
     },
-    [object, updateObject, closeHandler]
+    [object, updateObject, closeModal]
   )
 
   const { uploader } = useUploader({
@@ -40,7 +64,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
   })
 
   const uploaderModal = useMemo(() => {
-    if (!active) {
+    if (!opened) {
       return null
     }
 
@@ -49,12 +73,12 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         title="Изображение"
         modal={true}
         preventClickEvent={true}
-        closeHandler={closeHandler}
+        closeHandler={closeModal}
       >
         {uploader}
       </Modal2>
     )
-  }, [active, uploader, closeHandler])
+  }, [opened, uploader, closeModal])
 
   // const ref = useCallback((el: any) => {
   //   console.log('ref img el', el)

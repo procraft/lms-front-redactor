@@ -142,6 +142,16 @@ export const HtmlTag: RedactorComponent = ({
       //     // </Link>
       //   )
       // }
+      case 'img': {
+        return (
+          // <Link href={object.props.href || ''}>
+          <img
+            {...tagProps}
+            // src={object.props.src}
+            ref={ref as React.LegacyRef<HTMLImageElement> | undefined}
+          />
+        )
+      }
 
       default:
     }
@@ -159,16 +169,7 @@ export const HtmlTag: RedactorComponent = ({
         {object.props.children || childrenContent}
       </Tag>
     )
-  }, [
-    Tag,
-    childrenContent,
-    componentClassName,
-    object.components,
-    object.props.children,
-    otherProps,
-    text,
-    ref,
-  ])
+  }, [Tag, componentClassName, otherProps, ref, object, childrenContent, text])
 
   const preventDefault = useCallback((event: React.MouseEvent) => {
     if (process.env.NODE_ENV === 'development') {
@@ -287,6 +288,7 @@ export const HtmlTag: RedactorComponent = ({
               updateObject={updateObject}
               active={active}
               closeHandler={closeHandler}
+              element={element}
             >
               {content}
             </ImgWrapper>
@@ -315,5 +317,6 @@ export const HtmlTag: RedactorComponent = ({
     updateObject,
     active,
     closeHandler,
+    element,
   ])
 }
