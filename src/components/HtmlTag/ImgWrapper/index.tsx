@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
-import { Modal2 } from '../../../ui/Modal2'
+import { ImgWrapperModalStyled } from './styles'
+import { TextField } from 'material-ui'
 
 export const ImgWrapper: React.FC<ImgProps> = (props) => {
   const {
@@ -63,22 +65,87 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
     },
   })
 
+  const image = useMemo(() => {
+    if (!object.props.src) {
+      return null
+    }
+
+    return (
+      <div className="image-block">
+        <img {...object.props} />
+      </div>
+    )
+  }, [object.props])
+
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log('onChange event', event)
+
+      const name = event.target.name
+      const value = event.target.value
+
+      name &&
+        updateObject(object, {
+          props: {
+            ...object.props,
+            [name]: value,
+          },
+        })
+    },
+    [object, updateObject]
+  )
+
   const uploaderModal = useMemo(() => {
     if (!opened) {
       return null
     }
 
     return (
-      <Modal2
+      <ImgWrapperModalStyled
         title="Изображение"
         modal={true}
         preventClickEvent={true}
         closeHandler={closeModal}
       >
+        {image}
         {uploader}
-      </Modal2>
+
+        <div className="controls">
+          <TextField
+            fullWidth
+            value={object.props.width || ''}
+            label="Ширина"
+            name="width"
+            onChange={onChange}
+          />
+
+          <TextField
+            fullWidth
+            value={object.props.maxWidth || ''}
+            label="Максимальная ширина"
+            name="maxWidth"
+            onChange={onChange}
+          />
+
+          <TextField
+            fullWidth
+            value={object.props.height || ''}
+            label="Высота"
+            name="height"
+            onChange={onChange}
+          />
+
+          <TextField
+            fullWidth
+            value={object.props.maxHeight || ''}
+            label="Максимальная высота"
+            name="maxHeight"
+            onChange={onChange}
+          />
+        </div>
+      </ImgWrapperModalStyled>
     )
-  }, [opened, uploader, closeModal])
+  }, [opened, closeModal, image, object.props, onChange, uploader])
 
   // const ref = useCallback((el: any) => {
   //   console.log('ref img el', el)
