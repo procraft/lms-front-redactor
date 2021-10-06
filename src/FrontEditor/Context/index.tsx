@@ -27,3 +27,9 @@ export type RedactorComponentActiveEventDetail<
 
 export type RedactorComponentActiveEvent =
   CustomEvent<RedactorComponentActiveEventDetail>
+
+/**
+ * Сохранить все элементы.
+ * Сейчас выполняется только в @procraft/lms-redactor
+ */
+export type RedactorComponentSaveAllEvent = CustomEvent
