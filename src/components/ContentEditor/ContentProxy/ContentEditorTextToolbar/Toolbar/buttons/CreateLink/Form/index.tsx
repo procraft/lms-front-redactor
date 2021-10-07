@@ -1,8 +1,13 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { LinkFormProps } from './interfaces'
-import { Button, Grid, TextField } from 'material-ui'
+import {
+  // Button,
+  Grid,
+  TextField,
+} from 'material-ui'
 import Context from '../../../../../../../../Context'
 import { LinkFormLinksListStyled, LinkFormStyled } from './styles'
+import { UiButton } from '../../../../../../../../ui/UiButton'
 
 /**
  * Форма создания/редактирования ссылки
@@ -105,9 +110,36 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
     []
   )
 
-  const onClickLink = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    linkSetter(event.currentTarget.dataset.link || null)
-  }, [])
+  // const onClickLink = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+  //   linkSetter(event.currentTarget.dataset.link || null)
+  // }, [])
+
+  /**
+   * Список ссылок
+   */
+  const [listElement, listElementRef] = useState<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!listElement) {
+      return
+    }
+
+    const onClick = (event: MouseEvent) => {
+      event.stopPropagation()
+
+      if (event.target instanceof HTMLElement) {
+        const link = event.target.dataset.link
+
+        linkSetter(link || null)
+      }
+    }
+
+    listElement.addEventListener('click', onClick)
+
+    return () => {
+      listElement.removeEventListener('click', onClick)
+    }
+  }, [listElement])
 
   return (
     <>
@@ -125,12 +157,12 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
               fullWidth
             />
 
-            <LinkFormLinksListStyled>
+            <LinkFormLinksListStyled ref={listElementRef}>
               {context?.linksList.map((n) => {
                 return (
                   <div
                     key={n.id}
-                    onClick={onClickLink}
+                    // onClick={onClickLink}
                     data-link={n.uri}
                     title={n.name || undefined}
                   >
@@ -141,14 +173,23 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
             </LinkFormLinksListStyled>
           </Grid>
           <Grid item xs={12}></Grid>
-          <Button
-            onClick={saveLink}
-            disabled={!link || !range}
-            variant="raised"
+          <UiButton
             size="small"
+            disabled={!link || !range}
+            onClick={saveLink}
+            variant="raised"
           >
             Сохранить
-          </Button>
+          </UiButton>
+
+          {/* <Button
+            size="small"
+            disabled={!link || !range}
+            onClick={saveLink}
+            variant="raised"
+          >
+            Сохранить
+          </Button> */}
         </Grid>
       </LinkFormStyled>
     </>

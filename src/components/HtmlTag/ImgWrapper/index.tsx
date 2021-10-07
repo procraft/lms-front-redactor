@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
@@ -79,8 +78,6 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
 
   const onChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log('onChange event', event)
-
       const name = event.target.name
       const value = event.target.value
 

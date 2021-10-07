@@ -171,13 +171,14 @@ export const HtmlTag: RedactorComponent = ({
     )
   }, [Tag, componentClassName, otherProps, ref, object, childrenContent, text])
 
-  const preventDefault = useCallback((event: React.MouseEvent) => {
-    if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
-      console.log('preventDefault event', event)
-    }
-    event.preventDefault()
-  }, [])
+  // TODO Пока отключил этот перехватчик, но надо будет понаблюдать (за кнопками, селектами и т.п.)
+  // const preventDefault = useCallback((event: React.MouseEvent) => {
+  //   if (process.env.NODE_ENV === 'development') {
+  //     // eslint-disable-next-line no-console
+  //     console.log('preventDefault event', event)
+  //   }
+  //   event.preventDefault()
+  // }, [])
 
   return useMemo(() => {
     // return <>{content}</>
@@ -219,7 +220,7 @@ export const HtmlTag: RedactorComponent = ({
       ...otherInitProps,
       [redactor2ComponentAttributes.component]: 'HtmlTag',
       [redactor2ComponentAttributes.tag]: object.props.tag,
-      onClick: preventDefault,
+      // onClick: preventDefault,
     }
 
     let elementContent: JSX.Element = React.cloneElement(content, renderProps)
@@ -312,7 +313,7 @@ export const HtmlTag: RedactorComponent = ({
     ref,
     otherProps,
     otherInitProps,
-    preventDefault,
+    // preventDefault,
     wrapperContent,
     updateObject,
     active,
