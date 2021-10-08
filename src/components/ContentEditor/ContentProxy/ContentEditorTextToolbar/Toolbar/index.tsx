@@ -38,7 +38,7 @@ import Grid from 'material-ui/Grid'
 import { useCreateLinkButton } from './buttons/CreateLink'
 // import { Modal2 } from '../../../../../ui/Modal2'
 import { useHTMLEditorModeButton } from './buttons/HTMLEditorMode'
-import { UiIconButton } from '../../../../../ui/UiIconButton'
+import { IconButton } from '@procraft/ui/dist/IconButton'
 
 export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   props
@@ -610,7 +610,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
 
       return (
         <Grid key={name || index} item>
-          <UiIconButton
+          <IconButton
             className={['TagEditorToolbar--iconButton', className].join(' ')}
             name={name}
             callback={onClick ? onClick : onButtonClick}
@@ -618,7 +618,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
             {...other}
           >
             {icon}
-          </UiIconButton>
+          </IconButton>
         </Grid>
       )
     })

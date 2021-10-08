@@ -7,7 +7,7 @@ import {
 } from 'material-ui'
 import Context from '../../../../../../../../Context'
 import { LinkFormLinksListStyled, LinkFormStyled } from './styles'
-import { UiButton } from '../../../../../../../../ui/UiButton'
+import { Button } from '@procraft/ui/dist/Button'
 
 /**
  * Форма создания/редактирования ссылки
@@ -173,14 +173,14 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
             </LinkFormLinksListStyled>
           </Grid>
           <Grid item xs={12}></Grid>
-          <UiButton
+          <Button
             size="small"
             disabled={!link || !range}
             onClick={saveLink}
             variant="raised"
           >
             Сохранить
-          </UiButton>
+          </Button>
 
           {/* <Button
             size="small"

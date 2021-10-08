@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 // import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui-icons/Close'
+import { IconButton } from '@procraft/ui/dist/IconButton'
 import { Modal2Props } from './interfaces'
 import {
   Modal2ContentStyled,
@@ -9,7 +10,6 @@ import {
   Modal2Styled,
   Modal2TitleStyled,
 } from './styles'
-import { UiIconButton } from '../UiIconButton'
 
 export * from './interfaces'
 
@@ -107,9 +107,9 @@ export const Modal2: React.FC<Modal2Props> = ({
             <h1>{title}</h1>
 
             {closeHandler ? (
-              <UiIconButton callback={closeHandler}>
+              <IconButton callback={closeHandler}>
                 <CloseIcon />
-              </UiIconButton>
+              </IconButton>
             ) : null}
             <hr />
           </Modal2TitleStyled>

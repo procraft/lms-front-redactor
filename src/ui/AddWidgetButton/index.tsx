@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { UiIconButton } from '../UiIconButton'
+import { IconButton } from '@procraft/ui/dist/IconButton'
 import { AddWidgetModal } from './AddWidgetModal'
 import { AddWidgetButtonProps } from './interfaces'
 
@@ -59,9 +59,9 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
     return (
       <>
         {ReactDOM.createPortal(
-          <UiIconButton callback={onClick} style={style}>
+          <IconButton callback={onClick} style={style}>
             <>+</>
-          </UiIconButton>,
+          </IconButton>,
           document.body
         )}
         {modal}
