@@ -43,8 +43,9 @@ export const HTMLEditorModeButton: React.FC<HTMLEditorModeButtonProps> = ({
       <MonacoEditorModal
         title="Редактор HTML кода"
         closeHandler={closePopover}
-        preventClickEvent={true}
-        modal={true}
+        preventClickEvent
+        modal
+        moveable={false}
       >
         <ContentEditorHTMLEditorMonacoEditor
           active

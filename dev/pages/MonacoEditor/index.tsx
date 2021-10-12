@@ -47,6 +47,7 @@ export const DevMonacoPage: Page = () => {
           style={{
             right: 20,
           }}
+          moveable={false}
         >
           <div
             style={{

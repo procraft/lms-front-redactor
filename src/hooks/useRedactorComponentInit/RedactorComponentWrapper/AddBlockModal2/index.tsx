@@ -533,9 +533,10 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
     return ReactDOM.createPortal(
       <AddBlockModal2Styled
         title="Добавить блок"
-        preventClickEvent={true}
+        preventClickEvent
         closeHandler={closeHandler}
-        modal={true}
+        modal
+        moveable
       >
         <AddBlockModal2ContentStyled>{blocks}</AddBlockModal2ContentStyled>
       </AddBlockModal2Styled>,

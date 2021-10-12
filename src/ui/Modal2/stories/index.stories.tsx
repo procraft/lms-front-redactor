@@ -22,6 +22,7 @@ export const Modal2: React.FC<Partial<ContainerProps>> = ({
   children,
   modal,
   preventClickEvent,
+  moveable,
   ...other
 }) => {
   const [opened, openedSetter] = useState(true)
@@ -35,6 +36,7 @@ export const Modal2: React.FC<Partial<ContainerProps>> = ({
       closeHandler={closeHandler}
       modal={modal || false}
       preventClickEvent={preventClickEvent || false}
+      moveable={moveable || false}
       {...other}
     >
       {children}
@@ -47,6 +49,7 @@ const args: React.PropsWithChildren<Partial<ContainerProps>> = {
   children: 'Some content',
   modal: true,
   preventClickEvent: true,
+  moveable: false,
 }
 
 export default {

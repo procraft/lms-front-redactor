@@ -109,6 +109,7 @@ export const CreateLinkButton: React.FC<CreateLinkButtonProps> = ({
         // onMouseUp={onMouseUp}
         preventClickEvent={true}
         modal={false}
+        moveable
       >
         <LinkForm opened={opened} closePopover={closePopover} />
       </Modal2>

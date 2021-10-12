@@ -16,10 +16,11 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
   return useMemo(() => {
     return ReactDOM.createPortal(
       <AddWidgetModalStyled
-        modal={true}
-        preventClickEvent={true}
+        modal
+        preventClickEvent
         title="Вставить виджет"
         closeHandler={closeHandler}
+        moveable
       >
         <AddContentEditorWidgetButton
           closeHandler={closeHandler}

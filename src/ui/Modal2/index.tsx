@@ -10,6 +10,7 @@ import {
   Modal2Styled,
   Modal2TitleStyled,
 } from './styles'
+import { MoveButton } from './MoveButton'
 
 export * from './interfaces'
 
@@ -22,6 +23,8 @@ export const Modal2: React.FC<Modal2Props> = ({
   closeHandler,
   preventClickEvent,
   modal,
+  style: styleProps,
+  moveable,
   ...other
 }) => {
   /**
@@ -33,7 +36,7 @@ export const Modal2: React.FC<Modal2Props> = ({
     loadedSetter(true)
   }, [])
 
-  const elementState = useState<HTMLDivElement | null>(null)
+  const [element, ref] = useState<HTMLDivElement | null>(null)
   const wrapperState = useState<HTMLDivElement | null>(null)
 
   const preventEvents = useCallback((event: MouseEvent) => {
@@ -70,7 +73,7 @@ export const Modal2: React.FC<Modal2Props> = ({
    * Навешиваем прерыватель событий.
    */
   useEffect(() => {
-    if (!preventClickEvent || !elementState[0]) {
+    if (!preventClickEvent || !element) {
       return
     }
 
@@ -88,12 +91,58 @@ export const Modal2: React.FC<Modal2Props> = ({
       event.stopPropagation()
     }
 
-    elementState[0]?.addEventListener('click', onClick)
+    element.addEventListener('click', onClick)
 
     return () => {
-      elementState[0]?.removeEventListener('click', onClick)
+      element.removeEventListener('click', onClick)
     }
-  }, [elementState, preventClickEvent])
+  }, [element, preventClickEvent])
+
+
+  const [stylesState, stylesStateSetter] = useState<{
+    left: number
+    top: number
+  } | null>(null)
+
+
+  const style = useMemo(() => {
+
+    return {
+      ...styleProps,
+      ...stylesState,
+    }
+  }, [styleProps, stylesState])
+
+
+  const toolbar: JSX.Element[] = useMemo(() => {
+
+    const toolbar: JSX.Element[] = []
+
+    if (moveable) {
+      toolbar.push(<MoveButton
+        key="move"
+        stylesStateSetter={stylesStateSetter}
+        modalElement={element}
+      />);
+    }
+
+    if (title) {
+      toolbar.push(<h1
+        key="title"
+      >{title}</h1>);
+    }
+
+    if (closeHandler) {
+      toolbar.push(<IconButton
+        key="closeHandler"
+        callback={closeHandler}>
+        <CloseIcon />
+      </IconButton>);
+    }
+
+    return toolbar;
+  }, [closeHandler, element, moveable, title])
+
 
   return useMemo(() => {
     if (!loaded) {
@@ -101,19 +150,15 @@ export const Modal2: React.FC<Modal2Props> = ({
     }
 
     const modalWindow = (
-      <Modal2Styled ref={elementState[1]} {...other}>
-        {title || closeHandler ? (
-          <Modal2TitleStyled>
-            <h1>{title}</h1>
+      <Modal2Styled ref={ref}
+        style={style}
+        {...other}>
+        {toolbar.length ? <Modal2TitleStyled>
 
-            {closeHandler ? (
-              <IconButton callback={closeHandler}>
-                <CloseIcon />
-              </IconButton>
-            ) : null}
-            <hr />
-          </Modal2TitleStyled>
-        ) : null}
+          {toolbar}
+
+          <hr />
+        </Modal2TitleStyled> : null}
         <Modal2ContentStyled>{children}</Modal2ContentStyled>
       </Modal2Styled>
     )
@@ -127,14 +172,5 @@ export const Modal2: React.FC<Modal2Props> = ({
     )
 
     return ReactDOM.createPortal(content, document.body)
-  }, [
-    loaded,
-    elementState,
-    other,
-    title,
-    closeHandler,
-    children,
-    modal,
-    wrapperState,
-  ])
+  }, [loaded, style, other, toolbar, children, modal, wrapperState])
 }

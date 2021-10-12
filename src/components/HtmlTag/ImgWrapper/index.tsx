@@ -103,6 +103,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         modal={true}
         preventClickEvent={true}
         closeHandler={closeModal}
+        moveable
       >
         {image}
         {uploader}

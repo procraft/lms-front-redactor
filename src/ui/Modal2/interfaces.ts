@@ -12,4 +12,9 @@ export type Modal2Props = React.HTMLAttributes<HTMLDivElement> & {
    * Прерываем обработчики на клик (чтобы за пределами окна ничего не срабатывало)
    */
   preventClickEvent: boolean
+
+  /**
+   * Можно ли перетаскивать окно
+   */
+  moveable: boolean
 }

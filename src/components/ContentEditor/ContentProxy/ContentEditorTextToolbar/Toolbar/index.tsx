@@ -789,6 +789,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         closeHandler={closeHandler}
         preventClickEvent={true}
         modal={false}
+        moveable
       >
         {/* <Modal2
         > */}
