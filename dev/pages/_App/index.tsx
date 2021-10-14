@@ -6,6 +6,7 @@ import theme from '../../../src/theme'
 
 import { AppProps, MainApp } from './interfaces'
 import { useApollo } from '../../lib/apolloClient'
+import { UiGlobalStylesDev } from './styles/GlobalStyle'
 
 export * from './interfaces'
 
@@ -21,6 +22,7 @@ const App: MainApp<AppProps> = ({ Component, pageProps }) => {
         />
       </Head>
       <ThemeProvider theme={theme}>
+        <UiGlobalStylesDev />
         <ApolloProvider client={apolloClient}>
           <Component {...pageProps} />
         </ApolloProvider>

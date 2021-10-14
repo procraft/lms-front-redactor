@@ -26,7 +26,7 @@ const BottomDirectionSelector: useAddBlockButtonProps['direction'] = 'Bottom'
 const buttonHeight = 28
 
 export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
-  .RedactorComponentWrapper--addBlock-button {
+  button.RedactorComponentWrapper--addBlock-button {
     display: block;
     width: ${buttonHeight}px;
     height: ${buttonHeight}px;
@@ -37,11 +37,18 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
     transition-duration: 0.3s;
     pointer-events: all;
     cursor: pointer;
+    font-family: inherit;
+    padding: 0;
     font-size: ${buttonHeight}px;
     line-height: ${buttonHeight - 2}px;
     
     position: absolute;
     left: calc(50% - ${buttonHeight / 2}px);
+
+    > svg {
+      fill: white;
+      padding: 7px;
+    }
     
     &:hover {
       transform: scale(1.2);

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { IconButton } from '@procraft/ui/dist/IconButton'
 import { AddWidgetModal } from './AddWidgetModal'
 import { AddWidgetButtonProps } from './interfaces'
+import { SvgIconPlus } from '../SvgIcon/Plus'
 
 /**
  * Кнопка добавления дочернего виджета
@@ -60,7 +61,7 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
       <>
         {ReactDOM.createPortal(
           <IconButton callback={onClick} style={style}>
-            <>+</>
+            <SvgIconPlus />
           </IconButton>,
           document.body
         )}
