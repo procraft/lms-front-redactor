@@ -10,8 +10,4 @@ export const VideoWrapperModalStyled = styled(Modal2)`
       max-width: 100%;
     }
   }
-
-  .controls {
-    margin: 30px 0 10px;
-  }
 `

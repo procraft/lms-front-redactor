@@ -1,18 +1,41 @@
+
+import { ButtonStyled } from '@procraft/ui/dist/Button/styles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { useAddBlockButtonProps } from './hooks/useAddBlockButton/interfaces'
+
+export const RedactorComponentWrapperButtonsStyled = styled.div`
+  
+
+  > * {
+    margin: 0 2px;
+  }
+
+  ${ButtonStyled} {
+    min-width: auto;
+    min-height: auto;
+    width: 28px;
+    height: 28px;
+    line-height: 26px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgb(37, 36, 36);
+
+    svg {
+      fill: white;
+      width: 18px;
+      height: 18px;
+    }
+  }
+`
 
 export const RedactorComponentWrapperStyled = styled.div`
   height: 100%;
   white-space: nowrap;
 
-  .buttons {
+  ${RedactorComponentWrapperButtonsStyled} {
     position: absolute;
-    bottom: 100%;
-    right: 0;
-
-    > * {
-      margin: 0 2px;
-    }
+    bottom: calc(100% - 14px);
+    right: 14px;
   }
 
   button {

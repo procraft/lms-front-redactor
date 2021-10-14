@@ -11,7 +11,4 @@ export const ImgWrapperModalStyled = styled(Modal2)`
     }
   }
 
-  .controls {
-    margin: 30px 0 10px;
-  }
 `

@@ -1,3 +1,6 @@
+
+import UiTheme from '@procraft/ui/dist/theme'
+
 /**
  * Цвета
  */
@@ -17,6 +20,9 @@ const theme = {
   frontRedactor: {
     colors,
     zIndex,
+  },
+  ui: {
+    ...UiTheme.ui,
   },
 }
 

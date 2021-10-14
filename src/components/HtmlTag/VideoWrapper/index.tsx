@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
 import { VideoWrapperModalStyled } from './styles'
-import { TextField } from 'material-ui'
 
 export const VideoWrapper: React.FC<ImgProps> = (props) => {
   const {
@@ -121,7 +121,7 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
           <TextField
             fullWidth
             value={object.props.width || ''}
-            label="Ширина"
+            title="Ширина"
             name="width"
             onChange={onChange}
           />
@@ -129,7 +129,7 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
           <TextField
             fullWidth
             value={object.props.maxWidth || ''}
-            label="Максимальная ширина"
+            title="Максимальная ширина"
             name="maxWidth"
             onChange={onChange}
           />
@@ -137,7 +137,7 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
           <TextField
             fullWidth
             value={object.props.height || ''}
-            label="Высота"
+            title="Высота"
             name="height"
             onChange={onChange}
           />
@@ -145,7 +145,7 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
           <TextField
             fullWidth
             value={object.props.maxHeight || ''}
-            label="Максимальная высота"
+            title="Максимальная высота"
             name="maxHeight"
             onChange={onChange}
           />

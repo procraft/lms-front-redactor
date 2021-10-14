@@ -8,15 +8,19 @@ import { useAddBlockButton } from './hooks/useAddBlockButton'
 import { useAddBlockButtonProps } from './hooks/useAddBlockButton/interfaces'
 import { RedactorComponentWrapperProps } from './interfaces'
 import LmsFrontRedactorStateEditor from './StateEditor'
+import CloseIcon from 'material-ui-icons/Close'
+import DeleteIcon from 'material-ui-icons/Delete'
 import {
+  RedactorComponentWrapperButtonsStyled,
   RedactorComponentWrapperGlobalStyled,
   RedactorComponentWrapperStyled,
 } from './styles'
+import { Button } from '@procraft/ui/dist/Button'
 
 /**
  * Выводить дополнительные отладочные инструменты
  */
-const debug = true
+const debug = false
 
 /**
  * Враппер для компонентов редактора.
@@ -69,9 +73,8 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
       // if(wrapperTitle) {
       const titleNode = document.createElement('span')
       titleNode.innerHTML = `
-      <span>${object.name} ${
-        object.name !== object.component ? ` (${object.component})` : ''
-      }</span>
+      <span>${object.name} ${object.name !== object.component ? ` (${object.component})` : ''
+        }</span>
       <span>${object.props.tag || ''}</span>
     `
 
@@ -374,7 +377,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
     )
 
     const removeObjectHandler = useCallback(
-      (event: React.MouseEvent) => {
+      (event: MouseEvent) => {
         event.stopPropagation()
 
         removeComponent(object)
@@ -454,7 +457,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
           {ReactDOM.createPortal(
             <RedactorComponentWrapperStyled>
               {active ? (
-                <div className="buttons">
+                <RedactorComponentWrapperButtonsStyled>
                   {/* <span>
                   {object.name}{' '}
                   {object.name !== object.component
@@ -462,27 +465,29 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
                     : ''}
                 </span>
                 <span>{object.props.tag}</span> */}
-                  <button onClick={addObjectHandler} role="addBlock">
+                  {debug ? <button onClick={addObjectHandler} role="addBlock">
                     Add block
-                  </button>
+                  </button> : null}
                   {debug ? (
                     <button onClick={showContentHandler} role="showState">
                       Show state
                     </button>
                   ) : null}
                   {parent ? (
-                    <button
+                    <Button
                       onClick={removeObjectHandler}
                       role="removeComponent"
                       title="Удалить элемент"
                     >
-                      ␡
-                    </button>
+                      <DeleteIcon />
+                    </Button>
                   ) : null}
-                  <button onClick={closeEditor} role="close">
-                    Close
-                  </button>
-                </div>
+                  <Button onClick={closeEditor} role="close"
+                    title="Завершить редактирование"
+                  >
+                    <CloseIcon />
+                  </Button>
+                </RedactorComponentWrapperButtonsStyled>
               ) : null}
             </RedactorComponentWrapperStyled>,
             wrapper
