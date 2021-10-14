@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
-import { ImgWrapperModalStyled } from './styles'
+import { VideoWrapperModalStyled } from './styles'
 import { TextField } from 'material-ui'
 
-export const ImgWrapper: React.FC<ImgProps> = (props) => {
+export const VideoWrapper: React.FC<ImgProps> = (props) => {
   const {
     // src,
     children,
@@ -45,11 +45,21 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
   const onUpload = useCallback(
     (url: string) => {
       updateObject(object, {
-        components: [],
-        props: {
-          ...object.props,
-          src: url,
-        },
+        components: [
+          {
+            name: 'HtmlTag',
+            component: 'HtmlTag',
+            props: {
+              tag: 'source',
+              src: url,
+            },
+            components: [],
+          },
+        ],
+        // props: {
+        //   ...object.props,
+        //   src: url,
+        // },
       })
       closeModal()
     },
@@ -59,7 +69,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
   const { uploader } = useUploader({
     onUpload,
     inputProps: {
-      accept: 'image/*',
+      accept: 'video/*',
     },
   })
 
@@ -97,8 +107,8 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
     }
 
     return (
-      <ImgWrapperModalStyled
-        title="Изображение"
+      <VideoWrapperModalStyled
+        title="Видео"
         modal={true}
         preventClickEvent={true}
         closeHandler={closeModal}
@@ -140,7 +150,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
             onChange={onChange}
           />
         </div>
-      </ImgWrapperModalStyled>
+      </VideoWrapperModalStyled>
     )
   }, [opened, closeModal, image, active, uploader, object, onChange])
 

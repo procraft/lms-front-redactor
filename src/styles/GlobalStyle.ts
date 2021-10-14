@@ -107,36 +107,47 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
   img {
 
     &[src=""] {
-      /* border: 1px solid ;
-      min-height: 40px;
-      min-width: 20px; */
-
       width: 100%;
       max-width: 300px;
       display: block;
       position: relative;
       margin: 0 auto;
       
-      &:after {
+      &:before {
         content: "";
         padding-top: 56%;
         display: block;
         width: 100%;
-        /* top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute; */
         pointer-events: none;
         background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2OSIgaGVpZ2h0PSIzOCIgdmlld0JveD0iMCAwIDY5IDM4IiBmaWxsPSJub25lIiBzdHlsZT0iJiMxMDsgIHN0cm9rZTogI2NjY2NjYzsmIzEwOyI+CjxwYXRoIGQ9Ik0wLjQ3ODc1NCAzMC44NDczTDIyLjA5OTkgOC45MTgyM0MyMi41MzI3IDguNDc5MzIgMjMuMzAyIDguNDgxNjIgMjMuNzE1OSA4LjkyMzA1TDQ5LjM5MDUgMzYuMzAzOCIvPgo8cGF0aCBkPSJNMzggMjQuNDMxTDQ1LjIxNzMgMTguMTU0OEM0NS42NTU5IDE3Ljc3MzQgNDYuMzYyMiAxNy43OTIzIDQ2Ljc2IDE4LjE5NjFMNjQuOTk0MiAzNi43MDQ0Ii8+CjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iNjgiIGhlaWdodD0iMzYiIHJ4PSIyLjUiLz4KPGNpcmNsZSBjeD0iNTkuNSIgY3k9IjYuNSIgcj0iMS41IiBmaWxsPSIjY2NjY2NjIi8+Cjwvc3ZnPg==);
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 70%;
         background-color: #d5cfcf47;
-        /* z-index: 0; */
       }
 
     }
+  }
+
+  video {
+
+    &:empty { 
+
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      position: relative;
+      margin: 0 auto;
+
+
+      background-image: url(data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjY5IiBoZWlnaHQ9IjM3IiB2aWV3Qm94PSIwIDAgNjkgMzciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iNjgiIGhlaWdodD0iMzYiIHJ4PSIyLjUiIHN0cm9rZT0iI2NjY2NjYyIvPgo8cGF0aCBkPSJNMjguMjUgMTAuMTc5NEw0Ni43Nzk0IDE4LjVMMjguMjUgMjYuODIwNkwyOC4yNSAxMC4xNzk0WiIgZmlsbD0iI2NjY2NjYyIgc3Ryb2tlPSIjY2NjY2NjIi8+CjxsaW5lIHgxPSI1OC41IiB5MT0iMSIgeDI9IjU4LjUiIHkyPSIzNyIgc3Ryb2tlPSIjY2NjY2NjIiBzdHJva2UtZGFzaGFycmF5PSI2IDYiLz4KPGxpbmUgeDE9IjEwLjUiIHkxPSIxIiB4Mj0iMTAuNSIgeTI9IjM3IiBzdHJva2U9IiNjY2NjY2MiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNiIvPgo8L3N2Zz4K);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 70%;
+      background-color: #d5cfcf47;
+   
+    }
+
   }
 
 `

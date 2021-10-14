@@ -10,10 +10,12 @@ import { UploaderStyled } from './styles'
 export const useUploader = ({
   onUpload,
   inputProps,
+  disabled,
   ...other
 }: useUploaderProps) => {
   const client = useApolloClient()
 
+  const [loading, loadingSetter] = useState(false)
 
   const [input, inputRef] = useState<HTMLInputElement | null>(null)
 
@@ -27,6 +29,13 @@ export const useUploader = ({
 
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
+
+      if (loading) {
+        return;
+      }
+
+      loadingSetter(true)
+
       const file = event.target.files && event.target.files[0]
 
       if (file) {
@@ -50,12 +59,12 @@ export const useUploader = ({
               objectName: normalizeFileName(file.name),
             },
           })
-          .then((response) => {
+          .then(async (response) => {
             /**
              * Если была полученна ссылка на загрузку, загружаем файл
              */
             if (response.data?.s3getSignedUrl) {
-              uploadToS3(file, response.data?.s3getSignedUrl)
+              await uploadToS3(file, response.data?.s3getSignedUrl)
                 .then((url: string | undefined) => {
                   /**
                    * Если загрузка прошла успешно, обновляем содержимое компонента
@@ -71,9 +80,13 @@ export const useUploader = ({
                 })
             }
           })
+          .catch(console.error)
+          .finally(() => {
+            loadingSetter(false)
+          })
       }
     },
-    [client, onUpload]
+    [client, loading, onUpload]
   )
 
   const uploader = useMemo(() => {
@@ -89,13 +102,14 @@ export const useUploader = ({
         />
         <UploaderStyled
           callback={onClick}
+          disabled={loading ? true : disabled}
           {...other}
         >
           <UploadIcon />
-        </UploaderStyled>
+        </UploaderStyled>{loading ? ' Loading...' : null}
       </>
     )
-  }, [inputProps, onChange, onClick, other])
+  }, [inputProps, onChange, onClick, loading, disabled, other])
 
   return useMemo(() => {
     return {

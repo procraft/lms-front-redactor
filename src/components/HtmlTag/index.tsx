@@ -9,6 +9,7 @@ import { ImgWrapper } from './ImgWrapper'
 import { RelStylesheet } from './RelStylesheet'
 import { Script } from './Script'
 import { Style } from './Style'
+import { VideoWrapper } from './VideoWrapper'
 // import Link from 'next/link'
 
 export const HtmlTag: RedactorComponent = ({
@@ -51,6 +52,7 @@ export const HtmlTag: RedactorComponent = ({
         case 'style':
         case 'link':
         case 'img':
+        case 'video':
           hoverable = true
           break
 
@@ -99,10 +101,14 @@ export const HtmlTag: RedactorComponent = ({
       return text
     }
 
-    const tagProps = {
+    // const tagProps = {
+    //   className: componentClassName,
+    //   ...otherProps,
+    // }
+
+    const tagProps = Object.assign({}, {
       className: componentClassName,
-      ...otherProps,
-    }
+    }, otherProps)
 
     switch (Tag.toLowerCase()) {
       case 'script': {
@@ -123,8 +129,8 @@ export const HtmlTag: RedactorComponent = ({
           ...otherProps,
           dangerouslySetInnerHTML: object.components[0]?.props.text
             ? {
-                __html: object.components[0]?.props.text,
-              }
+              __html: object.components[0]?.props.text,
+            }
             : undefined,
         })
       }
@@ -142,14 +148,25 @@ export const HtmlTag: RedactorComponent = ({
       //     // </Link>
       //   )
       // }
-      case 'img': {
+
+      // TODO Закомментировал. Не совсем ясно будут ли какие последствия. Но вообще не должны.
+      // case 'img': {
+      //   return (
+      //     <img
+      //       {...tagProps}
+      //       ref={ref as React.LegacyRef<HTMLImageElement> | undefined}
+      //     />
+      //   )
+      // }
+      case 'video': {
         return (
-          // <Link href={object.props.href || ''}>
-          <img
+          <video
             {...tagProps}
-            // src={object.props.src}
-            ref={ref as React.LegacyRef<HTMLImageElement> | undefined}
-          />
+            ref={ref as React.LegacyRef<HTMLVideoElement> | undefined}
+            controls={!childrenContent ? undefined : tagProps.controls}
+          >
+            {childrenContent}
+          </video>
         )
       }
 
@@ -171,14 +188,16 @@ export const HtmlTag: RedactorComponent = ({
     )
   }, [Tag, componentClassName, otherProps, ref, object, childrenContent, text])
 
-  // TODO Пока отключил этот перехватчик, но надо будет понаблюдать (за кнопками, селектами и т.п.)
-  // const preventDefault = useCallback((event: React.MouseEvent) => {
-  //   if (process.env.NODE_ENV === 'development') {
-  //     // eslint-disable-next-line no-console
-  //     console.log('preventDefault event', event)
-  //   }
-  //   event.preventDefault()
-  // }, [])
+  // TODO: Было: Пока отключил этот перехватчик, но надо будет понаблюдать (за кнопками, селектами и т.п.)
+  // Стало: Перепроверить, не перехватывается.
+  // Цель: video
+  const preventDefault = useCallback((event: React.MouseEvent) => {
+    if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.log('preventDefault event', event)
+    }
+    event.preventDefault()
+  }, [])
 
   return useMemo(() => {
     // return <>{content}</>
@@ -220,7 +239,7 @@ export const HtmlTag: RedactorComponent = ({
       ...otherInitProps,
       [redactor2ComponentAttributes.component]: 'HtmlTag',
       [redactor2ComponentAttributes.tag]: object.props.tag,
-      // onClick: preventDefault,
+      onClick: preventDefault,
     }
 
     let elementContent: JSX.Element = React.cloneElement(content, renderProps)
@@ -297,6 +316,25 @@ export const HtmlTag: RedactorComponent = ({
         )
         break
 
+      case 'video':
+        elementContent = (
+          <>
+            <VideoWrapper
+              {...renderProps}
+              ref={undefined}
+              forwardedRef={renderProps.ref}
+              object={object}
+              updateObject={updateObject}
+              active={active}
+              closeHandler={closeHandler}
+              element={element}
+            >
+              {content}
+            </VideoWrapper>
+          </>
+        )
+        break
+
       default:
     }
 
@@ -313,7 +351,7 @@ export const HtmlTag: RedactorComponent = ({
     ref,
     otherProps,
     otherInitProps,
-    // preventDefault,
+    preventDefault,
     wrapperContent,
     updateObject,
     active,
