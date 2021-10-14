@@ -25,7 +25,6 @@ export const RelStylesheet: React.FC<RelStylesheetProps> = ({
   )
 
   const { uploader } = useUploader({
-    active,
     onUpload,
     inputProps: {
       accept: 'text/css',
@@ -57,7 +56,7 @@ export const RelStylesheet: React.FC<RelStylesheetProps> = ({
         data-redactor--href={object.props.href}
         // data-redactor--content-length={object.components[0]?.props.text?.length}
       >
-        {uploader}
+        {active ? uploader : null}
 
         {/* {content} */}
         {children}

@@ -1,15 +1,29 @@
-import React, { useCallback, ChangeEvent, useMemo } from 'react'
+import React, { useCallback, ChangeEvent, useMemo, useState } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
+import UploadIcon from 'material-ui-icons/FileUpload'
 import { useUploaderProps } from './interfaces'
 import { uploadToS3 } from '../../helpers/S3Uploader'
 import { normalizeFileName } from '../../helpers/normalizeFileName'
+import { UploaderStyled } from './styles'
+
 
 export const useUploader = ({
-  active,
   onUpload,
   inputProps,
+  ...other
 }: useUploaderProps) => {
   const client = useApolloClient()
+
+
+  const [input, inputRef] = useState<HTMLInputElement | null>(null)
+
+  const onClick = useCallback(() => {
+
+    if (input) {
+      input.click()
+    }
+
+  }, [input])
 
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,16 +77,25 @@ export const useUploader = ({
   )
 
   const uploader = useMemo(() => {
-    if (!active) {
-      return null
-    }
 
     return (
-      <div>
-        <input type="file" onChange={onChange} {...inputProps} />
-      </div>
+      <>
+        <input
+          ref={inputRef}
+          type="file"
+          onChange={onChange}
+          hidden
+          {...inputProps}
+        />
+        <UploaderStyled
+          callback={onClick}
+          {...other}
+        >
+          <UploadIcon />
+        </UploaderStyled>
+      </>
     )
-  }, [active, inputProps, onChange])
+  }, [inputProps, onChange, onClick, other])
 
   return useMemo(() => {
     return {

@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+export const LinkFormLinkWrapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 export const LinkFormLinksListStyled = styled.div`
   margin-top: 15px;
   overflow-y: auto;

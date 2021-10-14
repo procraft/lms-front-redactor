@@ -57,7 +57,6 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
   )
 
   const { uploader } = useUploader({
-    active,
     onUpload,
     inputProps: {
       accept: 'image/*',
@@ -106,7 +105,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         moveable
       >
         {image}
-        {uploader}
+        {active ? uploader : null}
 
         <div className="controls">
           <TextField
@@ -143,7 +142,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         </div>
       </ImgWrapperModalStyled>
     )
-  }, [opened, closeModal, image, object.props, onChange, uploader])
+  }, [opened, closeModal, image, active, uploader, object, onChange])
 
   // const ref = useCallback((el: any) => {
   //   console.log('ref img el', el)

@@ -27,7 +27,6 @@ export const Script: React.FC<ScriptProps> = ({
   )
 
   const { uploader } = useUploader({
-    active,
     onUpload,
     inputProps: {
       accept: 'text/javascript',
@@ -74,7 +73,7 @@ export const Script: React.FC<ScriptProps> = ({
         data-redactor--src={object.props.src}
         data-redactor--content-length={object.components[0]?.props.text?.length}
       >
-        {uploader}
+        {active ? uploader : null}
 
         {editor}
 

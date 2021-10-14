@@ -1,13 +1,9 @@
+import { IconButtonProps } from '@procraft/ui/dist/IconButton'
 import { AllHTMLAttributes } from 'react'
 
 export type UploaderInputProps = AllHTMLAttributes<HTMLInputElement>
 
-export type useUploaderProps = {
-  /**
-   * Активен ли текущий элемент. Если нет, то не редактируется
-   */
-  active: boolean
-
+export type useUploaderProps = Omit<IconButtonProps, "callback"> & {
   /**
    * Колбэк на загрузку
    */
