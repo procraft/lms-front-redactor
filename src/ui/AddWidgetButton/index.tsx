@@ -49,7 +49,6 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
       height: 28,
       background: 'rgb(96, 125, 139)',
       color: 'white',
-
       position: 'absolute',
       top: element.offsetTop + element.offsetHeight / 2 - 15,
       left: element.offsetLeft + element.offsetWidth / 2 - 15,

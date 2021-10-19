@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Modal2TitleStyled = styled.div`
   display: flex;
@@ -24,9 +24,15 @@ export const Modal2TitleStyled = styled.div`
   }
 `
 
-export const Modal2ContentStyled = styled.div`
+export const Modal2ContentScrollerStyled = styled.div`
   flex: 1;
   padding: 5px;
+  overflow: hidden;
+`
+
+export const Modal2ContentStyled = styled.div`
+  overflow: auto;
+  height: 100%;
 `
 
 export const ModalContainerStyled = styled.div`
@@ -38,7 +44,11 @@ export const ModalContainerStyled = styled.div`
   font-size: 13px;
 `
 
-export const Modal2Styled = styled(ModalContainerStyled)`
+export type Modal2StyledProps = {
+  fullScreen?: boolean
+}
+
+export const Modal2Styled = styled(ModalContainerStyled) <Modal2StyledProps>`
   position: fixed;
   z-index: 1100;
   top: 20px;
@@ -50,6 +60,7 @@ export const Modal2Styled = styled(ModalContainerStyled)`
   margin: 0;
   list-style: none;
   user-select: none;
+  font-size: 12px;
   /* opacity: 0; */
 
   /* > ${Modal2TitleStyled} {
@@ -57,6 +68,19 @@ export const Modal2Styled = styled(ModalContainerStyled)`
 
   /* > ${Modal2ContentStyled} {
   } */
+
+  ${({ fullScreen }) => {
+
+    if (fullScreen) {
+
+      return css`
+        top: 50px;
+        bottom: 50px;
+        left: 50px;
+        right: 50px;
+      `
+    }
+  }}
 `
 
 export const Modal2ModalWrapperStyled = styled.div`

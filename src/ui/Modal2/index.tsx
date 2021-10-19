@@ -5,6 +5,7 @@ import CloseIcon from 'material-ui-icons/Close'
 import { IconButton } from '@procraft/ui/dist/IconButton'
 import { Modal2Props } from './interfaces'
 import {
+  Modal2ContentScrollerStyled,
   Modal2ContentStyled,
   Modal2ModalWrapperStyled,
   Modal2Styled,
@@ -159,7 +160,11 @@ export const Modal2: React.FC<Modal2Props> = ({
 
           <hr />
         </Modal2TitleStyled> : null}
-        <Modal2ContentStyled>{children}</Modal2ContentStyled>
+        <Modal2ContentScrollerStyled>
+          <Modal2ContentStyled>
+            {children}
+          </Modal2ContentStyled>
+        </Modal2ContentScrollerStyled>
       </Modal2Styled>
     )
 

@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react'
+import { Modal2StyledProps } from './styles'
 
 export type Modal2Props = React.HTMLAttributes<HTMLDivElement> & {
   title?: JSX.Element | string | null
@@ -17,4 +18,4 @@ export type Modal2Props = React.HTMLAttributes<HTMLDivElement> & {
    * Можно ли перетаскивать окно
    */
   moveable: boolean
-}
+} & Modal2StyledProps

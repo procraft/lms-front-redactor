@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 import { AddContentEditorWidgetButton } from './buttons/AddContentEditorWidgetButton'
 import { AddImageWidgetButton } from './buttons/AddImageWidgetButton'
 import { AddVideoWidgetButton } from './buttons/AddVideoWidgetButton'
+import { AddWidgetModalContext } from './Context'
 import { AddWidgetModalProps } from './interfaces'
 import { AddWidgetModalStyled } from './styles'
 
@@ -14,6 +15,22 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
   updateObject,
   closeHandler,
 }) => {
+
+  const context = useContext(AddWidgetModalContext)
+
+  const buttons = useMemo(() => {
+
+    return context?.buttons.map((Button, index) => {
+
+      return <Button
+        key={index}
+        closeHandler={closeHandler}
+        object={object}
+        updateObject={updateObject}
+      />
+    })
+  }, [closeHandler, context?.buttons, object, updateObject])
+
   return useMemo(() => {
     return ReactDOM.createPortal(
       <AddWidgetModalStyled
@@ -38,8 +55,9 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
           object={object}
           updateObject={updateObject}
         />
+        {buttons}
       </AddWidgetModalStyled>,
       document.body
     )
-  }, [closeHandler, object, updateObject])
+  }, [buttons, closeHandler, object, updateObject])
 }

@@ -19,10 +19,7 @@ export const Section: RedactorComponent = ({
     useRedactorComponentRef<HTMLDivElement>()
 
   const {
-    // ref,
-    // className,
     wrapperContent,
-    // active: _active,
     hovered,
     ...otherInitProps
   } = useRedactorComponentInit({
@@ -37,56 +34,12 @@ export const Section: RedactorComponent = ({
     hoverable: true,
   })
 
-  // null
-  // _active
-
   const childrenContent = useRedactorRenderComponents({
     object,
     updateObject,
     inEditMode,
     wrapperContainer,
   })
-
-  // console.log('Section updateObject', updateObject);
-
-  // useEffect(() => {
-  //   console.log(`Section useEffect object`, object)
-  // }, [object])
-
-  // useEffect(() => {
-  //   console.log(`Section useEffect updateObject`, updateObject)
-  // }, [updateObject])
-
-  // const updateName = useCallback(() => {
-  //   // console.log(`Section updateName`, object);
-
-  //   updateObject(object, {
-  //     name: 'Section ' + Math.random().toFixed(3),
-  //   })
-  // }, [object, updateObject])
-
-  // const content = useMemo(() => {
-  //   return (
-  //     <>
-  //       {object.name} {Math.random()}
-  //       <button onClick={updateName}>Update name</button>
-  //     </>
-  //   )
-  // }, [object.name, updateName])
-
-  // const content = useMemo(() => {
-  //   return <>
-  //     <div
-  //       {...object.props}
-  //       style={{
-  //         border: "2px solid red",
-  //         ...object.props.style,
-  //       }}
-  //     >
-  //       {childrenContent}
-  //     </div>
-  //   </>
-  // }, [childrenContent, object.props]);
 
   const content = useMemo(() => {
     return (
