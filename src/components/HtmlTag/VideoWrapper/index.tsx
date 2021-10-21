@@ -3,6 +3,7 @@ import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
 import { VideoWrapperModalStyled } from './styles'
+import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
 
 export const VideoWrapper: React.FC<ImgProps> = (props) => {
   const {
@@ -73,33 +74,40 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
     },
   })
 
-  const image = useMemo(() => {
-    if (!object.props.src) {
-      return null
-    }
+  // const image = useMemo(() => {
+  //   if (!object.props.src) {
+  //     return null
+  //   }
 
-    return (
-      <div className="image-block">
-        <img {...object.props} />
-      </div>
-    )
-  }, [object.props])
+  //   return (
+  //     <div className="image-block">
+  //       <img {...object.props} />
+  //     </div>
+  //   )
+  // }, [object.props])
 
-  const onChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.target.name
-      const value = event.target.value
+  // const onChange = useCallback(
+  //   (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     const name = event.target.name
+  //     const value = event.target.value
 
-      name &&
-        updateObject(object, {
-          props: {
-            ...object.props,
-            [name]: value,
-          },
-        })
-    },
-    [object, updateObject]
-  )
+  //     name &&
+  //       updateObject(object, {
+  //         props: {
+  //           ...object.props,
+  //           [name]: value,
+  //         },
+  //       })
+  //   },
+  //   [object, updateObject]
+  // )
+
+  const {
+    onChangeStyles,
+  } = useOnChangeStyles({
+    object,
+    updateObject,
+  })
 
   const uploaderModal = useMemo(() => {
     if (!opened) {
@@ -114,45 +122,49 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
         closeHandler={closeModal}
         moveable
       >
-        {image}
+        {/* {image} */}
         {active ? uploader : null}
 
         <div className="controls">
           <TextField
             fullWidth
-            value={object.props.width || ''}
+            value={object.props.style?.width || ''}
             title="Ширина"
             name="width"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
 
           <TextField
             fullWidth
-            value={object.props.maxWidth || ''}
+            value={object.props.style?.maxWidth || ''}
             title="Максимальная ширина"
             name="maxWidth"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
 
           <TextField
             fullWidth
-            value={object.props.height || ''}
+            value={object.props.style?.height || ''}
             title="Высота"
             name="height"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
 
           <TextField
             fullWidth
-            value={object.props.maxHeight || ''}
+            value={object.props.style?.maxHeight || ''}
             title="Максимальная высота"
             name="maxHeight"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
         </div>
       </VideoWrapperModalStyled>
     )
-  }, [opened, closeModal, image, active, uploader, object, onChange])
+  }, [opened, closeModal, active, uploader, object, onChangeStyles])
 
   return (
     <>

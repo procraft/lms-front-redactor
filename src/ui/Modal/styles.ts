@@ -29,6 +29,9 @@ export const LmsFrontRedactorModalComponentsButtonsStyled = styled.div`
   }
 `
 
+/**
+ * @deprecated
+ */
 export const LmsFrontRedactorModalStyled = styled.div`
   position: fixed;
   overflow: auto;
@@ -42,4 +45,5 @@ export const LmsFrontRedactorModalStyled = styled.div`
   background: white;
   z-index: ${({ theme }) => theme.frontRedactor.zIndex.modal};
   padding: 10px;
+  font-size: 12px;
 `

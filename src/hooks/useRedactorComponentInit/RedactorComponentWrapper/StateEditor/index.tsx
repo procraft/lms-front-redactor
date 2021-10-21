@@ -7,6 +7,7 @@ import useErrorBar from '../../../../ui/ErrorBar/hooks/useErrorBar'
 import { RedactorComponentObject } from '../../../../RedactorComponent/interfaces'
 import { LmsFrontRedactorModalStyled } from '../../../../ui/Modal/styles'
 import LmsFrontRedactorModal from '../../../../ui/Modal'
+import { LmsFrontRedactorStateEditorStyled } from './styles'
 
 /**
  * Редактор JSON-стейта компонента
@@ -103,14 +104,16 @@ const LmsFrontRedactorStateEditor: React.FC<LmsFrontRedactorStateEditorProps> =
             title={object.name}
             buttons={saveButton}
           >
-            <pre
-              // onInput={onInput}
-              ref={contanerRef}
-              contentEditable
-              suppressContentEditableWarning
-            >
-              {initState}
-            </pre>
+            <LmsFrontRedactorStateEditorStyled>
+              <pre
+                // onInput={onInput}
+                ref={contanerRef}
+                contentEditable
+                suppressContentEditableWarning
+              >
+                {initState}
+              </pre>
+            </LmsFrontRedactorStateEditorStyled>
           </LmsFrontRedactorModal>
         </LmsFrontRedactorModalStyled>
       </>,

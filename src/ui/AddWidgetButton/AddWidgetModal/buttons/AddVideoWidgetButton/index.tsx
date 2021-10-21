@@ -30,6 +30,7 @@ export const AddVideoWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
               tag: 'video',
               style: {
                 width: '100%',
+                maxWidth: '100%',
               },
               controls: true,
             },

@@ -3,6 +3,7 @@ import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ImgProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
 import { ImgWrapperModalStyled } from './styles'
+import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
 
 export const ImgWrapper: React.FC<ImgProps> = (props) => {
   const {
@@ -75,21 +76,31 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
     )
   }, [object.props])
 
-  const onChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.target.name
-      const value = event.target.value
+  // const onChangeStyles = useCallback(
+  //   (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     const name = event.target.name
+  //     const value = event.target.value
 
-      name &&
-        updateObject(object, {
-          props: {
-            ...object.props,
-            [name]: value,
-          },
-        })
-    },
-    [object, updateObject]
-  )
+  //     name &&
+  //       updateObject(object, {
+  //         props: {
+  //           ...object.props,
+  //           style: {
+  //             ...object.props.style,
+  //             [name]: value,
+  //           },
+  //         },
+  //       })
+  //   },
+  //   [object, updateObject]
+  // )
+
+  const {
+    onChangeStyles,
+  } = useOnChangeStyles({
+    object,
+    updateObject,
+  })
 
   const uploaderModal = useMemo(() => {
     if (!opened) {
@@ -110,39 +121,43 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         <div className="controls">
           <TextField
             fullWidth
-            value={object.props.width || ''}
+            value={object.props.style?.width || ''}
             title="Ширина"
             name="width"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
 
           <TextField
             fullWidth
-            value={object.props.maxWidth || ''}
+            value={object.props.style?.maxWidth || ''}
             title="Максимальная ширина"
             name="maxWidth"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
 
           <TextField
             fullWidth
-            value={object.props.height || ''}
+            value={object.props.style?.height || ''}
             title="Высота"
             name="height"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
 
           <TextField
             fullWidth
-            value={object.props.maxHeight || ''}
+            value={object.props.style?.maxHeight || ''}
             title="Максимальная высота"
             name="maxHeight"
-            onChange={onChange}
+            onChange={onChangeStyles}
+            helperText="px, %"
           />
         </div>
       </ImgWrapperModalStyled>
     )
-  }, [opened, closeModal, image, active, uploader, object, onChange])
+  }, [opened, closeModal, image, active, uploader, object, onChangeStyles])
 
   return (
     <>
