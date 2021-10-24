@@ -10,7 +10,7 @@ export const TagEditorToolbarStyled = styled(Modal2)`
 
   */
 
-  > ${Modal2ContentStyled} {
+  ${Modal2ContentStyled} {
     > .buttons {
       display: flex;
       flex-wrap: wrap;

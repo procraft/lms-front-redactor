@@ -23,12 +23,12 @@ export const Editor: React.FC<MonacoEditorProps> = ({
    * а когда мы начинаем редактирование. На слобом интернете задержка очень ощутимая,
    * долгое время редактор выглядит пустым.
    */
-  const [editorEnited, editorEnitedSetter] = useState(false)
+  const [editorInited, editorInitedSetter] = useState(false)
 
   /**
    * Init editor
    */
-  // TODO Сейчас у нас редактор не реагирует на зименения извне
+  // TODO Сейчас у нас редактор не реагирует на изменения извне
 
   /**
    * Очень важно: если извне передаются переменные, обновляемые при каждом изменении в редакторе,
@@ -44,7 +44,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
     let model: monacoEditor.editor.ITextModel | null = null
 
     loader.init().then((monaco: typeof monacoEditor) => {
-      editorEnitedSetter(true)
+      editorInitedSetter(true)
 
       editorInstance = monaco.editor.create(editorContainer, {
         value: source,
@@ -70,7 +70,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       //   // console.log(
       //   //   'onDidChangeContent editorInstance',
       //   //   editorInstance?.getValue()
-      editorEnitedSetter(true)
+      //   //   editorInitedSetter(true)
       //   // )
       //   editorInstance && onChange(editorInstance.getValue())
       // })
@@ -113,7 +113,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
         {/* 
         Пока редактор не загрузился, выводим исходный код
         */}
-        {!editorEnited ? (
+        {!editorInited ? (
           <>
             <div
               style={{
@@ -127,7 +127,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
         ) : null}
       </div>
     )
-  }, [editorContainerRef, editorEnited, source])
+  }, [editorContainerRef, editorInited, source])
 }
 
 export default Editor

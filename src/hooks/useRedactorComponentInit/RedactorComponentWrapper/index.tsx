@@ -16,6 +16,8 @@ import {
   RedactorComponentWrapperStyled,
 } from './styles'
 import { Button } from '@procraft/ui/dist/Button'
+import { RedactorComponentWrapperHTMLEditor } from './HtmlEditor'
+import { SvgIconCode } from '../../../ui/SvgIcon/Code'
 
 /**
  * Выводить дополнительные отладочные инструменты
@@ -440,6 +442,18 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
 
     // }, [element]);
 
+
+    const [htmlEditorOpened, htmlEditorOpenedSetter] = useState(false)
+
+    const openHtmlEditor = useCallback((event: MouseEvent) => {
+
+      event.preventDefault()
+      event.stopPropagation()
+
+      htmlEditorOpenedSetter(true)
+    }, [])
+
+
     return useMemo(() => {
       return (
         <>
@@ -473,6 +487,14 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
                       Show state
                     </button>
                   ) : null}
+                  <Button
+                    onClick={openHtmlEditor}
+                    role="openHtmlEditor"
+                    title="Редактировать HTML"
+                  >
+                    <SvgIconCode
+                    />
+                  </Button>
                   {parent ? (
                     <Button
                       onClick={removeObjectHandler}
@@ -504,24 +526,17 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
               />
             ) : null
           ) : null}
+
+          {htmlEditorOpened ?
+            <RedactorComponentWrapperHTMLEditor
+              element={element}
+              htmlEditorOpenedSetter={htmlEditorOpenedSetter}
+              object={object}
+              updateObject={updateObject}
+            />
+            : null
+          }
         </>
       )
-    }, [
-      active,
-      addBlockButtonDirection,
-      addBlockOpened,
-      addObjectHandler,
-      closeAddBlockModal,
-      closeAddddBlockModal,
-      closeEditor,
-      object,
-      parent,
-      removeObjectHandler,
-      showAddBlockModal,
-      showContentHandler,
-      stateEditor,
-      updateObject,
-      updateParent,
-      wrapper,
-    ])
+    }, [active, addBlockButtonDirection, addBlockOpened, addObjectHandler, closeAddBlockModal, closeAddddBlockModal, closeEditor, element, htmlEditorOpened, object, openHtmlEditor, parent, removeObjectHandler, showAddBlockModal, showContentHandler, stateEditor, updateObject, updateParent, wrapper])
   }

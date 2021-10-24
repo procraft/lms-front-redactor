@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {
   useCallback,
   useContext,
@@ -269,21 +270,32 @@ const useRedactorComponentInit = ({
    * Здесь навешиваем различные ивенты
    */
   useEffect(() => {
-    if (!element || !context?.inEditMode || !hoverable) {
+    if (!element || !context?.inEditMode) {
       return
     }
 
     const onMouseOver = (event: MouseEvent) => {
-      // console.log('onMouseOver event', event);
       // console.log('onMouseOver event.target', event.target);
       // console.log('onMouseOver event.currentTarget', event.currentTarget);
 
+      /**
+       * Нельзя проверять на соответствие наведенному элементу,
+       * так как важно улавливать на любой вложенности вглубь.
+       */
       // if (
       //   event.target === event.currentTarget &&
       //   event.currentTarget instanceof HTMLElement
       // ) {
-      event.stopPropagation()
-      hoveredSetter(true)
+
+      /**
+       * 
+       */
+      if (hoverable || event.ctrlKey) {
+
+        event.stopPropagation()
+        hoveredSetter(true)
+      }
+
       // }
     }
 
