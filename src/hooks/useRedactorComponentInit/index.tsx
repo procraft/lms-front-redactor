@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, {
   useCallback,
   useContext,
@@ -275,6 +274,7 @@ const useRedactorComponentInit = ({
     }
 
     const onMouseOver = (event: MouseEvent) => {
+      // console.log('onMouseOver event', event);
       // console.log('onMouseOver event.target', event.target);
       // console.log('onMouseOver event.currentTarget', event.currentTarget);
 
@@ -290,7 +290,7 @@ const useRedactorComponentInit = ({
       /**
        * 
        */
-      if (hoverable || event.ctrlKey) {
+      if (hoverable || event.altKey) {
 
         event.stopPropagation()
         hoveredSetter(true)
