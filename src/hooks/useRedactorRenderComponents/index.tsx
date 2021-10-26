@@ -10,7 +10,7 @@ import { useRedactorRenderComponentsProps } from './interfaces'
 // import getRedactorObjectComponent from '../RedactorObjectRender'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
 import { useState } from 'react'
-import Context from '../../Context'
+import { LmsFrontRedactorContext } from '../../Context'
 
 /**
  * В цикле выводим дочерние компоненты
@@ -20,7 +20,7 @@ const useRedactorRenderComponents = (
 ) => {
   const { object, updateObject, inEditMode, wrapperContainer } = props
 
-  const context = useContext(Context)
+  const context = useContext(LmsFrontRedactorContext)
 
   const [objectState] = useState({
     updateObject,

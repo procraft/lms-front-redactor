@@ -145,6 +145,7 @@ const HeadDevPage: Page = (props) => {
               getRedactorObjectComponent={getRedactorObjectComponent}
               objectTemplates={objectTemplates}
               linksList={linksList}
+              showHiddenTags={true}
               {...props}
             />
           ) : null}

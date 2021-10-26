@@ -69,6 +69,7 @@ export const HtmlTag: RedactorComponent = ({
     wrapperContent,
     // active,
     hovered: _hovered,
+    showHiddenTags,
     ...otherInitProps
     // TODO этот кух не понимает HTMLDivElement | HTMLAnchorElement, а HTMLElement дает ошибку типа при передачи в анкор
   } = useRedactorComponentInit({
@@ -96,9 +97,9 @@ export const HtmlTag: RedactorComponent = ({
     wrapperContainer,
   })
 
-  const content = useMemo(() => {
+  const content = useMemo<JSX.Element | null>(() => {
     if (!Tag) {
-      return text
+      return <>{text}</>
     }
 
     // const tagProps = {
@@ -224,7 +225,7 @@ export const HtmlTag: RedactorComponent = ({
       // ].includes(object.props.tag) ||
       typeof content !== 'object'
     ) {
-      return <>{content}</>
+      return content
     }
 
     // const Element = React.createElement(object.props.tag, {
@@ -246,6 +247,11 @@ export const HtmlTag: RedactorComponent = ({
 
     switch (object.props.tag) {
       case 'style':
+
+        if (!showHiddenTags) {
+          return content;
+        }
+
         elementContent = (
           <Style
             {...renderProps}
@@ -263,6 +269,11 @@ export const HtmlTag: RedactorComponent = ({
         break
 
       case 'script':
+
+        if (!showHiddenTags) {
+          return content;
+        }
+
         elementContent = (
           <>
             <Script
@@ -281,6 +292,11 @@ export const HtmlTag: RedactorComponent = ({
         break
 
       case 'link':
+
+        if (!showHiddenTags) {
+          return content;
+        }
+
         elementContent = (
           <>
             <RelStylesheet
@@ -357,5 +373,6 @@ export const HtmlTag: RedactorComponent = ({
     active,
     closeHandler,
     element,
+    showHiddenTags,
   ])
 }

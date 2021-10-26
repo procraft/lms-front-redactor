@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
+import { LmsFrontRedactorContextValue } from '../../Context'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
 import { RedactorComponentWrapperProps } from './RedactorComponentWrapper/interfaces'
@@ -43,6 +44,9 @@ export type ComponentWrapperProps = {
 
   hovered: boolean
   wrapperContent: JSX.Element | undefined
+  
+  showHiddenTags: LmsFrontRedactorContextValue["showHiddenTags"]
+  
   // "data-redactor--redactor-component": "true" | undefined
 } & Omit<
   Record<

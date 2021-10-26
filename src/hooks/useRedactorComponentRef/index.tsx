@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
 
+// TODO Сейчас этот хук срабатывает даже когда не в режиме редактирования находимся.
 /**
  * Инициируем HTML-ноду компонента
  */

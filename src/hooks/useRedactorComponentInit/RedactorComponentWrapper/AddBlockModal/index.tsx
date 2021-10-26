@@ -9,7 +9,7 @@ import {
   RedactorComponentObject,
 } from '../../../../RedactorComponent/interfaces'
 import LmsFrontRedactorModal from '../../../../ui/Modal'
-import Context, { RedactorObjectTemplate } from '../../../../Context'
+import { LmsFrontRedactorContext, RedactorObjectTemplate } from '../../../../Context'
 import { AddBlockModalStyled } from './styles'
 import { InsertPlace } from '../../../useAddComponent/interfaces'
 import { useAddComponent } from '../../../useAddComponent'
@@ -24,7 +24,7 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
   parent,
   updateParent,
 }) => {
-  const context = useContext(Context)
+  const context = useContext(LmsFrontRedactorContext)
 
   const [place, placeSetter] = useState<InsertPlace>(InsertPlace.Child)
 

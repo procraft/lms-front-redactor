@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import dynamic from 'next/dynamic'
-import Context, { LmsFrontRedactorContextValue } from './Context'
+import { LmsFrontRedactorContext, LmsFrontRedactorContextValue } from './Context'
 import useRedactorComponentInit from './hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from './hooks/useRedactorRenderComponents'
 // import getRedactorObjectComponent from './hooks/RedactorObjectRender'
@@ -22,15 +22,20 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
   getRedactorObjectComponent,
   objectTemplates,
   linksList,
+  showHiddenTags,
 }) => {
+
+ 
+
   const context = useMemo<LmsFrontRedactorContextValue>(() => {
     return {
       inEditMode,
       getRedactorObjectComponent,
       objectTemplates,
       linksList,
+      showHiddenTags,
     }
-  }, [getRedactorObjectComponent, inEditMode, linksList, objectTemplates])
+  }, [getRedactorObjectComponent, inEditMode, linksList, objectTemplates, showHiddenTags])
 
   const content = useMemo(() => {
     if (!object) {
@@ -56,7 +61,7 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
   }, [object, getRedactorObjectComponent, updateObject, inEditMode])
 
   const redactorContent = useMemo(() => {
-    return <Context.Provider value={context}>{content}</Context.Provider>
+    return <LmsFrontRedactorContext.Provider value={context}>{content}</LmsFrontRedactorContext.Provider>
   }, [content, context])
 
   return useMemo(() => {

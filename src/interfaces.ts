@@ -17,4 +17,6 @@ export type LmsFrontRedactorProps = {
    * Список возможных ссылок
    */
   linksList: RedactorLinkData[]
+
+  showHiddenTags: boolean
 }

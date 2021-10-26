@@ -19,3 +19,7 @@ export const SvgIconCode: React.FC<{
     />
   </svg>
 }
+
+SvgIconCode.defaultProps = {
+  fill: "black",
+}

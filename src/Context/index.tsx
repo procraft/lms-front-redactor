@@ -35,9 +35,12 @@ export type LmsFrontRedactorContextValue = {
   objectTemplates: RedactorObjectTemplate[]
 
   linksList: RedactorLinkData[]
+
+  /**
+   * Показывать скрытые теги (скрипты, стили, мета и т.п.)
+   */
+  showHiddenTags: boolean
 }
 
-const LmsFrontRedactorContext =
+export const LmsFrontRedactorContext =
   React.createContext<LmsFrontRedactorContextValue | null>(null)
-
-export default LmsFrontRedactorContext

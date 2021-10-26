@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import Context from '../../Context'
+import { LmsFrontRedactorContext } from '../../Context'
 import {
   RedactorComponentActiveEvent,
   RedactorComponentActiveEventDetail,
@@ -39,7 +39,7 @@ const useRedactorComponentInit = ({
   activeSetter,
   hoverable,
 }: useRedactorComponentInitProps): ComponentWrapperProps => {
-  const context = useContext(Context)
+  const context = useContext(LmsFrontRedactorContext)
 
   /**
    * Наведена мышка
@@ -415,6 +415,8 @@ const useRedactorComponentInit = ({
       // [redactor2ComponentAttributes.hovered]: context?.inEditMode ? "true" : undefined,
       // "data-redactor--redactor-component": "true",
       hovered,
+
+      showHiddenTags: context?.showHiddenTags ?? false,
     }
 
     // if (context?.inEditMode) {
@@ -422,7 +424,7 @@ const useRedactorComponentInit = ({
     // }
 
     return props
-  }, [active, wrapperContent, context?.inEditMode, hovered])
+  }, [wrapperContent, context?.inEditMode, context?.showHiddenTags, active, hovered])
 }
 
 export default useRedactorComponentInit

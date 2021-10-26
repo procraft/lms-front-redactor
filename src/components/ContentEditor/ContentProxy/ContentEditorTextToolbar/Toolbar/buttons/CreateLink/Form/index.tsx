@@ -5,7 +5,7 @@ import {
   Grid,
   TextField,
 } from 'material-ui'
-import Context from '../../../../../../../../Context'
+import { LmsFrontRedactorContext } from '../../../../../../../../Context'
 import { LinkFormLinksListStyled, LinkFormLinkWrapperStyled, LinkFormStyled } from './styles'
 import { Button } from '@procraft/ui/dist/Button'
 import { useUploader } from '../../../../../../../../hooks/useUploader'
@@ -14,7 +14,7 @@ import { useUploader } from '../../../../../../../../hooks/useUploader'
  * Форма создания/редактирования ссылки
  */
 export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
-  const context = useContext(Context)
+  const context = useContext(LmsFrontRedactorContext)
 
   // TODO Надо проработать обрыв события.
   // Сейчас если кликать внутри редактора, то не закрывается окошко

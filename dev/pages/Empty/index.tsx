@@ -90,6 +90,7 @@ export const EmptyPage: Page = () => {
                 getRedactorObjectComponent={getRedactorObjectComponent}
                 objectTemplates={objectTemplates}
                 linksList={linksList}
+                showHiddenTags={true}
               />
             ) : null}
           </div>
