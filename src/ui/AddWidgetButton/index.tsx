@@ -43,6 +43,12 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
 
   const style = useMemo<React.CSSProperties>(() => {
     //
+
+    const bodyRect = document.body.getBoundingClientRect();
+    const elemRect = element.getBoundingClientRect();
+    const offsetTop = elemRect.top - bodyRect.top;
+    const offsetLeft = elemRect.left - bodyRect.left;
+
     return {
       border: '1px solid grey',
       width: 28,
@@ -50,8 +56,15 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
       background: 'rgb(96, 125, 139)',
       color: 'white',
       position: 'absolute',
-      top: element.offsetTop + element.offsetHeight / 2 - 15,
-      left: element.offsetLeft + element.offsetWidth / 2 - 15,
+
+      /**
+       * Ельзя ориентироваться на element.offsetTop, так как эти параметры перебиваются
+       * элементами с position: relative;
+       */
+      // top: element.offsetTop + element.offsetHeight / 2 - 15,
+      // left: element.offsetLeft + element.offsetWidth / 2 - 15,
+      top: offsetTop + (element.offsetHeight / 2 - 15),
+      left: offsetLeft + (element.offsetWidth / 2 - 15),
     }
   }, [element])
 
