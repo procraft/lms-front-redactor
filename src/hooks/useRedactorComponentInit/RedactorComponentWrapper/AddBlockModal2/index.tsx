@@ -11,7 +11,7 @@ import { AddBlockModal2ContentStyled, AddBlockModal2Styled } from './styles'
 const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
   closeHandler,
   direction,
-  // object,
+  object,
   parent,
   updateParent,
 }) => {
@@ -513,11 +513,12 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
       },
     ]
 
-    blocksObjects.forEach((object, index) => {
+    blocksObjects.forEach((newObject, index) => {
       blocks.push(
         <AddBlockModal2Button
           key={index}
           object={object}
+          newObject={newObject}
           direction={direction}
           parent={parent}
           updateParent={updateParent}
@@ -527,7 +528,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
     })
 
     return blocks
-  }, [closeHandler, direction, parent, updateParent])
+  }, [closeHandler, direction, object, parent, updateParent])
 
   return useMemo(() => {
     return ReactDOM.createPortal(

@@ -1,8 +1,8 @@
-// import { RedactorComponentWrapperProps } from '../interfaces'
+import { RedactorComponentWrapperProps } from '../interfaces'
 import { AddBlockModal2ButtonProps } from './Button/interfaces'
 
 export type AddBlockModal2Props = {
-  // object: RedactorComponentWrapperProps['object']
+  object: RedactorComponentWrapperProps['object']
 
   /**
    * Закрытие модалки

@@ -8,6 +8,7 @@ import { AddBlockModal2ButtonProps } from './interfaces'
  */
 export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
   object,
+  newObject,
   updateParent,
   parent,
   direction,
@@ -31,10 +32,17 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
        */
       const components = [...parent.components]
 
+      const index = parent.components.findIndex(n => n === object);
+      if (index === -1) {
+        console.error('Can not get object index')
+        return;
+      }
+
       if (direction === 'Top') {
-        components.unshift(object)
+        components.splice(index, 0, newObject)
+
       } else if (direction === 'Bottom') {
-        components.push(object)
+        components.splice(index + 1, 0, newObject)
       }
 
       /**
@@ -59,6 +67,7 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
     direction,
     elementState,
     object,
+    newObject,
     parent,
     parent.components,
     updateParent,
@@ -72,9 +81,9 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
           // eslint-disable-next-line no-console
           updateObject={console.log}
           wrapperContainer={undefined}
-          object={object}
+          object={newObject}
         />
       </AddBlockModal2ButtonStyled>
     )
-  }, [elementState, object, other])
+  }, [elementState, newObject, other])
 }

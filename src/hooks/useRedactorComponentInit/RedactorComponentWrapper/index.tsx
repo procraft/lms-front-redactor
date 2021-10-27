@@ -520,7 +520,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
               <AddBlockModal2
                 closeHandler={closeAddddBlockModal}
                 direction={addBlockButtonDirection}
-                // object={object}
+                object={object}
                 updateParent={updateParent}
                 parent={parent}
               />
