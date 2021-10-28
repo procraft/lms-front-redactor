@@ -11,4 +11,8 @@ export type ContentEditorHTMLEditorMonacoEditorProps = {
 
   object: RedactorComponentProps['object']
   updateObject: RedactorComponentProps['updateObject']
+
+  // TODO пока сделал необязательными эти параметры, но в дальнейшем надо будет сделать обязательными
+  parent?: RedactorComponentProps['parent']
+  updateParent?: RedactorComponentProps['updateParent']
 }

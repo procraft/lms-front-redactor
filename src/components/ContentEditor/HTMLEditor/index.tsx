@@ -11,7 +11,7 @@ import { ContentEditorHTMLEditorStyled } from './styles'
  * @deprecated
  */
 export const ContentEditorHTMLEditor: React.FC<ContentEditorHTMLEditorProps> =
-  ({ element, object, updateObject }) => {
+  ({ element, object, updateObject, parent, updateParent, }) => {
     const [inEditMode, inEditModeSetter] = useState(false)
 
     const toggleEditMode = useCallback(
@@ -46,9 +46,11 @@ export const ContentEditorHTMLEditor: React.FC<ContentEditorHTMLEditorProps> =
               element={element}
               object={object}
               updateObject={updateObject}
+              parent={parent}
+              updateParent={updateParent}
             />
           ) : null}
         </ContentEditorHTMLEditorStyled>
       )
-    }, [button, inEditMode, element, object, updateObject])
+    }, [button, inEditMode, element, object, updateObject, parent, updateParent])
   }

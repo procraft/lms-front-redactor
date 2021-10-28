@@ -533,6 +533,8 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
               htmlEditorOpenedSetter={htmlEditorOpenedSetter}
               object={object}
               updateObject={updateObject}
+              parent={parent}
+              updateParent={updateParent}
             />
             : null
           }

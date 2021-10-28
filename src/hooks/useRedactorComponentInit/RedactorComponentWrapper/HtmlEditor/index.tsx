@@ -12,6 +12,8 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<RedactorComponentWrapp
   htmlEditorOpenedSetter,
   object,
   updateObject,
+  parent,
+  updateParent,
 }) => {
 
   const closeHandler = useCallback(() => {
@@ -45,6 +47,8 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<RedactorComponentWrapp
       element={element}
       object={object}
       updateObject={updateObject}
+      parent={parent}
+      updateParent={updateParent}
     />
 
   </Modal2>

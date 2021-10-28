@@ -5,7 +5,7 @@ import { FiberNode } from '../interfaces'
 /**
  * Convert HTML Node to EditorComponentObject JSON
  */
-const nodeToEditorComponentObject = (
+export const nodeToEditorComponentObject = (
   // node: NonNullable<ElementWithReactComponent | Text | ChildNode>,
   node: NonNullable<Text | ChildNode>,
   object?: RedactorComponentObject
@@ -194,6 +194,7 @@ const nodeToEditorComponentObject = (
 
 /**
  * Конвертируем содержимое HTML-ноды в компоненты
+ * @deprecated use nodeToEditorComponentObject instead
  */
 export const nodeChildsToEditorComponentObjectComponents = (node: Node) => {
   const nodes = node.childNodes
