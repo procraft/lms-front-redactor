@@ -18,6 +18,7 @@ import {
 import { Button } from '@procraft/ui/dist/Button'
 import { RedactorComponentWrapperHTMLEditor } from './HtmlEditor'
 import { SvgIconCode } from '../../../ui/SvgIcon/Code'
+import { RedactorComponentWrapperAddComponentButton } from './buttons/AddComponent'
 
 /**
  * Выводить дополнительные отладочные инструменты
@@ -75,8 +76,9 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
       // if(wrapperTitle) {
       const titleNode = document.createElement('span')
       titleNode.innerHTML = `
-      <span>${object.name} ${object.name !== object.component ? ` (${object.component})` : ''
-        }</span>
+      <span>${object.name} ${
+        object.name !== object.component ? ` (${object.component})` : ''
+      }</span>
       <span>${object.props.tag || ''}</span>
     `
 
@@ -442,17 +444,14 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
 
     // }, [element]);
 
-
     const [htmlEditorOpened, htmlEditorOpenedSetter] = useState(false)
 
     const openHtmlEditor = useCallback((event: MouseEvent) => {
-
       event.preventDefault()
       event.stopPropagation()
 
       htmlEditorOpenedSetter(true)
     }, [])
-
 
     return useMemo(() => {
       return (
@@ -479,21 +478,26 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
                     : ''}
                 </span>
                 <span>{object.props.tag}</span> */}
-                  {debug ? <button onClick={addObjectHandler} role="addBlock">
-                    Add block
-                  </button> : null}
+                  {debug ? (
+                    <button onClick={addObjectHandler} role="addBlock">
+                      Add block
+                    </button>
+                  ) : null}
                   {debug ? (
                     <button onClick={showContentHandler} role="showState">
                       Show state
                     </button>
                   ) : null}
+                  <RedactorComponentWrapperAddComponentButton
+                    object={object}
+                    updateObject={updateObject}
+                  />
                   <Button
                     onClick={openHtmlEditor}
                     role="openHtmlEditor"
                     title="Редактировать HTML"
                   >
-                    <SvgIconCode
-                    />
+                    <SvgIconCode />
                   </Button>
                   {parent ? (
                     <Button
@@ -504,7 +508,9 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
                       <DeleteIcon />
                     </Button>
                   ) : null}
-                  <Button onClick={closeEditor} role="close"
+                  <Button
+                    onClick={closeEditor}
+                    role="close"
                     title="Завершить редактирование"
                   >
                     <CloseIcon />
@@ -527,7 +533,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
             ) : null
           ) : null}
 
-          {htmlEditorOpened ?
+          {htmlEditorOpened ? (
             <RedactorComponentWrapperHTMLEditor
               element={element}
               htmlEditorOpenedSetter={htmlEditorOpenedSetter}
@@ -536,9 +542,28 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
               parent={parent}
               updateParent={updateParent}
             />
-            : null
-          }
+          ) : null}
         </>
       )
-    }, [active, addBlockButtonDirection, addBlockOpened, addObjectHandler, closeAddBlockModal, closeAddddBlockModal, closeEditor, element, htmlEditorOpened, object, openHtmlEditor, parent, removeObjectHandler, showAddBlockModal, showContentHandler, stateEditor, updateObject, updateParent, wrapper])
+    }, [
+      active,
+      addBlockButtonDirection,
+      addBlockOpened,
+      addObjectHandler,
+      closeAddBlockModal,
+      closeAddddBlockModal,
+      closeEditor,
+      element,
+      htmlEditorOpened,
+      object,
+      openHtmlEditor,
+      parent,
+      removeObjectHandler,
+      showAddBlockModal,
+      showContentHandler,
+      stateEditor,
+      updateObject,
+      updateParent,
+      wrapper,
+    ])
   }
