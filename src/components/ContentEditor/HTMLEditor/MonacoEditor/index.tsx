@@ -247,11 +247,11 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
 
           // console.log('args', args);
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
           // eslint-disable-next-line prefer-spread
           parentComponents.splice.apply(
             parentComponents,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             args.concat(components)
           )
 

@@ -44,9 +44,9 @@ export type ComponentWrapperProps = {
 
   hovered: boolean
   wrapperContent: JSX.Element | undefined
-  
-  showHiddenTags: LmsFrontRedactorContextValue["showHiddenTags"]
-  
+
+  showHiddenTags: LmsFrontRedactorContextValue['showHiddenTags']
+
   // "data-redactor--redactor-component": "true" | undefined
 } & Omit<
   Record<

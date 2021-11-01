@@ -9,7 +9,10 @@ import {
   RedactorComponentObject,
 } from '../../../../RedactorComponent/interfaces'
 import LmsFrontRedactorModal from '../../../../ui/Modal'
-import { LmsFrontRedactorContext, RedactorObjectTemplate } from '../../../../Context'
+import {
+  LmsFrontRedactorContext,
+  RedactorObjectTemplate,
+} from '../../../../Context'
 import { AddBlockModalStyled } from './styles'
 import { InsertPlace } from '../../../useAddComponent/interfaces'
 import { useAddComponent } from '../../../useAddComponent'

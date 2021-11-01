@@ -288,10 +288,9 @@ const useRedactorComponentInit = ({
       // ) {
 
       /**
-       * 
+       *
        */
       if (hoverable || event.altKey) {
-
         event.stopPropagation()
         hoveredSetter(true)
       }
@@ -424,7 +423,13 @@ const useRedactorComponentInit = ({
     // }
 
     return props
-  }, [wrapperContent, context?.inEditMode, context?.showHiddenTags, active, hovered])
+  }, [
+    wrapperContent,
+    context?.inEditMode,
+    context?.showHiddenTags,
+    active,
+    hovered,
+  ])
 }
 
 export default useRedactorComponentInit

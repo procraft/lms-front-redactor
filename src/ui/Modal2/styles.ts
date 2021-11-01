@@ -48,7 +48,7 @@ export type Modal2StyledProps = {
   fullScreen?: boolean
 }
 
-export const Modal2Styled = styled(ModalContainerStyled) <Modal2StyledProps>`
+export const Modal2Styled = styled(ModalContainerStyled)<Modal2StyledProps>`
   position: fixed;
   z-index: 1100;
   top: 20px;
@@ -70,9 +70,7 @@ export const Modal2Styled = styled(ModalContainerStyled) <Modal2StyledProps>`
   } */
 
   ${({ fullScreen }) => {
-
     if (fullScreen) {
-
       return css`
         top: 50px;
         bottom: 50px;

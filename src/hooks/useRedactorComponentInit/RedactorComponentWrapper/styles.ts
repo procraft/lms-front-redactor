@@ -1,11 +1,8 @@
-
 import { ButtonStyled } from '@procraft/ui/dist/Button/styles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { useAddBlockButtonProps } from './hooks/useAddBlockButton/interfaces'
 
 export const RedactorComponentWrapperButtonsStyled = styled.div`
-  
-
   > * {
     margin: 0 2px;
   }

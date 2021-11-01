@@ -15,19 +15,18 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
   updateObject,
   closeHandler,
 }) => {
-
   const context = useContext(AddWidgetModalContext)
 
   const buttons = useMemo(() => {
-
     return context?.buttons.map((Button, index) => {
-
-      return <Button
-        key={index}
-        closeHandler={closeHandler}
-        object={object}
-        updateObject={updateObject}
-      />
+      return (
+        <Button
+          key={index}
+          closeHandler={closeHandler}
+          object={object}
+          updateObject={updateObject}
+        />
+      )
     })
   }, [closeHandler, context?.buttons, object, updateObject])
 

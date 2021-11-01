@@ -23,7 +23,6 @@ export default class Document extends NextDocument {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Inter"
           />
-
         </Head>
         <body>
           <Main />

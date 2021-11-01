@@ -18,21 +18,18 @@ export const Section: RedactorComponent = ({
   const { ref, element, active, activeSetter } =
     useRedactorComponentRef<HTMLDivElement>()
 
-  const {
-    wrapperContent,
-    hovered,
-    ...otherInitProps
-  } = useRedactorComponentInit({
-    object,
-    updateObject,
-    wrapperContainer,
-    parent,
-    updateParent,
-    element,
-    active,
-    activeSetter,
-    hoverable: true,
-  })
+  const { wrapperContent, hovered, ...otherInitProps } =
+    useRedactorComponentInit({
+      object,
+      updateObject,
+      wrapperContainer,
+      parent,
+      updateParent,
+      element,
+      active,
+      activeSetter,
+      hoverable: true,
+    })
 
   const childrenContent = useRedactorRenderComponents({
     object,

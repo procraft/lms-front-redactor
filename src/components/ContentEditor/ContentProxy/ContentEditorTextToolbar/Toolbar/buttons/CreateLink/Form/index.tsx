@@ -6,7 +6,11 @@ import {
   TextField,
 } from 'material-ui'
 import { LmsFrontRedactorContext } from '../../../../../../../../Context'
-import { LinkFormLinksListStyled, LinkFormLinkWrapperStyled, LinkFormStyled } from './styles'
+import {
+  LinkFormLinksListStyled,
+  LinkFormLinkWrapperStyled,
+  LinkFormStyled,
+} from './styles'
 import { Button } from '@procraft/ui/dist/Button'
 import { useUploader } from '../../../../../../../../hooks/useUploader'
 
@@ -142,14 +146,11 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
     }
   }, [listElement])
 
-
   const onUpload = useCallback((url: string) => {
     linkSetter(url)
   }, [])
 
-  const {
-    uploader,
-  } = useUploader({
+  const { uploader } = useUploader({
     onUpload,
   })
 
@@ -160,16 +161,16 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
           <Grid
             item
             xs={12}
-          // onMouseDown={onMouseDown}
+            // onMouseDown={onMouseDown}
           >
-
             <LinkFormLinkWrapperStyled>
               <TextField
                 value={link || ''}
                 onChange={onChangeLink}
                 label="Адрес ссылки"
                 fullWidth
-              /> {uploader}
+              />{' '}
+              {uploader}
             </LinkFormLinkWrapperStyled>
 
             <LinkFormLinksListStyled ref={listElementRef}>

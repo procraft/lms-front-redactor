@@ -3,7 +3,7 @@ import { AllHTMLAttributes } from 'react'
 
 export type UploaderInputProps = AllHTMLAttributes<HTMLInputElement>
 
-export type useUploaderProps = Omit<IconButtonProps, "callback"> & {
+export type useUploaderProps = Omit<IconButtonProps, 'callback'> & {
   /**
    * Колбэк на загрузку
    */

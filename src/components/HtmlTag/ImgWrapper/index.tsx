@@ -95,9 +95,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
   //   [object, updateObject]
   // )
 
-  const {
-    onChangeStyles,
-  } = useOnChangeStyles({
+  const { onChangeStyles } = useOnChangeStyles({
     object,
     updateObject,
   })
@@ -165,5 +163,4 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
       {uploaderModal}
     </>
   )
-
 }

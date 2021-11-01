@@ -32,15 +32,14 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
        */
       const components = [...parent.components]
 
-      const index = parent.components.findIndex(n => n === object);
+      const index = parent.components.findIndex((n) => n === object)
       if (index === -1) {
         console.error('Can not get object index')
-        return;
+        return
       }
 
       if (direction === 'Top') {
         components.splice(index, 0, newObject)
-
       } else if (direction === 'Bottom') {
         components.splice(index + 1, 0, newObject)
       }

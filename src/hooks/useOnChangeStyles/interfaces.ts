@@ -1,4 +1,4 @@
-import { RedactorComponentObject, RedactorComponentProps } from "../..";
+import { RedactorComponentObject, RedactorComponentProps } from '../..'
 
 export type useOnChangeStylesProps = {
   object: Readonly<RedactorComponentObject>

@@ -107,9 +107,13 @@ export const HtmlTag: RedactorComponent = ({
     //   ...otherProps,
     // }
 
-    const tagProps = Object.assign({}, {
-      className: componentClassName,
-    }, otherProps)
+    const tagProps = Object.assign(
+      {},
+      {
+        className: componentClassName,
+      },
+      otherProps
+    )
 
     switch (Tag.toLowerCase()) {
       case 'script': {
@@ -130,8 +134,8 @@ export const HtmlTag: RedactorComponent = ({
           ...otherProps,
           dangerouslySetInnerHTML: object.components[0]?.props.text
             ? {
-              __html: object.components[0]?.props.text,
-            }
+                __html: object.components[0]?.props.text,
+              }
             : undefined,
         })
       }
@@ -247,9 +251,8 @@ export const HtmlTag: RedactorComponent = ({
 
     switch (object.props.tag) {
       case 'style':
-
         if (!showHiddenTags) {
-          return content;
+          return content
         }
 
         elementContent = (
@@ -269,9 +272,8 @@ export const HtmlTag: RedactorComponent = ({
         break
 
       case 'script':
-
         if (!showHiddenTags) {
-          return content;
+          return content
         }
 
         elementContent = (
@@ -292,9 +294,8 @@ export const HtmlTag: RedactorComponent = ({
         break
 
       case 'link':
-
         if (!showHiddenTags) {
-          return content;
+          return content
         }
 
         elementContent = (

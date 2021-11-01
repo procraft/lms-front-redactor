@@ -6,7 +6,6 @@ import { uploadToS3 } from '../../helpers/S3Uploader'
 import { normalizeFileName } from '../../helpers/normalizeFileName'
 import { UploaderStyled } from './styles'
 
-
 export const useUploader = ({
   onUpload,
   inputProps,
@@ -20,18 +19,15 @@ export const useUploader = ({
   const [input, inputRef] = useState<HTMLInputElement | null>(null)
 
   const onClick = useCallback(() => {
-
     if (input) {
       input.click()
     }
-
   }, [input])
 
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-
       if (loading) {
-        return;
+        return
       }
 
       loadingSetter(true)
@@ -90,7 +86,6 @@ export const useUploader = ({
   )
 
   const uploader = useMemo(() => {
-
     return (
       <>
         <input
@@ -106,7 +101,8 @@ export const useUploader = ({
           {...other}
         >
           <UploadIcon />
-        </UploaderStyled>{loading ? ' Loading...' : null}
+        </UploaderStyled>
+        {loading ? ' Loading...' : null}
       </>
     )
   }, [inputProps, onChange, onClick, loading, disabled, other])

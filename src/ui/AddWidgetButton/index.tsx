@@ -44,10 +44,10 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
   const style = useMemo<React.CSSProperties>(() => {
     //
 
-    const bodyRect = document.body.getBoundingClientRect();
-    const elemRect = element.getBoundingClientRect();
-    const offsetTop = elemRect.top - bodyRect.top;
-    const offsetLeft = elemRect.left - bodyRect.left;
+    const bodyRect = document.body.getBoundingClientRect()
+    const elemRect = element.getBoundingClientRect()
+    const offsetTop = elemRect.top - bodyRect.top
+    const offsetLeft = elemRect.left - bodyRect.left
 
     return {
       border: '1px solid grey',

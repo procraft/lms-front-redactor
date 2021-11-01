@@ -6,5 +6,5 @@ export type AddWidgetModalContextValue = {
   buttons: React.FC<AddWidgetButtonButtonProps>[]
 }
 
-export const AddWidgetModalContext = React.createContext<AddWidgetModalContextValue | null>(null)
-
+export const AddWidgetModalContext =
+  React.createContext<AddWidgetModalContextValue | null>(null)

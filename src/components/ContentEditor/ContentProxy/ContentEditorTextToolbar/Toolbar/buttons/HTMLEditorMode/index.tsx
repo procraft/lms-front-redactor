@@ -84,10 +84,7 @@ export const HTMLEditorModeButton: React.FC<HTMLEditorModeButtonProps> = ({
         > */}
         {/* <ButtonIcon /> */}
 
-        <SvgIconCode
-          className="svg-icon"
-          fill="black"
-        />
+        <SvgIconCode className="svg-icon" fill="black" />
 
         {/* </i> */}
       </>
@@ -104,57 +101,57 @@ export const useHTMLEditorModeButton: (
   object,
   updateObject,
 }) => {
-    const [opened, openedSetter] = useState(false)
+  const [opened, openedSetter] = useState(false)
+
+  /**
+   * Координаты для позиционирования окна
+   */
+  // const [clickCoords, clickCoordsSetter] = useState<
+  //   HTMLEditorModeButtonProps['clickCoords'] | null
+  // >(null)
+
+  const onClick = useCallback(() => {
+    // console.log('onClick event', event)
+
+    openedSetter(!opened)
+
+    // if (!opened) {
+    //   clickCoordsSetter({
+    //     // TODO Получать координаты с учетом ширины самой всплывашки
+    //     x: event.clientX - 160,
+    //     y: event.clientY + 30,
+    //   })
+    // }
+  }, [opened])
+
+  // console.log('useHTMLEditorModeButton hasSelection', hasSelection)
+  // console.log('useHTMLEditorModeButton selection', selection)
+
+  // TODO Нельзя сейчас использовать useMemo, потому что selection - это всегда один и тот же объект
+  // return useMemo(() => {
+  //   console.log('useHTMLEditorModeButton useMemo hasSelection', hasSelection)
+  // }, [clickCoords, hasSelection, onClick, opened, selection])
+
+  return {
+    name: 'HTMLEditorMode',
+    title: 'Редактировать HTML',
+    // disabled: hasSelection && selection?.type === 'Range' ? false : true,
 
     /**
-     * Координаты для позиционирования окна
+     * Сейчас пока редактирование доступно только если не в фокусе (чтобы исключить вероятность коллизий измененного состояния)
      */
-    // const [clickCoords, clickCoordsSetter] = useState<
-    //   HTMLEditorModeButtonProps['clickCoords'] | null
-    // >(null)
-
-    const onClick = useCallback(() => {
-      // console.log('onClick event', event)
-
-      openedSetter(!opened)
-
-      // if (!opened) {
-      //   clickCoordsSetter({
-      //     // TODO Получать координаты с учетом ширины самой всплывашки
-      //     x: event.clientX - 160,
-      //     y: event.clientY + 30,
-      //   })
-      // }
-    }, [opened])
-
-    // console.log('useHTMLEditorModeButton hasSelection', hasSelection)
-    // console.log('useHTMLEditorModeButton selection', selection)
-
-    // TODO Нельзя сейчас использовать useMemo, потому что selection - это всегда один и тот же объект
-    // return useMemo(() => {
-    //   console.log('useHTMLEditorModeButton useMemo hasSelection', hasSelection)
-    // }, [clickCoords, hasSelection, onClick, opened, selection])
-
-    return {
-      name: 'HTMLEditorMode',
-      title: 'Редактировать HTML',
-      // disabled: hasSelection && selection?.type === 'Range' ? false : true,
-
-      /**
-       * Сейчас пока редактирование доступно только если не в фокусе (чтобы исключить вероятность коллизий измененного состояния)
-       */
-      disabled: hasSelection,
-      icon: (
-        <HTMLEditorModeButton
-          selection={selection}
-          opened={opened}
-          openedSetter={openedSetter}
-          // clickCoords={clickCoords}
-          element={contentWrapper}
-          object={object}
-          updateObject={updateObject}
-        />
-      ),
-      onClick,
-    }
+    disabled: hasSelection,
+    icon: (
+      <HTMLEditorModeButton
+        selection={selection}
+        opened={opened}
+        openedSetter={openedSetter}
+        // clickCoords={clickCoords}
+        element={contentWrapper}
+        object={object}
+        updateObject={updateObject}
+      />
+    ),
+    onClick,
   }
+}

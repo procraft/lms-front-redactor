@@ -102,9 +102,7 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
   //   [object, updateObject]
   // )
 
-  const {
-    onChangeStyles,
-  } = useOnChangeStyles({
+  const { onChangeStyles } = useOnChangeStyles({
     object,
     updateObject,
   })
@@ -172,5 +170,4 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
       {uploaderModal}
     </>
   )
-
 }

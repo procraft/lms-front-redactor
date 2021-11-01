@@ -99,51 +99,45 @@ export const Modal2: React.FC<Modal2Props> = ({
     }
   }, [element, preventClickEvent])
 
-
   const [stylesState, stylesStateSetter] = useState<{
     left: number
     top: number
   } | null>(null)
 
-
   const style = useMemo(() => {
-
     return {
       ...styleProps,
       ...stylesState,
     }
   }, [styleProps, stylesState])
 
-
   const toolbar: JSX.Element[] = useMemo(() => {
-
     const toolbar: JSX.Element[] = []
 
     if (moveable) {
-      toolbar.push(<MoveButton
-        key="move"
-        stylesStateSetter={stylesStateSetter}
-        modalElement={element}
-      />);
+      toolbar.push(
+        <MoveButton
+          key="move"
+          stylesStateSetter={stylesStateSetter}
+          modalElement={element}
+        />
+      )
     }
 
     if (title) {
-      toolbar.push(<h1
-        key="title"
-      >{title}</h1>);
+      toolbar.push(<h1 key="title">{title}</h1>)
     }
 
     if (closeHandler) {
-      toolbar.push(<IconButton
-        key="closeHandler"
-        callback={closeHandler}>
-        <CloseIcon />
-      </IconButton>);
+      toolbar.push(
+        <IconButton key="closeHandler" callback={closeHandler}>
+          <CloseIcon />
+        </IconButton>
+      )
     }
 
-    return toolbar;
+    return toolbar
   }, [closeHandler, element, moveable, title])
-
 
   return useMemo(() => {
     if (!loaded) {
@@ -151,19 +145,16 @@ export const Modal2: React.FC<Modal2Props> = ({
     }
 
     const modalWindow = (
-      <Modal2Styled ref={ref}
-        style={style}
-        {...other}>
-        {toolbar.length ? <Modal2TitleStyled>
+      <Modal2Styled ref={ref} style={style} {...other}>
+        {toolbar.length ? (
+          <Modal2TitleStyled>
+            {toolbar}
 
-          {toolbar}
-
-          <hr />
-        </Modal2TitleStyled> : null}
+            <hr />
+          </Modal2TitleStyled>
+        ) : null}
         <Modal2ContentScrollerStyled>
-          <Modal2ContentStyled>
-            {children}
-          </Modal2ContentStyled>
+          <Modal2ContentStyled>{children}</Modal2ContentStyled>
         </Modal2ContentScrollerStyled>
       </Modal2Styled>
     )

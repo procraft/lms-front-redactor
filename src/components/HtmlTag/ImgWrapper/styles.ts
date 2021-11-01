@@ -10,5 +10,4 @@ export const ImgWrapperModalStyled = styled(Modal2)`
       max-width: 100%;
     }
   }
-
 `

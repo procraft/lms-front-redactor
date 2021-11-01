@@ -6,11 +6,7 @@ import { useOnChangeStylesProps } from './interfaces'
  */
 export const useOnChangeStyles: (props: useOnChangeStylesProps) => {
   onChangeStyles: (event: React.ChangeEvent<HTMLInputElement>) => void
-} = ({
-  object,
-  updateObject,
-}) => {
-
+} = ({ object, updateObject }) => {
   const onChangeStyles = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.target.name
@@ -31,7 +27,6 @@ export const useOnChangeStyles: (props: useOnChangeStylesProps) => {
   )
 
   return useMemo(() => {
-
     return {
       onChangeStyles,
     }

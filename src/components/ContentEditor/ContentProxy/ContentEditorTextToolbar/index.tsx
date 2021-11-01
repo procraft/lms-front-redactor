@@ -15,7 +15,6 @@ export const ContentEditorTextToolbar: React.FC<ContentEditorTextToolbarProps> =
     object,
     updateObject,
   }) => {
-
     const selection = useMemo(() => global.document?.getSelection() ?? null, [])
 
     const closestInSelection = useCallback(
