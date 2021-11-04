@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
 // className.push("redactor--redactor-component");
 // className.push("redactor--inEditMode");
@@ -19,4 +19,4 @@ export const redactor2ComponentAttributes = {
   hovered: 'data-redactor--component-hovered',
 } as const
 
-export const LmsFrontRedactorStyled = styled.div``
+// export const LmsFrontRedactorStyled = styled.div``

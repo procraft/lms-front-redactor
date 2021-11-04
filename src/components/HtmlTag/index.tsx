@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react'
-// import Script from './Script'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -10,7 +9,6 @@ import { RelStylesheet } from './RelStylesheet'
 import { Script } from './Script'
 import { Style } from './Style'
 import { VideoWrapper } from './VideoWrapper'
-// import Link from 'next/link'
 
 export const HtmlTag: RedactorComponent = ({
   object,
@@ -64,10 +62,7 @@ export const HtmlTag: RedactorComponent = ({
   }, [Tag, inEditMode])
 
   const {
-    // ref,
-    // className,
     wrapperContent,
-    // active,
     hovered: _hovered,
     showHiddenTags,
     ...otherInitProps
@@ -102,11 +97,6 @@ export const HtmlTag: RedactorComponent = ({
       return <>{text}</>
     }
 
-    // const tagProps = {
-    //   className: componentClassName,
-    //   ...otherProps,
-    // }
-
     const tagProps = Object.assign(
       {},
       {
@@ -120,8 +110,6 @@ export const HtmlTag: RedactorComponent = ({
         return (
           <script
             {...otherProps}
-            // src={object.props.src}
-            // innerHTML={object.components[0]?.props.text}
             dangerouslySetInnerHTML={{
               __html: object.components[0]?.props.text || '',
             }}
@@ -139,30 +127,6 @@ export const HtmlTag: RedactorComponent = ({
             : undefined,
         })
       }
-      // case 'a': {
-      //   return (
-      //     // <Link href={object.props.href || ''}>
-      //     <a
-      //       href={object.props.href || ''}
-      //       {...tagProps}
-
-      //       ref={ref as React.LegacyRef<HTMLAnchorElement> | undefined}
-      //     >
-      //       {childrenContent}
-      //     </a>
-      //     // </Link>
-      //   )
-      // }
-
-      // TODO Закомментировал. Не совсем ясно будут ли какие последствия. Но вообще не должны.
-      // case 'img': {
-      //   return (
-      //     <img
-      //       {...tagProps}
-      //       ref={ref as React.LegacyRef<HTMLImageElement> | undefined}
-      //     />
-      //   )
-      // }
       case 'video': {
         return (
           <video
@@ -205,38 +169,16 @@ export const HtmlTag: RedactorComponent = ({
   }, [])
 
   return useMemo(() => {
-    // return <>{content}</>
+    // return content;
 
     if (
       !content ||
-      !inEditMode ||
+      // !inEditMode ||
       !object.props.tag ||
-      // ![
-      //   'div',
-      //   'ul',
-      //   'ol',
-      //   'li',
-      //   'table',
-      //   'thead',
-      //   'tbody',
-      //   'tr',
-      //   'th',
-      //   'td',
-      //   'a',
-      //   'script',
-      //   'style',
-      //   'link',
-      // ].includes(object.props.tag) ||
       typeof content !== 'object'
     ) {
       return content
     }
-
-    // const Element = React.createElement(object.props.tag, {
-
-    // });
-
-    // console.log('content', content);
 
     const renderProps = {
       ref,
@@ -247,38 +189,18 @@ export const HtmlTag: RedactorComponent = ({
       onClick: preventDefault,
     }
 
-    let elementContent: JSX.Element = React.cloneElement(content, renderProps)
+    // let elementContent: JSX.Element = React.cloneElement(content, renderProps)
+    let elementContent: JSX.Element = content
 
-    switch (object.props.tag) {
-      case 'style':
-        if (!showHiddenTags) {
-          return content
-        }
+    if (inEditMode) {
+      switch (object.props.tag) {
+        case 'style':
+          if (!showHiddenTags) {
+            return content
+          }
 
-        elementContent = (
-          <Style
-            {...renderProps}
-            ref={undefined}
-            forwardedRef={renderProps.ref}
-            object={object}
-            updateObject={updateObject}
-            active={active}
-            closeHandler={closeHandler}
-          >
-            {content}
-          </Style>
-        )
-
-        break
-
-      case 'script':
-        if (!showHiddenTags) {
-          return content
-        }
-
-        elementContent = (
-          <>
-            <Script
+          elementContent = (
+            <Style
               {...renderProps}
               ref={undefined}
               forwardedRef={renderProps.ref}
@@ -288,71 +210,94 @@ export const HtmlTag: RedactorComponent = ({
               closeHandler={closeHandler}
             >
               {content}
-            </Script>
-          </>
-        )
-        break
+            </Style>
+          )
 
-      case 'link':
-        if (!showHiddenTags) {
-          return content
-        }
+          break
 
-        elementContent = (
-          <>
-            <RelStylesheet
-              {...renderProps}
-              ref={undefined}
-              forwardedRef={renderProps.ref}
-              object={object}
-              updateObject={updateObject}
-              active={active}
-            >
-              {content}
-            </RelStylesheet>
-          </>
-        )
-        break
+        case 'script':
+          if (!showHiddenTags) {
+            return content
+          }
 
-      case 'img':
-        elementContent = (
-          <>
-            <ImgWrapper
-              {...renderProps}
-              ref={undefined}
-              forwardedRef={renderProps.ref}
-              object={object}
-              updateObject={updateObject}
-              active={active}
-              closeHandler={closeHandler}
-              element={element}
-            >
-              {content}
-            </ImgWrapper>
-          </>
-        )
-        break
+          elementContent = (
+            <>
+              <Script
+                {...renderProps}
+                ref={undefined}
+                forwardedRef={renderProps.ref}
+                object={object}
+                updateObject={updateObject}
+                active={active}
+                closeHandler={closeHandler}
+              >
+                {content}
+              </Script>
+            </>
+          )
+          break
 
-      case 'video':
-        elementContent = (
-          <>
-            <VideoWrapper
-              {...renderProps}
-              ref={undefined}
-              forwardedRef={renderProps.ref}
-              object={object}
-              updateObject={updateObject}
-              active={active}
-              closeHandler={closeHandler}
-              element={element}
-            >
-              {content}
-            </VideoWrapper>
-          </>
-        )
-        break
+        case 'link':
+          if (!showHiddenTags) {
+            return content
+          }
 
-      default:
+          elementContent = (
+            <>
+              <RelStylesheet
+                {...renderProps}
+                ref={undefined}
+                forwardedRef={renderProps.ref}
+                object={object}
+                updateObject={updateObject}
+                active={active}
+              >
+                {content}
+              </RelStylesheet>
+            </>
+          )
+          break
+
+        case 'img':
+          elementContent = (
+            <>
+              <ImgWrapper
+                {...renderProps}
+                ref={undefined}
+                forwardedRef={renderProps.ref}
+                object={object}
+                updateObject={updateObject}
+                active={active}
+                closeHandler={closeHandler}
+                element={element}
+              >
+                {content}
+              </ImgWrapper>
+            </>
+          )
+          break
+
+        case 'video':
+          elementContent = (
+            <>
+              <VideoWrapper
+                {...renderProps}
+                ref={undefined}
+                forwardedRef={renderProps.ref}
+                object={object}
+                updateObject={updateObject}
+                active={active}
+                closeHandler={closeHandler}
+                element={element}
+              >
+                {content}
+              </VideoWrapper>
+            </>
+          )
+          break
+
+        default:
+      }
     }
 
     return (

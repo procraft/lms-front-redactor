@@ -8,7 +8,7 @@ import useRedactorComponentInit from './hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from './hooks/useRedactorRenderComponents'
 // import getRedactorObjectComponent from './hooks/RedactorObjectRender'
 import { LmsFrontRedactorProps } from './interfaces'
-import { LmsFrontRedactorStyled } from './styles'
+// import { LmsFrontRedactorStyled } from './styles'
 import { LmsFrontRedactorGlobalStyle } from './styles/GlobalStyle'
 
 const FrontEditor = dynamic(() => import('./FrontEditor'))
@@ -75,22 +75,25 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
   }, [content, context])
 
   return useMemo(() => {
-    if (!inEditMode) {
-      return redactorContent
-    } else {
-      return (
-        <>
-          <LmsFrontRedactorGlobalStyle />
-          <LmsFrontRedactorStyled
-          // className={inEditMode ? 'inEditMode' : undefined}
-          >
-            {redactorContent}
-          </LmsFrontRedactorStyled>
-
-          <FrontEditor />
-        </>
-      )
-    }
+    // if (!inEditMode) {
+    //   return redactorContent
+    // } else {
+    return (
+      <>
+        {inEditMode ? (
+          <>
+            <LmsFrontRedactorGlobalStyle />
+            <FrontEditor />
+          </>
+        ) : null}
+        {/* <LmsFrontRedactorStyled
+        // className={inEditMode ? 'inEditMode' : undefined}
+        > */}
+        {redactorContent}
+        {/* </LmsFrontRedactorStyled> */}
+      </>
+    )
+    // }
   }, [inEditMode, redactorContent])
 }
 

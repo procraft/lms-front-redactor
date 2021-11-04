@@ -126,9 +126,9 @@ export const ContentEditor: RedactorComponent = ({
   )
 
   return useMemo(() => {
-    if (!inEditMode) {
-      return content
-    }
+    // if (!inEditMode) {
+    //   return content
+    // }
 
     return (
       <>
@@ -155,7 +155,7 @@ export const ContentEditor: RedactorComponent = ({
       </>
     )
   }, [
-    inEditMode,
+    // inEditMode,
     wrapperContent,
     other,
     object,

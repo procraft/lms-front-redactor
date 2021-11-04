@@ -55,9 +55,9 @@ export const Section: RedactorComponent = ({
   }, [childrenContent, inEditMode, object.props, other, otherInitProps, ref])
 
   return useMemo(() => {
-    if (!inEditMode) {
-      return content
-    }
+    // if (!inEditMode) {
+    //   return content
+    // }
 
     // TODO Сейчас все хуки срабатывают даже когда не в режиме редактирования находимся,
     // хотя они нужны именно только в режиме редактирования.
@@ -65,18 +65,22 @@ export const Section: RedactorComponent = ({
     // Надо все во враппер перенести, чтобы срабатывало только при редактировании.
     return (
       <>
-        {wrapperContent}
         {content}
 
-        {/* Если дочерних элементов нет, то даем возможность вставлять дочерние виджеты */}
-        {!content.props.children && hovered === true && element ? (
-          <AddWidgetButton
-            hovered={hovered}
-            element={element}
-            object={object}
-            updateObject={updateObject}
-            activeSetter={activeSetter}
-          />
+        {inEditMode ? (
+          <>
+            {wrapperContent}
+            {/* Если дочерних элементов нет, то даем возможность вставлять дочерние виджеты */}
+            {!content.props.children && hovered === true && element ? (
+              <AddWidgetButton
+                hovered={hovered}
+                element={element}
+                object={object}
+                updateObject={updateObject}
+                activeSetter={activeSetter}
+              />
+            ) : null}
+          </>
         ) : null}
       </>
     )

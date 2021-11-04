@@ -336,6 +336,205 @@ const ContentEditorDevPage: Page = (props) => {
     }
   }, [])
 
+  // const initialObject = useMemo<RedactorComponentObject>(() => {
+  //   return {
+  //     name: 'Root section',
+  //     component: 'Section',
+  //     props: {},
+  //     components: [
+  //       {
+  //         name: 'Second Section',
+  //         component: 'Section',
+  //         components: [
+  //           {
+  //             name: 'Third section',
+  //             component: 'Section',
+  //             props: {},
+  //             components: [],
+  //           },
+  //           {
+  //             name: 'HtmlTag',
+  //             component: 'HtmlTag',
+  //             props: {
+  //               tag: 'div',
+  //               style: {
+  //                 display: 'flex',
+  //                 marginBottom: 20,
+  //               },
+  //             },
+  //             components: [
+  //               // {
+  //               //   id: 'SDfsdf',
+  //               //   name: 'HtmlTag',
+  //               //   component: 'HtmlTag',
+  //               //   props: {
+  //               //     tag: 'a',
+  //               //     href: '/components/contenteditor',
+  //               //   },
+  //               //   components: [
+  //               //     {
+  //               //       name: 'HtmlTag',
+  //               //       component: 'HtmlTag',
+  //               //       components: [],
+  //               //       props: {
+  //               //         text: 'Content Editor',
+  //               //       },
+  //               //     },
+  //               //   ],
+  //               // },
+  //             ],
+  //           },
+  //           // {
+  //           //   name: 'HtmlTag',
+  //           //   component: 'HtmlTag',
+  //           //   props: {
+  //           //     tag: 'style',
+  //           //   },
+  //           //   components: [
+  //           //     {
+  //           //       name: 'HtmlTag',
+  //           //       component: 'HtmlTag',
+  //           //       components: [],
+  //           //       props: {
+  //           //         text: 'body {color: purple;}',
+  //           //       },
+  //           //     },
+  //           //   ],
+  //           // },
+  //           // {
+  //           //   name: 'HtmlTag',
+  //           //   component: 'HtmlTag',
+  //           //   props: {
+  //           //     tag: 'script',
+  //           //   },
+  //           //   components: [
+  //           //     {
+  //           //       name: 'HtmlTag',
+  //           //       component: 'HtmlTag',
+  //           //       components: [],
+  //           //       props: {
+  //           //         text: 'console.log("Test... Script console");',
+  //           //       },
+  //           //     },
+  //           //   ],
+  //           // },
+  //           // {
+  //           //   name: 'HtmlTag',
+  //           //   component: 'HtmlTag',
+  //           //   props: {
+  //           //     tag: 'link',
+  //           //     rel: 'stylesheet',
+  //           //     href: 'style.css',
+  //           //   },
+  //           //   components: [],
+  //           // },
+  //           // {
+  //           //   name: 'HtmlTag',
+  //           //   component: 'HtmlTag',
+  //           //   components: [
+  //           //     {
+  //           //       name: 'HtmlTag',
+  //           //       component: 'HtmlTag',
+  //           //       components: [],
+  //           //       props: {
+  //           //         text: 'Some text',
+  //           //       },
+  //           //     },
+  //           //   ],
+  //           //   props: {
+  //           //     tag: 'div',
+  //           //     style: {
+  //           //       // border: '1px solid green',
+  //           //       minHeight: 100,
+  //           //     },
+  //           //   },
+  //           // },
+  //           // {
+  //           //   name: 'HtmlTag',
+  //           //   component: 'HtmlTag',
+  //           //   components: [
+  //           //     {
+  //           //       name: 'HtmlTag',
+  //           //       component: 'HtmlTag',
+  //           //       components: [],
+  //           //       props: {
+  //           //         text: 'HtmlTag content',
+  //           //       },
+  //           //     },
+  //           //   ],
+  //           //   props: {
+  //           //     tag: 'div',
+  //           //     style: {
+  //           //       // border: '1px solid blue',
+  //           //       minHeight: 100,
+  //           //     },
+  //           //   },
+  //           // },
+  //           // {
+  //           //   name: 'HtmlTag',
+  //           //   component: 'HtmlTag',
+  //           //   components: [
+  //           //     {
+  //           //       name: 'HtmlTag',
+  //           //       component: 'HtmlTag',
+  //           //       components: [],
+  //           //       props: {
+  //           //         text: 'Some text',
+  //           //       },
+  //           //     },
+  //           //   ],
+  //           //   props: {
+  //           //     tag: 'div',
+  //           //     style: {
+  //           //       // border: '1px solid green',
+  //           //       minHeight: 100,
+  //           //     },
+  //           //   },
+  //           // },
+  //           // {
+  //           //   name: 'Section',
+  //           //   component: 'Section',
+  //           //   components: [
+  //           //     {
+  //           //       name: 'HtmlTag',
+  //           //       component: 'HtmlTag',
+  //           //       components: [
+  //           //         {
+  //           //           name: 'HtmlTag',
+  //           //           component: 'HtmlTag',
+  //           //           components: [],
+  //           //           props: {
+  //           //             text: 'Some text',
+  //           //           },
+  //           //         },
+  //           //       ],
+  //           //       props: {
+  //           //         tag: 'div',
+  //           //         style: {
+  //           //           // border: '1px solid green',
+  //           //           minHeight: 100,
+  //           //         },
+  //           //       },
+  //           //     },
+  //           //   ],
+  //           //   props: {},
+  //           // },
+  //         ],
+  //         props: {},
+  //       },
+  //     ],
+  //   }
+  // }, [])
+
+  // const initialObject = useMemo<RedactorComponentObject>(() => {
+  //   return {
+  //     name: 'Root section',
+  //     component: 'Section',
+  //     props: {},
+  //     components: [],
+  //   }
+  // }, [])
+
   const {
     store: object,
     updateObject,
