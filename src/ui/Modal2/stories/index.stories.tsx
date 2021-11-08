@@ -47,7 +47,7 @@ export const Modal2: React.FC<Partial<ContainerProps>> = ({
 const args: React.PropsWithChildren<Partial<ContainerProps>> = {
   title: 'Title',
   children: 'Some content',
-  modal: true,
+  modal: false,
   preventClickEvent: true,
   moveable: false,
 }

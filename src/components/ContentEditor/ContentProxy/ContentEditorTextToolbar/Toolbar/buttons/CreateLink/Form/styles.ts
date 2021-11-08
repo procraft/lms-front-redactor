@@ -16,4 +16,9 @@ export const LinkFormLinksListStyled = styled.div`
   }
 `
 
-export const LinkFormStyled = styled.div``
+export const LinkFormStyled = styled.div`
+  /**
+  MUI Grid margins compability
+  */
+  padding: 4px;
+`
