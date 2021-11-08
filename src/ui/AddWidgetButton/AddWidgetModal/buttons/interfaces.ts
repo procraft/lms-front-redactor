@@ -1,7 +1,8 @@
-import { RedactorComponentProps } from '../../../..'
+import { RedactorComponentObject, RedactorComponentProps } from '../../../..'
 
 export type AddWidgetButtonButtonProps = {
   object: RedactorComponentProps['object']
-  updateObject: RedactorComponentProps['updateObject']
+  // updateObject: RedactorComponentProps['updateObject']
+  addComponent: (component: RedactorComponentObject) => void
   closeHandler: () => void
 }

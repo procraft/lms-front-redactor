@@ -57,11 +57,11 @@ export const nodeToEditorComponentObject = (
         if (reactFiber.return.pendingProps?.object) {
           return reactFiber.return.pendingProps?.object
         } else if (reactFiber.return.return?.pendingProps?.object) {
-        /**
-         * Здесь нет возможности из любой ноды реакт-компонента определить каким именно компонентом сформирован HTML.
-         * Так как HTML-нода может быть обернута в другой компонент (например styled-component), то из нее мы не можем сразу
-         * получить наш объект. Добавляем костыль - поиск объекта в родительском компоненте.
-         */
+          /**
+           * Здесь нет возможности из любой ноды реакт-компонента определить каким именно компонентом сформирован HTML.
+           * Так как HTML-нода может быть обернута в другой компонент (например styled-component), то из нее мы не можем сразу
+           * получить наш объект. Добавляем костыль - поиск объекта в родительском компоненте.
+           */
           return reactFiber.return.return?.pendingProps?.object
         }
 

@@ -6,7 +6,7 @@ import { AddWidgetButtonButtonProps } from '../interfaces'
 export const AddVideoWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
   closeHandler,
   object,
-  updateObject,
+  addComponent,
   ...other
 }) => {
   const buttonState = useState<HTMLButtonElement | null>(null)
@@ -21,32 +21,18 @@ export const AddVideoWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
     const onClick = () => {
       //
 
-      updateObject(object, {
-        components: [
-          {
-            name: 'HtmlTag',
-            component: 'HtmlTag',
-            props: {
-              tag: 'video',
-              style: {
-                width: '100%',
-                maxWidth: '100%',
-              },
-              controls: true,
-            },
-            components: [
-              // {
-              //   name: 'HtmlTag',
-              //   component: 'HtmlTag',
-              //   props: {
-              //     tag: 'source',
-              //     src: '',
-              //   },
-              //   components: [],
-              // },
-            ],
+      addComponent({
+        name: 'HtmlTag',
+        component: 'HtmlTag',
+        props: {
+          tag: 'video',
+          style: {
+            width: '100%',
+            maxWidth: '100%',
           },
-        ],
+          controls: true,
+        },
+        components: [],
       })
 
       closeHandler()
@@ -57,7 +43,7 @@ export const AddVideoWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
     return () => {
       button.removeEventListener('click', onClick)
     }
-  }, [buttonState, object, updateObject, closeHandler])
+  }, [buttonState, object, closeHandler, addComponent])
 
   return useMemo(() => {
     return (

@@ -6,7 +6,7 @@ import { AddWidgetButtonButtonProps } from '../interfaces'
 export const AddImageWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
   closeHandler,
   object,
-  updateObject,
+  addComponent,
   ...other
 }) => {
   const buttonState = useState<HTMLButtonElement | null>(null)
@@ -21,18 +21,14 @@ export const AddImageWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
     const onClick = () => {
       //
 
-      updateObject(object, {
-        components: [
-          {
-            name: 'HtmlTag',
-            component: 'HtmlTag',
-            props: {
-              tag: 'img',
-              src: '',
-            },
-            components: [],
-          },
-        ],
+      addComponent({
+        name: 'HtmlTag',
+        component: 'HtmlTag',
+        props: {
+          tag: 'img',
+          src: '',
+        },
+        components: [],
       })
 
       closeHandler()
@@ -43,7 +39,7 @@ export const AddImageWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
     return () => {
       button.removeEventListener('click', onClick)
     }
-  }, [buttonState, object, updateObject, closeHandler])
+  }, [buttonState, object, closeHandler, addComponent])
 
   return useMemo(() => {
     return (
