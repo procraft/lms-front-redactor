@@ -1,7 +1,8 @@
 import { IconButtonProps } from '@procraft/ui/dist/IconButton'
-import { AllHTMLAttributes } from 'react'
+import { InputHTMLAttributes } from 'react'
 
-export type UploaderInputProps = AllHTMLAttributes<HTMLInputElement>
+// export type UploaderInputProps = AllHTMLAttributes<HTMLInputElement>
+export type UploaderInputProps = InputHTMLAttributes<HTMLInputElement>
 
 export type useUploaderProps = Omit<IconButtonProps, 'callback'> & {
   /**
