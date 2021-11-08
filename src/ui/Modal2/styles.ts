@@ -28,6 +28,8 @@ export const Modal2ContentScrollerStyled = styled.div`
   flex: 1;
   padding: 5px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `
 
 export const Modal2ContentStyled = styled.div`
