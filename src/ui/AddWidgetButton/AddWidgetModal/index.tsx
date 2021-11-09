@@ -56,26 +56,29 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
         title="Вставить виджет"
         closeHandler={closeHandler}
         moveable
+        role="redactor--modal"
       >
-        <AddContentEditorWidgetButton
-          closeHandler={closeHandler}
-          object={object}
-          // updateObject={updateObject}
-          addComponent={addComponent}
-        />
-        <AddImageWidgetButton
-          closeHandler={closeHandler}
-          object={object}
-          // updateObject={updateObject}
-          addComponent={addComponent}
-        />
-        <AddVideoWidgetButton
-          closeHandler={closeHandler}
-          object={object}
-          // updateObject={updateObject}
-          addComponent={addComponent}
-        />
-        {buttons}
+        <div role="secondaryButtons">
+          <AddContentEditorWidgetButton
+            closeHandler={closeHandler}
+            object={object}
+            // updateObject={updateObject}
+            addComponent={addComponent}
+          />
+          <AddImageWidgetButton
+            closeHandler={closeHandler}
+            object={object}
+            // updateObject={updateObject}
+            addComponent={addComponent}
+          />
+          <AddVideoWidgetButton
+            closeHandler={closeHandler}
+            object={object}
+            // updateObject={updateObject}
+            addComponent={addComponent}
+          />
+          {buttons}
+        </div>
       </AddWidgetModalStyled>,
       document.body
     )
