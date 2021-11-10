@@ -31,4 +31,19 @@ export const AddBlockModal2ContentStyled = styled.div`
   /* grid-gap: 10px; */
   grid-template-rows: auto;
   grid-template-columns: repeat(4, 1fr);
+
+  > * {
+    > * {
+      /**
+      Некоторым блокам может быть указано 100% ширина.
+      Тогда выходит за рамки.
+      */
+      width: auto !important;
+      /* border: 1px solid red !important; */
+
+      &:empty {
+        margin: 15px;
+      }
+    }
+  }
 `

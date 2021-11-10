@@ -22,4 +22,6 @@ export type AddBlockModal2ButtonProps = {
    * Закрытие модалки
    */
   closeHandler: () => void
+
+  title: string | undefined
 }
