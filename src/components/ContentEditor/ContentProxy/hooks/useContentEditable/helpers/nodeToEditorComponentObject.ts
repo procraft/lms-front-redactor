@@ -49,14 +49,43 @@ export const nodeToEditorComponentObject = (
       // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
 
       // Если компонент не доступен для редактирования, возвращаем его текущее состояние
+      /**
+       * Проверка на isContentEditable обязательна, так как сюда попадают и HTML-теги (компоненты).
+       * То есть сейчас предполагается нередактируемые рекат-компоненты задавать с isContentEditable=false
+       */
       if (node.isContentEditable === false) {
-        if (reactFiber.return.pendingProps.object) {
-          return reactFiber.return.pendingProps.object
+        if (reactFiber.return.pendingProps?.object) {
+          return reactFiber.return.pendingProps?.object
+        } else if (reactFiber.return.return?.pendingProps?.object) {
+          /**
+           * Здесь нет возможности из любой ноды реакт-компонента определить каким именно компонентом сформирован HTML.
+           * Так как HTML-нода может быть обернута в другой компонент (например styled-component), то из нее мы не можем сразу
+           * получить наш объект. Добавляем костыль - поиск объекта в родительском компоненте.
+           */
+          return reactFiber.return.return?.pendingProps?.object
         }
 
         return
       }
     }
+
+    /**
+     * Если это реакт-компонент, то возвращаем его свойства
+     */
+    // if (reactFiber && reactFiber.lastEffect) {
+    //   // !(reactFiber.return.elementType === HtmlTag)
+
+    //   // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
+
+    //   // Если компонент не доступен для редактирования, возвращаем его текущее состояние
+    //   if (node.isContentEditable === false) {
+    //     if (reactFiber.lastEffect.pendingProps.object) {
+    //       return reactFiber.lastEffect.pendingProps.object
+    //     }
+
+    //     return
+    //   }
+    // }
 
     // return
 

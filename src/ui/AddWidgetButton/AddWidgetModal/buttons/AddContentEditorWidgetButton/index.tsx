@@ -4,7 +4,7 @@ import { AddWidgetModalButtonStyled } from '../../styles'
 import { AddWidgetButtonButtonProps } from '../interfaces'
 
 export const AddContentEditorWidgetButton: React.FC<AddWidgetButtonButtonProps> =
-  ({ closeHandler, object, updateObject, ...other }) => {
+  ({ closeHandler, object, addComponent, ...other }) => {
     const buttonState = useState<HTMLButtonElement | null>(null)
 
     useEffect(() => {
@@ -17,46 +17,42 @@ export const AddContentEditorWidgetButton: React.FC<AddWidgetButtonButtonProps> 
       const onClick = () => {
         //
 
-        updateObject(object, {
+        addComponent({
+          name: 'ContentEditor',
+          component: 'ContentEditor',
+          props: {},
           components: [
             {
-              name: 'ContentEditor',
-              component: 'ContentEditor',
-              props: {},
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'h1',
+              },
               components: [
                 {
                   name: 'HtmlTag',
                   component: 'HtmlTag',
                   props: {
-                    tag: 'h1',
+                    text: 'Heading',
                   },
-                  components: [
-                    {
-                      name: 'HtmlTag',
-                      component: 'HtmlTag',
-                      props: {
-                        text: 'Heading',
-                      },
-                      components: [],
-                    },
-                  ],
+                  components: [],
                 },
+              ],
+            },
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'p',
+              },
+              components: [
                 {
                   name: 'HtmlTag',
                   component: 'HtmlTag',
                   props: {
-                    tag: 'p',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                   },
-                  components: [
-                    {
-                      name: 'HtmlTag',
-                      component: 'HtmlTag',
-                      props: {
-                        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                      },
-                      components: [],
-                    },
-                  ],
+                  components: [],
                 },
               ],
             },
@@ -71,7 +67,7 @@ export const AddContentEditorWidgetButton: React.FC<AddWidgetButtonButtonProps> 
       return () => {
         button.removeEventListener('click', onClick)
       }
-    }, [buttonState, object, updateObject, closeHandler])
+    }, [buttonState, object, closeHandler, addComponent])
 
     return useMemo(() => {
       return (

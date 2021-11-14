@@ -20,6 +20,12 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
 
     const blocksObjects: RedactorComponentObject[] = [
       {
+        name: 'Inline section',
+        component: 'Section',
+        props: {},
+        components: [],
+      },
+      {
         name: 'Section',
         component: 'Section',
         props: {
@@ -511,6 +517,36 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
           },
         ],
       },
+      {
+        name: 'Root',
+        component: 'Section',
+        props: {
+          style: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: '20px',
+          },
+        },
+        components: [],
+      },
+      {
+        name: 'Body',
+        component: 'Section',
+        props: {
+          style: {
+            width: '100%',
+            maxWidth: '1270px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          },
+        },
+        components: [],
+      },
     ]
 
     blocksObjects.forEach((newObject, index) => {
@@ -523,6 +559,7 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
           parent={parent}
           updateParent={updateParent}
           closeHandler={closeHandler}
+          title={newObject.name}
         />
       )
     })

@@ -1,5 +1,6 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 import ReactDOM from 'react-dom'
+import { RedactorComponentObject } from '../../..'
 import { AddContentEditorWidgetButton } from './buttons/AddContentEditorWidgetButton'
 import { AddImageWidgetButton } from './buttons/AddImageWidgetButton'
 import { AddVideoWidgetButton } from './buttons/AddVideoWidgetButton'
@@ -17,6 +18,22 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
 }) => {
   const context = useContext(AddWidgetModalContext)
 
+  /**
+   * Добавляем дочерний компонент
+   */
+  const addComponent = useCallback(
+    (component: RedactorComponentObject) => {
+      const components = [...object.components]
+
+      components.push(component)
+
+      return updateObject(object, {
+        components,
+      })
+    },
+    [object, updateObject]
+  )
+
   const buttons = useMemo(() => {
     return context?.buttons.map((Button, index) => {
       return (
@@ -24,11 +41,12 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
           key={index}
           closeHandler={closeHandler}
           object={object}
-          updateObject={updateObject}
+          // updateObject={updateObject}
+          addComponent={addComponent}
         />
       )
     })
-  }, [closeHandler, context?.buttons, object, updateObject])
+  }, [addComponent, closeHandler, context?.buttons, object])
 
   return useMemo(() => {
     return ReactDOM.createPortal(
@@ -38,25 +56,31 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
         title="Вставить виджет"
         closeHandler={closeHandler}
         moveable
+        role="redactor--modal"
       >
-        <AddContentEditorWidgetButton
-          closeHandler={closeHandler}
-          object={object}
-          updateObject={updateObject}
-        />
-        <AddImageWidgetButton
-          closeHandler={closeHandler}
-          object={object}
-          updateObject={updateObject}
-        />
-        <AddVideoWidgetButton
-          closeHandler={closeHandler}
-          object={object}
-          updateObject={updateObject}
-        />
-        {buttons}
+        <div role="secondaryButtons">
+          <AddContentEditorWidgetButton
+            closeHandler={closeHandler}
+            object={object}
+            // updateObject={updateObject}
+            addComponent={addComponent}
+          />
+          <AddImageWidgetButton
+            closeHandler={closeHandler}
+            object={object}
+            // updateObject={updateObject}
+            addComponent={addComponent}
+          />
+          <AddVideoWidgetButton
+            closeHandler={closeHandler}
+            object={object}
+            // updateObject={updateObject}
+            addComponent={addComponent}
+          />
+          {buttons}
+        </div>
       </AddWidgetModalStyled>,
       document.body
     )
-  }, [buttons, closeHandler, object, updateObject])
+  }, [addComponent, buttons, closeHandler, object])
 }

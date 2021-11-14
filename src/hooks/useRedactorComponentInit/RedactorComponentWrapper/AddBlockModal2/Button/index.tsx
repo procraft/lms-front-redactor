@@ -13,6 +13,7 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
   parent,
   direction,
   closeHandler,
+  title,
   ...other
 }) => {
   const elementState = useState<HTMLDivElement | null>()
@@ -74,7 +75,11 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
 
   return useMemo(() => {
     return (
-      <AddBlockModal2ButtonStyled {...other} ref={elementState[1]}>
+      <AddBlockModal2ButtonStyled
+        title={title}
+        {...other}
+        ref={elementState[1]}
+      >
         <Section
           inEditMode={false}
           // eslint-disable-next-line no-console
@@ -84,5 +89,5 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
         />
       </AddBlockModal2ButtonStyled>
     )
-  }, [elementState, newObject, other])
+  }, [elementState, newObject, title, other])
 }

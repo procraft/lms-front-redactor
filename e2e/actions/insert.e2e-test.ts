@@ -3,6 +3,8 @@ import { expect } from 'chai'
 import { RedactorHtmlElement } from '../../src/hooks/useRedactorComponentInit/interfaces'
 import { redactorStartEdit } from '../helpers/component'
 
+// const wrapper_selector = '[role="redactor-wrapper"]'
+
 /**
  * Вставка дочернего компонента
  */
@@ -45,23 +47,38 @@ describe('InsertBlock action', () => {
 
       cy.get<RedactorHtmlElement>('#component #test-content-id').then(
         (node) => {
-          console.log(
-            'redactorComponentWrapper',
-            node[0]?.redactorComponentWrapper
-          )
+          // const wrapper = node[0]?.parentNode?.redactorComponentWrapper
+          const wrapper =
+            (node[0]?.parentNode as RedactorHtmlElement | null)
+              ?.redactorComponentWrapper ?? null
+
+          console.log('redactorComponentWrapper', wrapper)
           // node.redactorComponentWrapper
 
-          expect(node[0]?.redactorComponentWrapper).not.null
+          expect(wrapper).not.null
 
-          if (node[0]?.redactorComponentWrapper) {
+          if (wrapper) {
             /**
              * Click add block
              */
-            node[0]?.redactorComponentWrapper
-              .querySelector<HTMLButtonElement>(
-                '.buttons button[role=addBlock]'
-              )
-              ?.click()
+
+            const buttons = wrapper.querySelector<HTMLButtonElement>(
+              '[role=redactor-wrapper-buttons]'
+            )
+
+            console.log('buttons', buttons)
+
+            expect(buttons).not.null
+
+            const addWidgetButton = buttons?.querySelector<HTMLButtonElement>(
+              '[title="Вставить виджет"]'
+            )
+
+            console.log('addWidgetButton', addWidgetButton)
+
+            expect(addWidgetButton).not.null
+
+            addWidgetButton?.click()
           }
         }
       )
@@ -88,14 +105,21 @@ describe('InsertBlock action', () => {
           '[role=secondaryButtons]'
         )
 
+        console.log('redactorModal buttons', buttons)
+
         expect(buttons).not.null
 
         /**
          * Get insert button
          */
         const insertComponentButton =
-          buttons?.children[2]?.querySelector<HTMLButtonElement>('button') ??
+          buttons?.querySelector<HTMLButtonElement>('button[role=addImage]') ??
           null
+
+        console.log(
+          'redactorModal insertComponentButton',
+          insertComponentButton
+        )
 
         expect(insertComponentButton).not.null
 
@@ -107,12 +131,12 @@ describe('InsertBlock action', () => {
         /**
          * Click save button
          */
-        const saveButton =
-          modalNode.querySelector<HTMLButtonElement>('button[role=save]')
+        // const saveButton =
+        //   modalNode.querySelector<HTMLButtonElement>('button[role=save]')
 
-        expect(saveButton).not.null
+        // expect(saveButton).not.null
 
-        saveButton?.click()
+        // saveButton?.click()
       })
     })
 
@@ -120,7 +144,7 @@ describe('InsertBlock action', () => {
       /**
        * Get inserted component
        */
-      cy.get<HTMLDivElement>('.test-html-tag').then((node) => {
+      cy.get<HTMLImageElement>('#component img').then((node) => {
         expect(node.length).be.eq(1)
       })
     })

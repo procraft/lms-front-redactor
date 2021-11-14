@@ -4,8 +4,10 @@ import { Modal2ContentStyled } from '../../Modal2/styles'
 
 export const AddWidgetModalStyled = styled(Modal2)`
   ${Modal2ContentStyled} {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    > [role='secondaryButtons'] {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
 `
 

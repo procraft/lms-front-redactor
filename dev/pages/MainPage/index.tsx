@@ -233,10 +233,76 @@ const ContentEditorDevPage: Page = (props) => {
                           props: {
                             tag: 'div',
                             style: {
-                              // border: '1px solid green',
                               minHeight: 100,
                             },
                           },
+                        },
+                        {
+                          name: 'Section',
+                          component: 'Section',
+                          props: {
+                            style: {
+                              display: 'grid',
+                              gridTemplateColumns: 'repeat(2, 6fr)',
+                              gridGap: '10px',
+                            },
+                          },
+                          components: [
+                            {
+                              name: 'Section',
+                              component: 'Section',
+                              props: {},
+                              components: [],
+                            },
+                            {
+                              name: 'Section',
+                              component: 'Section',
+                              props: {},
+                              components: [
+                                {
+                                  name: 'ContentEditor',
+                                  component: 'ContentEditor',
+                                  props: {},
+                                  components: [
+                                    {
+                                      name: 'HtmlTag',
+                                      component: 'HtmlTag',
+                                      props: {
+                                        tag: 'h1',
+                                      },
+                                      components: [
+                                        {
+                                          name: 'HtmlTag',
+                                          component: 'HtmlTag',
+                                          props: {
+                                            text: 'Heading',
+                                          },
+                                          components: [],
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      name: 'HtmlTag',
+                                      component: 'HtmlTag',
+                                      props: {
+                                        tag: 'p',
+                                      },
+                                      components: [
+                                        {
+                                          name: 'HtmlTag',
+                                          component: 'HtmlTag',
+                                          props: {
+                                            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                                          },
+                                          components: [],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
                         },
                       ],
                       props: {},
@@ -257,7 +323,6 @@ const ContentEditorDevPage: Page = (props) => {
                       props: {
                         tag: 'div',
                         style: {
-                          // border: '1px solid blue',
                           minHeight: 100,
                         },
                       },
@@ -282,7 +347,6 @@ const ContentEditorDevPage: Page = (props) => {
                           props: {
                             tag: 'div',
                             style: {
-                              // border: '1px solid green',
                               minHeight: 100,
                             },
                           },
@@ -314,7 +378,6 @@ const ContentEditorDevPage: Page = (props) => {
                               props: {
                                 tag: 'div',
                                 style: {
-                                  // border: '1px solid green',
                                   minHeight: 100,
                                 },
                               },

@@ -468,9 +468,9 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
             />
           ) : null}
           {ReactDOM.createPortal(
-            <RedactorComponentWrapperStyled>
+            <RedactorComponentWrapperStyled role="redactor-wrapper">
               {active ? (
-                <RedactorComponentWrapperButtonsStyled>
+                <RedactorComponentWrapperButtonsStyled role="redactor-wrapper-buttons">
                   {/* <span>
                   {object.name}{' '}
                   {object.name !== object.component

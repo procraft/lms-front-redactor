@@ -4,7 +4,7 @@ import UploadIcon from 'material-ui-icons/FileUpload'
 import { useUploaderProps } from './interfaces'
 import { uploadToS3 } from '../../helpers/S3Uploader'
 import { normalizeFileName } from '../../helpers/normalizeFileName'
-import { UploaderStyled } from './styles'
+import { UploaderInputStyled, UploaderStyled } from './styles'
 
 export const useUploader = ({
   onUpload,
@@ -88,11 +88,11 @@ export const useUploader = ({
   const uploader = useMemo(() => {
     return (
       <>
-        <input
+        <UploaderInputStyled
           ref={inputRef}
           type="file"
           onChange={onChange}
-          hidden
+          // hidden
           {...inputProps}
         />
         <UploaderStyled

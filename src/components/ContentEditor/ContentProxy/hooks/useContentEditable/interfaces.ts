@@ -11,10 +11,23 @@ export type useContentEditableProps = {
   updateObject: (components: RedactorComponentObject['components']) => void
 }
 
-export type FiberNode = {
-  return?: {
-    elementType: Function
+// export type FiberNode = {
+//   return?: {
+//     elementType: Function
 
-    pendingProps: RedactorComponentProps
-  }
+//     pendingProps: RedactorComponentProps
+//   }
+// }
+
+export type FiberNode = {
+  elementType?: Function | string
+
+  pendingProps?: RedactorComponentProps
+
+  return?: FiberNode
+  // lastEffect?: {
+  //   elementType: Function
+
+  //   pendingProps: RedactorComponentProps
+  // }
 }
