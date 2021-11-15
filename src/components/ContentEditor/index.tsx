@@ -148,6 +148,7 @@ export const ContentEditor: RedactorComponent = ({
             // updateObject={updateObject}
             updateObject={updateObjectCustom}
             activeSetter={activeSetter}
+            inEditMode={inEditMode}
           >
             {content}
           </EditableContentProxy>
@@ -165,5 +166,6 @@ export const ContentEditor: RedactorComponent = ({
     updateObjectCustom,
     content,
     activeSetter,
+    inEditMode,
   ])
 }

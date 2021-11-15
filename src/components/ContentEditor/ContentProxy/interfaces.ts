@@ -8,4 +8,5 @@ export type EditableContentProxyProps = Omit<
 > & {
   updateObject: RedactorComponentProps['updateObject']
   activeSetter: ContentEditorTextToolbarProps['activeSetter']
+  inEditMode: boolean
 }

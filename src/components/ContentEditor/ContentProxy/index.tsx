@@ -19,6 +19,7 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
   updateObject,
   children,
   activeSetter,
+  inEditMode,
   ...other
 }) => {
   // useEffect(() => {
@@ -164,6 +165,7 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
           // contentEditable={contentEditable}
           contentEditable={active}
           suppressContentEditableWarning
+          inEditMode={inEditMode}
           {...other}
         >
           {children}
@@ -185,6 +187,7 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
     object,
     other,
     updateObject,
+    inEditMode,
   ])
 }
 
