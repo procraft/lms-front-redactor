@@ -20,4 +20,6 @@ export type StyleProps = {
    * Закрытие компонента
    */
   closeHandler: () => void
+
+  element: HTMLElement | null
 }

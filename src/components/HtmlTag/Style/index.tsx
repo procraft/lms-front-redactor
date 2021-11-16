@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { StyleProps } from './interfaces'
 import { useMonacoEditor } from '../../../hooks/useMonacoEditor'
 import { MonacoEditorModal } from '../../../ui/MonacoEditorModal'
+import { useOpened } from '../../../hooks/useOpened'
 
 export const Style: React.FC<StyleProps> = ({
   // src,
@@ -11,6 +12,7 @@ export const Style: React.FC<StyleProps> = ({
   updateObject,
   active,
   closeHandler,
+  element,
   ...other
 }) => {
   const onChange = useCallback(
@@ -65,6 +67,11 @@ export const Style: React.FC<StyleProps> = ({
     },
   })
 
+  const { opened } = useOpened({
+    active,
+    element,
+  })
+
   return (
     <>
       <div
@@ -90,7 +97,7 @@ export const Style: React.FC<StyleProps> = ({
         data-redactor--content-length={object.components[0]?.props.text?.length}
         // data-redactor--content-length={object.components[0]?.props.text?.length}
       >
-        {active ? (
+        {active && opened ? (
           <MonacoEditorModal
             title="CSS"
             closeHandler={closeHandler}

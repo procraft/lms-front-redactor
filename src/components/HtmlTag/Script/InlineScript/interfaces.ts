@@ -13,4 +13,6 @@ export type InlineScriptProps = {
    * Закрытие компонента
    */
   closeHandler: () => void
+
+  element: HTMLElement | null
 }

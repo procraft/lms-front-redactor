@@ -20,4 +20,6 @@ export type ScriptProps = {
    * Закрытие компонента
    */
   closeHandler: () => void
+
+  element: HTMLElement | null
 }

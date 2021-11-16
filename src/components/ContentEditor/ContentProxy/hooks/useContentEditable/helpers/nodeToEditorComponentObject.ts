@@ -161,19 +161,30 @@ export const nodeToEditorComponentObject = (
           return null
 
         case 'contenteditable':
-          // name = "contentEditable";
-          // break;
-
           return null
 
         case 'class':
           name = 'className'
+          break
 
+        case 'srcset':
+          name = 'srcSet'
+          break
+
+        case 'autoplay':
+          name = 'autoPlay'
+          break
+
+        case 'playsinline':
+          name = 'playsInline'
+          break
+
+        case 'crossorigin':
+          name = 'crossOrigin'
           break
 
         case 'staticcontext':
           name = 'staticContext'
-
           break
 
         case 'style':
@@ -187,7 +198,6 @@ export const nodeToEditorComponentObject = (
             console.error(error)
             value = undefined
           }
-
           break
 
         default:

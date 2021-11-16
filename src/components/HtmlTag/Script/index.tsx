@@ -11,6 +11,7 @@ export const Script: React.FC<ScriptProps> = ({
   updateObject,
   active,
   closeHandler,
+  element,
   ...other
 }) => {
   const onUpload = useCallback(
@@ -42,12 +43,13 @@ export const Script: React.FC<ScriptProps> = ({
           object={object}
           updateObject={updateObject}
           closeHandler={closeHandler}
+          element={element}
         />
       )
     } else {
       return null
     }
-  }, [active, object, updateObject, closeHandler])
+  }, [object, active, updateObject, closeHandler, element])
 
   return (
     <>
@@ -73,7 +75,7 @@ export const Script: React.FC<ScriptProps> = ({
         data-redactor--src={object.props.src}
         data-redactor--content-length={object.components[0]?.props.text?.length}
       >
-        {active ? uploader : null}
+        {active && !object.components[0] ? uploader : null}
 
         {editor}
 

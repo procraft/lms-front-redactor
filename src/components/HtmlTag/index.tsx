@@ -208,6 +208,7 @@ export const HtmlTag: RedactorComponent = ({
               updateObject={updateObject}
               active={active}
               closeHandler={closeHandler}
+              element={element}
             >
               {content}
             </Style>
@@ -230,6 +231,7 @@ export const HtmlTag: RedactorComponent = ({
                 updateObject={updateObject}
                 active={active}
                 closeHandler={closeHandler}
+                element={element}
               >
                 {content}
               </Script>

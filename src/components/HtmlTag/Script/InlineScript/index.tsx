@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { useMonacoEditor } from '../../../../hooks/useMonacoEditor'
+import { useOpened } from '../../../../hooks/useOpened'
 import { MonacoEditorModal } from '../../../../ui/MonacoEditorModal'
 import { InlineScriptProps } from './interfaces'
 
@@ -9,6 +10,7 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
   object,
   updateObject,
   closeHandler,
+  element,
 }) => {
   /**
    * Editor
@@ -60,8 +62,13 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
     },
   })
 
+  const { opened } = useOpened({
+    active,
+    element,
+  })
+
   return useMemo(() => {
-    if (!active) {
+    if (!active || !opened) {
       return null
     }
 
@@ -78,5 +85,5 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
         </MonacoEditorModal>
       </>
     )
-  }, [active, closeHandler, editor])
+  }, [active, closeHandler, editor, opened])
 }
