@@ -26,7 +26,7 @@ export type RedactorComponentWrapperProps = {
   /**
    * Выходим из режима редактирования
    */
-  closeEditor: () => void
+  closeEditor: (event: MouseEvent) => void
 
   /**
    * Родительский JSON-объект

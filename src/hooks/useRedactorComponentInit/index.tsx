@@ -349,9 +349,13 @@ const useRedactorComponentInit = ({
 
   // }, []);
 
-  const closeEditor = useCallback(() => {
-    activeSetter(false)
-  }, [activeSetter])
+  const closeEditor = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation()
+      activeSetter(false)
+    },
+    [activeSetter]
+  )
 
   /**
    * Выводит обертку управления компонентом
