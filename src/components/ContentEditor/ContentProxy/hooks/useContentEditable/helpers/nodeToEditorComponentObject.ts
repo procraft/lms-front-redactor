@@ -1,4 +1,8 @@
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
+import {
+  BOOLEAN,
+  getPropertyInfoByAttributeName,
+} from './react-utils/DOMProperty'
 import { RedactorComponentObject } from '../../../../../../RedactorComponent/interfaces'
 import { FiberNode } from '../interfaces'
 
@@ -134,10 +138,10 @@ export const nodeToEditorComponentObject = (
   } else if (node instanceof Element && node.nodeType === Node.ELEMENT_NODE) {
     const attributes = node.attributes
 
-    node.getAttributeNames().map((name) => {
+    node.getAttributeNames().forEach((name) => {
       // let value = attributes[name].value;
 
-      let value: string | Record<string, unknown> | undefined =
+      let value: string | Record<string, unknown> | boolean | undefined =
         attributes.getNamedItem(name)?.value ?? undefined
 
       /**
@@ -163,29 +167,29 @@ export const nodeToEditorComponentObject = (
         case 'contenteditable':
           return null
 
-        case 'class':
-          name = 'className'
-          break
+        // case 'class':
+        //   name = 'className'
+        //   break
 
-        case 'srcset':
-          name = 'srcSet'
-          break
+        // case 'srcset':
+        //   name = 'srcSet'
+        //   break
 
-        case 'autoplay':
-          name = 'autoPlay'
-          break
+        // case 'autoplay':
+        //   name = 'autoPlay'
+        //   break
 
-        case 'playsinline':
-          name = 'playsInline'
-          break
+        // case 'playsinline':
+        //   name = 'playsInline'
+        //   break
 
-        case 'crossorigin':
-          name = 'crossOrigin'
-          break
+        // case 'crossorigin':
+        //   name = 'crossOrigin'
+        //   break
 
-        case 'staticcontext':
-          name = 'staticContext'
-          break
+        // case 'staticcontext':
+        //   name = 'staticContext'
+        //   break
 
         case 'style':
           try {
@@ -200,15 +204,38 @@ export const nodeToEditorComponentObject = (
           }
           break
 
-        default:
+        default: {
+          const propertyInfo = getPropertyInfoByAttributeName(name)
+
+          if (propertyInfo) {
+            //
+
+            name = propertyInfo.propertyName
+
+            // TODO handle other attr types
+            switch (propertyInfo.type) {
+              case BOOLEAN:
+                /**
+                 * Если это логический атрибут, задаем значение по-умолчанию true.
+                 * Это связано с тем, что HTML сокращенные варианты атрибутов расценивает как пустую строку,
+                 * то есть, к примеру, autoplay будет расценено как autoplay=''
+                 * Но в реакт если передавать autoplay='', будет расценено как false,
+                 * так как у него этот атрибут считается булевым и надо передавать true или false
+                 */
+                if (value === '' && propertyInfo.acceptsBooleans) {
+                  value = true
+                }
+
+                break
+            }
+          }
+        }
       }
 
       content &&
         Object.assign(content.props, {
           [name]: value,
         })
-
-      return null
     })
 
     const components: RedactorComponentObject['components'] = []

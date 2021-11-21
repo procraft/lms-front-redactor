@@ -288,6 +288,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
           variant="raised"
           disabled={!isDirty}
           onClick={saveValue}
+          role="save"
         >
           Сохранить
         </Button>,

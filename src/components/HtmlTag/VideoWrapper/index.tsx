@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { TextField } from '@procraft/ui/dist/form/TextField'
-import { ImgProps } from './interfaces'
+import { VideoWrapperProps } from './interfaces'
 import { useUploader } from '../../../hooks/useUploader'
 import { VideoWrapperModalStyled } from './styles'
 import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
 
-export const VideoWrapper: React.FC<ImgProps> = (props) => {
+export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
   const {
     // src,
     children,
@@ -73,34 +73,6 @@ export const VideoWrapper: React.FC<ImgProps> = (props) => {
       accept: 'video/*',
     },
   })
-
-  // const image = useMemo(() => {
-  //   if (!object.props.src) {
-  //     return null
-  //   }
-
-  //   return (
-  //     <div className="image-block">
-  //       <img {...object.props} />
-  //     </div>
-  //   )
-  // }, [object.props])
-
-  // const onChange = useCallback(
-  //   (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     const name = event.target.name
-  //     const value = event.target.value
-
-  //     name &&
-  //       updateObject(object, {
-  //         props: {
-  //           ...object.props,
-  //           [name]: value,
-  //         },
-  //       })
-  //   },
-  //   [object, updateObject]
-  // )
 
   const { onChangeStyles } = useOnChangeStyles({
     object,

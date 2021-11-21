@@ -4,6 +4,7 @@ import React, { useMemo } from 'react'
 /**
  * Новый фронт-редактор.
  * Выводить следует только в режиме редактирования.
+ * @deprecated Пока так и не был доработан
  */
 export const FrontEditor: React.FC = () => {
   // useEffect(() => {

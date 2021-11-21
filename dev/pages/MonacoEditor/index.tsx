@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useMemo, useState } from 'react'
 import { useMonacoEditor } from '../../../src/hooks/useMonacoEditor'
 import { Modal2 } from '../../../src/ui/Modal2'
@@ -25,6 +24,7 @@ export const DevMonacoPage: Page = () => {
     }
 
     const handler = (event: MouseEvent) => {
+      // eslint-disable-next-line no-console
       console.log('handler event', event)
 
       event.preventDefault()

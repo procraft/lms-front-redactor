@@ -130,7 +130,7 @@ export const Modal2: React.FC<Modal2Props> = ({
 
     if (closeHandler) {
       toolbar.push(
-        <IconButton key="closeHandler" callback={closeHandler}>
+        <IconButton key="closeHandler" onClick={closeHandler} role="close">
           <CloseIcon />
         </IconButton>
       )

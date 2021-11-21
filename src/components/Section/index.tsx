@@ -3,7 +3,7 @@ import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
-import { AddWidgetButton } from '../../ui/AddWidgetButton'
+// import { AddWidgetButton } from '../../ui/AddWidgetButton'
 import { SectionStyled } from './styles'
 
 export const Section: RedactorComponent = ({
@@ -18,18 +18,21 @@ export const Section: RedactorComponent = ({
   const { ref, element, active, activeSetter } =
     useRedactorComponentRef<HTMLDivElement>()
 
-  const { wrapperContent, hovered, ...otherInitProps } =
-    useRedactorComponentInit({
-      object,
-      updateObject,
-      wrapperContainer,
-      parent,
-      updateParent,
-      element,
-      active,
-      activeSetter,
-      hoverable: true,
-    })
+  const {
+    wrapperContent,
+    // hovered: _hovered,
+    ...otherInitProps
+  } = useRedactorComponentInit({
+    object,
+    updateObject,
+    wrapperContainer,
+    parent,
+    updateParent,
+    element,
+    active,
+    activeSetter,
+    hoverable: true,
+  })
 
   const childrenContent = useRedactorRenderComponents({
     object,
@@ -71,7 +74,7 @@ export const Section: RedactorComponent = ({
           <>
             {wrapperContent}
             {/* Если дочерних элементов нет, то даем возможность вставлять дочерние виджеты */}
-            {!content.props.children && hovered === true && element ? (
+            {/* {!content.props.children && hovered === true && element ? (
               <AddWidgetButton
                 hovered={hovered}
                 element={element}
@@ -79,19 +82,10 @@ export const Section: RedactorComponent = ({
                 updateObject={updateObject}
                 activeSetter={activeSetter}
               />
-            ) : null}
+            ) : null} */}
           </>
         ) : null}
       </>
     )
-  }, [
-    inEditMode,
-    content,
-    wrapperContent,
-    hovered,
-    element,
-    object,
-    updateObject,
-    activeSetter,
-  ])
+  }, [inEditMode, content, wrapperContent])
 }

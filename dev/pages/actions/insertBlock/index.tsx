@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import App from '../../../../src'
 import {
@@ -71,9 +71,11 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
   // />;
 }
 
-const InsertBlockDevPage: Page = (props) => {
-  const initialObject = useMemo<RedactorComponentObject>(() => {
-    return {
+const initialObject: RedactorComponentObject = {
+  name: 'Section',
+  component: 'Section',
+  components: [
+    {
       name: 'Section',
       component: 'Section',
       components: [
@@ -101,9 +103,15 @@ const InsertBlockDevPage: Page = (props) => {
         },
       ],
       props: {},
-    }
-  }, [])
+    },
+  ],
+  props: {},
+}
 
+export const InsertBlockDevPage: Page = (props) => {
+  /**
+   * Store
+   */
   const {
     store: object,
     updateObject,
@@ -145,5 +153,3 @@ const InsertBlockDevPage: Page = (props) => {
     </>
   )
 }
-
-export default InsertBlockDevPage

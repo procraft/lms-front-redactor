@@ -40,6 +40,7 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<RedactorComponentWrapp
         preventClickEvent
         fullScreen
         closeHandler={closeHandler}
+        role="monaco-modal"
       >
         {/* {editor} */}
 

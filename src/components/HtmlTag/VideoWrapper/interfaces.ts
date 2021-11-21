@@ -3,7 +3,7 @@ import {
   RedactorComponentProps,
 } from '../../../RedactorComponent/interfaces'
 
-export type ImgProps = {
+export type VideoWrapperProps = {
   ref: undefined
   forwardedRef: Function
 

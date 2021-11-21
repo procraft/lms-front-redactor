@@ -132,7 +132,9 @@ export const HtmlTag: RedactorComponent = ({
           <video
             {...tagProps}
             ref={ref as React.LegacyRef<HTMLVideoElement> | undefined}
-            controls={!childrenContent ? undefined : tagProps.controls}
+            controls={
+              inEditMode && !childrenContent ? undefined : tagProps.controls
+            }
           >
             {childrenContent}
           </video>
@@ -155,7 +157,17 @@ export const HtmlTag: RedactorComponent = ({
         {object.props.children || childrenContent}
       </Tag>
     )
-  }, [Tag, componentClassName, otherProps, ref, object, childrenContent, text])
+  }, [
+    Tag,
+    componentClassName,
+    otherProps,
+    ref,
+    object.props.children,
+    object.components,
+    childrenContent,
+    text,
+    inEditMode,
+  ])
 
   // TODO: Было: Пока отключил этот перехватчик, но надо будет понаблюдать (за кнопками, селектами и т.п.)
   // Стало: Перепроверить, не перехватывается.

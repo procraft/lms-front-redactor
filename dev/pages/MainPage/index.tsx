@@ -619,6 +619,8 @@ const ContentEditorDevPage: Page = (props) => {
         id="component-wrapper"
         style={{
           marginBottom: 20,
+          marginTop: 15,
+          paddingTop: 30,
         }}
       >
         {toolbar}

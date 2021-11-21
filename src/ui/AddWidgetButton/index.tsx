@@ -7,6 +7,8 @@ import { SvgIconPlus } from '../SvgIcon/Plus'
 
 /**
  * Кнопка добавления дочернего виджета
+ * @deprecated Пока убрал, так как сложности с позиционированием
+ * при паддингах и маржинах родительских компонентов
  */
 export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
   element,
@@ -51,8 +53,6 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
 
     return {
       border: '1px solid grey',
-      width: 28,
-      height: 28,
       background: 'rgb(96, 125, 139)',
       color: 'white',
       position: 'absolute',
@@ -72,7 +72,7 @@ export const AddWidgetButton: React.FC<AddWidgetButtonProps> = ({
     return (
       <>
         {ReactDOM.createPortal(
-          <IconButton callback={onClick} style={style}>
+          <IconButton callback={onClick} style={style} size="small">
             <SvgIconPlus />
           </IconButton>,
           document.body

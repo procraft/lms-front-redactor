@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import {
   LmsFrontRedactorContext,
   LmsFrontRedactorContextValue,
@@ -11,7 +11,7 @@ import { LmsFrontRedactorProps } from './interfaces'
 // import { LmsFrontRedactorStyled } from './styles'
 import { LmsFrontRedactorGlobalStyle } from './styles/GlobalStyle'
 
-const FrontEditor = dynamic(() => import('./FrontEditor'))
+// const FrontEditor = dynamic(() => import('./FrontEditor'))
 
 export * from './interfaces'
 export * from './RedactorComponent/interfaces'
@@ -83,7 +83,7 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
         {inEditMode ? (
           <>
             <LmsFrontRedactorGlobalStyle />
-            <FrontEditor />
+            {/* <FrontEditor /> */}
           </>
         ) : null}
         {/* <LmsFrontRedactorStyled
