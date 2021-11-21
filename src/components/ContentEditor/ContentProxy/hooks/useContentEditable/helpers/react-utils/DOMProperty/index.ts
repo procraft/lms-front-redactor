@@ -626,7 +626,6 @@ properties[xlinkHref] = new (PropertyInfoRecord as any)(
   true, // sanitizeURL
   false // removeEmptyString
 )
-
 ;['src', 'href', 'action', 'formAction'].forEach((attributeName) => {
   properties[attributeName] = new (PropertyInfoRecord as any)(
     attributeName,

@@ -171,9 +171,9 @@ export const nodeToEditorComponentObject = (
         //   name = 'className'
         //   break
 
-        // case 'srcset':
-        //   name = 'srcSet'
-        //   break
+        case 'srcset':
+          name = 'srcSet'
+          break
 
         // case 'autoplay':
         //   name = 'autoPlay'
