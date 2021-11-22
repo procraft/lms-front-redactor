@@ -237,7 +237,7 @@ describe('InsertBlock action', () => {
           model.setValue(
             model.getValue() +
               `
-            <video autOplay contRols claSS="test-video" style="width: 200; height:150;border:1px solid green;" />
+            <video autOplay contRols loop="loop" muted="" claSS="test-video" style="width: 200; height:150;border:1px solid green;" playsinline="playsinline" data-wf-ignore="true" data-object-fit="cover"/>
           `
           )
         }
@@ -293,6 +293,9 @@ describe('InsertBlock action', () => {
          * Проверяем атрибуты
          */
         expect(video.getAttribute('autoplay')).be.eq('')
+        expect(video.getAttribute('loop')).be.eq('')
+        expect(video.getAttribute('muted')).be.eq('muted')
+        expect(video.getAttribute('playsinline')).be.eq('')
 
         /**
          * Этот атрибут доступен только если не в режиме редактирования

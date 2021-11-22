@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
 import {
   BOOLEAN,
@@ -210,6 +211,8 @@ export const nodeToEditorComponentObject = (
           if (propertyInfo) {
             //
 
+            console.log('propertyInfo', name, value, propertyInfo)
+
             name = propertyInfo.propertyName
 
             // TODO handle other attr types
@@ -222,6 +225,14 @@ export const nodeToEditorComponentObject = (
                  * Но в реакт если передавать autoplay='', будет расценено как false,
                  * так как у него этот атрибут считается булевым и надо передавать true или false
                  */
+
+                /**
+                 * Некоторые атрибуты требуют значения по названию
+                 */
+                if (value === '' && propertyInfo.mustUseProperty) {
+                  value = propertyInfo.propertyName
+                }
+
                 if (value === '' && propertyInfo.acceptsBooleans) {
                   value = true
                 }
@@ -237,6 +248,8 @@ export const nodeToEditorComponentObject = (
           [name]: value,
         })
     })
+
+    console.log('content.props', content.props)
 
     const components: RedactorComponentObject['components'] = []
 

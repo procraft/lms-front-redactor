@@ -129,15 +129,28 @@ export const HtmlTag: RedactorComponent = ({
       }
       case 'video': {
         return (
-          <video
-            {...tagProps}
-            ref={ref as React.LegacyRef<HTMLVideoElement> | undefined}
-            controls={
-              inEditMode && !childrenContent ? undefined : tagProps.controls
-            }
-          >
-            {childrenContent}
-          </video>
+          <>
+            <video
+              {...tagProps}
+              ref={ref as React.LegacyRef<HTMLVideoElement> | undefined}
+              controls={
+                inEditMode && !childrenContent ? undefined : tagProps.controls
+              }
+            >
+              {childrenContent}
+            </video>
+            <VideoWrapper
+              // {...renderProps}
+              ref={undefined}
+              // forwardedRef={renderProps.ref}
+              forwardedRef={ref}
+              object={object}
+              updateObject={updateObject}
+              active={active}
+              closeHandler={closeHandler}
+              element={element}
+            />
+          </>
         )
       }
 
@@ -162,11 +175,14 @@ export const HtmlTag: RedactorComponent = ({
     componentClassName,
     otherProps,
     ref,
-    object.props.children,
-    object.components,
+    object,
     childrenContent,
     text,
     inEditMode,
+    updateObject,
+    active,
+    closeHandler,
+    element,
   ])
 
   // TODO: Было: Пока отключил этот перехватчик, но надо будет понаблюдать (за кнопками, селектами и т.п.)
@@ -291,24 +307,24 @@ export const HtmlTag: RedactorComponent = ({
           )
           break
 
-        case 'video':
-          elementContent = (
-            <>
-              <VideoWrapper
-                {...renderProps}
-                ref={undefined}
-                forwardedRef={renderProps.ref}
-                object={object}
-                updateObject={updateObject}
-                active={active}
-                closeHandler={closeHandler}
-                element={element}
-              >
-                {content}
-              </VideoWrapper>
-            </>
-          )
-          break
+        // case 'video':
+        //   elementContent = (
+        //     <>
+        //       <VideoWrapper
+        //         {...renderProps}
+        //         ref={undefined}
+        //         forwardedRef={renderProps.ref}
+        //         object={object}
+        //         updateObject={updateObject}
+        //         active={active}
+        //         closeHandler={closeHandler}
+        //         element={element}
+        //       >
+        //         {content}
+        //       </VideoWrapper>
+        //     </>
+        //   )
+        //   break
 
         default:
       }

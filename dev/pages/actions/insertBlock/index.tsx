@@ -104,6 +104,21 @@ const initialObject: RedactorComponentObject = {
       ],
       props: {},
     },
+    // {
+    //   name: 'HtmlTag',
+    //   component: 'HtmlTag',
+    //   components: [],
+    //   props: {
+    //     tag: 'video',
+    //     style: {
+    //       width: 200,
+    //       height: 150,
+    //       border: '1px solid green',
+    //     },
+    //     // loop: true,
+    //     // muted: true,
+    //   },
+    // },
   ],
   props: {},
 }
