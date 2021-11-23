@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
 import {
   BOOLEAN,
@@ -209,10 +208,6 @@ export const nodeToEditorComponentObject = (
           const propertyInfo = getPropertyInfoByAttributeName(name)
 
           if (propertyInfo) {
-            //
-
-            console.log('propertyInfo', name, value, propertyInfo)
-
             name = propertyInfo.propertyName
 
             // TODO handle other attr types
@@ -248,8 +243,6 @@ export const nodeToEditorComponentObject = (
           [name]: value,
         })
     })
-
-    console.log('content.props', content.props)
 
     const components: RedactorComponentObject['components'] = []
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { TextField } from '@procraft/ui/dist/form/TextField'
 import { VideoWrapperProps } from './interfaces'
@@ -29,8 +28,6 @@ export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
     if (!element) {
       return
     }
-
-    console.log('VideoWrapper object.props', { ...object.props })
 
     if (object.props.muted !== undefined) {
       element.setAttribute('muted', object.props.muted)

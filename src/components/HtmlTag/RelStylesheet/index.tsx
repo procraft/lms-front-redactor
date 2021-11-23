@@ -4,7 +4,7 @@ import { useUploader } from '../../../hooks/useUploader'
 
 export const RelStylesheet: React.FC<RelStylesheetProps> = ({
   // src,
-  children,
+  children: _children,
   object,
   forwardedRef,
   updateObject,
@@ -59,7 +59,7 @@ export const RelStylesheet: React.FC<RelStylesheetProps> = ({
         {active ? uploader : null}
 
         {/* {content} */}
-        {children}
+        {/* {children} */}
       </div>
     </>
   )

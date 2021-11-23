@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
+import Head from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -127,6 +128,13 @@ export const HtmlTag: RedactorComponent = ({
             : undefined,
         })
       }
+      case 'link':
+        return (
+          <Head>
+            <link {...tagProps}>{childrenContent}</link>
+          </Head>
+        )
+
       case 'video': {
         return (
           <>
@@ -274,6 +282,7 @@ export const HtmlTag: RedactorComponent = ({
 
           elementContent = (
             <>
+              {content}
               <RelStylesheet
                 {...renderProps}
                 ref={undefined}
@@ -281,9 +290,7 @@ export const HtmlTag: RedactorComponent = ({
                 object={object}
                 updateObject={updateObject}
                 active={active}
-              >
-                {content}
-              </RelStylesheet>
+              />
             </>
           )
           break
