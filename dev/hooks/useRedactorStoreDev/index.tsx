@@ -177,6 +177,16 @@ export const useRedactorStoreDev = ({
           components: [],
         },
       },
+      {
+        Component: HtmlTag,
+        template: {
+          name: 'Head',
+          description: 'Insert Head',
+          component: 'Head',
+          props: {},
+          components: [],
+        },
+      },
     ]
   }, [])
 

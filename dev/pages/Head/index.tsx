@@ -1,5 +1,5 @@
 import React from 'react'
-import Head from 'next/head'
+import NextHead from 'next/head'
 import App from '../../../src'
 import {
   RedactorComponent,
@@ -11,6 +11,7 @@ import { HtmlTag } from '../../../src/components/HtmlTag'
 import { getRedactorObjectComponentProps } from '../../../src/hooks/RedactorObjectRender/interfaces'
 import { useRedactorStoreDev } from '../../hooks/useRedactorStoreDev'
 import { linksList } from '../MainPage'
+import { Head } from '../../../src/components/Head'
 
 /**
  * Функция вставки кастомного блока
@@ -48,6 +49,10 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
 
     case 'HtmlTag':
       Component = HtmlTag
+      break
+
+    case 'Head':
+      Component = Head
       break
 
     // case 'LandingRouter':
@@ -125,9 +130,9 @@ export const HeadDevPage: Page = (props) => {
 
   return (
     <>
-      <Head>
+      <NextHead>
         <title>Section</title>
-      </Head>
+      </NextHead>
       <div
         id="component-wrapper"
         style={{

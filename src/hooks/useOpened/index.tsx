@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useOpenedProps } from './interfaces'
 
 /**
@@ -33,9 +33,14 @@ export const useOpened = ({ active, element }: useOpenedProps) => {
     }
   }, [active, opened])
 
+  const closeHandler = useCallback(() => {
+    openedSetter(false)
+  }, [])
+
   return useMemo(() => {
     return {
       opened,
+      closeHandler,
     }
-  }, [opened])
+  }, [opened, closeHandler])
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
 import {
   BOOLEAN,
@@ -19,6 +20,12 @@ export const nodeToEditorComponentObject = (
     component: 'HtmlTag',
     props: {},
     components: [],
+  }
+
+  console.log('nodeToEditorComponentObject node', node)
+
+  if (node instanceof HTMLElement) {
+    console.log('nodeToEditorComponentObject node.outerHTML', node.outerHTML)
   }
 
   // eslint-disable-next-line no-constant-condition
@@ -258,7 +265,18 @@ export const nodeToEditorComponentObject = (
   }
 
   if (content) {
-    content.props.tag = NodeName
+    console.log('NodeName', NodeName)
+
+    switch (NodeName) {
+      case 'head':
+        content.component = 'Head'
+
+        console.log('Head content', content)
+
+        break
+      default:
+        content.props.tag = NodeName
+    }
   }
 
   return content

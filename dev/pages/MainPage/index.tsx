@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import Head from 'next/head'
+import NextHead from 'next/head'
 import App, { RedactorComponent, RedactorComponentObject } from '../../../src'
 import { Page } from '../_App/interfaces'
 import { useRedactorStoreDev } from '../../hooks/useRedactorStoreDev'
@@ -7,6 +7,7 @@ import { getRedactorObjectComponentProps } from '../../../src/hooks/RedactorObje
 import { Section } from '../../../src/components/Section'
 import { HtmlTag } from '../../../src/components/HtmlTag'
 import { ContentEditor } from '../../../src/components/ContentEditor'
+import { Head } from '../../../src/components/Head'
 
 export const linksList = [
   {
@@ -102,6 +103,10 @@ const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
     case 'ContentEditor':
       Component = ContentEditor
       break
+
+    case 'Head':
+      Component = Head
+      break
   }
 
   if (!Component) {
@@ -123,6 +128,61 @@ const ContentEditorDevPage: Page = (props) => {
       component: 'Section',
       props: {},
       components: [
+        {
+          name: 'Head',
+          component: 'Head',
+          props: {
+            // content: `<title id="title">wefwfwef</title>`
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'title',
+                id: 'title',
+                children: 'SDfsdfwefwef',
+              },
+              components: [],
+            },
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'title',
+                id: 'title2',
+              },
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [],
+                  props: {
+                    text: 'title Content Editor',
+                  },
+                },
+              ],
+            },
+            // {
+            //   name: 'HtmlTag',
+            //   component: 'HtmlTag',
+            //   props: {
+            //     tag: 'script',
+            //     id: 'script2',
+            //   },
+            //   components: [
+            //     {
+            //       name: 'HtmlTag',
+            //       component: 'HtmlTag',
+            //       components: [],
+            //       props: {
+            //         text: 'alert("Dfgf")',
+            //       },
+            //     },
+            //   ],
+            // },
+          ],
+        },
         {
           name: 'ContentEditor',
           component: 'ContentEditor',
@@ -611,9 +671,9 @@ const ContentEditorDevPage: Page = (props) => {
 
   return (
     <>
-      <Head>
+      <NextHead>
         <title>FrontRedactor all components</title>
-      </Head>
+      </NextHead>
 
       <div
         id="component-wrapper"

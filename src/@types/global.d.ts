@@ -1,3 +1,6 @@
+/// <reference types="jest" />
+/// <reference types="cypress" />
+
 import { RedactorComponentClickEvent, RedactorComponentActiveEvent, RedactorComponentHoveredEvent, RedactorComponentSaveAllEvent } from "../FrontEditor/Context";
 
 // https://github.com/microsoft/TypeScript/issues/28357#issuecomment-664144063
