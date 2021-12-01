@@ -1,6 +1,5 @@
 /* eslint-disable react/no-children-prop */
-/* eslint-disable no-console */
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import NextHead from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -8,8 +7,8 @@ import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import { RedactorComponentStyled } from '../../RedactorComponent/styles'
 import { useOpened } from '../../hooks/useOpened'
-import { MonacoEditorModal } from '../../ui/MonacoEditorModal'
-import { useMonacoEditor } from '../../hooks/useMonacoEditor'
+import { Modal2 } from '../../ui/Modal2'
+import { ContentEditorHTMLEditorMonacoEditor } from '../ContentEditor/HTMLEditor/MonacoEditor'
 // import { HeadManagerContext } from 'next/dist/next-server/lib/head-manager-context'
 
 /**
@@ -64,103 +63,94 @@ export const Head: RedactorComponent = ({
   //   return <title id="title">sdfffwefewf</title>
   // }, [])
 
-  console.log('childrenContent', childrenContent)
+  // console.log('childrenContent', childrenContent)
 
   const content = useMemo(() => {
     // return <NextHead>{childrenContent}</NextHead>
     // return <NextHead>{object.props.content}</NextHead>
 
-    console.log('object.props.content', object.props.content)
+    // console.log('object.props.content', object.props.content)
 
-    // const dom = (new DOMParser()).parseFromString('<title id="title">wefwfwef</title>', "text/html")
-    // const dom = (new DOMParser()).parseFromString('<title id="title">wefwfwef</title>', "text/html")
-
-    // console.log('dom', dom)
-
-    // return (
-    //   <HeadManagerContext.Consumer>
-    //     {(context) => {
-    //       console.log('HeadManagerContext context', context)
-    //       return <></>
-    //     }}
-    //   </HeadManagerContext.Consumer>
-    // )
-
-    return (
-      <NextHead>
-        {/* <title children="erwerwefwefewf"></title>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "alert('sdfsdfdsfffwfwefwefwef')",
-          }}
-        /> */}
-        {childrenContent}
-      </NextHead>
-    )
+    /**
+     * В режиме редактирования нам нужен исходный контент.
+     * А NextHead рендерит все в head и там не найти какие именно элементы рендерятся.
+     */
+    return inEditMode ? childrenContent : <NextHead>{childrenContent}</NextHead>
 
     // return <NextHead>{title}</NextHead>
-  }, [childrenContent, object.props.content])
+  }, [childrenContent, inEditMode])
 
-  const onChange = useCallback(
-    (content: string) => {
-      try {
-        if (!object.components) {
-          console.error('object.components is empty', { ...object })
-          return
-        }
+  // const onChange = useCallback(
+  //   (content: string) => {
+  //     // console.log('onChange content', content)
 
-        const contentElement = object.components[0] || {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          components: [],
-          props: {
-            text: '',
-          },
-        }
+  //     // console.log('onChange object.components', object.components)
 
-        if (!contentElement) {
-          console.error('contentElement is null')
-          return
-        }
+  //     try {
+  //       if (!object.components) {
+  //         console.error('onChange object.components is empty', { ...object })
+  //         return
+  //       }
 
-        const data = {
-          components: [
-            {
-              ...contentElement,
-              props: {
-                ...contentElement.props,
-                text: content,
-              },
-            },
-          ],
-        }
+  //       const contentElement = object.components[0] || {
+  //         name: 'Head',
+  //         component: 'Head',
+  //         components: [],
+  //         props: {},
+  //       }
 
-        console.log('onChange data', data)
+  //       if (!contentElement) {
+  //         console.error('onChange contentElement is null')
+  //         return
+  //       }
 
-        updateObject(object, data)
-      } catch (error) {
-        console.error('Style onChange error, object', error, { ...object })
-      }
-    },
-    [object, updateObject]
-  )
+  //       const data = {
+  //         components: [
+  //           {
+  //             ...contentElement,
+  //             props: {
+  //               ...contentElement.props,
+  //               text: content,
+  //             },
+  //           },
+  //         ],
+  //       }
 
-  const { editor } = useMonacoEditor({
-    active,
-    editorProps: {
-      source: object.components[0]?.props.text || '',
-      // ext: 'css',
-      // saveEditorContent,
-      // updateFile,
-      language: 'html',
-      onChange,
-    },
-  })
+  //       // console.log('onChange data', data)
+
+  //       updateObject(object, data)
+  //     } catch (error) {
+  //       console.error('Head onChange error, object', error, { ...object })
+  //     }
+  //   },
+  //   [object, updateObject]
+  // )
+
+  // const { editor } = useMonacoEditor({
+  //   active,
+  //   editorProps: {
+  //     // source: object.components[0]?.props.text || '',
+  //     source: element?.innerHTML || '',
+  //     // ext: 'css',
+  //     // saveEditorContent,
+  //     // updateFile,
+  //     language: 'html',
+  //     onChange,
+  //   },
+  // })
 
   const { opened, closeHandler } = useOpened({
     active,
     element,
   })
+
+  // const updateObjectCustom = useCallback(function (...rest) {
+  //   console.log('updateObjectCustom arguments', rest)
+  // }, [])
+
+  // const updateParentCustom = useCallback(function (...rest) {
+  //   console.log('updateParentCustom arguments', rest)
+  // }, [])
 
   return useMemo(() => {
     // if (!inEditMode) {
@@ -170,7 +160,7 @@ export const Head: RedactorComponent = ({
     return (
       <>
         {wrapperContent}
-        {active && opened ? (
+        {/* {active && opened ? (
           <MonacoEditorModal
             title="Head"
             closeHandler={closeHandler}
@@ -180,6 +170,28 @@ export const Head: RedactorComponent = ({
           >
             {editor}
           </MonacoEditorModal>
+        ) : null} */}
+        {active && opened && element ? (
+          <Modal2
+            title=" "
+            modal
+            moveable={false}
+            preventClickEvent
+            fullScreen
+            closeHandler={closeHandler}
+            role="monaco-modal"
+          >
+            {/* {editor} */}
+
+            <ContentEditorHTMLEditorMonacoEditor
+              active
+              element={element}
+              object={object}
+              updateObject={updateObject}
+              parent={parent}
+              updateParent={updateParent}
+            />
+          </Modal2>
         ) : null}
         <RedactorComponentStyled
           {...other}
@@ -198,8 +210,12 @@ export const Head: RedactorComponent = ({
     wrapperContent,
     active,
     opened,
+    element,
     closeHandler,
-    editor,
+    object,
+    updateObject,
+    parent,
+    updateParent,
     other,
     otherInitProps,
     inEditMode,

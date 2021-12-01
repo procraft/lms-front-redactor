@@ -163,24 +163,24 @@ const ContentEditorDevPage: Page = (props) => {
                 },
               ],
             },
-            // {
-            //   name: 'HtmlTag',
-            //   component: 'HtmlTag',
-            //   props: {
-            //     tag: 'script',
-            //     id: 'script2',
-            //   },
-            //   components: [
-            //     {
-            //       name: 'HtmlTag',
-            //       component: 'HtmlTag',
-            //       components: [],
-            //       props: {
-            //         text: 'alert("Dfgf")',
-            //       },
-            //     },
-            //   ],
-            // },
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                tag: 'script',
+                id: 'script2',
+              },
+              components: [
+                {
+                  name: 'HtmlTag',
+                  component: 'HtmlTag',
+                  components: [],
+                  props: {
+                    text: 'console.log("Script in head")',
+                  },
+                },
+              ],
+            },
           ],
         },
         {

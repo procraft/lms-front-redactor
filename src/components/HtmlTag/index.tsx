@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import Head from 'next/head'
+import NextHead from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -107,6 +107,13 @@ export const HtmlTag: RedactorComponent = ({
     )
 
     switch (Tag.toLowerCase()) {
+      case 'title': {
+        return (
+          <title {...otherProps}>
+            {object.components[0]?.props.text || ''}
+          </title>
+        )
+      }
       case 'script': {
         return (
           <script
@@ -130,9 +137,9 @@ export const HtmlTag: RedactorComponent = ({
       }
       case 'link':
         return (
-          <Head>
+          <NextHead>
             <link {...tagProps}>{childrenContent}</link>
-          </Head>
+          </NextHead>
         )
 
       case 'video': {

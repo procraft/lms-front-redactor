@@ -9,6 +9,7 @@ export const RedactorComponentStyled = styled.div<RedactorComponentStyledProps>`
     if (inEditMode) {
       return css`
         min-height: 20px;
+        padding: 10px;
       `
     }
   }}
