@@ -32,6 +32,7 @@ export const Section: RedactorComponent = ({
     active,
     activeSetter,
     hoverable: true,
+    canEditHTML: true,
   })
 
   const childrenContent = useRedactorRenderComponents({

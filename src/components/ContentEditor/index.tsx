@@ -100,6 +100,7 @@ export const ContentEditor: RedactorComponent = ({
     active,
     activeSetter,
     hoverable: true,
+    canEditHTML: true,
   })
 
   _hovered

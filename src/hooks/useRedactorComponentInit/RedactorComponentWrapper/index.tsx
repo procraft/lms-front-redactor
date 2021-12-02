@@ -41,6 +41,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
     active,
     // wrapperTitle,
     hovered,
+    canEditHTML,
   }) => {
     const wrapper = useMemo(() => {
       const wrapper = document.createElement('div')
@@ -492,13 +493,15 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
                     object={object}
                     updateObject={updateObject}
                   />
-                  <Button
-                    onClick={openHtmlEditor}
-                    role="openHtmlEditor"
-                    title="Редактировать HTML"
-                  >
-                    <SvgIconCode />
-                  </Button>
+                  {canEditHTML ? (
+                    <Button
+                      onClick={openHtmlEditor}
+                      role="openHtmlEditor"
+                      title="Редактировать HTML"
+                    >
+                      <SvgIconCode />
+                    </Button>
+                  ) : null}
                   {parent ? (
                     <Button
                       onClick={removeObjectHandler}
@@ -565,5 +568,6 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
       updateObject,
       updateParent,
       wrapper,
+      canEditHTML,
     ])
   }

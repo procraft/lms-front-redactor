@@ -35,6 +35,8 @@ export type useRedactorComponentInitProps<
    * (то есть можно навести на любой элемент)
    */
   hoverable: boolean
+
+  canEditHTML: boolean
 }
 
 export type ComponentWrapperProps = {

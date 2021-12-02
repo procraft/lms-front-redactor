@@ -66,6 +66,7 @@ export const Modal2: React.FC<Partial<ContainerProps>> = ({
           parent={undefined}
           active={active !== undefined ? active : false}
           hovered={hovered !== undefined ? hovered : false}
+          canEditHTML={false}
           {...other}
         >
           {children}

@@ -78,6 +78,7 @@ export const HtmlTag: RedactorComponent = ({
     active,
     activeSetter,
     hoverable,
+    canEditHTML: true,
   })
 
   _hovered

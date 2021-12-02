@@ -45,6 +45,7 @@ export const Head: RedactorComponent = ({
     active,
     activeSetter,
     hoverable: true,
+    canEditHTML: false,
   })
 
   _hovered
