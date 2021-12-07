@@ -174,7 +174,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
             </LinkFormLinkWrapperStyled>
 
             <LinkFormLinksListStyled ref={listElementRef}>
-              {context?.linksList.map((n) => {
+              {context?.linksList?.map((n) => {
                 return (
                   <div
                     key={n.id}

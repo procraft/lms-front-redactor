@@ -22,6 +22,9 @@ export type ToolbarButtonProps = {
 }
 
 export type ReactFiber = {
+  /**
+   * parent
+   */
   return?: {
     pendingProps: {
       object?: RedactorComponentProps['object']

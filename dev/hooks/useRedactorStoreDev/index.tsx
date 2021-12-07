@@ -208,5 +208,3 @@ export const useRedactorStoreDev = ({
     objectTemplates,
   ])
 }
-
-export default useRedactorStoreDev

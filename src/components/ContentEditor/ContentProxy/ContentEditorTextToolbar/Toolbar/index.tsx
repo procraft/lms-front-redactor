@@ -28,7 +28,7 @@ import { TagEditorToolbarStyled } from './styles'
 import {
   ContentEditorToolbarButton,
   ContentEditorToolbarProps,
-  ReactFiber,
+  // ReactFiber,
   ToolbarButtonProps,
 } from './interfaces'
 // import { ContentProxyEditMode } from '../interfaces'
@@ -39,6 +39,7 @@ import { useCreateLinkButton } from './buttons/CreateLink'
 // import { Modal2 } from '../../../../../ui/Modal2'
 import { useHTMLEditorModeButton } from './buttons/HTMLEditorMode'
 import { IconButton } from '@procraft/ui/dist/IconButton'
+import { getReactFiber } from '../../../../../helpers/ReactFiber'
 
 export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   props
@@ -225,21 +226,23 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
        * Находим реакт-файбер
        */
 
-      let reactFiber: ReactFiber | undefined | null
+      // let reactFiber: ReactFiber | undefined | null
 
-      for (const i in focusNode) {
-        if (i.startsWith('__reactFiber')) {
-          //
+      // for (const i in focusNode) {
+      //   if (i.startsWith('__reactFiber')) {
+      //     //
 
-          reactFiber = focusNode[i as keyof Node] as ReactFiber
+      //     reactFiber = focusNode[i as keyof Node] as ReactFiber
 
-          break
-        }
-      }
+      //     break
+      //   }
+      // }
+
+      const reactFiber = getReactFiber(focusNode)
 
       if (reactFiber) {
-        reactFiber.return?.pendingProps.object
-        reactFiber.return?.pendingProps.updateParent
+        // reactFiber.return?.pendingProps.object
+        // reactFiber.return?.pendingProps.updateParent
 
         if (
           reactFiber.return?.pendingProps.object &&

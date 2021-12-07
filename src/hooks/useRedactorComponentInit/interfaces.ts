@@ -37,6 +37,11 @@ export type useRedactorComponentInitProps<
   hoverable: boolean
 
   canEditHTML: boolean
+
+  /**
+   * Может редактироваться в режиме contentEditable
+   */
+  // canContentEditable: boolean
 }
 
 export type ComponentWrapperProps = {

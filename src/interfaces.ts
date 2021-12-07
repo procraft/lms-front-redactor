@@ -1,6 +1,6 @@
 import { RedactorComponentProps } from './RedactorComponent/interfaces'
 import getRedactorObjectComponent from './hooks/RedactorObjectRender'
-import { LmsFrontRedactorContextValue, RedactorLinkData } from './Context'
+import { LmsFrontRedactorContextValue } from './Context'
 
 export type LmsFrontRedactorProps = {
   inEditMode: boolean
@@ -16,7 +16,7 @@ export type LmsFrontRedactorProps = {
   /**
    * Список возможных ссылок
    */
-  linksList: RedactorLinkData[]
+  linksList: LmsFrontRedactorContextValue['linksList']
 
   showHiddenTags: boolean
 }

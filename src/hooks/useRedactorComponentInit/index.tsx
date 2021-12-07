@@ -289,9 +289,16 @@ const useRedactorComponentInit = ({
       // ) {
 
       /**
-       *
+       * Если элементу задан hoverable,
+       * то ему в любом случае можно перехватывать это событие.
+       * Так же с зажатой клавишей Alt подсвечиваются все элементы.
+       * Если элемент уже active, то тоже перехватываем событие,
+       * потому что иначе у нас возникает проблема, когда нашел и выделил элемент
+       * с использованием клавиши Alt, потом отпустил Alt
+       * и затем кликнул в любой внутренний элемент, а так как элемент
+       * не hoverable, то событие уходит дальше и активность уходит в родительский элемент.
        */
-      if (hoverable || event.altKey) {
+      if (hoverable || event.altKey || active) {
         event.stopPropagation()
         hoveredSetter(true)
       }
@@ -328,7 +335,7 @@ const useRedactorComponentInit = ({
       element.removeEventListener('mouseover', onMouseOver)
       // element.removeEventListener('mouseleave', onMouseLeave)
     }
-  }, [context?.inEditMode, element, hoverable])
+  }, [context?.inEditMode, element, hoverable, active])
 
   /**
    * Обновление текущуего объекта компонента.

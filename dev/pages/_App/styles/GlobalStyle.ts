@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 export const UiGlobalStylesDev = createGlobalStyle`
 
   html {
-    font-size: 8px;
+    font-size: 14px;
   }
 
   body {

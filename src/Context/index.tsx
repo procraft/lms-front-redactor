@@ -34,7 +34,7 @@ export type LmsFrontRedactorContextValue = {
 
   objectTemplates: RedactorObjectTemplate[]
 
-  linksList: RedactorLinkData[]
+  linksList: RedactorLinkData[] | undefined
 
   /**
    * Показывать скрытые теги (скрипты, стили, мета и т.п.)

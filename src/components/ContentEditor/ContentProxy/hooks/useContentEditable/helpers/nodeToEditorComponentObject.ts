@@ -283,7 +283,6 @@ export const nodeToEditorComponentObject = (
 
 /**
  * Конвертируем содержимое HTML-ноды в компоненты
- * @deprecated use nodeToEditorComponentObject instead
  */
 export const nodeChildsToEditorComponentObjectComponents = (node: Node) => {
   const nodes = node.childNodes

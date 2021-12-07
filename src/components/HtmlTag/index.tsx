@@ -10,6 +10,7 @@ import { RelStylesheet } from './RelStylesheet'
 import { Script } from './Script'
 import { Style } from './Style'
 import { VideoWrapper } from './VideoWrapper'
+import { HtmlTagContentEditable } from './ContentEditable'
 
 export const HtmlTag: RedactorComponent = ({
   object,
@@ -38,12 +39,16 @@ export const HtmlTag: RedactorComponent = ({
   const { ref, element, active, activeSetter } =
     useRedactorComponentRef<HTMLElement>()
 
-  const hoverable = useMemo(() => {
-    if (!inEditMode) {
-      return false
-    }
-
+  const { hoverable, canContentEditable } = useMemo(() => {
     let hoverable = false
+    let canContentEditable = true
+
+    if (!inEditMode) {
+      return {
+        hoverable,
+        canContentEditable,
+      }
+    }
 
     if (Tag) {
       switch (Tag.toLowerCase()) {
@@ -57,9 +62,21 @@ export const HtmlTag: RedactorComponent = ({
 
         default:
       }
+
+      switch (Tag.toLowerCase()) {
+        case 'script':
+        case 'style':
+        case 'link':
+        case 'img':
+        case 'video':
+          canContentEditable = false
+          break
+
+        default:
+      }
     }
 
-    return hoverable
+    return { hoverable, canContentEditable }
   }, [Tag, inEditMode])
 
   const {
@@ -349,21 +366,29 @@ export const HtmlTag: RedactorComponent = ({
       <>
         {wrapperContent}
         {elementContent}
+        {inEditMode && canContentEditable ? (
+          <HtmlTagContentEditable
+            active={active}
+            element={element}
+            canContentEditable={canContentEditable}
+          />
+        ) : null}
       </>
     )
   }, [
     content,
-    inEditMode,
     object,
     ref,
     otherProps,
     otherInitProps,
     preventDefault,
+    inEditMode,
     wrapperContent,
+    canContentEditable,
+    showHiddenTags,
     updateObject,
     active,
     closeHandler,
     element,
-    showHiddenTags,
   ])
 }

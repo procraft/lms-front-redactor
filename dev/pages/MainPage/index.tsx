@@ -82,7 +82,9 @@ export const linksList = [
   },
 ]
 
-const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
+export const getRedactorObjectComponent = (
+  props: getRedactorObjectComponentProps
+) => {
   const { object } = props
 
   if (!object) {
