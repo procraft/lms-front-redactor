@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { ContentEditorTextToolbar } from '../../../components/ContentEditor/ContentProxy/ContentEditorTextToolbar'
 import { nodeChildsToEditorComponentObjectComponents } from '../../../components/ContentEditor/ContentProxy/hooks/useContentEditable/helpers/nodeToEditorComponentObject'
 import { getReactFiber } from '../../../helpers/ReactFiber'
 import { useContentEditable2Props } from './interfaces'
@@ -10,6 +11,7 @@ export const useContentEditable2 = ({
   element,
   active,
   canContentEditable,
+  activeSetter,
 }: useContentEditable2Props) => {
   const [contentEditable, contentEditableSetter] = useState<boolean>(false)
 
@@ -267,5 +269,19 @@ export const useContentEditable2 = ({
     }
   }, [contentEdited, element, active, elementClone])
 
-  return null
+  const toolbar = useMemo(() => {
+    return (
+      <>
+        {contentEditable ? (
+          <ContentEditorTextToolbar
+            activeSetter={activeSetter}
+            // TODO Fix types
+            contentEditableContainer={element as HTMLDivElement}
+          />
+        ) : null}
+      </>
+    )
+  }, [activeSetter, contentEditable, element])
+
+  return toolbar
 }

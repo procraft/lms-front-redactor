@@ -4,4 +4,5 @@ export type HtmlTagContentEditableProps = {
   element: useContentEditable2Props['element']
   canContentEditable: useContentEditable2Props['canContentEditable']
   active: useContentEditable2Props['active']
+  activeSetter: useContentEditable2Props['activeSetter']
 }

@@ -371,6 +371,7 @@ export const HtmlTag: RedactorComponent = ({
             active={active}
             element={element}
             canContentEditable={canContentEditable}
+            activeSetter={activeSetter}
           />
         ) : null}
       </>
@@ -390,5 +391,6 @@ export const HtmlTag: RedactorComponent = ({
     active,
     closeHandler,
     element,
+    activeSetter,
   ])
 }

@@ -11,7 +11,7 @@ import { ContentEditorHTMLEditorMonacoEditor } from '../../../../../HTMLEditor/M
 import { SvgIconCode } from '../../../../../../../ui/SvgIcon/Code'
 
 /**
- * Создание ссылки
+ * @deprecated
  */
 export const HTMLEditorModeButton: React.FC<HTMLEditorModeButtonProps> = ({
   opened,

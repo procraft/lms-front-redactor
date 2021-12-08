@@ -42,9 +42,9 @@ export interface ContentEditorToolbarProps {
 
   closestInSelection: <E extends HTMLElement>(selector: string) => E | null
 
-  object: RedactorComponentProps['object']
-  updateObject: RedactorComponentProps['updateObject']
-  contentWrapper: HTMLDivElement
+  // object: RedactorComponentProps['object']
+  // updateObject: RedactorComponentProps['updateObject']
+  // contentWrapper: HTMLDivElement
 
   // updateObject: EditorComponent['updateObject']
   // updateObject: RedactorComponentProps['updateObject']

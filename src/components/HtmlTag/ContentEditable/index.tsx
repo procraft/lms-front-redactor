@@ -9,15 +9,17 @@ export const HtmlTagContentEditable: React.FC<HtmlTagContentEditableProps> = ({
   active,
   canContentEditable,
   element,
+  activeSetter,
 }) => {
   /**
    * Редактирование инлайн
    */
-  useContentEditable2({
+  const toolbar = useContentEditable2({
     element,
     active,
     canContentEditable,
+    activeSetter,
   })
 
-  return null
+  return toolbar
 }

@@ -11,9 +11,9 @@ export const ContentEditorTextToolbar: React.FC<ContentEditorTextToolbarProps> =
   ({
     contentEditableContainer,
     activeSetter,
-    contentWrapper,
-    object,
-    updateObject,
+    // contentWrapper,
+    // object,
+    // updateObject,
   }) => {
     const selection = useMemo(() => global.document?.getSelection() ?? null, [])
 
@@ -44,17 +44,10 @@ export const ContentEditorTextToolbar: React.FC<ContentEditorTextToolbarProps> =
           closestInSelection={closestInSelection}
           contentEditableContainer={contentEditableContainer}
           activeSetter={activeSetter}
-          contentWrapper={contentWrapper}
-          object={object}
-          updateObject={updateObject}
+          // contentWrapper={contentWrapper}
+          // object={object}
+          // updateObject={updateObject}
         />
       )
-    }, [
-      closestInSelection,
-      contentEditableContainer,
-      activeSetter,
-      contentWrapper,
-      object,
-      updateObject,
-    ])
+    }, [closestInSelection, contentEditableContainer, activeSetter])
   }

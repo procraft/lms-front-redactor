@@ -154,9 +154,9 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
           <ContentEditorTextToolbar
             contentEditableContainer={contentWrapper}
             activeSetter={activeSetter}
-            contentWrapper={contentWrapper}
-            object={object}
-            updateObject={updateObject}
+            // contentWrapper={contentWrapper}
+            // object={object}
+            // updateObject={updateObject}
           />
         ) : null}
         <EditableContentProxyStyled
@@ -179,16 +179,7 @@ const EditableContentProxy: React.FC<EditableContentProxyProps> = ({
         ) : null} */}
       </>
     )
-  }, [
-    active,
-    activeSetter,
-    children,
-    contentWrapper,
-    object,
-    other,
-    updateObject,
-    inEditMode,
-  ])
+  }, [active, activeSetter, children, contentWrapper, other, inEditMode])
 }
 
 export default EditableContentProxy

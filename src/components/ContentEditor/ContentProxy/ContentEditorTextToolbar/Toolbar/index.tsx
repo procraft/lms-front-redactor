@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-// import ReactDOM from 'react-dom'
-
-// import IconButton from 'material-ui/IconButton'
-// import Button from 'material-ui/Button'
 
 // import ModeEditHtmlIcon from 'material-ui-icons/ModeEdit'
 import FormatClearIcon from 'material-ui-icons/FormatClear'
@@ -22,49 +17,30 @@ import FormatIndentIncreaseIcon from 'material-ui-icons/FormatIndentIncrease'
 import FormatIndentDecreaseIcon from 'material-ui-icons/FormatIndentDecrease'
 import RedoIcon from 'material-ui-icons/Redo'
 import UndoIcon from 'material-ui-icons/Undo'
-// import SaveIcon from 'material-ui-icons/Save'
 
-import { TagEditorToolbarStyled } from './styles'
+import { TagEditorToolbarModalStyled } from './styles'
 import {
   ContentEditorToolbarButton,
   ContentEditorToolbarProps,
-  // ReactFiber,
   ToolbarButtonProps,
 } from './interfaces'
-// import { ContentProxyEditMode } from '../interfaces'
-// import { nodeChildsToEditorComponentObjectComponents } from '../../hooks/useContentEditable/helpers/nodeToEditorComponentObject'
-// import { ElementWithReactComponent } from '@prisma-cms/front-editor'
 import Grid from 'material-ui/Grid'
 import { useCreateLinkButton } from './buttons/CreateLink'
-// import { Modal2 } from '../../../../../ui/Modal2'
-import { useHTMLEditorModeButton } from './buttons/HTMLEditorMode'
+// import { useHTMLEditorModeButton } from './buttons/HTMLEditorMode'
 import { IconButton } from '@procraft/ui/dist/IconButton'
-import { getReactFiber } from '../../../../../helpers/ReactFiber'
+// import { getReactFiber } from '../../../../../helpers/ReactFiber'
 
 export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   props
 ) => {
   const {
-    // selection,
-    // newContent,
     closestInSelection,
-    // saveChanges,
-    // editMode,
-    // setEditMode,
     contentEditableContainer,
-    object,
-    updateObject,
-    // experimental,
+    // object,
+    // updateObject,
     activeSetter,
-    contentWrapper,
+    // contentWrapper,
   } = props
-
-  // const setEditModeHTML = useCallback(() => {
-  //   setEditMode(
-  //     editMode === ContentProxyEditMode.HTML ? null : ContentProxyEditMode.HTML
-  //   )
-  //   return true
-  // }, [editMode, setEditMode])
 
   const [selection, setSelection] = useState<Selection | null>(null)
   const [selectionType, setSelectionType] = useState<
@@ -72,42 +48,22 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
   >(undefined)
 
   selectionType
-  // console.log('selectionType', selectionType);
-  // console.log('selection', selection)
 
   const [
     contentEditableContainerSelected,
     setContentEditableContainerSelected,
   ] = useState(false)
 
-  // console.log('contentEditableContainerSelected', contentEditableContainerSelected);
-  // console.log('contentEditableContainer', contentEditableContainer);
-
   const onSelectionChange = useCallback(
     (_event) => {
-      // const container = ref.current;
-
       const selection = document.getSelection()
-
-      // console.log('Toolbar onSelectionChange selection', selection);
-
-      // if (selection2 && container && selection2.containsNode(container, true)) {
-
-      //   setSelection(selection2);
-      // }
-      // else {
-      //   setSelection(null);
-      // }
 
       const contentEditableContainerSelected =
         (contentEditableContainer &&
           selection?.containsNode(contentEditableContainer, true)) ||
         false
 
-      // console.log('Toolbar contentEditableContainerSelected', contentEditableContainerSelected);
-
       setContentEditableContainerSelected(contentEditableContainerSelected)
-      // setSelection(selection);
 
       setSelectionType(selection?.type)
     },
@@ -124,45 +80,19 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     }
   }, [onSelectionChange])
 
-  // console.log('ContentEditorToolbar selection', selection);
-
-  // const execCommand = useCallback(
-  //   (commandId: string, showUI?: boolean, value?: string) => {
-  //     return document.execCommand(commandId, showUI, value)
-  //   },
-  //   []
-  // )
-
-  // const execCommand = document.execCommand
-
   const onButtonClick = useCallback((event: MouseEvent) => {
-    // return document.execCommand(event.currentTarget.name)
+    const currentTarget = event.currentTarget as HTMLButtonElement
 
-    // event.preventDefault();
-    // event.stopPropagation();
-
-    // document.execCommand('bold')
-
-    // console.log('onButtonClick on click event', event)
-    // // console.log('onButtonClick on click event.target', event.target)
-    // // console.log('onButtonClick on click event.target.name', event.target.name)
-    // // console.log(
-    // //   'onButtonClick on click event.currentTarget',
-    // //   event.currentTarget
-    // // )
-    // // console.log(
-    // //   'onButtonClick on click event.currentTarget.name',
-    // //   event.currentTarget.name
-    // // )
-
-    const currentTarget = event.currentTarget as HTMLDivElement
-
-    const name = currentTarget.dataset.name
-
-    // // return name && execCommand(event.currentTarget.name)
+    const name = currentTarget.name
 
     if (name) {
-      document.execCommand(name)
+      const result = document.execCommand(name)
+
+      if (!result) {
+        console.error(new Error('Error execCommand'))
+      }
+    } else {
+      console.error(new Error('name is empty'))
     }
   }, [])
 
@@ -199,109 +129,20 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     [insertTableCell]
   )
 
-  const hasSelection = contentEditableContainerSelected
-    ? // && editMode === ContentProxyEditMode.HTML
-      true
-    : false
-
-  const insertSectionButtonOnClick = useCallback(
-    (event: MouseEvent) => {
-      event.preventDefault()
-      event.stopPropagation()
-
-      if (!selection) {
-        return
-      }
-
-      /**
-       * Фокусный элемент. Может быть как тег, так и текст
-       */
-      const focusNode = selection.focusNode
-
-      if (!focusNode) {
-        return
-      }
-
-      /**
-       * Находим реакт-файбер
-       */
-
-      // let reactFiber: ReactFiber | undefined | null
-
-      // for (const i in focusNode) {
-      //   if (i.startsWith('__reactFiber')) {
-      //     //
-
-      //     reactFiber = focusNode[i as keyof Node] as ReactFiber
-
-      //     break
-      //   }
-      // }
-
-      const reactFiber = getReactFiber(focusNode)
-
-      if (reactFiber) {
-        // reactFiber.return?.pendingProps.object
-        // reactFiber.return?.pendingProps.updateParent
-
-        if (
-          reactFiber.return?.pendingProps.object &&
-          reactFiber.return?.pendingProps.updateParent &&
-          reactFiber.return?.pendingProps.updateObject
-        ) {
-          const newComponents = [
-            ...reactFiber.return?.pendingProps.object.components,
-          ]
-          newComponents.push({
-            name: 'test section',
-            component: 'Section',
-            props: {},
-            components: [],
-          })
-
-          reactFiber.return?.pendingProps.updateObject(
-            reactFiber.return?.pendingProps.object,
-            {
-              components: newComponents,
-            }
-          )
-        }
-      }
-    },
-    [selection]
-  )
-
-  /**
-   * Тест. Вставка блока.
-   */
-  const insertSectionButton = useMemo<ToolbarButtonProps>(() => {
-    const button: ToolbarButtonProps = {
-      name: 'insertSection',
-      title: 'Вставить блок',
-      disabled: hasSelection && selection?.type === 'Caret' ? false : true,
-      // icon: <FormatClearIcon />,
-      icon: <i>IS</i>,
-      onClick: insertSectionButtonOnClick,
-    }
-
-    return button
-  }, [hasSelection, insertSectionButtonOnClick, selection?.type])
-
-  // TODO Cleanup
-  insertSectionButton
+  const hasSelection = contentEditableContainerSelected ? true : false
 
   const createLinkButton = useCreateLinkButton({
     hasSelection,
     selection,
   })
 
-  const HTMLEditorModeButton = useHTMLEditorModeButton({
-    hasSelection,
-    selection,
-    object,
-    updateObject,
-    contentWrapper,
-  })
+  // const HTMLEditorModeButton = useHTMLEditorModeButton({
+  //   hasSelection,
+  //   selection,
+  //   object,
+  //   updateObject,
+  //   contentWrapper,
+  // })
 
   const renderToolbarButtons = useMemo(() => {
     const tableControls: ContentEditorToolbarButton[] = [
@@ -326,9 +167,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
             y="0px"
             viewBox="0 0 512 512"
             xmlSpace="preserve"
-            // style={{
-            //   enableBackground: 'new 0 0 512 512',
-            // }}
           >
             <g>
               <g>
@@ -379,12 +217,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
                   ? Array.from(tr.parentElement.childNodes).indexOf(tr)
                   : -1
 
-              return insertTableRow(
-                table,
-                index + 1,
-                tr?.childElementCount
-                // selection,
-              )
+              return insertTableRow(table, index + 1, tr?.childElementCount)
             },
             icon: (
               <svg
@@ -417,7 +250,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
                 ? Array.from(cell.parentElement.childNodes).indexOf(cell)
                 : -1
 
-              // return this.insertTableCell(tr, index + 1, selection)
               return insertTableCell(tr, index + 1)
             },
             icon: (
@@ -443,28 +275,7 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
       }
     }
 
-    // const editButton: ContentEditorToolbarButton = {
-    //   onClick: setEditModeHTML,
-    //   name: 'setEditModeHTML',
-    //   title: 'Редактировать как HTML',
-    //   // disabled: hasSelection ? false : true,
-    //   color:
-    //     // editMode === ContentProxyEditMode.HTML
-    //     // eslint-disable-next-line no-constant-condition
-    //     1 === 1
-    //       ? ('primary' as 'primary')
-    //       : undefined,
-    //   disabled: false,
-    //   icon: <ModeEditHtmlIcon />,
-    // }
-
     const buttons: ToolbarButtonProps[] = [
-      /**
-       * Первый элемент выносим в отдельную переменную, чтобы TS правильно понял
-       * массив каких типов используется.
-       * Это нужно для выполнения concat(...)
-       */
-      // editButton,
       {
         name: 'bold',
         title: 'Жирный текст',
@@ -537,15 +348,8 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         disabled: hasSelection ? false : true,
         icon: <FormatIndentIncreaseIcon />,
       },
-      // {
-      //   name: 'createLink',
-      //   title: 'Создать ссылку',
-      //   disabled: hasSelection && selection?.type === "Range" ? false : true,
-      //   icon: <i>Link</i>,
-      //   onClick: createLink,
-      // },
       createLinkButton,
-      HTMLEditorModeButton,
+      // HTMLEditorModeButton,
       {
         name: 'selectAll',
         title: 'Выделить все',
@@ -558,7 +362,6 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         disabled: hasSelection ? false : true,
         icon: <FormatClearIcon />,
       },
-      // insertSectionButton,
     ]
       // .concat(tableControls)
       .concat([
@@ -576,40 +379,8 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
         },
       ])
 
-    // if (newContent?.length) {
-    //   buttons.push({
-    //     name: 'save',
-    //     title: 'Сохранить изменения',
-    //     // disabled: hasSelection ? false : true,
-    //     className: 'save',
-    //     icon: (
-    //       <SaveIcon
-    //         style={{
-    //           color: 'red',
-    //         }}
-    //       />
-    //     ),
-    //     disabled: false,
-    //     onClick: saveChanges,
-    //   })
-    // }
-
     return buttons.map((n, index) => {
       const { disabled, name, icon, onClick, className, ...other } = n
-
-      // return (
-      //   <Grid key={name || index} item>
-      //     <IconButton
-      //       className={'TagEditorToolbar--iconButton'}
-      //       name={name}
-      //       onClick={onClick ? onClick : onButtonClick}
-      //       disabled={disabled}
-      //       {...other}
-      //     >
-      //       {icon}
-      //     </IconButton>
-      //   </Grid>
-      // )
 
       return (
         <Grid key={name || index} item>
@@ -633,175 +404,25 @@ export const ContentEditorToolbar: React.FC<ContentEditorToolbarProps> = (
     insertTableRow,
     onButtonClick,
     selection,
-    HTMLEditorModeButton,
   ])
-
-  // const onMouseDown = useCallback((event: React.MouseEvent) => {
-  //   event.preventDefault()
-  // }, [])
-
-  // const addSection = useCallback(() => {
-  //   /**
-  //    * Нельзя просто так взять и вставить реакт-компонент в готовый HTML, чтобы он в контексте был и т.п.
-  //    * Придется брать текущий HTML, вставлять в него новый элемент,
-  //    * перегонять в JSON и обновлять базовый компонент.
-  //    * Важно! Этого нельзя делать в contentEditable=true, потому что новый реакт-компонент
-  //    * не отрендерится полноценно.
-  //    */
-
-  //   if (!contentEditableContainerSelected || !contentEditableContainer) {
-  //     return false
-  //   }
-
-  //   const selection = document.getSelection()
-
-  //   let focusNode = selection?.focusNode
-
-  //   if (focusNode?.nodeType === Node.TEXT_NODE) {
-  //     focusNode = focusNode.parentNode
-  //   }
-
-  //   if (focusNode) {
-  //     const div: ElementWithReactComponent = document.createElement('div')
-  //     // div.contentEditable = "false";
-
-  //     const object = {
-  //       name: 'Section',
-  //       component: 'Section',
-  //       components: [],
-  //       props: {},
-  //     }
-
-  //     // const section = new Section({
-  //     //   mode: "main",
-  //     //   object,
-  //     // });
-
-  //     // @ts-ignore
-  //     // div.reactComponent = section;
-
-  //     div.editorComponentObject = object
-
-  //     focusNode.appendChild(div)
-
-  //     // TODO Add carret movement into new node
-  //     // div.focus();
-
-  //     /**
-  //      * Получаем новый JSON
-  //      */
-
-  //     const newObject = nodeChildsToEditorComponentObjectComponents(
-  //       contentEditableContainer
-  //     )
-
-  //     /**
-  //      * Удаляем вставленный элемент во избежание дублирования
-  //      */
-  //     focusNode.removeChild(div)
-
-  //     /**
-  //      * Обновляем основной компонент
-  //      */
-  //     updateObject(newObject)
-
-  //     // const section = <Section
-  //     //   mode="main"
-  //     //   object={object}
-  //     // />;
-
-  //     // const withContext = <EditorContext.Provider
-  //     //   value={editorContext}
-  //     // >
-  //     //   {section}
-  //     // </EditorContext.Provider>
-
-  //     // const renderToString = ReactDOMServer.renderToString(section);
-  //     // const renderToString = ReactDOMServer.renderToString(withContext);
-
-  //     // console.log('renderToString', renderToString);
-
-  //     // ReactDOM.unstable_renderSubtreeIntoContainer();
-
-  //     // ReactDOM.render(section, div)
-  //   }
-  // }, [contentEditableContainer, contentEditableContainerSelected, updateObject])
 
   const closeHandler = useCallback(() => {
     activeSetter(false)
   }, [activeSetter])
 
   return useMemo(() => {
-    const editModes = (
-      <>
-        {/* <Grid item>
-          <Button
-            size="small"
-            onClick={setEditModeHTML}
-            color={
-              editMode === ContentProxyEditMode.HTML ? 'primary' : undefined
-            }
-            name="setEditModeHTML"
-          >
-            Edit as HTML
-          </Button>
-        </Grid> */}
-        {/* <Grid item>
-          <Button
-            size="small"
-            onClick={setEditModeReact}
-            color={
-              editMode === ContentProxyEditMode.React ? 'primary' : undefined
-            }
-            name="setEditModeReact"
-          >
-            Edit as React
-          </Button>
-        </Grid> */}
-        {/* {experimental ? (
-          <Grid item>
-            <Button
-              size="small"
-              onClick={addSection}
-              // color={
-              //   editMode === ContentProxyEditMode.React ? 'primary' : undefined
-              // }
-              name="addSection"
-              // TODO Добавить корректную проверку активности кнопки.
-              // Сейчас проблема в том, что если каретка на нередактируемом элементе,
-              // то секция не вставляется
-              disabled={
-                !contentEditableContainerSelected ||
-                !!editMode ||
-                selectionType !== 'Caret'
-              }
-            >
-              Add Section
-            </Button>
-          </Grid>
-        ) : null} */}
-      </>
-    )
-
     return (
-      <TagEditorToolbarStyled
-        // contentEditable={false}
-        // onMouseDown={onMouseDown}
-        // className="ContentEditorToolbar"
+      <TagEditorToolbarModalStyled
         title="Редактирование текста"
         closeHandler={closeHandler}
         preventClickEvent={true}
         modal={false}
         moveable
       >
-        {/* <Modal2
-        > */}
         <Grid container className="buttons">
           {renderToolbarButtons}
-          {editModes}
         </Grid>
-        {/* </Modal2> */}
-      </TagEditorToolbarStyled>
+      </TagEditorToolbarModalStyled>
     )
   }, [renderToolbarButtons, closeHandler])
 }

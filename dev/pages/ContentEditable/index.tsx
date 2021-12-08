@@ -294,7 +294,7 @@ export const ContentEditableDevPage: Page = (props) => {
     inEditMode,
     objectTemplates,
   } = useRedactorStoreDev({
-    key: 'test-mainpage-object',
+    key: 'test-contenteditable-object',
     initialObject,
   })
 

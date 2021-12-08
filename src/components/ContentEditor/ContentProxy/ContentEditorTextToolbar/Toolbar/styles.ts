@@ -4,7 +4,7 @@ import { Modal2ContentStyled } from '../../../../../ui/Modal2/styles'
 
 // export const TagEditorToolbarStyled = styled(Modal2Styled)`
 // export const TagEditorToolbarStyled = styled.div`
-export const TagEditorToolbarStyled = styled(Modal2)`
+export const TagEditorToolbarModalStyled = styled(Modal2)`
   /* margin: 5px 0;
   border: 1px solid #ddd;
 
