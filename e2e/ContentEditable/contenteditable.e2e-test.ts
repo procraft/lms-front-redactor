@@ -52,6 +52,8 @@ describe('Start contenteditable test', () => {
    */
   it('Set cursor and type text on first li', () => {
     cy.wait(1000)
+    //Дописывает только в конец текста, попытка поставить курсок
+    //в середину или в начало через click('left'), click('center'), click(30,0) не получается
     cy.get('#component li:first p').click().type(' qwqwqwqwqwqw')
   })
 
@@ -66,10 +68,16 @@ describe('Start contenteditable test', () => {
         console.log('$el', $el[0].childNodes[0])
         const el: any = $el[0].childNodes[0]
         const range = document.createRange()
-        range.selectNode(el)
+        //range.selectNode(el)
+        //Не выделяет, хотя должен. Причину пока найти не могу.
         range.setStart(el, 3)
         range.setEnd(el, 8)
         console.log('range', range)
+        const select = document.getSelection()
+        console.log('select1', select)
+        select?.removeAllRanges()
+        select?.addRange(range)
+        console.log('select2', select)
       })
     cy.wait(1000)
     cy.get('button[name="bold"]').trigger('click')
