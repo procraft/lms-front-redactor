@@ -163,7 +163,7 @@ describe('Start contenteditable test', () => {
   })
 
   /**
-   * Выделяем "publishes HTML" в первом li списка, ставим ссылку
+   * Выделяем "describes everything" во втором li списка, ставим ссылку и переходим по ней
    */
   it('Range "publishes HTML" in second li, make link', () => {
     cy.wait(1000)
@@ -175,7 +175,7 @@ describe('Start contenteditable test', () => {
         const document = el.ownerDocument
         const range = document.createRange()
         range.setStart(el, 2)
-        range.setEnd(el, 15)
+        range.setEnd(el, 22)
         console.log('range', range)
         const select = document.getSelection()
         select?.removeAllRanges()
@@ -184,9 +184,25 @@ describe('Start contenteditable test', () => {
     cy.wait(1000)
     cy.get('button[name="createLink"]').trigger('click')
     cy.wait(1000)
-    cy.get('input[type="text"]').trigger('click').type('http://ya.ru')
+    cy.get('div[role="modal-window"] input[type="text"]')
+      .trigger('click')
+      .type('http://ya.ru')
+    cy.get('div[role="modal-window"]:last button:last').trigger('click')
+    cy.wait(1000)
 
-    //cy.wait(1000)
-    //cy.get('button[role="close"]:last').trigger('click')
+    //Ссылка кликаться не желает ЛИБО не происходит переход
+    cy.get('#component ul:first > li:nth-child(2) p').find('a').click()
+    /*
+    cy.get('#component ul:first > li:nth-child(2) p a').then((node) => {
+      node[0].click()
+    })
+    */
+    /*
+    cy.get('#component ul:first > li:nth-child(2) p a')
+      .trigger('mouseover')
+      .then(($el) => {
+        console.log('$el', $el[0].childNodes[0])
+      })
+    */
   })
 })

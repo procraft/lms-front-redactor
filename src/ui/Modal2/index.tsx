@@ -26,6 +26,7 @@ export const Modal2: React.FC<Modal2Props> = ({
   modal,
   style: styleProps,
   moveable,
+  role,
   ...other
 }) => {
   /**
@@ -145,7 +146,7 @@ export const Modal2: React.FC<Modal2Props> = ({
     }
 
     const modalWindow = (
-      <Modal2Styled ref={ref} style={style} {...other}>
+      <Modal2Styled role={role} ref={ref} style={style} {...other}>
         {toolbar.length ? (
           <Modal2TitleStyled>
             {toolbar}
@@ -168,5 +169,9 @@ export const Modal2: React.FC<Modal2Props> = ({
     )
 
     return ReactDOM.createPortal(content, document.body)
-  }, [loaded, style, other, toolbar, children, modal, wrapperState])
+  }, [loaded, style, other, toolbar, children, modal, wrapperState, role])
+}
+
+Modal2.defaultProps = {
+  role: 'modal-window',
 }
