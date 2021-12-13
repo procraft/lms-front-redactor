@@ -64,42 +64,41 @@ export const useContentEditable2 = ({
     }
 
     /**
-     * Делаем клон текущего элемента
+     * Делаем клон текущего элемента.
      */
     const clone = element.cloneNode()
 
     if (clone instanceof HTMLElement) {
       /**
-       * Заменяем текущий элемент клоном
+       * Перетаскиваем все дочерние элементы из оригинала в клон
        */
-      // const arr: ChildNode[] = []
-
-      // element.childNodes.forEach((n) => {
-      //   arr.push(n)
-      // })
-
-      // arr.forEach((node) => {
-      //   clone.appendChild(node)
-
-      //   element.appendChild(node.cloneNode(true))
-      // })
-
-      // arr.length = 0
-
       while (element.childNodes.length > 0) {
         const node = element.firstChild
 
         if (node !== null) {
-          // arr.push(node);
-
           clone.appendChild(node)
         }
       }
 
+      /**
+       * Делаем клоны всех дочерних элементов клона и перекидываем их в оригинал.
+       */
       clone.childNodes.forEach((node) => {
-        element.appendChild(node.cloneNode(true))
+        // element.appendChild(node.cloneNode(true))
+
+        const nodeClone = node.cloneNode(true)
+        /**
+         * Перекидываем кастомные свойства, так как часть их теряется при клонировании
+         * (как минимум необходимый нам FinerNode)
+         */
+        Object.assign(nodeClone, { ...node })
+
+        element.appendChild(nodeClone)
       })
 
+      /**
+       * Устанавливаем наш клон в стейт
+       */
       elementCloneSetter(clone)
     }
 
@@ -107,11 +106,6 @@ export const useContentEditable2 = ({
       //
     }
   }, [contentEditable, element])
-
-  /**
-   * Флаг того, что контент был изменен
-   */
-  // const
 
   /**
    * Навешиваем обсервер на изменение контента
@@ -125,7 +119,6 @@ export const useContentEditable2 = ({
     }
 
     const config = {
-      // attributes: true,
       childList: true,
       subtree: true,
       characterData: true,
@@ -147,13 +140,6 @@ export const useContentEditable2 = ({
   }, [active, contentEditable, element])
 
   /**
-   * Исходные элементы
-   */
-  // const [originalChildren, originalChildrenSetter] = useState<
-  //   Element[] | undefined
-  // >(undefined)
-
-  /**
    * Если вышли из режима редактирования,
    * то сохраняем контент, если он был измен.
    */
@@ -161,30 +147,6 @@ export const useContentEditable2 = ({
     if (!element || !contentEditable) {
       return
     }
-
-    /**
-     * Эксперимент
-     * Делаем клоны текущих элементов
-     */
-
-    // const originalChildrenClones: Element[] = []
-
-    // const children = element.children
-
-    // for (let i = 0; i < children.length; i++) {
-    //   const item = children.item(i)
-
-    //   if (item) {
-    //     /**
-    //      * Здесь надо бы клоны делать, но не у всех есть этот метод
-    //      */
-    //     originalChildrenClones.push(item)
-    //   }
-    // }
-
-    // console.log('originalChildrenClones', originalChildrenClones)
-
-    // originalChildrenSetter(originalChildrenClones)
 
     element.setAttribute('contentEditable', 'true')
 
@@ -204,15 +166,9 @@ export const useContentEditable2 = ({
     return () => {
       const reactFiber = getReactFiber(element)
 
-      // console.log('useContentEditable2 useEffect reactFiber', reactFiber)
-
       if (reactFiber) {
-        // reactFiber.return?.pendingProps.object
-        // reactFiber.return?.pendingProps.updateParent
-
         if (
           reactFiber.return?.pendingProps.object &&
-          // reactFiber.return?.pendingProps.updateParent &&
           reactFiber.return?.pendingProps.updateObject
         ) {
           /**
@@ -221,22 +177,11 @@ export const useContentEditable2 = ({
           const { components } =
             nodeChildsToEditorComponentObjectComponents(element)
 
-          /**
-           * Прежде чем обновить стейт, надо повставлять копии исходных элементов
-           */
-
-          // const updatedChildren = element.childNodes ? [...element.childNodes.forEach ] : [];
-
           const updatedChildren: ChildNode[] = []
 
           element.childNodes.forEach((cn) => {
             updatedChildren.push(cn)
           })
-
-          /**
-           * Заменяем текущий элемент клоном
-           */
-          // element.replaceWith(elementClone)
 
           /**
            * Восстанавливаем изначальное состояние объекта

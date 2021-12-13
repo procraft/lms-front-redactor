@@ -6,7 +6,7 @@ import { RedactorHtmlElement } from '../../src/hooks/useRedactorComponentInit/in
 
 describe('Start head test', () => {
   before(() => {
-    cy.visit('/head')
+    cy.visit('/components/head')
   })
 
   /**

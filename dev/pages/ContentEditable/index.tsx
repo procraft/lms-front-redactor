@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react'
 import NextHead from 'next/head'
-import App, { RedactorComponentObject } from '../../../src'
+import { RedactorComponentObject } from '../../../src'
 import { Page } from '../_App/interfaces'
-import { useRedactorStoreDev } from '../../hooks/useRedactorStoreDev'
-import { getRedactorObjectComponent } from '../MainPage'
+import { DevRedactor } from '../../Redactor'
 
-export const ContentEditableDevPage: Page = (props) => {
+export const ContentEditableDevPage: Page = () => {
   const initialObject = useMemo<RedactorComponentObject>(() => {
     return {
       name: 'Root section',
@@ -14,6 +13,31 @@ export const ContentEditableDevPage: Page = (props) => {
         className: 'root',
       },
       components: [
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'div',
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              props: {
+                text: '1 stores intents rather than specific markup',
+              },
+              components: [],
+            },
+            {
+              name: 'CourseOrderDev',
+              component: 'CourseOrderDev',
+              props: {
+                role: 'CourseOrderDev-default',
+              },
+              components: [],
+            },
+          ],
+        },
         {
           name: 'HtmlTag',
           component: 'HtmlTag',
@@ -287,48 +311,15 @@ export const ContentEditableDevPage: Page = (props) => {
     }
   }, [])
 
-  const {
-    store: object,
-    updateObject,
-    toolbar,
-    inEditMode,
-    objectTemplates,
-  } = useRedactorStoreDev({
-    key: 'test-contenteditable-object',
-    initialObject,
-  })
-
   return (
     <>
       <NextHead>
         <title>ContentEditable</title>
       </NextHead>
-
-      <div
-        id="component-wrapper"
-        style={{
-          marginBottom: 20,
-          marginTop: 15,
-          paddingTop: 30,
-        }}
-      >
-        {toolbar}
-
-        <div id="component">
-          {object ? (
-            <App
-              {...props}
-              inEditMode={inEditMode}
-              object={object}
-              updateObject={updateObject}
-              getRedactorObjectComponent={getRedactorObjectComponent}
-              objectTemplates={objectTemplates}
-              linksList={undefined}
-              showHiddenTags={true}
-            />
-          ) : null}
-        </div>
-      </div>
+      <DevRedactor
+        initialObject={initialObject}
+        redactorKey="test-contentEditable"
+      />
     </>
   )
 }

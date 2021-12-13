@@ -7,7 +7,7 @@ export function getReactFiber(node: Node): ReactFiber | null {
     if (i.startsWith('__reactFiber')) {
       //
 
-      reactFiber = node[i as keyof Node] as ReactFiber
+      reactFiber = node[i as keyof Node] as unknown as ReactFiber
 
       break
     }

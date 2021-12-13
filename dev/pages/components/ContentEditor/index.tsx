@@ -1,74 +1,10 @@
 import React, { useMemo } from 'react'
 import Head from 'next/head'
-import App from '../../../../src'
-import {
-  RedactorComponent,
-  RedactorComponentObject,
-} from '../../../../src/RedactorComponent/interfaces'
+import { RedactorComponentObject } from '../../../../src/RedactorComponent/interfaces'
 import { Page } from '../../_App/interfaces'
-import { getRedactorObjectComponentProps } from '../../../../src/hooks/RedactorObjectRender/interfaces'
-import { ContentEditor } from '../../../../src/components/ContentEditor'
-import { HtmlTag } from '../../../../src/components/HtmlTag'
-import { useRedactorStoreDev } from '../../../hooks/useRedactorStoreDev'
-import { Section } from '../../../../src/components/Section'
-import { linksList } from '../../MainPage'
+import { DevRedactor } from '../../../Redactor'
 
-const getRedactorObjectComponent = (props: getRedactorObjectComponentProps) => {
-  const { object } = props
-
-  if (!object) {
-    return null
-  }
-
-  let Component: RedactorComponent | undefined
-
-  switch (object.component) {
-    case 'Section':
-      Component = Section
-      break
-
-    // case 'LandingLayout':
-    //   Component = LandingLayout
-    //   break
-
-    // case 'LandingHeader':
-    //   Component = LandingHeader
-    //   break
-
-    // case 'LandingFooter':
-    //   Component = LandingFooter
-    //   break
-
-    case 'ContentEditor':
-      Component = ContentEditor
-      break
-
-    case 'HtmlTag':
-      Component = HtmlTag
-      break
-
-    // case 'LandingRouter':
-    //   Component = LandingRouter
-    //   break
-
-    // case 'CourseOrder':
-    //   Component = CourseOrder
-    //   break
-  }
-
-  if (!Component) {
-    console.error('Unknown component', object.component)
-    return null
-  }
-
-  return Component
-
-  // return <Component
-  //   object={object}
-  // />;
-}
-
-const ContentEditorDevPage: Page = (props) => {
+const ContentEditorDevPage: Page = () => {
   const initialObject = useMemo<RedactorComponentObject>(() => {
     return {
       name: 'ContentEditor',
@@ -206,50 +142,19 @@ const ContentEditorDevPage: Page = (props) => {
     }
   }, [])
 
-  const {
-    store: object,
-    updateObject,
-    toolbar,
-    inEditMode,
-    objectTemplates,
-  } = useRedactorStoreDev({
-    key: 'test-content-editor-object',
-    initialObject,
-  })
-
   return useMemo(() => {
     return (
       <>
         <Head>
           <title>ContentEditor</title>
         </Head>
-
-        <div
-          id="component-wrapper"
-          style={{
-            marginBottom: 20,
-          }}
-        >
-          {toolbar}
-
-          <div id="component">
-            {object ? (
-              <App
-                inEditMode={inEditMode}
-                object={object}
-                updateObject={updateObject}
-                getRedactorObjectComponent={getRedactorObjectComponent}
-                objectTemplates={objectTemplates}
-                linksList={linksList}
-                showHiddenTags={true}
-                {...props}
-              />
-            ) : null}
-          </div>
-        </div>
+        <DevRedactor
+          initialObject={initialObject}
+          redactorKey="test-components-contentEditor"
+        />
       </>
     )
-  }, [inEditMode, object, props, toolbar, updateObject, objectTemplates])
+  }, [initialObject])
 }
 
 export default ContentEditorDevPage

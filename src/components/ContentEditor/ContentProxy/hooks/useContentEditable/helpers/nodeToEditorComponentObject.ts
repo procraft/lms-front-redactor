@@ -4,7 +4,8 @@ import {
   getPropertyInfoByAttributeName,
 } from './react-utils/DOMProperty'
 import { RedactorComponentObject } from '../../../../../../RedactorComponent/interfaces'
-import { FiberNode } from '../interfaces'
+// import { FiberNode } from '../interfaces'
+import { getReactFiber } from '../../../../../../helpers/ReactFiber'
 
 /**
  * Convert HTML Node to EditorComponentObject JSON
@@ -43,12 +44,16 @@ export const nodeToEditorComponentObject = (
     /**
      * Пытаемся получить данные реакт-компонента
      */
-    const keys = Object.keys(node)
+    // const keys = Object.keys(node)
 
-    const reactFiberKey = keys.find((n) =>
-      n.startsWith('__reactFiber$')
-    ) as keyof Element
-    const reactFiber = node[reactFiberKey] as FiberNode
+    // const reactFiberKey = keys.find((n) =>
+    //   n.startsWith('__reactFiber$')
+    // ) as keyof Element
+    // const reactFiber = node[reactFiberKey] as FiberNode
+
+    const reactFiber = getReactFiber(node)
+
+    // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
 
     /**
      * Если это реакт-компонент, то возвращаем его свойства

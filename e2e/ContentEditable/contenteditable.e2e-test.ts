@@ -2,6 +2,8 @@
 /* eslint-disable no-console */ /* eslint-disable no-redeclare */
 /* eslint-disable @typescript-eslint/no-namespace */
 import { expect } from 'chai'
+import { getReactFiber } from '../../src/helpers/ReactFiber'
+import { RedactorHtmlElement } from '../../src/hooks/useRedactorComponentInit/interfaces'
 //import { RedactorHtmlElement } from '../../src/hooks/useRedactorComponentInit/interfaces'
 
 describe('Start contenteditable test', () => {
@@ -36,13 +38,123 @@ describe('Start contenteditable test', () => {
     cy.get('#component').trigger('mouseover')
   })
 
+  // Сейчас при клике выделяется не li, а дочерний элемент p.
+  // Вероятнее всего это происходит, потому что КиПресс смотрим по координатам
+  // найденного элемента и вызывает событие клика с указанием этих координат.
+  // См. метод getBoundingClientRect() https://developer.mozilla.org/ru/docs/Web/API/Element/getBoundingClientRect
+  // А первый встречный для него элемент по этим координатам - дочерний элемент,
+  // и получается, что клик прилетает не на тот элемент, и далее уже не проходит.
+  // В целом это не бага, но надо учитывать этот момент и надо проверять инстанс
+  // конечного выделенного объекта и если что, переходить на нужный
+  // Чтобы такого не происходило, надо в вызов события наведения мышки
+  // передавать force: true, чтобы отрабатывались все события и выделялся правильный элемент.
+  // Обсуждение здесь: https://github.com/cypress-io/cypress/issues/6165
+
+  /**
+   * Наводим мышь на третий li списка с нажатым Alt и один раз кликаем
+   */
+  it('Focus and click+click on second li', () => {
+    cy.wait(1000)
+
+    cy.get('#component ul:first > li:nth-child(1)')
+      .trigger('mouseover', { altKey: true, force: true })
+      .trigger('click')
+  })
+
+  /**
+   * Получаем технический враппер активного компонента
+   */
+  it("Get components's wrapper", () => {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(200)
+
+    cy.get<RedactorHtmlElement>('[role=redactor-wrapper]').then((nodes) => {
+      const wrapper = nodes[0]
+
+      console.log('redactorComponentWrapper', wrapper)
+      // node.redactorComponentWrapper
+
+      expect(wrapper).not.null
+
+      if (wrapper) {
+        /**
+         * Click add block
+         */
+
+        const buttons = wrapper.querySelector<HTMLButtonElement>(
+          '[role=redactor-wrapper-buttons]'
+        )
+
+        console.log('buttons', buttons)
+
+        expect(buttons).not.null
+
+        const addWidgetButton = buttons?.querySelector<HTMLButtonElement>(
+          '[title="Вставить виджет"]'
+        )
+
+        console.log('addWidgetButton', addWidgetButton)
+
+        expect(addWidgetButton).not.null
+
+        addWidgetButton?.click()
+      }
+    })
+  })
+
+  /**
+   * Вставляем виджет заказа курса
+   */
+  it('Add Course component', () => {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(200)
+
+    /**
+     * Get Modal
+     */
+    cy.get<HTMLDivElement>('[role=redactor--modal]').then((node) => {
+      const modalNode = node[0]
+
+      console.log('redactorModal', modalNode)
+
+      expect(modalNode).not.null
+
+      /**
+       * Buttons
+       */
+      const buttons = modalNode.querySelector<HTMLDivElement>(
+        '[role=secondaryButtons]'
+      )
+
+      console.log('redactorModal buttons', buttons)
+
+      expect(buttons).not.null
+
+      /**
+       * Get insert button
+       */
+      const insertComponentButton =
+        buttons?.querySelector<HTMLButtonElement>('button[role=addCourse]') ??
+        null
+
+      console.log('redactorModal insertComponentButton', insertComponentButton)
+
+      expect(insertComponentButton).not.null
+
+      /**
+       * Click insert button
+       */
+      insertComponentButton?.click()
+    })
+  })
+
   /**
    * Наводим мышь на первый li списка с нажатым Alt и два раза кликаем
    */
   it('Focus and click+click on first li', () => {
     //cy.wait(1000)
     cy.get('#component li:first')
-      .trigger('mouseover', { altKey: true })
+      .trigger('mouseover', { altKey: true, force: true })
       .trigger('click')
       .trigger('click')
   })
@@ -157,7 +269,7 @@ describe('Start contenteditable test', () => {
   it('Focus and click+click on second li', () => {
     cy.wait(1000)
     cy.get('#component ul:first > li:nth-child(2)')
-      .trigger('mouseover', { altKey: true })
+      .trigger('mouseover', { altKey: true, force: true })
       .trigger('click')
       .trigger('click')
   })
@@ -204,5 +316,63 @@ describe('Start contenteditable test', () => {
         console.log('$el', $el[0].childNodes[0])
       })
     */
+  })
+
+  /**
+   * Выходим из режима редактирование
+   */
+  it('Switch off edit mode', () => {
+    /**
+     * Get Reset store button
+     */
+    cy.get<HTMLButtonElement>('#toggleEditMode').then((nodes) => {
+      nodes[0].click()
+    })
+
+    cy.wait(100)
+  })
+
+  // TODO Сейчас, при выходе из режима редактирования, все еще остается враппер активного элемента.
+  // Такого не должно быть. Это бага в самом редакторе.
+  // Надо добавить здесь проверку на отсутствие враппера.
+  // Пока эта проверка даст ошибку, но это нормально. Поправлю редактор, ошибка исчезнет.
+
+  /**
+   * Проверяем измененный контент
+   */
+
+  /**
+   * Проверяем, что виджет курса все еще реакт-компонент, а не перебитый на HtmlTag
+   */
+  it('Check CourseOrderDev component', () => {
+    cy.wait(100)
+
+    cy.get<RedactorHtmlElement>('[role=CourseOrderDev]').then((nodes) => {
+      console.log('CourseOrderDev nodes', nodes)
+
+      expect(nodes.length).eq(1)
+
+      const courseNode = nodes[0]
+
+      console.log('CourseOrderDev courseNode', courseNode)
+
+      const fiberNode = getReactFiber(courseNode)
+
+      console.log('CourseOrderDev fiberNode', fiberNode)
+
+      expect(fiberNode).not.null
+
+      console.log(
+        'CourseOrderDev fiberNode',
+        fiberNode?.return?.return?.type?.name
+      )
+
+      expect(fiberNode?.return?.return?.type?.name).eq('CourseOrderDev')
+
+      // if (fiberNode && fiberNode.return && fiberNode.return.return) {
+
+      //   // console.log('CourseOrderDev fiberNode', fiberNode.return.return.type === CourseOrderDev);
+      // }
+    })
   })
 })
