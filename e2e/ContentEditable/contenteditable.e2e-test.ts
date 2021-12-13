@@ -337,14 +337,6 @@ describe('Start contenteditable test', () => {
      * Get Reset store button
      */
 
-    cy.get('#component ul:first')
-      .trigger('mouseover', { altKey: true, force: true })
-      .trigger('click')
-      .find('li:first b')
-      .click()
-    //.type('qqqqqq')
-    cy.wait(500)
-
     cy.get<HTMLButtonElement>('#toggleEditMode').then((nodes) => {
       nodes[0].click()
     })
