@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { AddWidgetButtonButtonProps } from '@procraft/lms-front-redactor/dist/ui/AddWidgetButton/AddWidgetModal/buttons/interfaces'
-import { AddWidgetModalButtonStyled } from '@procraft/lms-front-redactor/dist/ui/AddWidgetButton/AddWidgetModal/styles'
-import { SvgIcon } from '@procraft/lms-front-redactor/dist/ui/SvgIcon'
+import { AddWidgetButtonButtonProps } from '../../../../src/ui/AddWidgetButton/AddWidgetModal/buttons/interfaces'
+import { AddWidgetModalButtonStyled } from '../../../../src/ui/AddWidgetButton/AddWidgetModal/styles'
+import { SvgIcon } from '../../../../src/ui/SvgIcon'
 
 /**
  * Добавление виджета курса
