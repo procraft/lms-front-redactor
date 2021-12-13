@@ -5,6 +5,39 @@ import { getReactFiber } from '../../../helpers/ReactFiber'
 import { useContentEditable2Props } from './interfaces'
 
 /**
+ * Функция перебора нод
+ * Записк функции: nodeDeepClone(element)
+ */
+
+function nodeDeepClone(nodeIn) {
+  const clone = nodeIn.cloneNode()
+
+  if (clone instanceof HTMLElement) {
+    while (nodeIn.childNodes.length > 0) {
+      const node = nodeIn.firstChild
+
+      if (node !== null) {
+        if (node.childNodes.length > 0) {
+          nodeDeepClone(node)
+        } else {
+          clone.appendChild(node)
+        }
+      }
+    }
+
+    clone.childNodes.forEach((node) => {
+      const nodeClone = node.cloneNode(true)
+
+      Object.assign(nodeClone, { ...node })
+
+      nodeIn.appendChild(nodeClone)
+    })
+  }
+
+  return clone
+}
+
+/**
  * Редактирование компонентов в режиме инлайн
  */
 export const useContentEditable2 = ({
