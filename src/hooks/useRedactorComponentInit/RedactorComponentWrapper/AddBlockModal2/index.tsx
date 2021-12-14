@@ -517,36 +517,6 @@ const AddBlockModal2: React.FC<AddBlockModal2Props> = ({
           },
         ],
       },
-      {
-        name: 'Root',
-        component: 'Section',
-        props: {
-          style: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            padding: '20px',
-          },
-        },
-        components: [],
-      },
-      {
-        name: 'Body',
-        component: 'Section',
-        props: {
-          style: {
-            width: '100%',
-            maxWidth: '1270px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          },
-        },
-        components: [],
-      },
     ]
 
     blocksObjects.forEach((newObject, index) => {
