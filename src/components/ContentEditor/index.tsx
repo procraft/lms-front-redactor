@@ -9,6 +9,9 @@ import {
 import { redactor2ComponentAttributes } from '../../styles'
 import EditableContentProxy from './ContentProxy'
 
+/**
+ * @deprecated
+ */
 export const ContentEditor: RedactorComponent = ({
   object,
   updateObject,

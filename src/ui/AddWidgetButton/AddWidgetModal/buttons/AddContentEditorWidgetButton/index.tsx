@@ -18,9 +18,11 @@ export const AddContentEditorWidgetButton: React.FC<AddWidgetButtonButtonProps> 
         //
 
         addComponent({
-          name: 'ContentEditor',
-          component: 'ContentEditor',
-          props: {},
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'div',
+          },
           components: [
             {
               name: 'HtmlTag',

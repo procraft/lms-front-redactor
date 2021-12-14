@@ -6,6 +6,9 @@ import { RedactorComponent } from '../../RedactorComponent/interfaces'
 // import { AddWidgetButton } from '../../ui/AddWidgetButton'
 import { SectionStyled } from './styles'
 
+/**
+ * @deprecated
+ */
 export const Section: RedactorComponent = ({
   object,
   updateObject,
