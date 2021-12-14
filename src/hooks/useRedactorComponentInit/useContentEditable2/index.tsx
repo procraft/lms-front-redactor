@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useMemo, useState } from 'react'
 import { ContentEditorTextToolbar } from '../../../components/ContentEditor/ContentProxy/ContentEditorTextToolbar'
 import { nodeChildsToEditorComponentObjectComponents } from '../../../components/ContentEditor/ContentProxy/hooks/useContentEditable/helpers/nodeToEditorComponentObject'
@@ -132,17 +131,31 @@ export const useContentEditable2 = ({
       return
     }
 
-    const config = {
+    const config: MutationObserverInit = {
       childList: true,
       subtree: true,
       characterData: true,
+      attributes: true,
     }
 
     /**
      * Навешиваем обсервер, который следит за изменениями,
      * и если они возникли, то устанавливается флаг.
      */
-    const observer = new MutationObserver(() => {
+    const observer = new MutationObserver((event) => {
+      /**
+       * Не реагируем на изменение атрибута редактирования,
+       * иначе мы только переключились в редактирование, у нас еще ничего
+       * не изменилось, но уже есть флаг того, что что-то поменялось.
+       */
+      if (
+        event.length === 1 &&
+        event[0].type === 'attributes' &&
+        event[0].attributeName === 'contenteditable'
+      ) {
+        return
+      }
+
       contentEditedSetter(true)
     })
 
