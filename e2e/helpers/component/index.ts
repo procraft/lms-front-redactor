@@ -18,3 +18,29 @@ export const redactorStartEdit = () => {
     cy.get('#component-toolbar #toggleEditMode').click()
   })
 }
+
+/**
+ * Наводим мышь на родительский компонент
+ */
+export const focusParentComponent = () => {
+  it('Focus on parent #component', () => {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500)
+    cy.get('#component').trigger('mouseover')
+  })
+}
+
+/**
+ * Выходим из режима редактирование
+ */
+export const redactorStopEdit = () => {
+  it('Switch off edit mode', () => {
+    /**
+     * Get Reset store button
+     */
+
+    cy.get<HTMLButtonElement>('#toggleEditMode').then((nodes) => {
+      nodes[0].click()
+    })
+  })
+}
