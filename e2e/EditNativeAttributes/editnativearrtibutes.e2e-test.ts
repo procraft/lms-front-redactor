@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable cypress/no-unnecessary-waiting */
 import { expect } from 'chai'
 import {
@@ -30,14 +29,16 @@ describe('Start EditNativeAttributes test', () => {
 
     cy.get<HTMLLIElement>('#component ul:first > li:nth-child(1)')
       .trigger('mouseover', { altKey: true, force: true })
+      .wait(100)
       .trigger('click')
+      .wait(100)
+      .trigger('click')
+      .wait(100)
       .then((j) => {
         const node = j.get(0)
         if (node) {
           node.style.color = 'red'
         }
-
-        //console.log('node', node?.style.color)
       })
   })
 
@@ -47,17 +48,19 @@ describe('Start EditNativeAttributes test', () => {
   it('Focus on first li, find p change style', () => {
     cy.wait(1000)
 
-    cy.get<HTMLLIElement>('#component ul:first > li:nth-child(1)')
+    cy.get<HTMLLIElement>('#component ul:first > li:nth-child(2)')
       .trigger('mouseover', { altKey: true, force: true })
+      .wait(100)
       .trigger('click')
+      .wait(100)
+      .trigger('click')
+      .wait(100)
       .find('p')
       .then((j) => {
         const node = j.get(0)
         if (node) {
           node.style.color = 'blue'
         }
-
-        //console.log('node', node?.style.color)
       })
 
     cy.wait(1000)
@@ -73,24 +76,20 @@ describe('Start EditNativeAttributes test', () => {
   it('Focus on first li, check style', () => {
     cy.wait(1000)
 
-    cy.get<HTMLLIElement>('#component ul:first > li:nth-child(1)')
-      .trigger('mouseover', { altKey: true, force: true })
-      .trigger('click')
-      .then((j) => {
-        const node = j.get(0)
-        expect(node?.style.color).to.equal('red')
-      })
+    cy.get<HTMLLIElement>('#component ul:first > li:nth-child(1)').then((j) => {
+      const node = j.get(0)
+      expect(node?.style.color).to.equal('red')
+    })
   })
 
   it('Focus on first li, finde p, check style', () => {
     cy.wait(1000)
 
-    cy.get<HTMLLIElement>('#component ul:first > li:nth-child(1)')
-      .trigger('mouseover', { altKey: true, force: true })
-      .trigger('click')
-      .then((j) => {
+    cy.get<HTMLLIElement>('#component ul:first > li:nth-child(2) > p').then(
+      (j) => {
         const node = j.get(0)
         expect(node?.style.color).to.equal('blue')
-      })
+      }
+    )
   })
 })
