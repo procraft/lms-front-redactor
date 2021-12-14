@@ -44,3 +44,15 @@ export const redactorStopEdit = () => {
     })
   })
 }
+
+/**
+ * Окончание редактирование элемента
+ */
+export const closeElementEdit = () => {
+  it('Close element edit', () => {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000)
+
+    cy.get('button[role="close"]:first').trigger('click')
+  })
+}

@@ -4,6 +4,7 @@ import {
   redactorStartEdit,
   focusParentComponent,
   redactorStopEdit,
+  closeElementEdit,
 } from '../helpers/component'
 
 describe('Start EditNativeAttributes test', () => {
@@ -62,9 +63,12 @@ describe('Start EditNativeAttributes test', () => {
           node.style.color = 'blue'
         }
       })
-
-    cy.wait(1000)
   })
+
+  /**
+   * Окончание редактирование элемента
+   */
+  closeElementEdit()
 
   /**
    * Выходим из режима редактирование
