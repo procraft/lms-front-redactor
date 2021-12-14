@@ -119,7 +119,7 @@ export interface ContentEditorToolbarProps {
 
   // setEditMode: React.Dispatch<React.SetStateAction<ContentProxyEditMode | null>>
 
-  contentEditableContainer: HTMLDivElement | null
+  contentEditableContainer: HTMLElement | null
 
   activeSetter: React.Dispatch<React.SetStateAction<boolean>>
 }
