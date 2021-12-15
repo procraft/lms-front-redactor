@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 import { useMonacoEditor } from '../../../../hooks/useMonacoEditor'
@@ -6,6 +7,7 @@ import nodeToEditorComponentObject from '../../ContentProxy/hooks/useContentEdit
 import { Button } from '@procraft/ui/dist/Button'
 import { ContentEditorHTMLEditorMonacoEditorStyled } from './styles'
 import { RedactorComponentObject } from '../../../..'
+import { NodeToHtml } from './helpers/NodeToHtml'
 
 /**
  * Здесь с редактированием есть сразу несколько сложных моментов:
@@ -31,8 +33,8 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
        */
       object
 
-      sourceSetter(element.outerHTML.replace(/ data-redactor--.+?=".*?"+/g, ''))
-    }, [element.outerHTML, object])
+      sourceSetter(NodeToHtml(element))
+    }, [element, object])
 
     const [error, errorSetter] = useState<Error | null>(null)
 
@@ -46,34 +48,6 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
 
       isDirtySetter(false)
     }, [source])
-
-    // const onChange = useCallback((content) => {
-    //   console.log('onChange content', content)
-    // }, [])
-
-    // const onChange = useCallback((content: string) => {
-    //   console.log('onChange content', content)
-    //   // const contentElement = object.components[0] || {
-    //   //   name: 'HtmlTag',
-    //   //   component: 'HtmlTag',
-    //   //   components: [],
-    //   //   props: {
-    //   //     text: '',
-    //   //   },
-    //   // }
-
-    //   // updateObject(object, {
-    //   //   components: [
-    //   //     {
-    //   //       ...contentElement,
-    //   //       props: {
-    //   //         ...contentElement.props,
-    //   //         text: content,
-    //   //       },
-    //   //     },
-    //   //   ],
-    //   // })
-    // }, [])
 
     const [editorInstance, editorInstanceSetter] =
       useState<monacoEditor.editor.IStandaloneCodeEditor | null>(null)
@@ -110,7 +84,6 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
       editorProps: {
         language: 'html',
         source,
-        // onChange,
         onEditorInit,
       },
     })
@@ -132,16 +105,9 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
      * Сохранение изменений
      */
     const saveValue = useCallback(() => {
-      // console.log(
-      //   'ContentEditorHTMLEditorMonacoEditor onDidChangeContent event',
-      //   event
-      // )
-      // console.log(
-      //   'ContentEditorHTMLEditorMonacoEditor onDidChangeContent editorInstance',
-      //   value
-      // )
-
-      // Создаем ноду и передаем содержимое как HTML
+      /**
+       * Создаем ноду и передаем содержимое как HTML
+       */
 
       const model = editorInstance?.getModel()
 
@@ -151,32 +117,11 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
 
       const value = model.getValue().trim()
 
+      console.log('saveValue value', value)
+
       const template = global.document.createElement('div')
 
       template.innerHTML = value
-
-      /**
-       * Если количество нод не равно один, то обновление должно выполняться на родителе
-       */
-      // if (template.childNodes.length !== 1) {
-
-      //   return;
-      // }
-      // // Иначе обновляем сам объект
-      // else {
-      //   //
-      // }
-
-      // const child = node.appendChild(element.cloneNode()) as HTMLElement
-
-      // const node = template.content.firstChild;
-
-      // if (!node || !(node instanceof HTMLElement)) {
-      //   console.error('Нода не является HTML-элементом');
-      //   return;
-      // }
-
-      // console.log('node', node);
 
       const newObject = nodeToEditorComponentObject(template)
 
@@ -186,6 +131,8 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
       }
 
       const components = newObject.components
+
+      console.log('saveValue components', components)
 
       if (components.length === 1) {
         const component = components[0]
@@ -210,42 +157,12 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
 
           const index = parentComponents.findIndex((n) => n === object)
 
-          // let args: Array<number | RedactorComponentObject> = [index, 1]
-
           if (index === -1) {
             errorSetter(new Error('Не был найден индекс текущего объекта'))
             return
           }
 
-          // TODO Эслинт с ума сходит от такой конструкции, хотя она для ТС правильная. Пришлось игнор добавлять
-          // const args: [start: number, deleteCount: number, ...items: RedactorComponentObject<{}>[]] = [index, 1]
-
           const args: Array<number | RedactorComponentObject> = [index, 1]
-
-          // if (components.length === 0) {
-          //   //
-          //   // parentComponents.splice(index, 0)
-          //   // args.push(0);
-          // }
-          // /**
-          //  * Если сразу несколько элементов, то надо в массиве компонентов родителя найти индекс текущего элемента
-          //  */
-          // else {
-
-          //   // args.push(1);
-
-          //   // args[1] = 1;
-
-          //   //
-          //   // parentComponents.splice(index, 1)
-
-          //   // args = args.concat(components);
-
-          // }
-
-          // console.log('args', args);
-
-          // console.log('args', args);
 
           // eslint-disable-next-line prefer-spread
           parentComponents.splice.apply(
@@ -260,16 +177,6 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
           })
         }
       }
-
-      // const { components } = nodeChildsToEditorComponentObjectComponents(node)
-
-      // if (components) {
-      //   updateObject(object, { components })
-      // }
-
-      // if (newObject) {
-      //   updateObject(object, newObject)
-      // }
     }, [editorInstance, object, parent, updateObject, updateParent])
 
     const buttons = useMemo(() => {

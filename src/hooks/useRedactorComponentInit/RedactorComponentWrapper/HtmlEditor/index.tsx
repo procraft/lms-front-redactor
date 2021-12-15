@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import { ContentEditorHTMLEditorMonacoEditor } from '../../../../components/ContentEditor/HTMLEditor/MonacoEditor'
 import { Modal2 } from '../../../../ui/Modal2'
-// import { useMonacoEditor } from '../../../useMonacoEditor'
 import { RedactorComponentWrapperHTMLEditorProps } from './interfaces'
 
 /**
@@ -20,18 +19,6 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<RedactorComponentWrapp
       htmlEditorOpenedSetter(false)
     }, [htmlEditorOpenedSetter])
 
-    // const [source] = useState(element.outerHTML)
-
-    // const {
-    //   editor,
-    // } = useMonacoEditor({
-    //   active: true,
-    //   editorProps: {
-    //     language: "html",
-    //     source,
-    //   },
-    // })
-
     return (
       <Modal2
         title=" "
@@ -42,8 +29,6 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<RedactorComponentWrapp
         closeHandler={closeHandler}
         role="monaco-modal"
       >
-        {/* {editor} */}
-
         <ContentEditorHTMLEditorMonacoEditor
           active
           element={element}

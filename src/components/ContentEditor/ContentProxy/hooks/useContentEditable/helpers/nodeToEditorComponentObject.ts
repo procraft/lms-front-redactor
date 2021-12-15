@@ -1,17 +1,16 @@
+/* eslint-disable no-console */
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
 import {
   BOOLEAN,
   getPropertyInfoByAttributeName,
 } from './react-utils/DOMProperty'
 import { RedactorComponentObject } from '../../../../../../RedactorComponent/interfaces'
-// import { FiberNode } from '../interfaces'
-import { getReactFiber } from '../../../../../../helpers/ReactFiber'
+import { getRedactorComponentObjectFromHtmlNode } from '../../../../../../helpers/ReactFiber'
 
 /**
  * Convert HTML Node to EditorComponentObject JSON
  */
 export const nodeToEditorComponentObject = (
-  // node: NonNullable<ElementWithReactComponent | Text | ChildNode>,
   node: NonNullable<Text | ChildNode>,
   object?: RedactorComponentObject
 ): RedactorComponentObject | undefined => {
@@ -22,16 +21,11 @@ export const nodeToEditorComponentObject = (
     components: [],
   }
 
-  // console.log('nodeToEditorComponentObject node', node)
-
-  // if (node instanceof HTMLElement) {
-  //   console.log('nodeToEditorComponentObject node.outerHTML', node.outerHTML)
-  // }
-
-  // eslint-disable-next-line no-constant-condition
-  // if (1 === 1) {
-  //   return
-  // }
+  console.log('nodeToEditorComponentObject node', node)
+  console.log(
+    'nodeToEditorComponentObject node instanceof HTMLElement',
+    node instanceof HTMLElement
+  )
 
   /**
    * Если это реакт-нода, то возвращаем его состояние
@@ -39,84 +33,41 @@ export const nodeToEditorComponentObject = (
   if (node instanceof HTMLElement) {
     // TODO Здесь надо реализовать логику вычленения данных реакт-компонента
 
-    // console.log('nodeToEditorComponentObject node', node)
-
-    /**
-     * Пытаемся получить данные реакт-компонента
-     */
-    // const keys = Object.keys(node)
-
-    // const reactFiberKey = keys.find((n) =>
-    //   n.startsWith('__reactFiber$')
-    // ) as keyof Element
-    // const reactFiber = node[reactFiberKey] as FiberNode
-
-    const reactFiber = getReactFiber(node)
-
-    // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
+    // const reactFiber = getReactFiber(node)
 
     /**
      * Если это реакт-компонент, то возвращаем его свойства
      */
-    if (reactFiber && reactFiber.return) {
-      // !(reactFiber.return.elementType === HtmlTag)
-
-      // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
-
-      // Если компонент не доступен для редактирования, возвращаем его текущее состояние
-      /**
-       * Проверка на isContentEditable обязательна, так как сюда попадают и HTML-теги (компоненты).
-       * То есть сейчас предполагается нередактируемые рекат-компоненты задавать с isContentEditable=false
-       */
-      if (node.isContentEditable === false) {
-        if (reactFiber.return.pendingProps?.object) {
-          return reactFiber.return.pendingProps?.object
-        } else if (reactFiber.return.return?.pendingProps?.object) {
-          /**
-           * Здесь нет возможности из любой ноды реакт-компонента определить каким именно компонентом сформирован HTML.
-           * Так как HTML-нода может быть обернута в другой компонент (например styled-component), то из нее мы не можем сразу
-           * получить наш объект. Добавляем костыль - поиск объекта в родительском компоненте.
-           */
-          return reactFiber.return.return?.pendingProps?.object
-        }
-
-        return
-      }
-    }
-
-    /**
-     * Если это реакт-компонент, то возвращаем его свойства
-     */
-    // if (reactFiber && reactFiber.lastEffect) {
-    //   // !(reactFiber.return.elementType === HtmlTag)
-
-    //   // console.log('nodeToEditorComponentObject reactFiber', reactFiber)
+    // if (reactFiber && reactFiber.return) {
 
     //   // Если компонент не доступен для редактирования, возвращаем его текущее состояние
+    //   /**
+    //    * Проверка на isContentEditable обязательна, так как сюда попадают и HTML-теги (компоненты).
+    //    * То есть сейчас предполагается нередактируемые реакт-компоненты задавать с isContentEditable=false
+    //    */
     //   if (node.isContentEditable === false) {
-    //     if (reactFiber.lastEffect.pendingProps.object) {
-    //       return reactFiber.lastEffect.pendingProps.object
+    //     if (reactFiber.return.pendingProps?.object) {
+    //       return reactFiber.return.pendingProps?.object
+    //     } else if (reactFiber.return.return?.pendingProps?.object) {
+    //       /**
+    //        * Здесь нет возможности из любой ноды реакт-компонента определить каким именно компонентом сформирован HTML.
+    //        * Так как HTML-нода может быть обернута в другой компонент (например styled-component), то из нее мы не можем сразу
+    //        * получить наш объект. Добавляем костыль - поиск объекта в родительском компоненте.
+    //        */
+    //       return reactFiber.return.return?.pendingProps?.object
     //     }
 
     //     return
     //   }
     // }
 
-    // return
+    const redactorObject = getRedactorComponentObjectFromHtmlNode(node)
 
-    // const { reactComponent, editorComponentObject } = node
+    if (redactorObject) {
+      return redactorObject
+    }
 
-    // if (editorComponentObject) {
-    //   return editorComponentObject
-    // }
-
-    // if (reactComponent && !(reactComponent instanceof HtmlTag)) {
-    //   const component = reactComponent.getObjectWithMutations()
-
-    //   return component
-    // }
-
-    // TODO Временный хак, чтобы
+    // TODO Временный хак, чтобы пропускать технические ноды
     if (node.getAttribute('data-redactor--fake-wrapper') === 'true') {
       if (node.firstChild) {
         return nodeToEditorComponentObject(node.firstChild, object)
@@ -134,6 +85,8 @@ export const nodeToEditorComponentObject = (
     | '#comment'
     | undefined
 
+  console.log('nodeToEditorComponentObject NodeName', NodeName)
+
   if (NodeName === '#text') {
     NodeName = undefined
   }
@@ -150,8 +103,6 @@ export const nodeToEditorComponentObject = (
     const attributes = node.attributes
 
     node.getAttributeNames().forEach((name) => {
-      // let value = attributes[name].value;
-
       let value: string | Record<string, unknown> | boolean | undefined =
         attributes.getNamedItem(name)?.value ?? undefined
 
@@ -163,13 +114,6 @@ export const nodeToEditorComponentObject = (
       }
 
       switch (name) {
-        // case "id":
-        // case "src":
-        // case "href":
-        //   // case "editable":
-
-        //   break;
-
         case 'props':
         case 'object':
         case 'data':
@@ -178,37 +122,13 @@ export const nodeToEditorComponentObject = (
         case 'contenteditable':
           return null
 
-        // case 'class':
-        //   name = 'className'
-        //   break
-
         case 'srcset':
           name = 'srcSet'
           break
 
-        // case 'autoplay':
-        //   name = 'autoPlay'
-        //   break
-
-        // case 'playsinline':
-        //   name = 'playsInline'
-        //   break
-
-        // case 'crossorigin':
-        //   name = 'crossOrigin'
-        //   break
-
-        // case 'staticcontext':
-        //   name = 'staticContext'
-        //   break
-
         case 'style':
           try {
-            // console.log("CSSTransform style", value);
-
             value = value ? CSSTransform(value) : undefined
-
-            // console.log("CSSTransform new style", value);
           } catch (error) {
             console.error(error)
             value = undefined
@@ -269,18 +189,16 @@ export const nodeToEditorComponentObject = (
   }
 
   if (content) {
-    // console.log('NodeName', NodeName)
+    // switch (NodeName) {
+    //   // case 'head':
+    //   //   content.component = 'Head'
 
-    switch (NodeName) {
-      // case 'head':
-      //   content.component = 'Head'
+    //   //   // console.log('Head content', content)
 
-      //   // console.log('Head content', content)
-
-      //   break
-      default:
-        content.props.tag = NodeName
-    }
+    //   //   break
+    //   default:
+    content.props.tag = NodeName
+    // }
   }
 
   return content

@@ -38,7 +38,6 @@ export const CourseOrderDev: RedactorComponent = ({
         {...other}
         {...otherInitProps}
         ref={inEditMode ? ref : undefined}
-        // className={className}
         contentEditable="false"
         suppressContentEditableWarning
         role="CourseOrderDev"
@@ -53,7 +52,6 @@ export const CourseOrderDev: RedactorComponent = ({
     return (
       <>
         {content}
-
         {inEditMode ? <>{wrapperContent}</> : null}
       </>
     )
