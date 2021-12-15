@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { expect } from 'chai'
 import { RedactorHtmlElement } from '../../src/hooks/useRedactorComponentInit/interfaces'
-import { redactorStartEdit } from '../helpers/component'
+import { redactorStartEdit, redactorStopEdit } from '../helpers/component'
 
 declare global {
   namespace Cypress {
@@ -218,8 +218,12 @@ describe('InsertBlock action', () => {
     })
 
     it('Add video component', () => {
+      // TODO Надо прописать проверку на загрузку редактора.
+      // Если интернет медленный, не успевает загрузиться,
+      // соответственно не работает.
+      // Пока просто паузу побольше поставлю
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000)
+      cy.wait(15000)
 
       /**
        * Get monaco editor and add content
@@ -269,16 +273,21 @@ describe('InsertBlock action', () => {
     //     })
     // })
 
-    it('Switch off edit mode', () => {
-      /**
-       * Get Reset store button
-       */
-      cy.get<HTMLButtonElement>('#toggleEditMode').then((nodes) => {
-        nodes[0].click()
-      })
+    // it('Switch off edit mode', () => {
+    //   /**
+    //    * Get Reset store button
+    //    */
+    //   cy.get<HTMLButtonElement>('#toggleEditMode').then((nodes) => {
+    //     nodes[0].click()
+    //   })
 
-      cy.wait(1000)
-    })
+    //   cy.wait(1000)
+    // })
+
+    /**
+     * Выходим из режима редактирование
+     */
+    redactorStopEdit()
 
     it('Check video component inserted', () => {
       /**
