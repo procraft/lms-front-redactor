@@ -90,10 +90,10 @@ describe('Start EditNativeAttributes test', () => {
       if (node) {
         const reactFiber = getReactFiber(node)
         console.log('reactFiber 1', reactFiber)
-        /*
+
         expect(
           reactFiber?.return?.pendingProps.object.props.style.color
-        ).to.equal('red')*/
+        ).to.equal('red')
       }
     })
   })
