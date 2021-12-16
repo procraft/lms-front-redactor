@@ -126,6 +126,14 @@ const ContentEditorDevPage: Page = () => {
                     },
                   },
                 },
+                {
+                  name: 'CourseOrderDev',
+                  component: 'CourseOrderDev',
+                  props: {
+                    className: 'test',
+                  },
+                  components: [],
+                },
               ],
               props: {},
             },

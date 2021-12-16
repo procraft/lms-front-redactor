@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { getRedactorComponentObjectFromHtmlNode } from '../../../../../helpers/ReactFiber'
 
 /**
@@ -9,12 +7,12 @@ import { getRedactorComponentObjectFromHtmlNode } from '../../../../../helpers/R
 function nodeDeepCloneWithReactComponents(node: ChildNode) {
   const redactorObject = getRedactorComponentObjectFromHtmlNode(node)
 
-  redactorObject &&
-    console.log(
-      'nodeDeepCloneWithReactComponents redactorObject',
-      redactorObject,
-      node
-    )
+  // redactorObject &&
+  //   console.log(
+  //     'nodeDeepCloneWithReactComponents redactorObject',
+  //     redactorObject,
+  //     node
+  //   )
 
   /**
    * Если это редактор-компонент, создаем кастомную ноду.
@@ -35,7 +33,7 @@ function nodeDeepCloneWithReactComponents(node: ChildNode) {
         Object.keys(redactorObject).forEach((name) => {
           const attrValue = redactorObject[name as keyof typeof redactorObject]
 
-          console.log('attrValue', attrValue)
+          // console.log('attrValue', attrValue)
 
           if (attrValue !== undefined) {
             const attr = document.createAttribute(name)
@@ -77,7 +75,7 @@ function nodeDeepCloneWithReactComponents(node: ChildNode) {
 
   if (clone instanceof HTMLElement) {
     clone.getAttributeNames().forEach((name) => {
-      console.log('attribute name', name)
+      // console.log('attribute name', name)
 
       const value: string | Record<string, unknown> | boolean | undefined =
         clone.attributes.getNamedItem(name)?.value ?? undefined
@@ -124,7 +122,7 @@ export function NodeToHtml(element: HTMLElement) {
    */
   const clone = nodeDeepCloneWithReactComponents(element)
 
-  console.log('NodeToHtml clone', clone)
+  // console.log('NodeToHtml clone', clone)
 
   if (!(clone instanceof HTMLElement)) {
     return ''

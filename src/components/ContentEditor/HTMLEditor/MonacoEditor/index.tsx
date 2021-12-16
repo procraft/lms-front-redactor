@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 import { useMonacoEditor } from '../../../../hooks/useMonacoEditor'
@@ -105,77 +104,81 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEdit
      * Сохранение изменений
      */
     const saveValue = useCallback(() => {
-      /**
-       * Создаем ноду и передаем содержимое как HTML
-       */
-
-      const model = editorInstance?.getModel()
-
-      if (!model) {
-        throw new Error('Can not get monaco editor model')
-      }
-
-      const value = model.getValue().trim()
-
-      console.log('saveValue value', value)
-
-      const template = global.document.createElement('div')
-
-      template.innerHTML = value
-
-      const newObject = nodeToEditorComponentObject(template)
-
-      if (!newObject) {
-        errorSetter(new Error('Не был получен объект'))
-        return
-      }
-
-      const components = newObject.components
-
-      console.log('saveValue components', components)
-
-      if (components.length === 1) {
-        const component = components[0]
-
-        updateObject(object, component)
-      } else {
+      try {
         /**
-         * Если нет родительского объекта, то выдаем ошибку
+         * Создаем ноду и передаем содержимое как HTML
          */
-        if (!parent || !updateParent) {
-          const error = new Error(
-            `Количество дочерних элементов должно быть 1, а получено ${template.childNodes.length}`
-          )
 
-          console.error(error, value, template.children)
+        const model = editorInstance?.getModel()
 
-          errorSetter(error)
-
-          return
-        } else {
-          const parentComponents = [...parent.components]
-
-          const index = parentComponents.findIndex((n) => n === object)
-
-          if (index === -1) {
-            errorSetter(new Error('Не был найден индекс текущего объекта'))
-            return
-          }
-
-          const args: Array<number | RedactorComponentObject> = [index, 1]
-
-          // eslint-disable-next-line prefer-spread
-          parentComponents.splice.apply(
-            parentComponents,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            args.concat(components)
-          )
-
-          updateParent(parent, {
-            components: parentComponents,
-          })
+        if (!model) {
+          throw new Error('Can not get monaco editor model')
         }
+
+        const value = model.getValue().trim()
+
+        // console.log('saveValue value', value)
+
+        const template = global.document.createElement('div')
+
+        template.innerHTML = value
+
+        const newObject = nodeToEditorComponentObject(template)
+
+        if (!newObject) {
+          errorSetter(new Error('Не был получен объект'))
+          return
+        }
+
+        const components = newObject.components
+
+        // console.log('saveValue components', components)
+
+        if (components.length === 1) {
+          const component = components[0]
+
+          updateObject(object, component)
+        } else {
+          /**
+           * Если нет родительского объекта, то выдаем ошибку
+           */
+          if (!parent || !updateParent) {
+            const error = new Error(
+              `Количество дочерних элементов должно быть 1, а получено ${template.childNodes.length}`
+            )
+
+            console.error(error, value, template.children)
+
+            errorSetter(error)
+
+            return
+          } else {
+            const parentComponents = [...parent.components]
+
+            const index = parentComponents.findIndex((n) => n === object)
+
+            if (index === -1) {
+              errorSetter(new Error('Не был найден индекс текущего объекта'))
+              return
+            }
+
+            const args: Array<number | RedactorComponentObject> = [index, 1]
+
+            // eslint-disable-next-line prefer-spread
+            parentComponents.splice.apply(
+              parentComponents,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              args.concat(components)
+            )
+
+            updateParent(parent, {
+              components: parentComponents,
+            })
+          }
+        }
+      } catch (error) {
+        errorSetter(error as Error)
       }
     }, [editorInstance, object, parent, updateObject, updateParent])
 

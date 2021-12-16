@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import CSSTransform from '@prisma-cms/front-editor/dist/components/Tag/HtmlTag/CSSTransform'
 import {
   BOOLEAN,
@@ -21,11 +20,11 @@ export const nodeToEditorComponentObject = (
     components: [],
   }
 
-  console.log('nodeToEditorComponentObject node', node)
-  console.log(
-    'nodeToEditorComponentObject node instanceof HTMLElement',
-    node instanceof HTMLElement
-  )
+  // console.log('nodeToEditorComponentObject node', node)
+  // console.log(
+  //   'nodeToEditorComponentObject node instanceof HTMLElement',
+  //   node instanceof HTMLElement
+  // )
 
   /**
    * Если это реакт-нода, то возвращаем его состояние
@@ -85,7 +84,33 @@ export const nodeToEditorComponentObject = (
     | '#comment'
     | undefined
 
-  console.log('nodeToEditorComponentObject NodeName', NodeName)
+  // console.log('nodeToEditorComponentObject NodeName', NodeName)
+
+  /**
+   * Реакт-компоненты
+   */
+  if (
+    NodeName?.startsWith('redactorcomponent__') &&
+    node instanceof HTMLElement
+  ) {
+    const object: RedactorComponentObject = {
+      name: 'HtmlTag',
+      component: 'HtmlTag',
+      props: {},
+      components: [],
+    }
+
+    node.getAttributeNames().forEach((name) => {
+      const value = node.attributes.getNamedItem(name)?.value
+
+      if (value !== undefined) {
+        // @ts-expect-error
+        object[name as keyof RedactorComponentObject] = JSON.parse(value)
+      }
+    })
+
+    return object
+  }
 
   if (NodeName === '#text') {
     NodeName = undefined
