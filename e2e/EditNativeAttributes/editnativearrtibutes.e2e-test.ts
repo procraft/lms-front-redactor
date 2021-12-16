@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable cypress/no-unnecessary-waiting */
 import { expect } from 'chai'
 import {
@@ -6,6 +7,8 @@ import {
   redactorStopEdit,
   closeElementEdit,
 } from '../helpers/component'
+
+import { getReactFiber } from '../helpers/component/reactFiber'
 
 describe('Start EditNativeAttributes test', () => {
   before(() => {
@@ -83,6 +86,15 @@ describe('Start EditNativeAttributes test', () => {
     cy.get<HTMLLIElement>('#component ul:first > li:nth-child(1)').then((j) => {
       const node = j.get(0)
       expect(node?.style.color).to.equal('red')
+
+      if (node) {
+        const reactFiber = getReactFiber(node)
+        console.log('reactFiber 1', reactFiber)
+
+        expect(
+          reactFiber?.return?.pendingProps.object.props.style.color
+        ).to.equal('red')
+      }
     })
   })
 
@@ -93,6 +105,17 @@ describe('Start EditNativeAttributes test', () => {
       (j) => {
         const node = j.get(0)
         expect(node?.style.color).to.equal('blue')
+
+        if (node) {
+          const reactFiber = getReactFiber(node)
+          console.log(
+            'reactFiber 2',
+            reactFiber?.return?.pendingProps.object.props.style.color
+          )
+          expect(
+            reactFiber?.return?.pendingProps.object.props.style.color
+          ).to.equal('blue')
+        }
       }
     )
   })
