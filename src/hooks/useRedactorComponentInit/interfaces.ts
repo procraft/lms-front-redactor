@@ -23,6 +23,11 @@ export type useRedactorComponentInitProps<
   parent: RedactorComponentWrapperProps['parent']
   updateParent: RedactorComponentWrapperProps['updateParent']
 
+  /**
+   * Заголовок враппера
+   */
+  wrapperTitle?: RedactorComponentWrapperProps['wrapperTitle']
+
   element: El | null
   active: boolean
   activeSetter: Dispatch<SetStateAction<boolean>>

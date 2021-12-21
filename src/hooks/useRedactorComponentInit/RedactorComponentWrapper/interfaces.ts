@@ -40,7 +40,7 @@ export type RedactorComponentWrapperProps = {
 
   active: boolean
   hovered: boolean
-  // wrapperTitle: string
+  wrapperTitle?: string
 
   /**
    * Можно редактировать HTML компонента

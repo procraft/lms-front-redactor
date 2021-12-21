@@ -39,6 +39,7 @@ const useRedactorComponentInit = ({
   activeSetter,
   hoverable,
   canEditHTML,
+  wrapperTitle,
 }: useRedactorComponentInitProps): ComponentWrapperProps => {
   const context = useContext(LmsFrontRedactorContext)
 
@@ -385,6 +386,7 @@ const useRedactorComponentInit = ({
         active={active}
         hovered={hovered}
         canEditHTML={canEditHTML}
+        wrapperTitle={wrapperTitle}
       />
     )
   }, [
@@ -398,6 +400,7 @@ const useRedactorComponentInit = ({
     parent,
     updateParent,
     canEditHTML,
+    wrapperTitle,
   ])
 
   return useMemo(() => {

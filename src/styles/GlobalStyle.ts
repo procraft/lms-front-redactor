@@ -10,7 +10,11 @@ import { SectionStyled } from '../components/Section/styles'
  */
 export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
-  * {
+  /* * {
+    box-sizing: border-box;
+  } */
+  
+  [role=redactor-wrapper] * {
     box-sizing: border-box;
   }
 

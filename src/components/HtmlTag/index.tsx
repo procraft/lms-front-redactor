@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import NextHead from 'next/head'
+// import NextHead from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -153,12 +153,12 @@ export const HtmlTag: RedactorComponent = ({
             : undefined,
         })
       }
-      case 'link':
-        return (
-          <NextHead>
-            <link {...tagProps}>{childrenContent}</link>
-          </NextHead>
-        )
+      // case 'link':
+      //   return (
+      //     <NextHead>
+      //       <link {...tagProps}>{childrenContent}</link>
+      //     </NextHead>
+      //   )
 
       case 'video': {
         return (

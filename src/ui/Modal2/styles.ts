@@ -63,13 +63,10 @@ export const Modal2Styled = styled(ModalContainerStyled)<Modal2StyledProps>`
   list-style: none;
   user-select: none;
   font-size: 12px;
-  /* opacity: 0; */
 
-  /* > ${Modal2TitleStyled} {
-  } */
-
-  /* > ${Modal2ContentStyled} {
-  } */
+  * {
+    box-sizing: border-box;
+  }
 
   ${({ fullScreen }) => {
     if (fullScreen) {

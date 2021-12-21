@@ -5,6 +5,7 @@ import {
 } from './react-utils/DOMProperty'
 import { RedactorComponentObject } from '../../../../../../RedactorComponent/interfaces'
 import { getRedactorComponentObjectFromHtmlNode } from '../../../../../../helpers/ReactFiber'
+import { ReactComponentTagName } from '../../../../HTMLEditor/interfaces'
 
 /**
  * Convert HTML Node to EditorComponentObject JSON
@@ -89,10 +90,7 @@ export const nodeToEditorComponentObject = (
   /**
    * Реакт-компоненты
    */
-  if (
-    NodeName?.startsWith('redactorcomponent__') &&
-    node instanceof HTMLElement
-  ) {
+  if (NodeName === `${ReactComponentTagName}` && node instanceof HTMLElement) {
     const object: RedactorComponentObject = {
       name: 'HtmlTag',
       component: 'HtmlTag',
@@ -101,11 +99,22 @@ export const nodeToEditorComponentObject = (
     }
 
     node.getAttributeNames().forEach((name) => {
-      const value = node.attributes.getNamedItem(name)?.value
+      let value = node.attributes.getNamedItem(name)?.value
 
       if (value !== undefined) {
-        // @ts-expect-error
-        object[name as keyof RedactorComponentObject] = JSON.parse(value)
+        try {
+          switch (name) {
+            case 'components':
+            case 'props':
+              value = JSON.parse(value)
+              break
+          }
+          // @ts-expect-error
+          object[name as keyof RedactorComponentObject] = value
+          // object[name as keyof RedactorComponentObject] = JSON.parse(value)
+        } catch (error) {
+          console.error(error)
+        }
       }
     })
 

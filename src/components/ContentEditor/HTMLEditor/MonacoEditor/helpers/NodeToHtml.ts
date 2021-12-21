@@ -1,4 +1,5 @@
 import { getRedactorComponentObjectFromHtmlNode } from '../../../../../helpers/ReactFiber'
+import { ReactComponentTagName } from '../../interfaces'
 
 /**
  * Рекурсивное клонирование ноды с пользовательскими свойствами
@@ -26,18 +27,28 @@ function nodeDeepCloneWithReactComponents(node: ChildNode) {
         break
 
       default: {
-        const redactorTag = document.createElement(
-          `redactorcomponent__${component}`
-        )
+        const redactorTag = document.createElement(ReactComponentTagName)
 
         Object.keys(redactorObject).forEach((name) => {
-          const attrValue = redactorObject[name as keyof typeof redactorObject]
+          let attrValue = redactorObject[name as keyof typeof redactorObject]
 
           // console.log('attrValue', attrValue)
 
-          if (attrValue !== undefined) {
+          if (attrValue !== undefined && attrValue !== null) {
             const attr = document.createAttribute(name)
-            attr.value = JSON.stringify(attrValue)
+
+            switch (name) {
+              // Может залететь свойство из аполло-клиента
+              case '__typename':
+                return
+
+              case 'components':
+              case 'props':
+                attrValue = JSON.stringify(attrValue)
+                break
+            }
+
+            attr.value = attrValue.toString()
 
             redactorTag.attributes.setNamedItem(attr)
           }

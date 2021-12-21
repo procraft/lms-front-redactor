@@ -7,3 +7,5 @@ export type ContentEditorHTMLEditorProps = {
   parent: ContentEditorHTMLEditorMonacoEditorProps['parent']
   updateParent: ContentEditorHTMLEditorMonacoEditorProps['updateParent']
 }
+
+export const ReactComponentTagName = 'lms'

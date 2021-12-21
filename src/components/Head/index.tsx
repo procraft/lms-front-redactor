@@ -1,5 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import React, { useMemo } from 'react'
+// import ReactDOM from 'react-dom'
 import NextHead from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -45,7 +46,7 @@ export const Head: RedactorComponent = ({
     active,
     activeSetter,
     hoverable: true,
-    canEditHTML: false,
+    canEditHTML: true,
   })
 
   _hovered
@@ -64,8 +65,6 @@ export const Head: RedactorComponent = ({
   //   return <title id="title">sdfffwefewf</title>
   // }, [])
 
-  // console.log('childrenContent', childrenContent)
-
   const content = useMemo(() => {
     // return <NextHead>{childrenContent}</NextHead>
     // return <NextHead>{object.props.content}</NextHead>
@@ -77,6 +76,9 @@ export const Head: RedactorComponent = ({
      * А NextHead рендерит все в head и там не найти какие именно элементы рендерятся.
      */
     return inEditMode ? childrenContent : <NextHead>{childrenContent}</NextHead>
+    // return inEditMode || !global.document?.head
+    //   ? childrenContent
+    //   : ReactDOM.createPortal(childrenContent, document.head)
 
     // return <NextHead>{title}</NextHead>
   }, [childrenContent, inEditMode])

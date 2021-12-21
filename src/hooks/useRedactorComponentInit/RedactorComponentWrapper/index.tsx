@@ -39,7 +39,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
     parent,
     updateParent,
     active,
-    // wrapperTitle,
+    wrapperTitle,
     hovered,
     canEditHTML,
   }) => {
@@ -74,11 +74,14 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
         })
       )
 
-      // if(wrapperTitle) {
       const titleNode = document.createElement('span')
       titleNode.innerHTML = `
-      <span>${object.name} ${
-        object.name !== object.component ? ` (${object.component})` : ''
+      <span>${
+        wrapperTitle
+          ? wrapperTitle
+          : `${object.name} ${
+              object.name !== object.component ? ` (${object.component})` : ''
+            }`
       }</span>
       <span>${object.props.tag || ''}</span>
     `
@@ -100,7 +103,7 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
       // }
 
       return wrapper
-    }, [object.component, object.name, object.props.tag])
+    }, [object.component, object.name, object.props.tag, wrapperTitle])
 
     const [addBlockButtonDirection, addBlockButtonDirectionSetter] =
       useState<useAddBlockButtonProps['direction']>()
