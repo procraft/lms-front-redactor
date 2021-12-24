@@ -57,6 +57,7 @@ export const HtmlTag: RedactorComponent = ({
         case 'link':
         case 'img':
         case 'video':
+        case 'button':
           hoverable = true
           break
 

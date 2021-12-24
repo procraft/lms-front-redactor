@@ -24,6 +24,21 @@ export const AddButtonWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
         name: 'HtmlTag',
         component: 'HtmlTag',
         props: {
+          style: {
+            borderRadius: '4px',
+            lineHeight: '120%',
+            display: 'inline-block',
+            textDecoration: 'none',
+            textAlign: 'center',
+            padding: '10px 20px',
+            backgroundColor: '#0087ee',
+            color: 'rgb(255, 255, 255)',
+            width: 'auto',
+            maxWidth: '100%',
+            overflowWrap: 'break-word',
+            position: 'relative',
+            border: 'none',
+          },
           tag: 'button',
         },
         components: [
