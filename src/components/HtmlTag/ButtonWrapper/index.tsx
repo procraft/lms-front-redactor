@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ButtonProps } from './interfaces'
@@ -105,11 +104,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
       //console.log('---value', value)
 
       updateObject(object, {
-        name: 'HtmlTag',
-        component: 'HtmlTag',
-        props: {
-          tag: 'button',
-        },
         components: [
           {
             name: 'HtmlTag',
@@ -141,14 +135,9 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     }
   )
 */
-  const buttonModal = useMemo(() => {
-    if (!opened) {
-      return null
-    }
 
-    const onChangeColorTest = (color: ColorResult) => {
-      console.log('event', color)
-
+  const onChangeColorTest = useCallback(
+    (color: ColorResult) => {
       updateObject(object, {
         props: {
           ...object.props,
@@ -158,6 +147,13 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
           },
         },
       })
+    },
+    [object, updateObject]
+  )
+
+  const buttonModal = useMemo(() => {
+    if (!opened) {
+      return null
     }
 
     /*
@@ -176,7 +172,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
       })
     }
 */
-    console.log('object.props', object)
     //console.log('object', object.components[0].props.text)
 
     return (
@@ -218,7 +213,14 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
         </div>
       </ButtonWrapperModalStyled>
     )
-  }, [opened, object, closeModal, onChangeValue, onChangeStyles, updateObject])
+  }, [
+    opened,
+    object,
+    closeModal,
+    onChangeValue,
+    onChangeStyles,
+    onChangeColorTest,
+  ])
 
   return (
     <>

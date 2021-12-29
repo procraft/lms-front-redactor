@@ -23,7 +23,7 @@ import { RedactorComponentWrapperAddComponentButton } from './buttons/AddCompone
 /**
  * Выводить дополнительные отладочные инструменты
  */
-const debug = false
+const debug = true
 
 /**
  * Враппер для компонентов редактора.
