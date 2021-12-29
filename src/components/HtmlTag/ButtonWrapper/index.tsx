@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ButtonProps } from './interfaces'
 import { ButtonWrapperModalStyled } from './styles'
 import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
+import { ColorResult, HuePicker } from 'react-color'
 
 export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   const {
@@ -23,6 +25,36 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     closeHandler()
   }, [closeHandler])
 
+  /*
+ const [color, setColor] = useState('#fff')
+ onChange={(color) => {
+              setColor(color)
+              onChangeColor('backgroundColor', color.hex)
+            }}
+
+   onChangeComplete={(color) => {
+              setColor(color.hex)
+            }}
+ <TextField
+            fullWidth
+            value={color || 'object.props.style?.backgroundColor'}
+            title="Фон кнопки"
+            name="backgroundColor"
+            onChange={onChangeStyles}
+            helperText="hex"
+          />
+
+          <TextField
+            fullWidth
+            value={color || ''}
+            title="Цвет текста"
+            name="color"
+            onChange={onChangeStyles}
+            helperText="hex"
+          />
+
+
+*/
   useEffect(() => {
     if (!element || !active) {
       return
@@ -92,13 +124,59 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     },
     [object, updateObject]
   )
+  /*
+  const onChangeColorTest = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log('event', event)
 
+      updateObject(object, {
+        props: {
+          ...object.props,
+          style: {
+            ...object.props.style,
+            backgroundColor: event.hex,
+          },
+        },
+      })
+    }
+  )
+*/
   const buttonModal = useMemo(() => {
     if (!opened) {
       return null
     }
 
-    //console.log('object.props', object)
+    const onChangeColorTest = (color: ColorResult) => {
+      console.log('event', color)
+
+      updateObject(object, {
+        props: {
+          ...object.props,
+          style: {
+            ...object.props.style,
+            backgroundColor: color.hex,
+          },
+        },
+      })
+    }
+
+    /*
+    const onChangeColor = (style: string, value: string) => {
+      //console.log('---value', value)
+      //console.log('---style', style)
+
+      updateObject(object, {
+        props: {
+          ...object.props,
+          style: {
+            ...object.props.style,
+            [style]: value,
+          },
+        },
+      })
+    }
+*/
+    console.log('object.props', object)
     //console.log('object', object.components[0].props.text)
 
     return (
@@ -116,7 +194,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             title="Текст кнопки"
             onChange={onChangeValue}
           />
-
           <TextField
             fullWidth
             value={object.props.style?.width || ''}
@@ -125,7 +202,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             onChange={onChangeStyles}
             helperText="px, %"
           />
-
           <TextField
             fullWidth
             value={object.props.style?.maxWidth || ''}
@@ -134,10 +210,15 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             onChange={onChangeStyles}
             helperText="px, %"
           />
+
+          <HuePicker
+            color={object.props.style?.backgroundColor}
+            onChange={onChangeColorTest}
+          />
         </div>
       </ButtonWrapperModalStyled>
     )
-  }, [opened, object, closeModal, onChangeValue, onChangeStyles])
+  }, [opened, object, closeModal, onChangeValue, onChangeStyles, updateObject])
 
   return (
     <>
