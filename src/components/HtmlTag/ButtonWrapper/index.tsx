@@ -90,13 +90,13 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   )
 
   const onChangeColor = useCallback(
-    (color: ColorResult) => {
+    (name: string) => (color: ColorResult) => {
       updateObject(object, {
         props: {
           ...object.props,
           style: {
             ...object.props.style,
-            backgroundColor: color.hex,
+            [name]: color.hex,
           },
         },
       })
@@ -143,12 +143,15 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
 
           <HuePicker
             color={object.props.style?.backgroundColor}
-            onChange={onChangeColor}
+            onChange={onChangeColor('backgroundColor')}
+            width="100%"
           />
+
           <div className="marginTop">
             <HuePicker
               color={object.props.style?.color}
-              onChange={onChangeColor}
+              onChange={onChangeColor('color')}
+              width="100%"
             />
           </div>
         </div>
