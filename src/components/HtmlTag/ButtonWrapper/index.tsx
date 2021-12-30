@@ -145,6 +145,12 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             color={object.props.style?.backgroundColor}
             onChange={onChangeColor}
           />
+          <div className="marginTop">
+            <HuePicker
+              color={object.props.style?.color}
+              onChange={onChangeColor}
+            />
+          </div>
         </div>
       </ButtonWrapperModalStyled>
     )

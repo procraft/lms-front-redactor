@@ -10,4 +10,8 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
       max-width: 100%;
     }
   }
+
+  .marginTop {
+    margin-top: 20px;
+  }
 `
