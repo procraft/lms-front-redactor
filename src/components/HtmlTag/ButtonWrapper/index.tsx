@@ -24,36 +24,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     closeHandler()
   }, [closeHandler])
 
-  /*
- const [color, setColor] = useState('#fff')
- onChange={(color) => {
-              setColor(color)
-              onChangeColor('backgroundColor', color.hex)
-            }}
-
-   onChangeComplete={(color) => {
-              setColor(color.hex)
-            }}
- <TextField
-            fullWidth
-            value={color || 'object.props.style?.backgroundColor'}
-            title="Фон кнопки"
-            name="backgroundColor"
-            onChange={onChangeStyles}
-            helperText="hex"
-          />
-
-          <TextField
-            fullWidth
-            value={color || ''}
-            title="Цвет текста"
-            name="color"
-            onChange={onChangeStyles}
-            helperText="hex"
-          />
-
-
-*/
   useEffect(() => {
     if (!element || !active) {
       return
@@ -118,25 +88,8 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     },
     [object, updateObject]
   )
-  /*
-  const onChangeColorTest = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log('event', event)
 
-      updateObject(object, {
-        props: {
-          ...object.props,
-          style: {
-            ...object.props.style,
-            backgroundColor: event.hex,
-          },
-        },
-      })
-    }
-  )
-*/
-
-  const onChangeColorTest = useCallback(
+  const onChangeColor = useCallback(
     (color: ColorResult) => {
       updateObject(object, {
         props: {
@@ -155,24 +108,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     if (!opened) {
       return null
     }
-
-    /*
-    const onChangeColor = (style: string, value: string) => {
-      //console.log('---value', value)
-      //console.log('---style', style)
-
-      updateObject(object, {
-        props: {
-          ...object.props,
-          style: {
-            ...object.props.style,
-            [style]: value,
-          },
-        },
-      })
-    }
-*/
-    //console.log('object', object.components[0].props.text)
 
     return (
       <ButtonWrapperModalStyled
@@ -208,19 +143,12 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
 
           <HuePicker
             color={object.props.style?.backgroundColor}
-            onChange={onChangeColorTest}
+            onChange={onChangeColor}
           />
         </div>
       </ButtonWrapperModalStyled>
     )
-  }, [
-    opened,
-    object,
-    closeModal,
-    onChangeValue,
-    onChangeStyles,
-    onChangeColorTest,
-  ])
+  }, [opened, object, closeModal, onChangeValue, onChangeStyles, onChangeColor])
 
   return (
     <>
