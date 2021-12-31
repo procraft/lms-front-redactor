@@ -141,13 +141,16 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             helperText="px, %"
           />
 
-          <HuePicker
-            color={object.props.style?.backgroundColor}
-            onChange={onChangeColor('backgroundColor')}
-            width="100%"
-          />
-
           <div className="marginTop">
+            <label>Цвет фона</label>
+            <HuePicker
+              color={object.props.style?.backgroundColor}
+              onChange={onChangeColor('backgroundColor')}
+              width="100%"
+            />
+          </div>
+          <div className="marginTop">
+            <label>Цвет текста</label>
             <HuePicker
               color={object.props.style?.color}
               onChange={onChangeColor('color')}

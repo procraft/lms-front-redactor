@@ -14,4 +14,7 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
   .marginTop {
     margin-top: 20px;
   }
+  .marginTop label {
+    color: #7f92a3;
+  }
 `
