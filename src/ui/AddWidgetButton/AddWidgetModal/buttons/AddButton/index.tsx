@@ -24,6 +24,7 @@ export const AddButtonWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
         name: 'HtmlTag',
         component: 'HtmlTag',
         props: {
+          role: 'contentButton',
           style: {
             borderRadius: '4px',
             lineHeight: '120%',
@@ -66,7 +67,11 @@ export const AddButtonWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
   return useMemo(() => {
     return (
       <>
-        <AddWidgetModalButtonStyled ref={buttonState[1]} {...other}>
+        <AddWidgetModalButtonStyled
+          ref={buttonState[1]}
+          role="addButton"
+          {...other}
+        >
           <div
             style={{
               border: '1px solid',
