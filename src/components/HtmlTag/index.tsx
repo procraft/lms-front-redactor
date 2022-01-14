@@ -6,6 +6,7 @@ import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents
 import { RedactorComponent } from '../../RedactorComponent/interfaces'
 import { redactor2ComponentAttributes } from '../../styles'
 import { ImgWrapper } from './ImgWrapper'
+import { ButtonWrapper } from './ButtonWrapper'
 import { RelStylesheet } from './RelStylesheet'
 import { Script } from './Script'
 import { Style } from './Style'
@@ -69,6 +70,7 @@ export const HtmlTag: RedactorComponent = ({
         case 'style':
         case 'link':
         case 'img':
+        case 'button':
         case 'video':
           canContentEditable = false
           break
@@ -336,6 +338,25 @@ export const HtmlTag: RedactorComponent = ({
               >
                 {content}
               </ImgWrapper>
+            </>
+          )
+          break
+
+        case 'button':
+          elementContent = (
+            <>
+              <ButtonWrapper
+                {...renderProps}
+                ref={undefined}
+                forwardedRef={renderProps.ref}
+                object={object}
+                updateObject={updateObject}
+                active={active}
+                closeHandler={closeHandler}
+                element={element}
+              >
+                {content}
+              </ButtonWrapper>
             </>
           )
           break

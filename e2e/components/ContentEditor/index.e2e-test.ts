@@ -43,19 +43,21 @@ describe('ContentEditor', () => {
       .wait(100)
       .trigger('click')
 
-    cy.wait(1000)
-    //cy.wait(15000) включить после редактирования
+    //cy.wait(1000)
+    cy.wait(10000) //включить после редактирования
 
     cy.get('.monaco-editor-background')
-      .contains('{&quot;className&quot;:&quot;test&quot;}')
+      //.contains('{&quot;className&quot;:&quot;test&quot;}')
+      .contains('test')
       //.setCursorAfter('text')
       .click()
       .wait(100)
-      .type(
+      /*.type(
         '{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}11111'
-      )
+      )*/
+      .type('{leftarrow}{leftarrow}11111')
 
-    cy.get('button[role="save"]').click()
+    cy.get('div[role="monaco-modal"] button[role="save"]').click()
     cy.wait(500)
     cy.get('div[role="monaco-modal"] button[role="close"]').click({
       force: true,
@@ -82,6 +84,60 @@ describe('ContentEditor', () => {
     cy.get('div[role="monaco-modal"] button[role="close"]').click({
       force: true,
     })
+  })
+
+  /**
+   * Проверяем поведение кнопки: создание, настройка
+   */
+  it('Check button', () => {
+    cy.wait(1000)
+
+    cy.get('div[role="sectionBox"]')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+
+    cy.wait(500)
+
+    cy.get('button[title="Вставить виджеторрпопр"]')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+
+    cy.wait(500)
+
+    cy.get('button[role="addButton"]')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+
+    cy.wait(500)
+
+    cy.get('button[role="contentButton"]')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+      .wait(100)
+      .trigger('click')
+
+    cy.get('input[type="text"]:first')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+      .wait(100)
+      .type('123')
+
+    cy.get('.hue-horizontal:first')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+      .wait(100)
+
+    cy.get('div[role="modal-window"] button[role="close"]')
+      .trigger('mouseover')
+      .wait(100)
+      .trigger('click')
+      .wait(100)
   })
 
   /**

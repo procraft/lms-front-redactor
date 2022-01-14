@@ -120,6 +120,7 @@ const ContentEditorDevPage: Page = () => {
                   ],
                   props: {
                     tag: 'div',
+                    role: 'sectionBox',
                     style: {
                       border: '1px solid blue',
                       minHeight: 100,
