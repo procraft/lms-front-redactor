@@ -3,7 +3,7 @@ import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ButtonProps } from './interfaces'
 import { ButtonWrapperModalStyled } from './styles'
 import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
-import { ColorResult, HuePicker } from 'react-color'
+import { ColorResult, HuePicker, SketchPicker } from 'react-color'
 
 export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   const {
@@ -104,6 +104,12 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     [object, updateObject]
   )
 
+  const [showBackColorPicker, setShowBackColorPicker] = useState(false)
+
+  const toggleBackColorPicker = useCallback(() => {
+    setShowBackColorPicker(!showBackColorPicker)
+  }, [showBackColorPicker])
+
   const buttonModal = useMemo(() => {
     if (!opened) {
       return null
@@ -143,12 +149,27 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
 
           <div className="marginTop">
             <label>Цвет фона</label>
+            <button onClick={toggleBackColorPicker}>
+              Pick {showBackColorPicker ? 'Yes' : 'No'}
+            </button>
+            {showBackColorPicker && (
+              <SketchPicker
+                color={object.props.style?.backgroundColor}
+                onChange={onChangeColor('backgroundColor')}
+                width="100%"
+              />
+            )}
+          </div>
+
+          {/*<div className="marginTop">
+            <label>Цвет фона</label>
             <HuePicker
               color={object.props.style?.backgroundColor}
               onChange={onChangeColor('backgroundColor')}
               width="100%"
             />
-          </div>
+    </div>*/}
+
           <div className="marginTop">
             <label>Цвет текста</label>
             <HuePicker
@@ -160,7 +181,16 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
         </div>
       </ButtonWrapperModalStyled>
     )
-  }, [opened, object, closeModal, onChangeValue, onChangeStyles, onChangeColor])
+  }, [
+    opened,
+    object,
+    closeModal,
+    onChangeValue,
+    onChangeStyles,
+    onChangeColor,
+    toggleBackColorPicker,
+    showBackColorPicker,
+  ])
 
   return (
     <>

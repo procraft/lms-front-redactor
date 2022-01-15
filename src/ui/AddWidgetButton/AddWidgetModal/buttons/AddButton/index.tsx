@@ -81,7 +81,7 @@ export const AddButtonWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
               borderRadius: 5,
             }}
           >
-            Button
+            Кнопка
             <br />
             <br />
           </div>
