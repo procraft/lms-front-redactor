@@ -17,6 +17,10 @@ export const RedactorComponentWrapperButtonsStyled = styled.div`
     border-radius: 50%;
     background: rgb(37, 36, 36);
 
+    &:active {
+      background: rgb(71, 71, 71);
+    }
+
     svg {
       fill: white;
       width: 18px;

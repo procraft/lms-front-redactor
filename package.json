@@ -11,6 +11,7 @@
     "build": "tsc -p tsconfig.build.json",
     "build:server": "rimraf ./dev/server/dist && next build && tsc --project tsconfig.server.json",
     "build:server:analyze": "ANALYZE=true yarn build:server",
+    "generate:types": "NODE_PATH=. ts-node -P tsconfig.server.json src/modules/gql/cli/generateTypes/run",
     "types": "tsc --pretty --noEmit -p tsconfig.types.json",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts --ext tsx --ext js",

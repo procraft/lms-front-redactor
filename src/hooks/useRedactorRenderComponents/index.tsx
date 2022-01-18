@@ -1,16 +1,10 @@
+/* eslint-disable no-console */
 import React, { useCallback, useContext, useMemo } from 'react'
-// import { RedactorComponent } from '../../RedactorComponent/interfaces';
-// import LandingFooter from '../../components/LandingFooter';
-// import LandingHeader from '../../components/LandingHeader';
-// import LandingLayout from '../../components/LandingLayout';
-// import LandingRouter from '../../components/LandingRouter';
-// import Section from '../../components/Section';
 import { useRedactorRenderComponentsProps } from './interfaces'
-// import RedactorObjectRender from '../RedactorObjectRender';
-// import getRedactorObjectComponent from '../RedactorObjectRender'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
 import { useState } from 'react'
 import { LmsFrontRedactorContext } from '../../Context'
+import { SavedBlock } from './SavedBlock'
 
 /**
  * В цикле выводим дочерние компоненты
@@ -42,6 +36,11 @@ const useRedactorRenderComponents = (
       (current, data) => {
         // console.log('useRedactorRenderComponents updateObject object', object)
 
+        console.log(
+          'useRedactorRenderComponents updateObject current, data',
+          current,
+          data
+        )
         // console.log('useRedactorRenderComponents updateObject current', current)
         // console.log('useRedactorRenderComponents updateObject data', data)
 
@@ -100,16 +99,26 @@ const useRedactorRenderComponents = (
       })
 
       if (Component) {
+        const renderProps = {
+          object: next,
+          updateObject: updateObjectChildComponent,
+          inEditMode: inEditMode,
+          wrapperContainer: wrapperContainer,
+          parent: object,
+          updateParent: updateObject,
+        }
+
         curr.push(
-          <Component
-            key={next.id || index}
-            object={next}
-            updateObject={updateObjectChildComponent}
-            inEditMode={inEditMode}
-            wrapperContainer={wrapperContainer}
-            parent={object}
-            updateParent={updateObject}
-          />
+          next.id ? (
+            <SavedBlock
+              key={`${next.id}--${index}`}
+              id={next.id}
+              Component={Component}
+              {...renderProps}
+            />
+          ) : (
+            <Component key={index} {...renderProps} />
+          )
         )
       }
 

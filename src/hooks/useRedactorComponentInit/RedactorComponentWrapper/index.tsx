@@ -19,11 +19,12 @@ import { Button } from '@procraft/ui/dist/Button'
 import { RedactorComponentWrapperHTMLEditor } from './HtmlEditor'
 import { SvgIconCode } from '../../../ui/SvgIcon/Code'
 import { RedactorComponentWrapperAddComponentButton } from './buttons/AddComponent'
+import { RedactorComponentWrapperSaveButton } from './buttons/Save'
 
 /**
  * Выводить дополнительные отладочные инструменты
  */
-const debug = false
+const debug = true
 
 /**
  * Враппер для компонентов редактора.
@@ -504,6 +505,14 @@ export const RedactorComponentWrapper: React.FC<RedactorComponentWrapperProps> =
                     >
                       <SvgIconCode />
                     </Button>
+                  ) : null}
+                  {parent ? (
+                    <RedactorComponentWrapperSaveButton
+                      object={object}
+                      updateObject={updateObject}
+                      parent={parent}
+                      updateParent={updateParent}
+                    />
                   ) : null}
                   {parent ? (
                     <Button
