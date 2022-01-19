@@ -89,6 +89,25 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     [object, updateObject]
   )
 
+  const onChangeUrl = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
+
+      //console.log('---value', event.target)
+
+      updateObject(object, {
+        props: {
+          ...object.props,
+          href: value,
+          style: {
+            ...object.props.style,
+          },
+        },
+      })
+    },
+    [object, updateObject]
+  )
+
   const onChangeColor = useCallback(
     (name: string) => (color: ColorResult) => {
       updateObject(object, {
@@ -115,6 +134,8 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
       return null
     }
 
+    //console.log('object', object)
+
     return (
       <ButtonWrapperModalStyled
         title="Кнопка"
@@ -129,6 +150,12 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             value={object.components[0].props.text || ''}
             title="Текст кнопки"
             onChange={onChangeValue}
+          />
+          <TextField
+            fullWidth
+            value={object.props.href || ''}
+            title="URL"
+            onChange={onChangeUrl}
           />
           <TextField
             fullWidth
@@ -190,6 +217,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     onChangeColor,
     toggleBackColorPicker,
     showBackColorPicker,
+    onChangeUrl,
   ])
 
   return (
