@@ -149,12 +149,13 @@ const useRedactorComponentInit = ({
    * По клику делаем компонент активным
    */
   useEffect(() => {
-    if (!element || !context?.inEditMode || active || !hovered) {
+    // if (!element || !context?.inEditMode || active || !hovered) {
+    if (!element || !context?.inEditMode || !hovered) {
       return
     }
 
     const onClick = (event: MouseEvent) => {
-      // console.log('editor onClick event.target', event.target);
+      // console.log('editor onClick event.target', event.target)
       // console.log('editor onClick event.currentTarget', event.currentTarget);
 
       // TODO Здесь, если прерывать ивент, не кликаются внутренние элементы.
@@ -190,7 +191,10 @@ const useRedactorComponentInit = ({
       // )
       // event2.preventDefault()
       // global.document.dispatchEvent(event2)
-      activeSetter(true)
+
+      if (!active) {
+        activeSetter(true)
+      }
       // }
     }
 
