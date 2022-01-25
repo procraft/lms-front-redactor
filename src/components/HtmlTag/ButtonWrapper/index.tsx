@@ -125,9 +125,31 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
 
   const [showBackColorPicker, setShowBackColorPicker] = useState(false)
 
-  const toggleBackColorPicker = useCallback(() => {
-    setShowBackColorPicker(!showBackColorPicker)
-  }, [showBackColorPicker])
+  const toggleBackColorPicker = useCallback(
+    (event) => {
+      // TODO: remove console.log
+      // eslint-disable-next-line no-console
+      console.log('toggleBackColorPicker', event)
+      setShowBackColorPicker(!showBackColorPicker)
+    },
+    [showBackColorPicker]
+  )
+
+  const [buttonElement, buttonRef] = useState<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    if (!buttonElement) {
+      return
+    }
+
+    const onClick = toggleBackColorPicker
+
+    buttonElement.addEventListener('click', onClick)
+
+    return () => {
+      buttonElement.removeEventListener('click', onClick)
+    }
+  }, [buttonElement, toggleBackColorPicker])
 
   const buttonModal = useMemo(() => {
     if (!opened) {
@@ -176,7 +198,11 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
 
           <div className="marginTop">
             <label>Цвет фона</label>
-            <button onClick={toggleBackColorPicker}>
+            <button
+              // TODO: Remove legacy onClick
+              onClick={toggleBackColorPicker}
+              ref={buttonRef}
+            >
               Pick {showBackColorPicker ? 'Yes' : 'No'}
             </button>
             {showBackColorPicker && (
