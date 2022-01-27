@@ -240,7 +240,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
               <SketchPicker
                 color={object.props.style?.backgroundColor}
                 onChange={onChangeColor('backgroundColor')}
-                width="100%"
+                width="auto"
               />
             )}
           </div>
