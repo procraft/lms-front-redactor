@@ -3,7 +3,7 @@ import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ButtonProps } from './interfaces'
 import { ButtonWrapperModalStyled } from './styles'
 import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
-import { ColorResult, HuePicker, SketchPicker } from 'react-color'
+import { ColorResult, SketchPicker } from 'react-color'
 
 export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   const {
@@ -151,6 +151,35 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     }
   }, [buttonElement, toggleBackColorPicker])
 
+  const [showTextColorPicker, setShowTextColorPicker] = useState(false)
+
+  const toggleTextColorPicker = useCallback(
+    (event) => {
+      // TODO: remove console.log
+      // eslint-disable-next-line no-console
+      console.log('toggleTextColorPicker', event)
+      setShowTextColorPicker(!showTextColorPicker)
+    },
+    [showTextColorPicker]
+  )
+
+  const [buttonElementTextColor, buttonRefTextColor] =
+    useState<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    if (!buttonElementTextColor) {
+      return
+    }
+
+    const onClickTextColor = toggleTextColorPicker
+
+    buttonElementTextColor.addEventListener('click', onClickTextColor)
+
+    return () => {
+      buttonElementTextColor.removeEventListener('click', onClickTextColor)
+    }
+  }, [buttonElementTextColor, toggleTextColorPicker])
+
   const buttonModal = useMemo(() => {
     if (!opened) {
       return null
@@ -199,12 +228,14 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
           <div className="marginTop">
             <label>Цвет фона</label>
             <button
-              // TODO: Remove legacy onClick
-              onClick={toggleBackColorPicker}
               ref={buttonRef}
-            >
-              Pick {showBackColorPicker ? 'Yes' : 'No'}
-            </button>
+              style={{
+                backgroundColor: object.props.style?.backgroundColor,
+                width: '50px',
+                height: '20px',
+                marginLeft: '10px',
+              }}
+            ></button>
             {showBackColorPicker && (
               <SketchPicker
                 color={object.props.style?.backgroundColor}
@@ -225,11 +256,22 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
 
           <div className="marginTop">
             <label>Цвет текста</label>
-            <HuePicker
-              color={object.props.style?.color}
-              onChange={onChangeColor('color')}
-              width="100%"
-            />
+            <button
+              ref={buttonRefTextColor}
+              style={{
+                backgroundColor: object.props.style?.color,
+                width: '50px',
+                height: '20px',
+                marginLeft: '10px',
+              }}
+            ></button>
+            {showTextColorPicker && (
+              <SketchPicker
+                color={object.props.style?.color}
+                onChange={onChangeColor('color')}
+                width="auto"
+              />
+            )}
           </div>
         </div>
       </ButtonWrapperModalStyled>
@@ -241,8 +283,8 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     onChangeValue,
     onChangeStyles,
     onChangeColor,
-    toggleBackColorPicker,
     showBackColorPicker,
+    showTextColorPicker,
     onChangeUrl,
   ])
 
