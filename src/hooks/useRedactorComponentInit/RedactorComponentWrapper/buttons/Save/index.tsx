@@ -83,7 +83,7 @@ export const RedactorComponentWrapperSaveButton: React.FC<RedactorComponentWrapp
             })
             .catch((error) => {
               console.error(error)
-              alert('Ошибка выполнения запроса')
+              alert(error.message || 'Ошибка выполнения запроса')
             })
         }
       },
