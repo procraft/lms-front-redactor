@@ -43,7 +43,7 @@ export const CourseOrderDev: RedactorComponent = ({
         role="CourseOrderDev"
         {...object.props}
       >
-        CourseOrderDev {Math.random()}
+        CourseOrderDev
       </CourseOrderDevStyled>
     )
   }, [inEditMode, object.props, other, otherInitProps, ref])

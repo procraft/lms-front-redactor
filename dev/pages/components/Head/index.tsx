@@ -65,6 +65,28 @@ const HeadDevPage: Page = () => {
             },
           },
         },
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'div',
+            id: 'test-content-id',
+            style: {
+              border: '1px solid blue',
+              minHeight: 100,
+            },
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'Section',
+              },
+            },
+          ],
+        },
       ],
       props: {},
     }

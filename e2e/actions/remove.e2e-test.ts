@@ -42,21 +42,27 @@ describe('RemoveBlock action', () => {
 
       cy.get<RedactorHtmlElement>('#component #test-content-id').then(
         (node) => {
+          // const wrapper = node[0]?.parentNode?.redactorComponentWrapper
+          const wrapper =
+            (node[0]?.parentNode as RedactorHtmlElement | null)
+              ?.redactorComponentWrapper ?? null
+
           console.log(
             'redactorComponentWrapper',
-            node[0]?.redactorComponentWrapper
+            wrapper,
+            typeof wrapper,
+            wrapper === null
           )
           // node.redactorComponentWrapper
 
-          expect(node[0]?.redactorComponentWrapper).not.null
+          expect(wrapper).not.null
 
           /**
            * Get remove button
            */
-
           const removeButton =
-            node[0]?.redactorComponentWrapper?.querySelector<HTMLButtonElement>(
-              '.buttons button[role=removeComponent]'
+            wrapper?.querySelector<HTMLButtonElement>(
+              '[role=redactor-wrapper-buttons] button[role=removeComponent]'
             ) ?? null
 
           expect(removeButton).not.null
