@@ -92,6 +92,7 @@ export const ContentEditor: RedactorComponent = ({
     // className,
     wrapperContent,
     hovered: _hovered,
+    showHiddenTags: _showHiddenTags,
     ...otherInitProps
   } = useRedactorComponentInit({
     object,
@@ -107,6 +108,7 @@ export const ContentEditor: RedactorComponent = ({
   })
 
   _hovered
+  _showHiddenTags
 
   const childrenContent = useRedactorRenderComponents({
     object,
