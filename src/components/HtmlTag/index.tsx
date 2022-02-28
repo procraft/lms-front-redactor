@@ -41,7 +41,7 @@ export const HtmlTag: RedactorComponent = ({
     useRedactorComponentRef<HTMLElement>()
 
   const { hoverable, canContentEditable } = useMemo(() => {
-    let hoverable = false
+    let hoverable = true
     let canContentEditable = true
 
     if (!inEditMode) {
