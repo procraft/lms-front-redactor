@@ -223,7 +223,7 @@ describe('InsertBlock action', () => {
       // соответственно не работает.
       // Пока просто паузу побольше поставлю
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(15000)
+      cy.wait(10000)
 
       /**
        * Get monaco editor and add content

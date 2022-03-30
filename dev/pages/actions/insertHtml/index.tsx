@@ -4,75 +4,112 @@ import { RedactorComponentObject } from '../../../../src/RedactorComponent/inter
 import { Page } from '../../_App/interfaces'
 import { DevRedactor } from '../../../Redactor'
 
+// const initialObject: RedactorComponentObject = {
+//   name: 'Section',
+//   component: 'Section',
+//   components: [
+//     // {
+//     //   name: 'CourseOrderDev',
+//     //   component: 'CourseOrderDev',
+//     //   components: [],
+//     //   props: {},
+//     // },
+//     {
+//       name: 'Section',
+//       component: 'Section',
+//       components: [],
+//       props: {},
+//     },
+//     {
+//       name: 'ContentEditor',
+//       component: 'ContentEditor',
+//       components: [],
+//       props: {},
+//     },
+//     // {
+//     //   name: 'Section',
+//     //   component: 'Section',
+//     //   components: [
+//     //     {
+//     //       name: 'HtmlTag',
+//     //       component: 'HtmlTag',
+//     //       props: {
+//     //         tag: 'div',
+//     //         id: 'test-content-id',
+//     //         style: {
+//     //           border: '1px solid blue',
+//     //           minHeight: 100,
+//     //         },
+//     //       },
+//     //       components: [
+//     //         {
+//     //           name: 'HtmlTag',
+//     //           component: 'HtmlTag',
+//     //           components: [],
+//     //           props: {
+//     //             text: 'Section',
+//     //           },
+//     //         },
+//     //         {
+//     //           name: 'CourseOrderDev',
+//     //           component: 'CourseOrderDev',
+//     //           components: [],
+//     //           props: {},
+//     //         },
+//     //         {
+//     //           name: 'Section',
+//     //           component: 'Section',
+//     //           components: [],
+//     //           props: {},
+//     //         },
+//     //         {
+//     //           name: 'ContentEditor',
+//     //           component: 'ContentEditor',
+//     //           components: [],
+//     //           props: {},
+//     //         },
+//     //       ],
+//     //     },
+//     //   ],
+//     //   props: {},
+//     // },
+//   ],
+//   props: {},
+// }
+
 const initialObject: RedactorComponentObject = {
   name: 'Section',
   component: 'Section',
   components: [
-    // {
-    //   name: 'CourseOrderDev',
-    //   component: 'CourseOrderDev',
-    //   components: [],
-    //   props: {},
-    // },
     {
       name: 'Section',
       component: 'Section',
-      components: [],
+      components: [
+        {
+          name: 'HtmlTag',
+          component: 'HtmlTag',
+          props: {
+            tag: 'div',
+            id: 'test-content-id',
+            style: {
+              border: '1px solid blue',
+              minHeight: 100,
+            },
+          },
+          components: [
+            {
+              name: 'HtmlTag',
+              component: 'HtmlTag',
+              components: [],
+              props: {
+                text: 'Section',
+              },
+            },
+          ],
+        },
+      ],
       props: {},
     },
-    {
-      name: 'ContentEditor',
-      component: 'ContentEditor',
-      components: [],
-      props: {},
-    },
-    // {
-    //   name: 'Section',
-    //   component: 'Section',
-    //   components: [
-    //     {
-    //       name: 'HtmlTag',
-    //       component: 'HtmlTag',
-    //       props: {
-    //         tag: 'div',
-    //         id: 'test-content-id',
-    //         style: {
-    //           border: '1px solid blue',
-    //           minHeight: 100,
-    //         },
-    //       },
-    //       components: [
-    //         {
-    //           name: 'HtmlTag',
-    //           component: 'HtmlTag',
-    //           components: [],
-    //           props: {
-    //             text: 'Section',
-    //           },
-    //         },
-    //         {
-    //           name: 'CourseOrderDev',
-    //           component: 'CourseOrderDev',
-    //           components: [],
-    //           props: {},
-    //         },
-    //         {
-    //           name: 'Section',
-    //           component: 'Section',
-    //           components: [],
-    //           props: {},
-    //         },
-    //         {
-    //           name: 'ContentEditor',
-    //           component: 'ContentEditor',
-    //           components: [],
-    //           props: {},
-    //         },
-    //       ],
-    //     },
-    //   ],
-    //   props: {},
-    // },
   ],
   props: {},
 }

@@ -86,7 +86,7 @@ describe('Start head test', () => {
 
   it('Add Head component', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000)
+    cy.wait(10000)
 
     /**
      * Get monaco editor and add content
@@ -126,6 +126,11 @@ describe('Start head test', () => {
         nodes[0].click()
       }
     )
+
+    cy.wait(500)
+    cy.get('div[role="monaco-modal"] button[role="close"]').click({
+      force: true,
+    })
   })
 
   /**

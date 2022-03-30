@@ -9,29 +9,7 @@ const RemoveBlockDevPage: Page = () => {
     return {
       name: 'Section',
       component: 'Section',
-      props: {},
       components: [
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'Section',
-              },
-            },
-          ],
-          props: {
-            tag: 'div',
-            style: {
-              border: '1px solid blue',
-              minHeight: 100,
-            },
-          },
-        },
         {
           name: 'Section',
           component: 'Section',
@@ -43,7 +21,7 @@ const RemoveBlockDevPage: Page = () => {
                 tag: 'div',
                 id: 'test-content-id',
                 style: {
-                  border: '1px solid green',
+                  border: '1px solid blue',
                   minHeight: 100,
                 },
               },
@@ -53,7 +31,7 @@ const RemoveBlockDevPage: Page = () => {
                   component: 'HtmlTag',
                   components: [],
                   props: {
-                    text: 'Inner Section to be removed',
+                    text: 'Section',
                   },
                 },
               ],
@@ -61,28 +39,8 @@ const RemoveBlockDevPage: Page = () => {
           ],
           props: {},
         },
-        {
-          name: 'HtmlTag',
-          component: 'HtmlTag',
-          components: [
-            {
-              name: 'HtmlTag',
-              component: 'HtmlTag',
-              components: [],
-              props: {
-                text: 'Section',
-              },
-            },
-          ],
-          props: {
-            tag: 'div',
-            style: {
-              border: '1px solid blue',
-              minHeight: 100,
-            },
-          },
-        },
       ],
+      props: {},
     }
   }, [])
 
