@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { expect } from 'chai'
 
 /**
@@ -35,6 +36,8 @@ export const focusParentComponent = () => {
  */
 export const redactorStopEdit = () => {
   it('Switch off edit mode', () => {
+    cy.wait(1000)
+
     /**
      * Get Reset store button
      */
