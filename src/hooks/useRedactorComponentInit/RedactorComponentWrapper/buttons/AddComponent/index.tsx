@@ -8,33 +8,34 @@ import { AddWidgetModal } from '../../../../../ui/AddWidgetButton/AddWidgetModal
 /**
  * Кнопка вывода окна вставки компонента
  */
-export const RedactorComponentWrapperAddComponentButton: React.FC<RedactorComponentWrapperAddComponentButtonProps> =
-  ({ object, updateObject }) => {
-    const [opened, openedSetter] = useState(false)
+export const RedactorComponentWrapperAddComponentButton: React.FC<
+  RedactorComponentWrapperAddComponentButtonProps
+> = ({ object, updateObject }) => {
+  const [opened, openedSetter] = useState(false)
 
-    const openModal = useCallback((event: MouseEvent) => {
-      event.stopPropagation()
+  const openModal = useCallback((event: MouseEvent) => {
+    event.stopPropagation()
 
-      openedSetter(true)
-    }, [])
+    openedSetter(true)
+  }, [])
 
-    const closeHandler = useCallback(() => {
-      openedSetter(false)
-    }, [])
+  const closeHandler = useCallback(() => {
+    openedSetter(false)
+  }, [])
 
-    return (
-      <>
-        <Button title="Вставить виджет" onClick={openModal}>
-          <SvgIconPlus />
-        </Button>
+  return (
+    <>
+      <Button title="Вставить виджет" onClick={openModal}>
+        <SvgIconPlus />
+      </Button>
 
-        {opened ? (
-          <AddWidgetModal
-            closeHandler={closeHandler}
-            object={object}
-            updateObject={updateObject}
-          />
-        ) : null}
-      </>
-    )
-  }
+      {opened ? (
+        <AddWidgetModal
+          closeHandler={closeHandler}
+          object={object}
+          updateObject={updateObject}
+        />
+      ) : null}
+    </>
+  )
+}
