@@ -10,48 +10,55 @@ import { ContentEditorHTMLEditorStyled } from './styles'
  * Только надо учитывать, что если в коде
  * @deprecated
  */
-export const ContentEditorHTMLEditor: React.FC<
-  ContentEditorHTMLEditorProps
-> = ({ element, object, updateObject, parent, updateParent }) => {
-  const [inEditMode, inEditModeSetter] = useState(false)
+export const ContentEditorHTMLEditor: React.FC<ContentEditorHTMLEditorProps> =
+  ({ element, object, updateObject, parent, updateParent }) => {
+    const [inEditMode, inEditModeSetter] = useState(false)
 
-  const toggleEditMode = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
-      inEditModeSetter(!inEditMode)
-    },
-    [inEditMode]
-  )
-
-  const button = useMemo(() => {
-    return (
-      <button onClick={toggleEditMode}>
-        {!inEditMode ? 'Редактировать как HTML' : 'Закрыть редактор'}
-      </button>
+    const toggleEditMode = useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
+        event.stopPropagation()
+        inEditModeSetter(!inEditMode)
+      },
+      [inEditMode]
     )
 
-    // toggleEditMode
+    const button = useMemo(() => {
+      return (
+        <button onClick={toggleEditMode}>
+          {!inEditMode ? 'Редактировать как HTML' : 'Закрыть редактор'}
+        </button>
+      )
 
-    // return null
-  }, [inEditMode, toggleEditMode])
+      // toggleEditMode
 
-  return useMemo(() => {
-    return (
-      <ContentEditorHTMLEditorStyled>
-        {button}
+      // return null
+    }, [inEditMode, toggleEditMode])
 
-        {inEditMode ? (
-          <ContentEditorHTMLEditorMonacoEditor
-            active
-            element={element}
-            object={object}
-            updateObject={updateObject}
-            parent={parent}
-            updateParent={updateParent}
-          />
-        ) : null}
-      </ContentEditorHTMLEditorStyled>
-    )
-  }, [button, inEditMode, element, object, updateObject, parent, updateParent])
-}
+    return useMemo(() => {
+      return (
+        <ContentEditorHTMLEditorStyled>
+          {button}
+
+          {inEditMode ? (
+            <ContentEditorHTMLEditorMonacoEditor
+              active
+              element={element}
+              object={object}
+              updateObject={updateObject}
+              parent={parent}
+              updateParent={updateParent}
+            />
+          ) : null}
+        </ContentEditorHTMLEditorStyled>
+      )
+    }, [
+      button,
+      inEditMode,
+      element,
+      object,
+      updateObject,
+      parent,
+      updateParent,
+    ])
+  }

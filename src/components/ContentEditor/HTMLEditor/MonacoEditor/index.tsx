@@ -22,206 +22,205 @@ import { NodeToHtml } from './helpers/NodeToHtml'
  * текущего элемента.
  */
 
-export const ContentEditorHTMLEditorMonacoEditor: React.FC<
-  ContentEditorHTMLEditorMonacoEditorProps
-> = ({ active, element, object, updateObject, parent, updateParent }) => {
-  const [source, sourceSetter] = useState<string>('')
+export const ContentEditorHTMLEditorMonacoEditor: React.FC<ContentEditorHTMLEditorMonacoEditorProps> =
+  ({ active, element, object, updateObject, parent, updateParent }) => {
+    const [source, sourceSetter] = useState<string>('')
 
-  useEffect(() => {
+    useEffect(() => {
+      /**
+       * Нужен для отслеживания изменений на объекте
+       */
+      object
+
+      sourceSetter(NodeToHtml(element))
+    }, [element, object])
+
+    const [error, errorSetter] = useState<Error | null>(null)
+
+    const [isDirty, isDirtySetter] = useState(false)
+
     /**
-     * Нужен для отслеживания изменений на объекте
+     * Если устанавливается новый контент, то сбрасываем флаг
      */
-    object
+    useEffect(() => {
+      source
 
-    sourceSetter(NodeToHtml(element))
-  }, [element, object])
+      isDirtySetter(false)
+    }, [source])
 
-  const [error, errorSetter] = useState<Error | null>(null)
+    const [editorInstance, editorInstanceSetter] =
+      useState<monacoEditor.editor.IStandaloneCodeEditor | null>(null)
 
-  const [isDirty, isDirtySetter] = useState(false)
+    useEffect(() => {
+      if (!editorInstance) {
+        return
+      }
 
-  /**
-   * Если устанавливается новый контент, то сбрасываем флаг
-   */
-  useEffect(() => {
-    source
+      const model = editorInstance.getModel()
 
-    isDirtySetter(false)
-  }, [source])
+      const modelOnChange = model?.onDidChangeContent((_event) => {
+        const value = model.getValue()
 
-  const [editorInstance, editorInstanceSetter] =
-    useState<monacoEditor.editor.IStandaloneCodeEditor | null>(null)
+        isDirtySetter(value !== source)
 
-  useEffect(() => {
-    if (!editorInstance) {
-      return
-    }
+        errorSetter(null)
+      })
 
-    const model = editorInstance.getModel()
+      return () => {
+        modelOnChange?.dispose()
+      }
+    }, [editorInstance, source])
 
-    const modelOnChange = model?.onDidChangeContent((_event) => {
-      const value = model.getValue()
+    const onEditorInit = useCallback(
+      (editorInstance: monacoEditor.editor.IStandaloneCodeEditor) => {
+        editorInstanceSetter(editorInstance)
+      },
+      []
+    )
 
-      isDirtySetter(value !== source)
-
-      errorSetter(null)
+    const { editor } = useMonacoEditor({
+      active,
+      editorProps: {
+        language: 'html',
+        source,
+        onEditorInit,
+      },
     })
 
-    return () => {
-      modelOnChange?.dispose()
-    }
-  }, [editorInstance, source])
-
-  const onEditorInit = useCallback(
-    (editorInstance: monacoEditor.editor.IStandaloneCodeEditor) => {
-      editorInstanceSetter(editorInstance)
-    },
-    []
-  )
-
-  const { editor } = useMonacoEditor({
-    active,
-    editorProps: {
-      language: 'html',
-      source,
-      onEditorInit,
-    },
-  })
-
-  /**
-   * Восстановление изменений
-   */
-  const resetValue = useCallback(() => {
-    const model = editorInstance?.getModel()
-
-    if (!model) {
-      throw new Error('Can not get monaco editor model')
-    }
-
-    model.setValue(source)
-  }, [editorInstance, source])
-
-  /**
-   * Сохранение изменений
-   */
-  const saveValue = useCallback(() => {
-    try {
-      /**
-       * Создаем ноду и передаем содержимое как HTML
-       */
-
+    /**
+     * Восстановление изменений
+     */
+    const resetValue = useCallback(() => {
       const model = editorInstance?.getModel()
 
       if (!model) {
         throw new Error('Can not get monaco editor model')
       }
 
-      const value = model.getValue().trim()
+      model.setValue(source)
+    }, [editorInstance, source])
 
-      // console.log('saveValue value', value)
-
-      const template = global.document.createElement('div')
-
-      template.innerHTML = value
-
-      const newObject = nodeToEditorComponentObject(template)
-
-      if (!newObject) {
-        errorSetter(new Error('Не был получен объект'))
-        return
-      }
-
-      const components = newObject.components
-
-      // console.log('saveValue components', components)
-
-      if (components.length === 1) {
-        const component = components[0]
-
-        updateObject(object, component)
-      } else {
+    /**
+     * Сохранение изменений
+     */
+    const saveValue = useCallback(() => {
+      try {
         /**
-         * Если нет родительского объекта, то выдаем ошибку
+         * Создаем ноду и передаем содержимое как HTML
          */
-        if (!parent || !updateParent) {
-          const error = new Error(
-            `Количество дочерних элементов должно быть 1, а получено ${template.childNodes.length}`
-          )
 
-          console.error(error, value, template.children)
+        const model = editorInstance?.getModel()
 
-          errorSetter(error)
-
-          return
-        } else {
-          const parentComponents = [...parent.components]
-
-          const index = parentComponents.findIndex((n) => n === object)
-
-          if (index === -1) {
-            errorSetter(new Error('Не был найден индекс текущего объекта'))
-            return
-          }
-
-          const args: Array<number | RedactorComponentObject> = [index, 1]
-
-          // eslint-disable-next-line prefer-spread
-          parentComponents.splice.apply(
-            parentComponents,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            args.concat(components)
-          )
-
-          updateParent(parent, {
-            components: parentComponents,
-          })
+        if (!model) {
+          throw new Error('Can not get monaco editor model')
         }
+
+        const value = model.getValue().trim()
+
+        // console.log('saveValue value', value)
+
+        const template = global.document.createElement('div')
+
+        template.innerHTML = value
+
+        const newObject = nodeToEditorComponentObject(template)
+
+        if (!newObject) {
+          errorSetter(new Error('Не был получен объект'))
+          return
+        }
+
+        const components = newObject.components
+
+        // console.log('saveValue components', components)
+
+        if (components.length === 1) {
+          const component = components[0]
+
+          updateObject(object, component)
+        } else {
+          /**
+           * Если нет родительского объекта, то выдаем ошибку
+           */
+          if (!parent || !updateParent) {
+            const error = new Error(
+              `Количество дочерних элементов должно быть 1, а получено ${template.childNodes.length}`
+            )
+
+            console.error(error, value, template.children)
+
+            errorSetter(error)
+
+            return
+          } else {
+            const parentComponents = [...parent.components]
+
+            const index = parentComponents.findIndex((n) => n === object)
+
+            if (index === -1) {
+              errorSetter(new Error('Не был найден индекс текущего объекта'))
+              return
+            }
+
+            const args: Array<number | RedactorComponentObject> = [index, 1]
+
+            // eslint-disable-next-line prefer-spread
+            parentComponents.splice.apply(
+              parentComponents,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              args.concat(components)
+            )
+
+            updateParent(parent, {
+              components: parentComponents,
+            })
+          }
+        }
+      } catch (error) {
+        errorSetter(error as Error)
       }
-    } catch (error) {
-      errorSetter(error as Error)
-    }
-  }, [editorInstance, object, parent, updateObject, updateParent])
+    }, [editorInstance, object, parent, updateObject, updateParent])
 
-  const buttons = useMemo(() => {
-    return [
-      <Button
-        key="reset"
-        variant={isDirty ? 'raised' : undefined}
-        disabled={!isDirty}
-        onClick={resetValue}
-      >
-        Отмена
-      </Button>,
-      <Button
-        key="save"
-        color={isDirty ? 'primary' : 'default'}
-        variant="raised"
-        disabled={!isDirty}
-        onClick={saveValue}
-        role="save"
-      >
-        Сохранить
-      </Button>,
-    ]
-  }, [isDirty, resetValue, saveValue])
-
-  return (
-    <>
-      <ContentEditorHTMLEditorMonacoEditorStyled>
-        <div
-          style={{
-            flex: 1,
-          }}
+    const buttons = useMemo(() => {
+      return [
+        <Button
+          key="reset"
+          variant={isDirty ? 'raised' : undefined}
+          disabled={!isDirty}
+          onClick={resetValue}
         >
-          {editor}
-        </div>
+          Отмена
+        </Button>,
+        <Button
+          key="save"
+          color={isDirty ? 'primary' : 'default'}
+          variant="raised"
+          disabled={!isDirty}
+          onClick={saveValue}
+          role="save"
+        >
+          Сохранить
+        </Button>,
+      ]
+    }, [isDirty, resetValue, saveValue])
 
-        <div className="buttons">
-          {error ? <div className="error">{error.message}</div> : null}
-          {buttons}
-        </div>
-      </ContentEditorHTMLEditorMonacoEditorStyled>
-    </>
-  )
-}
+    return (
+      <>
+        <ContentEditorHTMLEditorMonacoEditorStyled>
+          <div
+            style={{
+              flex: 1,
+            }}
+          >
+            {editor}
+          </div>
+
+          <div className="buttons">
+            {error ? <div className="error">{error.message}</div> : null}
+            {buttons}
+          </div>
+        </ContentEditorHTMLEditorMonacoEditorStyled>
+      </>
+    )
+  }

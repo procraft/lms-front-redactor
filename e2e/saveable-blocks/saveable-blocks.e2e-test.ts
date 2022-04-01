@@ -2,8 +2,16 @@
 /* eslint-disable no-console */ /* eslint-disable no-redeclare */
 /* eslint-disable @typescript-eslint/no-namespace */
 import { expect } from 'chai'
+import {
+  CreateLandingTemplateMutation,
+  CreateLandingTemplateMutationVariables,
+} from '../../src/gql/createLandingTemplate'
+import { LandingTemplateFrFragment } from '../../src/gql/landingTemplateFr'
+import { TemplateQueryVariables } from '../../src/gql/template'
+import { getReactFiber } from '../../src/helpers/ReactFiber'
 import { RedactorHtmlElement } from '../../src/hooks/useRedactorComponentInit/interfaces'
-import { redactorStartEdit, redactorStopEdit } from '../helpers/component'
+import { closeElementEdit, redactorStartEdit } from '../helpers/component'
+import { initMockServer } from '../mock'
 
 declare global {
   namespace Cypress {
@@ -12,6 +20,8 @@ declare global {
     }
   }
 }
+
+const editableTagSelector = '#component #test-content-id'
 
 /**
  * Вставка дочернего компонента
@@ -22,8 +32,6 @@ describe('Saveable Blocks', () => {
   })
 
   describe('Load ContentEditor', () => {
-    const editableTagSelector = '#component #test-content-id'
-
     /**
      * Включаем редактирование компонента
      */
@@ -86,61 +94,242 @@ describe('Saveable Blocks', () => {
       })
     })
 
-    // it('Add new component', () => {
+    it('Add text block 1', () => {
+      cy.wait(1000)
 
-    //   cy.wait(1000)
+      /**
+       * Get Modal
+       */
+      cy.get<HTMLDivElement>('[role=redactor--modal]').then((node) => {
+        const modalNode = node[0]
 
-    //   /**
-    //    * Get Modal
-    //    */
-    //   cy.get<HTMLDivElement>('[role=redactor--modal]').then((node) => {
-    //     const modalNode = node[0]
+        expect(modalNode).not.null
 
-    //     console.log('redactorModal', modalNode)
+        /**
+         * Buttons
+         */
+        const buttons = modalNode.querySelector<HTMLDivElement>(
+          '[role=secondaryButtons]'
+        )
 
-    //     expect(modalNode).not.null
+        expect(buttons).not.null
 
-    //     /**
-    //      * Buttons
-    //      */
-    //     const buttons = modalNode.querySelector<HTMLDivElement>(
-    //       '[role=secondaryButtons]'
-    //     )
+        /**
+         * Get insert button
+         */
+        const insertComponentButton =
+          buttons?.querySelector<HTMLButtonElement>(
+            'button[role=addHtmlEditor]'
+          ) ?? null
 
-    //     console.log('redactorModal buttons', buttons)
+        expect(insertComponentButton).not.null
 
-    //     expect(buttons).not.null
+        /**
+         * Click insert button
+         */
+        insertComponentButton?.click()
+      })
+    })
 
-    //     /**
-    //      * Get insert button
-    //      */
-    //     const insertComponentButton =
-    //       buttons?.querySelector<HTMLButtonElement>('button[role=addImage]') ??
-    //       null
+    closeElementEdit()
 
-    //     console.log(
-    //       'redactorModal insertComponentButton',
-    //       insertComponentButton
-    //     )
+    it('Get inserted block and save them', () => {
+      /**
+       * Get inserted component
+       */
+      cy.get<HTMLDivElement>(`${editableTagSelector} > :last-child`)
+        // .then(nodes => {
+        //   console.log('last nodes', nodes);
+        // })
+        .click({
+          force: true,
+        })
+        .then((nodes) => {
+          console.log('last nodes', nodes)
 
-    //     expect(insertComponentButton).not.null
+          expect(nodes.length).eq(1)
 
-    //     /**
-    //      * Click insert button
-    //      */
-    //     insertComponentButton?.click()
+          const node = nodes[0]
 
-    //     /**
-    //      * Click save button
-    //      */
-    //     // const saveButton =
-    //     //   modalNode.querySelector<HTMLButtonElement>('button[role=save]')
+          const fiberNode = getReactFiber(node)
 
-    //     // expect(saveButton).not.null
+          console.log('fiberNode', fiberNode)
 
-    //     // saveButton?.click()
-    //   })
-    // })
+          if (!fiberNode) {
+            throw new Error('Can not get fiberNode')
+          }
+
+          /**
+           * Сохраняем блок
+           */
+          const component = fiberNode.return
+
+          if (!component) {
+            throw new Error('Can not get component')
+          }
+
+          if (!component.pendingProps.object) {
+            throw new Error('Can not get component.pendingProps.object')
+          }
+
+          if (!component.pendingProps.updateObject) {
+            throw new Error('Can not get component.pendingProps.updateObject')
+          }
+
+          component.pendingProps.updateObject(component.pendingProps.object, {
+            components: [
+              ...component.pendingProps.object.components,
+              {
+                name: 'HtmlTag',
+                component: 'HtmlTag',
+                props: {
+                  tag: 'h2',
+                  'data-cy': 'test-header-1',
+                },
+                components: [
+                  {
+                    name: 'HtmlTag',
+                    component: 'HtmlTag',
+                    props: {
+                      text: 'Test Heading',
+                    },
+                    components: [],
+                  },
+                ],
+              },
+            ],
+          })
+        })
+    })
+
+    it('Save node', () => {
+      // const node = await getLastBlock()
+      // .then(node => {
+      //   console.log('fiber node', node);
+
+      //   return cy.wait(1000)
+      // });
+
+      // console.log('fiber node 2', node);
+
+      initMockServer()
+
+      // const templates: LandingTemplateFrFragment[] = [
+      //   {
+      //     id: 'template-1',
+      //     name: 'HtmlTag',
+      //     component: 'HtmlTag',
+      //     props: {
+      //       tag: 'div',
+      //       role: 'text-block-widget',
+      //     },
+      //     components: [
+      //       {
+      //         name: 'HtmlTag',
+      //         component: 'HtmlTag',
+      //         props: {
+      //           tag: 'h1',
+      //         },
+      //         components: [
+      //           {
+      //             name: 'HtmlTag',
+      //             component: 'HtmlTag',
+      //             props: {
+      //               text: 'Heading',
+      //             },
+      //             components: [],
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: 'HtmlTag',
+      //         component: 'HtmlTag',
+      //         props: {
+      //           tag: 'p',
+      //         },
+      //         components: [
+      //           {
+      //             name: 'HtmlTag',
+      //             component: 'HtmlTag',
+      //             props: {
+      //               text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      //             },
+      //             components: [],
+      //           },
+      //         ],
+      //       },
+      //       {
+      //         name: 'HtmlTag',
+      //         component: 'HtmlTag',
+      //         props: {
+      //           tag: 'h2',
+      //           'data-cy': 'test-header-1',
+      //         },
+      //         components: [
+      //           {
+      //             name: 'HtmlTag',
+      //             component: 'HtmlTag',
+      //             props: {
+      //               text: 'Test Heading',
+      //             },
+      //             components: [],
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      // ]
+
+      const templates: LandingTemplateFrFragment[] = []
+
+      cy.mockNetworkAdd({
+        Mutation: () => ({
+          createLandingTemplate: (
+            _: any,
+            args: CreateLandingTemplateMutationVariables
+          ): CreateLandingTemplateMutation['createLandingTemplate'] => {
+            const { components, props, ...other } = args.input.patch
+
+            const template: LandingTemplateFrFragment = {
+              ...other,
+              id: 'template-1',
+              components: JSON.parse(components),
+              props: JSON.parse(props),
+            }
+
+            console.log('template', template)
+            console.log('{...template}', { ...template })
+
+            templates.push(template)
+
+            return {
+              landingTemplate: template,
+            }
+          },
+        }),
+        Query: () => ({
+          template: (_: any, args: TemplateQueryVariables) => {
+            console.log('Query template args', args)
+
+            const template = templates.find((n) => n.id === args.where.id)
+
+            console.log('Query template', template)
+
+            return template || null
+          },
+        }),
+      })
+
+      cy.wait(1000)
+
+      cy.get('button[role="save-block"').click()
+    })
+
+    it('Check props has id value', () => {
+      cy.wait(1000)
+      cy.get('button[role=showState]').click()
+      cy.wait(10000)
+    })
 
     // it('Check new component inserted', () => {
     //   /**
@@ -189,7 +378,7 @@ describe('Saveable Blocks', () => {
     /**
      * Выходим из режима редактирование
      */
-    redactorStopEdit()
+    // redactorStopEdit()
   })
 })
 
