@@ -53,7 +53,11 @@ const useRedactorRenderComponents = (
         const componentIndex = components.indexOf(current)
 
         if (componentIndex === -1) {
-          console.error('Не был найден текущий компонент в массиве компонентов')
+          console.error(
+            'Не был найден текущий компонент в массиве компонентов',
+            object,
+            data
+          )
           return
         }
 

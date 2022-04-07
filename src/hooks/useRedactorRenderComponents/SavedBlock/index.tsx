@@ -22,18 +22,22 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
   return useMemo(() => {
     console.log('SavedBlock response.data', response.data)
 
-    if (!response.data?.template) {
-      return null
-    }
+    // if (!response.data?.template) {
+    //   return null
+    // }
 
     // const { components, props, ...otherObject } = object
 
     return (
       <Component
-        object={{
-          ...object,
-          ...response.data?.template,
-        }}
+        object={
+          response.data?.template
+            ? {
+                ...object,
+                ...response.data.template,
+              }
+            : object
+        }
         {...other}
       />
     )
