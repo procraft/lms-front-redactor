@@ -1,24 +1,21 @@
-/* eslint-disable no-console */
-import React, { useCallback, useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo, useRef } from 'react'
 import { useRedactorRenderComponentsProps } from './interfaces'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
-import { useState } from 'react'
 import { LmsFrontRedactorContext } from '../../Context'
 import { SavedBlock } from './SavedBlock'
 
 /**
  * В цикле выводим дочерние компоненты
  */
-const useRedactorRenderComponents = (
-  props: useRedactorRenderComponentsProps
-) => {
-  const { object, updateObject, inEditMode, wrapperContainer } = props
-
+const useRedactorRenderComponents = ({
+  object,
+  updateObject,
+  inEditMode,
+  wrapperContainer,
+}: useRedactorRenderComponentsProps) => {
   const context = useContext(LmsFrontRedactorContext)
 
-  const [objectState] = useState({
-    updateObject,
-  })
+  const updateObjectRef = useRef(updateObject)
 
   /**
    * Сейчас используем такой хак, чтобы в updateObjectChildComponent не передавать updateObject,
@@ -26,7 +23,7 @@ const useRedactorRenderComponents = (
    * Это позволяет ререндерить только текущий объект и прямых оптомков 1-го уровня.
    * Но в идеале должны ререндериться только текущие объекты, без дочерних.
    */
-  objectState.updateObject = updateObject
+  updateObjectRef.current = updateObject
 
   // TODO: Надо учитывать, что у нас выполняется цикл для вывода отдельных компонентов.
   // При этом изменение любого из этих компонентов должно отправляться в родительский объект.
@@ -36,13 +33,11 @@ const useRedactorRenderComponents = (
       (current, data) => {
         // console.log('useRedactorRenderComponents updateObject object', object)
 
-        console.log(
-          'useRedactorRenderComponents updateObject current, data',
-          current,
-          data
-        )
-        // console.log('useRedactorRenderComponents updateObject current', current)
-        // console.log('useRedactorRenderComponents updateObject data', data)
+        // console.log(
+        //   'useRedactorRenderComponents updateObject current, data',
+        //   current,
+        //   data
+        // )
 
         /**
          * Находим объект в массиве компонентов
@@ -55,8 +50,12 @@ const useRedactorRenderComponents = (
         if (componentIndex === -1) {
           console.error(
             'Не был найден текущий компонент в массиве компонентов',
-            object,
-            data
+            'current',
+            current,
+            'data',
+            data,
+            'object',
+            object
           )
           return
         }
@@ -78,13 +77,13 @@ const useRedactorRenderComponents = (
          * Для этого в нем найдем нужный нам компонент и наверх вернем обновленный массив компонентов.
          */
 
-        objectState.updateObject(object, {
+        updateObjectRef.current(object, {
           components,
         })
 
         return
       },
-      [object, objectState]
+      [object]
     )
 
   return useMemo(() => {
@@ -109,7 +108,8 @@ const useRedactorRenderComponents = (
           inEditMode: inEditMode,
           wrapperContainer: wrapperContainer,
           parent: object,
-          updateParent: updateObject,
+          // updateParent: updateObject,
+          updateParent: updateObjectRef.current,
         }
 
         curr.push(
@@ -121,7 +121,12 @@ const useRedactorRenderComponents = (
               {...renderProps}
             />
           ) : (
-            <Component key={index} {...renderProps} />
+            <Component
+              key={index}
+              isDirty={undefined}
+              updateTemplate={undefined}
+              {...renderProps}
+            />
           )
         )
       }
@@ -134,7 +139,6 @@ const useRedactorRenderComponents = (
     updateObjectChildComponent,
     inEditMode,
     wrapperContainer,
-    updateObject,
   ])
 }
 

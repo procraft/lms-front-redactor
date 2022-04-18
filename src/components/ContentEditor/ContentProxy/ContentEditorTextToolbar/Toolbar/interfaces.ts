@@ -74,12 +74,14 @@ export const LegacyHiddenComponent = 23
 export const CacheComponent = 24
 
 export type ReactFiber = {
-  pendingProps: {
-    object?: RedactorComponentProps['object']
-    parent?: RedactorComponentProps['object']
-    updateObject?: RedactorComponentProps['updateObject']
-    updateParent?: RedactorComponentProps['updateParent']
-  }
+  pendingProps:
+    | {
+        object?: RedactorComponentProps['object']
+        parent?: RedactorComponentProps['object']
+        updateObject?: RedactorComponentProps['updateObject']
+        updateParent?: RedactorComponentProps['updateParent']
+      }
+    | undefined
 
   /**
    * parent

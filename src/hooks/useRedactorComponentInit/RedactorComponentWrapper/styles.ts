@@ -26,6 +26,12 @@ export const RedactorComponentWrapperButtonsStyled = styled.div`
       width: 18px;
       height: 18px;
     }
+
+    &[color='secondary'] {
+      svg {
+        fill: red;
+      }
+    }
   }
 `
 

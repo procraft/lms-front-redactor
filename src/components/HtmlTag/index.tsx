@@ -21,6 +21,8 @@ export const HtmlTag: RedactorComponent = ({
   children: _children,
   parent,
   updateParent,
+  isDirty,
+  updateTemplate,
   // ...other
 }) => {
   _children
@@ -99,6 +101,8 @@ export const HtmlTag: RedactorComponent = ({
     activeSetter,
     hoverable,
     canEditHTML: true,
+    isDirty,
+    updateTemplate,
   })
 
   _hovered

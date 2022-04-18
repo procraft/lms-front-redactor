@@ -195,7 +195,7 @@ export const useContentEditable2 = ({
 
       if (reactFiber) {
         if (
-          reactFiber.return?.pendingProps.object &&
+          reactFiber.return?.pendingProps?.object &&
           reactFiber.return?.pendingProps.updateObject
         ) {
           /**

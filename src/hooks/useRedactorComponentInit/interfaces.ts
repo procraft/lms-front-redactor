@@ -47,6 +47,9 @@ export type useRedactorComponentInitProps<
    * Может редактироваться в режиме contentEditable
    */
   // canContentEditable: boolean
+
+  isDirty: RedactorComponentWrapperProps['isDirty']
+  updateTemplate: RedactorComponentWrapperProps['updateTemplate']
 }
 
 export type ComponentWrapperProps = {

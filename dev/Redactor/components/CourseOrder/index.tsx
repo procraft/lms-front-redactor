@@ -30,6 +30,8 @@ export const CourseOrderDev: RedactorComponent = ({
     activeSetter,
     hoverable: true,
     canEditHTML: true,
+    isDirty: undefined,
+    updateTemplate: undefined,
   })
 
   const content = useMemo(() => {

@@ -11,7 +11,7 @@ import { useApolloClient } from '@apollo/client'
  */
 export const RedactorComponentWrapperSaveButton: React.FC<
   RedactorComponentWrapperSaveButtonProps
-> = ({ object, parent, updateParent }) => {
+> = ({ object, parent, updateParent, isDirty, updateTemplate }) => {
   const client = useApolloClient()
 
   const [createTemplate, { loading: createTemplateLoading }] =
@@ -32,7 +32,7 @@ export const RedactorComponentWrapperSaveButton: React.FC<
       const { component, components, name, props } = object
 
       if (object.id) {
-        //
+        updateTemplate && updateTemplate()
       } else {
         createTemplate({
           variables: {
@@ -80,7 +80,7 @@ export const RedactorComponentWrapperSaveButton: React.FC<
           })
       }
     },
-    [client, createTemplate, object, parent, updateParent]
+    [client, createTemplate, object, parent, updateParent, updateTemplate]
   )
 
   return (
@@ -90,6 +90,7 @@ export const RedactorComponentWrapperSaveButton: React.FC<
         title="Сохранить блок"
         onClick={saveBlock}
         disabled={inRequest}
+        color={isDirty ? 'secondary' : undefined}
       >
         <SvgIconSave />
       </Button>

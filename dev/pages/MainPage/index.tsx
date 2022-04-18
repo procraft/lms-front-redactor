@@ -92,7 +92,6 @@ const ContentEditorDevPage: Page = () => {
                       },
                       components: [
                         {
-                          id: 'SDfsdf',
                           name: 'HtmlTag',
                           component: 'HtmlTag',
                           props: {

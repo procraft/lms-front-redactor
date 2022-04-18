@@ -46,6 +46,9 @@ export type RedactorComponentProps<P = {}> = {
 
   parent?: RedactorComponentWrapperProps['parent']
   updateParent?: RedactorComponentWrapperProps['updateParent']
+
+  isDirty: RedactorComponentWrapperProps['isDirty']
+  updateTemplate: RedactorComponentWrapperProps['updateTemplate']
 }
 
 export type RedactorComponent<

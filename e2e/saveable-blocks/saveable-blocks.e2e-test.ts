@@ -168,7 +168,7 @@ describe('Saveable Blocks', () => {
             throw new Error('Can not get component')
           }
 
-          if (!component.pendingProps.object) {
+          if (!component.pendingProps?.object) {
             throw new Error('Can not get component.pendingProps.object')
           }
 

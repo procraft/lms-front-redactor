@@ -19,6 +19,8 @@ export const ContentEditor: RedactorComponent = ({
   wrapperContainer,
   parent,
   updateParent,
+  isDirty,
+  updateTemplate,
   ...other
 }) => {
   const { ref, element, active, activeSetter } =
@@ -105,6 +107,8 @@ export const ContentEditor: RedactorComponent = ({
     activeSetter,
     hoverable: true,
     canEditHTML: false,
+    isDirty,
+    updateTemplate,
   })
 
   _hovered

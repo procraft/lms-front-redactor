@@ -97,6 +97,8 @@ const AddBlockModal: React.FC<AddBlockModalProps> = ({
           inEditMode={true}
           updateObject={updateTemplateObject}
           wrapperContainer={wrapperContainer || undefined}
+          isDirty={undefined}
+          updateTemplate={undefined}
         />
       </>
     )

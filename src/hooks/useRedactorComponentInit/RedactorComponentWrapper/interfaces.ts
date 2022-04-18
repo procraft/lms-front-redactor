@@ -1,5 +1,6 @@
 import { RedactorComponentProps } from '../../../RedactorComponent/interfaces'
 import { RedactorHtmlElement } from '../interfaces'
+import { RedactorComponentWrapperSaveButtonProps } from './buttons/Save/interfaces'
 
 export type RedactorComponentWrapperProps = {
   /**
@@ -46,4 +47,7 @@ export type RedactorComponentWrapperProps = {
    * Можно редактировать HTML компонента
    */
   canEditHTML: boolean
+
+  isDirty: RedactorComponentWrapperSaveButtonProps['isDirty']
+  updateTemplate: RedactorComponentWrapperSaveButtonProps['updateTemplate']
 }

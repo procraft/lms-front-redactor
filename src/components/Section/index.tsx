@@ -16,6 +16,8 @@ export const Section: RedactorComponent = ({
   wrapperContainer,
   parent,
   updateParent,
+  isDirty,
+  updateTemplate,
   ...other
 }) => {
   const { ref, element, active, activeSetter } =
@@ -36,6 +38,8 @@ export const Section: RedactorComponent = ({
     activeSetter,
     hoverable: true,
     canEditHTML: true,
+    isDirty,
+    updateTemplate,
   })
 
   const childrenContent = useRedactorRenderComponents({

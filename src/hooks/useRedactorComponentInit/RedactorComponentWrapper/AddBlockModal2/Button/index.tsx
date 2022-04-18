@@ -86,6 +86,8 @@ export const AddBlockModal2Button: React.FC<AddBlockModal2ButtonProps> = ({
           updateObject={console.log}
           wrapperContainer={undefined}
           object={newObject}
+          isDirty={undefined}
+          updateTemplate={undefined}
         />
       </AddBlockModal2ButtonStyled>
     )

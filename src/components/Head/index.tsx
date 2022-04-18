@@ -24,6 +24,8 @@ export const Head: RedactorComponent = ({
   wrapperContainer,
   parent,
   updateParent,
+  isDirty,
+  updateTemplate,
   ...other
 }) => {
   const { ref, element, active, activeSetter } =
@@ -47,6 +49,8 @@ export const Head: RedactorComponent = ({
     activeSetter,
     hoverable: true,
     canEditHTML: true,
+    isDirty,
+    updateTemplate,
   })
 
   _hovered

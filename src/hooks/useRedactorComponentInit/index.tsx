@@ -40,6 +40,8 @@ const useRedactorComponentInit = ({
   hoverable,
   canEditHTML,
   wrapperTitle,
+  isDirty,
+  updateTemplate,
 }: useRedactorComponentInitProps): ComponentWrapperProps => {
   const context = useContext(LmsFrontRedactorContext)
 
@@ -370,7 +372,13 @@ const useRedactorComponentInit = ({
    * Выводит обертку управления компонентом
    */
   const wrapperContent = useMemo(() => {
-    if (!element || (!active && !hovered)) {
+    if (!element) {
+      return
+    }
+
+    if (isDirty) {
+      // Show anyway if isDirty
+    } else if (!active && !hovered) {
       return
     }
 
@@ -387,6 +395,8 @@ const useRedactorComponentInit = ({
         hovered={hovered}
         canEditHTML={canEditHTML}
         wrapperTitle={wrapperTitle}
+        isDirty={isDirty}
+        updateTemplate={updateTemplate}
       />
     )
   }, [
@@ -401,6 +411,8 @@ const useRedactorComponentInit = ({
     updateParent,
     canEditHTML,
     wrapperTitle,
+    isDirty,
+    updateTemplate,
   ])
 
   return useMemo(() => {

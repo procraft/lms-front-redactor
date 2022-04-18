@@ -24,7 +24,7 @@ import { RedactorComponentWrapperSaveButton } from './buttons/Save'
 /**
  * Выводить дополнительные отладочные инструменты
  */
-const debug = true
+const debug = false
 
 /**
  * Враппер для компонентов редактора.
@@ -44,6 +44,8 @@ export const RedactorComponentWrapper: React.FC<
   wrapperTitle,
   hovered,
   canEditHTML,
+  isDirty,
+  updateTemplate,
 }) => {
   const wrapper = useMemo(() => {
     const wrapper = document.createElement('div')
@@ -473,69 +475,71 @@ export const RedactorComponentWrapper: React.FC<
             updateParent={updateParent}
           />
         ) : null}
-        {ReactDOM.createPortal(
-          <RedactorComponentWrapperStyled role="redactor-wrapper">
-            {active ? (
-              <RedactorComponentWrapperButtonsStyled role="redactor-wrapper-buttons">
-                {/* <span>
+        {active || isDirty
+          ? ReactDOM.createPortal(
+              <RedactorComponentWrapperStyled role="redactor-wrapper">
+                <RedactorComponentWrapperButtonsStyled role="redactor-wrapper-buttons">
+                  {/* <span>
                   {object.name}{' '}
                   {object.name !== object.component
                     ? ` (${object.component})`
                     : ''}
                 </span>
                 <span>{object.props.tag}</span> */}
-                {debug ? (
-                  <button onClick={addObjectHandler} role="addBlock">
-                    Add block
-                  </button>
-                ) : null}
-                {debug ? (
-                  <button onClick={showContentHandler} role="showState">
-                    Show state
-                  </button>
-                ) : null}
-                <RedactorComponentWrapperAddComponentButton
-                  object={object}
-                  updateObject={updateObject}
-                />
-                {canEditHTML ? (
-                  <Button
-                    onClick={openHtmlEditor}
-                    role="openHtmlEditor"
-                    title="Редактировать HTML"
-                  >
-                    <SvgIconCode />
-                  </Button>
-                ) : null}
-                {parent ? (
-                  <RedactorComponentWrapperSaveButton
+                  {debug ? (
+                    <button onClick={addObjectHandler} role="addBlock">
+                      Add block
+                    </button>
+                  ) : null}
+                  {debug ? (
+                    <button onClick={showContentHandler} role="showState">
+                      Show state
+                    </button>
+                  ) : null}
+                  <RedactorComponentWrapperAddComponentButton
                     object={object}
                     updateObject={updateObject}
-                    parent={parent}
-                    updateParent={updateParent}
                   />
-                ) : null}
-                {parent ? (
+                  {canEditHTML ? (
+                    <Button
+                      onClick={openHtmlEditor}
+                      role="openHtmlEditor"
+                      title="Редактировать HTML"
+                    >
+                      <SvgIconCode />
+                    </Button>
+                  ) : null}
+                  {parent ? (
+                    <RedactorComponentWrapperSaveButton
+                      object={object}
+                      updateObject={updateObject}
+                      parent={parent}
+                      updateParent={updateParent}
+                      isDirty={isDirty}
+                      updateTemplate={updateTemplate}
+                    />
+                  ) : null}
+                  {parent ? (
+                    <Button
+                      onClick={removeObjectHandler}
+                      role="removeComponent"
+                      title="Удалить элемент"
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  ) : null}
                   <Button
-                    onClick={removeObjectHandler}
-                    role="removeComponent"
-                    title="Удалить элемент"
+                    onClick={closeEditor}
+                    role="close"
+                    title="Завершить редактирование"
                   >
-                    <DeleteIcon />
+                    <CloseIcon />
                   </Button>
-                ) : null}
-                <Button
-                  onClick={closeEditor}
-                  role="close"
-                  title="Завершить редактирование"
-                >
-                  <CloseIcon />
-                </Button>
-              </RedactorComponentWrapperButtonsStyled>
-            ) : null}
-          </RedactorComponentWrapperStyled>,
-          wrapper
-        )}
+                </RedactorComponentWrapperButtonsStyled>
+              </RedactorComponentWrapperStyled>,
+              wrapper
+            )
+          : null}
 
         {addBlockOpened && addBlockButtonDirection ? (
           updateParent && parent ? (
@@ -582,5 +586,7 @@ export const RedactorComponentWrapper: React.FC<
     updateParent,
     wrapper,
     canEditHTML,
+    isDirty,
+    updateTemplate,
   ])
 }

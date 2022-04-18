@@ -62,6 +62,8 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
         updateObject={updateObject}
         inEditMode={inEditMode}
         wrapperContainer={undefined}
+        isDirty={undefined}
+        updateTemplate={undefined}
       />
     )
   }, [object, getRedactorObjectComponent, updateObject, inEditMode])
