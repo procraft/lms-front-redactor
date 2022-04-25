@@ -5,8 +5,6 @@
  * Команда для генерирования этого файла: "yarn generate:types"
  */
 
-// @ts-ignore
-
 import * as Types from './types'
 
 import { LandingTemplateFrFragment } from './landingTemplateFr'

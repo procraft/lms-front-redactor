@@ -59,7 +59,7 @@ export const Modal2Styled = styled(ModalContainerStyled)<Modal2StyledProps>`
   display: flex;
   flex-direction: column;
   max-height: calc(100% - 40px);
-  margin: 0;
+  margin: 0 150px 0 0;
   list-style: none;
   user-select: none;
   font-size: 12px;

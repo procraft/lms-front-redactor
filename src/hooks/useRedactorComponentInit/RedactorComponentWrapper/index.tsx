@@ -25,7 +25,7 @@ import { findComponentInParent } from '../../../helpers/findComponentInParent'
 /**
  * Выводить дополнительные отладочные инструменты
  */
-const debug = true
+const debug = false
 
 /**
  * Враппер для компонентов редактора.

@@ -76,9 +76,9 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
   }, [client, dirty, object.id, updateTemplateMutation])
 
   return useMemo(() => {
-    // if (!response.data?.template) {
-    //   return null
-    // }
+    if (!response.data?.template) {
+      return null
+    }
 
     // const { components, props, ...otherObject } = object
 
@@ -91,5 +91,12 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
         updateTemplate={updateTemplate}
       />
     )
-  }, [dirty, other, savedBlock, updateObject, updateTemplate])
+  }, [
+    dirty,
+    other,
+    response.data?.template,
+    savedBlock,
+    updateObject,
+    updateTemplate,
+  ])
 }
