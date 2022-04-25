@@ -20,11 +20,12 @@ import { RedactorComponentWrapperHTMLEditor } from './HtmlEditor'
 import { SvgIconCode } from '../../../ui/SvgIcon/Code'
 import { RedactorComponentWrapperAddComponentButton } from './buttons/AddComponent'
 import { RedactorComponentWrapperSaveButton } from './buttons/Save'
+import { findComponentInParent } from '../../../helpers/findComponentInParent'
 
 /**
  * Выводить дополнительные отладочные инструменты
  */
-const debug = false
+const debug = true
 
 /**
  * Враппер для компонентов редактора.
@@ -360,9 +361,15 @@ export const RedactorComponentWrapper: React.FC<
 
       const components = [...parent.components]
 
-      const componentIndex = components.indexOf(component)
+      // const componentIndex = components.indexOf(component)
 
-      if (componentIndex === -1) {
+      // if (componentIndex === -1) {
+      //   console.error('Не был найден текущий компонент в массиве компонентов 1')
+      //   return
+      // }
+      const componentIndex = findComponentInParent(components, component)
+
+      if (componentIndex === undefined) {
         console.error('Не был найден текущий компонент в массиве компонентов')
         return
       }

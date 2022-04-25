@@ -16,11 +16,11 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
   const updateObject = useCallback<RedactorComponentProps['updateObject']>(
     (_current, data) => {
       dirtySetter({
-        ...(dirty ?? object),
+        ...(dirty ?? _current),
         ...data,
       })
     },
-    [dirty, object]
+    [dirty]
   )
 
   const response = useTemplateQuery({
@@ -84,8 +84,8 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
 
     return (
       <Component
-        object={savedBlock}
         {...other}
+        object={savedBlock}
         updateObject={updateObject}
         isDirty={!!dirty}
         updateTemplate={updateTemplate}

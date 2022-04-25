@@ -3,6 +3,7 @@ import { useRedactorRenderComponentsProps } from './interfaces'
 import { RedactorComponentProps } from '../../RedactorComponent/interfaces'
 import { LmsFrontRedactorContext } from '../../Context'
 import { SavedBlock } from './SavedBlock'
+import { findComponentInParent } from '../../helpers/findComponentInParent'
 
 /**
  * В цикле выводим дочерние компоненты
@@ -45,18 +46,25 @@ const useRedactorRenderComponents = ({
 
         const components = [...object.components]
 
-        const componentIndex = components.indexOf(current)
+        // const componentIndex = components.indexOf(current)
 
-        if (componentIndex === -1) {
-          console.error(
-            'Не был найден текущий компонент в массиве компонентов',
-            'current',
-            current,
-            'data',
-            data,
-            'object',
-            object
-          )
+        // if (componentIndex === -1) {
+        //   console.error(
+        //     'Не был найден текущий компонент в массиве компонентов',
+        //     'current',
+        //     current,
+        //     'data',
+        //     data,
+        //     'object',
+        //     object
+        //   )
+        //   return
+        // }
+
+        const componentIndex = findComponentInParent(components, current)
+
+        if (componentIndex === undefined) {
+          console.error('Не был найден текущий компонент в массиве компонентов')
           return
         }
 
