@@ -42,47 +42,58 @@ export const HtmlTag: RedactorComponent = ({
   const { ref, element, active, activeSetter } =
     useRedactorComponentRef<HTMLElement>()
 
-  const { hoverable, canContentEditable } = useMemo(() => {
-    let hoverable = true
-    let canContentEditable = true
+  const { hoverable, canContentEditable, allowChildComponents } =
+    useMemo(() => {
+      let hoverable = true
+      let canContentEditable = true
+      let allowChildComponents = true
 
-    if (!inEditMode) {
-      return {
-        hoverable,
-        canContentEditable,
+      if (inEditMode) {
+        if (Tag) {
+          const tagName = Tag.toLowerCase()
+
+          switch (tagName) {
+            case 'script':
+            case 'style':
+            case 'link':
+            case 'img':
+            case 'video':
+            case 'button':
+              hoverable = true
+              break
+
+            default:
+          }
+
+          switch (tagName) {
+            case 'script':
+            case 'style':
+            case 'link':
+            case 'img':
+            case 'button':
+            case 'video':
+              canContentEditable = false
+              break
+
+            default:
+          }
+
+          switch (tagName) {
+            case 'script':
+            case 'style':
+            case 'link':
+            case 'img':
+            case 'video':
+              allowChildComponents = false
+              break
+
+            default:
+          }
+        }
       }
-    }
 
-    if (Tag) {
-      switch (Tag.toLowerCase()) {
-        case 'script':
-        case 'style':
-        case 'link':
-        case 'img':
-        case 'video':
-        case 'button':
-          hoverable = true
-          break
-
-        default:
-      }
-
-      switch (Tag.toLowerCase()) {
-        case 'script':
-        case 'style':
-        case 'link':
-        case 'img':
-        case 'button':
-        case 'video':
-          canContentEditable = false
-          break
-
-        default:
-      }
-    }
-
-    return { hoverable, canContentEditable }
-  }, [Tag, inEditMode])
+      return { hoverable, canContentEditable, allowChildComponents }
+    }, [Tag, inEditMode])
 
   const {
     wrapperContent,
@@ -103,6 +114,7 @@ export const HtmlTag: RedactorComponent = ({
     canEditHTML: true,
     isDirty,
     updateTemplate,
+    allowChildComponents,
   })
 
   _hovered

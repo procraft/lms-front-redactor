@@ -47,6 +47,7 @@ export const RedactorComponentWrapper: React.FC<
   canEditHTML,
   isDirty,
   updateTemplate,
+  allowChildComponents,
 }) => {
   const wrapper = useMemo(() => {
     const wrapper = document.createElement('div')
@@ -503,10 +504,12 @@ export const RedactorComponentWrapper: React.FC<
                       Show state
                     </button>
                   ) : null}
-                  <RedactorComponentWrapperAddComponentButton
-                    object={object}
-                    updateObject={updateObject}
-                  />
+                  {allowChildComponents ? (
+                    <RedactorComponentWrapperAddComponentButton
+                      object={object}
+                      updateObject={updateObject}
+                    />
+                  ) : null}
                   {canEditHTML ? (
                     <Button
                       onClick={openHtmlEditor}
@@ -595,5 +598,6 @@ export const RedactorComponentWrapper: React.FC<
     canEditHTML,
     isDirty,
     updateTemplate,
+    allowChildComponents,
   ])
 }

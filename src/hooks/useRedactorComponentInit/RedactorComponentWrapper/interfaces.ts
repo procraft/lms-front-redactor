@@ -50,4 +50,9 @@ export type RedactorComponentWrapperProps = {
 
   isDirty: RedactorComponentWrapperSaveButtonProps['isDirty']
   updateTemplate: RedactorComponentWrapperSaveButtonProps['updateTemplate']
+
+  /**
+   * Можно добавлять дочерние компоненты
+   */
+  allowChildComponents: boolean
 }

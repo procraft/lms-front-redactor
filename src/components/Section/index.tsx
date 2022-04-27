@@ -40,6 +40,7 @@ export const Section: RedactorComponent = ({
     canEditHTML: true,
     isDirty,
     updateTemplate,
+    allowChildComponents: true,
   })
 
   const childrenContent = useRedactorRenderComponents({

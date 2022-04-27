@@ -19,12 +19,13 @@ const title = 'Redactor/RedactorComponentWrapper'
 
 interface ContainerProps extends ComponentProps {}
 
-export const Modal2: React.FC<Partial<ContainerProps>> = ({
-  children,
-  active,
-  hovered,
-  ...other
-}) => {
+type Args = React.PropsWithChildren<Partial<ContainerProps>> & {
+  active: boolean
+  hovered: boolean
+  allowChildComponents: boolean
+}
+
+export const Modal2: React.FC<Args> = ({ children, ...other }) => {
   // const [opened, openedSetter] = useState(true)
 
   // const closeHandler = useCallback(() => {
@@ -64,8 +65,6 @@ export const Modal2: React.FC<Partial<ContainerProps>> = ({
           container={document.body}
           object={object}
           parent={undefined}
-          active={active !== undefined ? active : false}
-          hovered={hovered !== undefined ? hovered : false}
           canEditHTML={false}
           isDirty={undefined}
           updateTemplate={undefined}
@@ -78,9 +77,10 @@ export const Modal2: React.FC<Partial<ContainerProps>> = ({
   )
 }
 
-const args: React.PropsWithChildren<Partial<ContainerProps>> = {
+const args: Args = {
   active: false,
   hovered: true,
+  allowChildComponents: true,
 }
 
 export default {

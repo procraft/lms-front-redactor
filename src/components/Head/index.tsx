@@ -51,6 +51,7 @@ export const Head: RedactorComponent = ({
     canEditHTML: true,
     isDirty,
     updateTemplate,
+    allowChildComponents: true,
   })
 
   _hovered

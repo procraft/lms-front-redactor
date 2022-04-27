@@ -109,6 +109,7 @@ export const ContentEditor: RedactorComponent = ({
     canEditHTML: false,
     isDirty,
     updateTemplate,
+    allowChildComponents: false,
   })
 
   _hovered

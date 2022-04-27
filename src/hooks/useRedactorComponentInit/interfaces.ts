@@ -50,6 +50,7 @@ export type useRedactorComponentInitProps<
 
   isDirty: RedactorComponentWrapperProps['isDirty']
   updateTemplate: RedactorComponentWrapperProps['updateTemplate']
+  allowChildComponents: RedactorComponentWrapperProps['allowChildComponents']
 }
 
 export type ComponentWrapperProps = {

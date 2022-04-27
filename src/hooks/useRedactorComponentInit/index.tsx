@@ -42,6 +42,7 @@ const useRedactorComponentInit = ({
   wrapperTitle,
   isDirty,
   updateTemplate,
+  allowChildComponents,
 }: useRedactorComponentInitProps): ComponentWrapperProps => {
   const context = useContext(LmsFrontRedactorContext)
 
@@ -397,6 +398,7 @@ const useRedactorComponentInit = ({
         wrapperTitle={wrapperTitle}
         isDirty={isDirty}
         updateTemplate={updateTemplate}
+        allowChildComponents={allowChildComponents}
       />
     )
   }, [
@@ -413,6 +415,7 @@ const useRedactorComponentInit = ({
     wrapperTitle,
     isDirty,
     updateTemplate,
+    allowChildComponents,
   ])
 
   return useMemo(() => {
