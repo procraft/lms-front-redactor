@@ -1,6 +1,5 @@
-import React, { useCallback, useContext } from 'react'
-import { Button, ButtonProps } from '@procraft/ui/dist/Button'
-import { SavedBlockStyled } from './styles'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { SavedBlockButtonStyled, SavedBlockStyled } from './styles'
 import { RedactorComponentObject } from '../../../../../../RedactorComponent/interfaces'
 import { LandingTemplateFrFragment } from '../../../../../../gql/landingTemplateFr'
 import { AddWidgetButtonButtonProps } from '../../../buttons/interfaces'
@@ -24,13 +23,24 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
 
   const context = useContext(LmsFrontRedactorContext)
 
-  const onClick = useCallback<NonNullable<ButtonProps['onClick']>>(
-    (event) => {
+  /**
+   * Хотя целевой блок - див, все же считаем, что он кнопка.
+   * Просто чтобы меньше всяких стилей было примешено.
+   */
+  const [button, buttonSetter] = useState<HTMLDivElement | null>(null)
+
+  /**
+   * Навешиваем событие по клику, чтобы вставить выбранный шаблон
+   */
+  useEffect(() => {
+    if (!button) {
+      return
+    }
+
+    const onClick = (event: MouseEvent) => {
       event.stopPropagation()
 
-      const target = event.target as HTMLButtonElement
-
-      const template = templates.find((n) => n.id === target.value)
+      const template = templates.find((n) => n.id === object.id)
 
       if (template) {
         const { id, name, component } = template
@@ -50,9 +60,14 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
 
         closeHandler()
       }
-    },
-    [addComponent, closeHandler, templates]
-  )
+    }
+
+    button.addEventListener('click', onClick)
+
+    return () => {
+      button.removeEventListener('click', onClick)
+    }
+  }, [addComponent, button, closeHandler, object.id, templates])
 
   const [deleteMutation] = useDeleteLandingTemplateMutation({})
 
@@ -72,6 +87,33 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
     object,
   })
 
+  /**
+   * Адаптация компонента по ширине.
+   * Дело в том, что некоторые блоки могут быть слишком большие и не помещаться в
+   * родительский блок.
+   * Делаем тогда скейл.
+   */
+  useEffect(() => {
+    if (!button) {
+      return
+    }
+
+    const width = button.offsetWidth
+
+    button.childNodes.forEach((node) => {
+      if (node instanceof HTMLElement) {
+        const nodeWidth = node.offsetWidth
+
+        if (nodeWidth > width) {
+          const scale = width / nodeWidth
+
+          node.style.transform = `scale(${scale})`
+          node.style.transformOrigin = 'left'
+        }
+      }
+    })
+  }, [button])
+
   if (!Component) {
     return null
   }
@@ -83,7 +125,7 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
           🗑
         </IconButton>
       </div>
-      <Button className="addComponent" value={object.id} onClick={onClick}>
+      <SavedBlockButtonStyled ref={buttonSetter}>
         <Component
           object={object}
           inEditMode={false}
@@ -93,7 +135,7 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
           updateTemplate={undefined}
           wrapperContainer={undefined}
         />
-      </Button>
+      </SavedBlockButtonStyled>
     </SavedBlockStyled>
   )
 }

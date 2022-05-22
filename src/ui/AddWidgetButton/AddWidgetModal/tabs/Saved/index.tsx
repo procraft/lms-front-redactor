@@ -18,7 +18,7 @@ export const AddWidgetModalSavedBlocks: React.FC<
   })
 
   return (
-    <AddWidgetModalSavedBlocksStyled role="secondaryButtons">
+    <AddWidgetModalSavedBlocksStyled>
       {response.data?.templates.map((n) => {
         return (
           <SavedBlock
