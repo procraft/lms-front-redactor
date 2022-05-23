@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
 import { Button } from '@procraft/ui/dist/Button'
-import { SvgIconSave } from '../../../../../ui/SvgIcon/Save'
+import { SvgIconSave } from '../../../../../../ui/SvgIcon/Save'
 
 import { RedactorComponentWrapperSaveButtonProps } from './interfaces'
-import { useCreateLandingTemplateMutation } from '../../../../../gql/createLandingTemplate'
+import { useCreateLandingTemplateMutation } from '../../../../../../gql/createLandingTemplate'
 import { useApolloClient } from '@apollo/client'
 
 /**

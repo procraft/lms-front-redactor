@@ -1,17 +1,13 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { RedactorComponentObject } from '../../..'
-import { AddContentEditorWidgetButton } from './buttons/AddContentEditorWidgetButton'
-import { AddHeadWidgetButton } from './buttons/AddHead'
-import { AddButtonWidgetButton } from './buttons/AddButton'
-import { AddImageWidgetButton } from './buttons/AddImageWidgetButton'
-import { AddVideoWidgetButton } from './buttons/AddVideoWidgetButton'
 import { AddWidgetModalContext } from './Context'
 import { AddWidgetModalProps } from './interfaces'
 import { AddWidgetModalStyled } from './styles'
 import { Tabs } from '../../Tabs'
 import { Button, ButtonProps } from '@procraft/ui/dist/Button'
 import { AddWidgetModalSavedBlocks } from './tabs/Saved'
+import { AddWidgetModalDefaultBlocks } from './tabs/Default'
 
 // type TabState = 'default' | 'saved'
 enum TabState {
@@ -45,20 +41,6 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     [object, updateObject]
   )
 
-  const buttons = useMemo(() => {
-    return context?.buttons.map((Button, index) => {
-      return (
-        <Button
-          key={index}
-          closeHandler={closeHandler}
-          object={object}
-          // updateObject={updateObject}
-          addComponent={addComponent}
-        />
-      )
-    })
-  }, [addComponent, closeHandler, context?.buttons, object])
-
   const [tab, tabSetter] = useState<TabState>(TabState.default)
 
   const onTabClick = useCallback<NonNullable<ButtonProps['onClick']>>(
@@ -76,37 +58,12 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     switch (tab) {
       case TabState.default:
         tabContent = (
-          <div role="secondaryButtons">
-            <AddContentEditorWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              // updateObject={updateObject}
-              addComponent={addComponent}
-            />
-            <AddImageWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              // updateObject={updateObject}
-              addComponent={addComponent}
-            />
-            <AddVideoWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              // updateObject={updateObject}
-              addComponent={addComponent}
-            />
-            <AddHeadWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              addComponent={addComponent}
-            />
-            <AddButtonWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              addComponent={addComponent}
-            />
-            {buttons}
-          </div>
+          <AddWidgetModalDefaultBlocks
+            closeHandler={closeHandler}
+            object={object}
+            addComponent={addComponent}
+            context={context}
+          />
         )
         break
 
@@ -149,7 +106,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
         {tabContent}
       </>
     )
-  }, [addComponent, buttons, closeHandler, object, onTabClick, tab])
+  }, [addComponent, closeHandler, context, object, onTabClick, tab])
 
   return useMemo(() => {
     return ReactDOM.createPortal(

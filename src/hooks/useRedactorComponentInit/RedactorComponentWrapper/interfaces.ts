@@ -1,6 +1,6 @@
 import { RedactorComponentProps } from '../../../RedactorComponent/interfaces'
 import { RedactorHtmlElement } from '../interfaces'
-import { RedactorComponentWrapperSaveButtonProps } from './buttons/Save/interfaces'
+import { RedactorComponentWrapperSaveButtonProps } from './Toolbar/buttons/Save/interfaces'
 
 export type RedactorComponentWrapperProps = {
   /**

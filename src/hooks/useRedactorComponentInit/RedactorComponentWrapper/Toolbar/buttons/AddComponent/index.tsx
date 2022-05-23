@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import { Button } from '@procraft/ui/dist/Button'
-import { SvgIconPlus } from '../../../../../ui/SvgIcon/Plus'
+import { SvgIconPlus } from '../../../../../../ui/SvgIcon/Plus'
 
 import { RedactorComponentWrapperAddComponentButtonProps } from './interfaces'
-import { AddWidgetModal } from '../../../../../ui/AddWidgetButton/AddWidgetModal'
+import { AddWidgetModal } from '../../../../../../ui/AddWidgetButton/AddWidgetModal'
 
 /**
  * Кнопка вывода окна вставки компонента

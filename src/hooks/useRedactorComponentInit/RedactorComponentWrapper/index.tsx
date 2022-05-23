@@ -11,7 +11,7 @@ import LmsFrontRedactorStateEditor from './StateEditor'
 import { RedactorComponentWrapperGlobalStyled } from './styles'
 import { RedactorComponentWrapperHTMLEditor } from './HtmlEditor'
 import { findComponentInParent } from '../../../helpers/findComponentInParent'
-import { RedactorComponentWrapperToolbar } from './ui/Toolbar'
+import { RedactorComponentWrapperToolbar } from './Toolbar'
 
 /**
  * Враппер для компонентов редактора.

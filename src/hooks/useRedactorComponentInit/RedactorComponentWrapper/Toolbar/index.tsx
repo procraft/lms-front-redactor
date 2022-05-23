@@ -2,14 +2,14 @@ import React from 'react'
 import { Button } from '@procraft/ui/dist/Button'
 import DeleteIcon from 'material-ui-icons/Delete'
 import CloseIcon from 'material-ui-icons/Close'
-import { SvgIconCode } from '../../../../../ui/SvgIcon/Code'
-import { RedactorComponentWrapperAddComponentButton } from '../../buttons/AddComponent'
-import { RedactorComponentWrapperSaveButton } from '../../buttons/Save'
-import { RedactorComponentWrapperProps } from '../../interfaces'
+import { SvgIconCode } from '../../../../ui/SvgIcon/Code'
+import { RedactorComponentWrapperAddComponentButton } from './buttons/AddComponent'
+import { RedactorComponentWrapperSaveButton } from './buttons/Save'
+import { RedactorComponentWrapperProps } from '../interfaces'
 import {
   RedactorComponentWrapperButtonsStyled,
   RedactorComponentWrapperStyled,
-} from '../../styles'
+} from '../styles'
 
 /**
  * Выводить дополнительные отладочные инструменты
