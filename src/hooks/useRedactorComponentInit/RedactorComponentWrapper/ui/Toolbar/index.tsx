@@ -83,6 +83,7 @@ export const RedactorComponentWrapperToolbar: React.FC<
 
         {canEditHTML ? (
           <Button
+            className='vidget'
             onClick={openHtmlEditor}
             role="openHtmlEditor"
             title="Редактировать HTML"
@@ -102,6 +103,7 @@ export const RedactorComponentWrapperToolbar: React.FC<
         ) : null}
         {parent ? (
           <Button
+            className='vidget'
             onClick={removeObjectHandler}
             role="removeComponent"
             title="Удалить элемент"
@@ -110,6 +112,7 @@ export const RedactorComponentWrapperToolbar: React.FC<
           </Button>
         ) : null}
         <Button
+          className='vidget'
           onClick={closeEditor}
           role="close"
           title="Завершить редактирование"

@@ -29,45 +29,10 @@ export const useAddBlockButton: (props: useAddBlockButtonProps) => void = ({
     button.className = `RedactorComponentWrapper--addBlock-button ${direction}`
 
     button.innerHTML = `
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 472.615 472.615" xml:space="preserve">
-<g>
-	<g>
-		<polygon points="278.565,194.051 278.565,0 194.053,0 194.053,194.051 0,194.051 0,278.564 194.053,278.564 194.053,472.615 
-			278.565,472.615 278.565,278.564 472.615,278.564 472.615,194.051 		"/>
-	</g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-</svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <rect width="24" height="24" rx="12" fill="#2563EB"/>
+      <path d="M11.375 11.375V7.625H12.625V11.375H16.375V12.625H12.625V16.375H11.375V12.625H7.625V11.375H11.375Z" fill="white"/>
+    </svg>
     `
 
     // const onMouseOver = (event: MouseEvent) => {

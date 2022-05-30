@@ -4,6 +4,7 @@ import { SvgIconPlus } from '../../../../../ui/SvgIcon/Plus'
 
 import { RedactorComponentWrapperAddComponentButtonProps } from './interfaces'
 import { AddWidgetModal } from '../../../../../ui/AddWidgetButton/AddWidgetModal'
+import { RedactorComponentWrapperAddComponentButtonStyled } from './styles'
 
 /**
  * Кнопка вывода окна вставки компонента
@@ -24,8 +25,8 @@ export const RedactorComponentWrapperAddComponentButton: React.FC<
   }, [])
 
   return (
-    <>
-      <Button title="Вставить виджет" onClick={openModal}>
+    <RedactorComponentWrapperAddComponentButtonStyled>
+      <Button className='vidget' title="Вставить виджет" onClick={openModal}>
         <SvgIconPlus />
       </Button>
 
@@ -36,6 +37,6 @@ export const RedactorComponentWrapperAddComponentButton: React.FC<
           updateObject={updateObject}
         />
       ) : null}
-    </>
+    </RedactorComponentWrapperAddComponentButtonStyled>
   )
 }

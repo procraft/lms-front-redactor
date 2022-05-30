@@ -6,19 +6,18 @@ export const RedactorComponentWrapperButtonsStyled = styled.div`
   > * {
     margin: 0 2px;
   }
-
+  
   ${ButtonStyled} {
     min-width: auto;
     min-height: auto;
-    width: 28px;
-    height: 28px;
-    line-height: 26px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border-radius: 50%;
-    background: rgb(37, 36, 36);
+    background: #2563EB;
 
     &:active {
-      background: rgb(71, 71, 71);
+      background: #1D4ED8;
     }
 
     svg {
@@ -43,6 +42,7 @@ export const RedactorComponentWrapperStyled = styled.div`
     position: absolute;
     bottom: calc(100% - 14px);
     right: 14px;
+    display: flex;
   }
 
   button {
@@ -53,7 +53,7 @@ export const RedactorComponentWrapperStyled = styled.div`
 
 const TopDirectionSelector: useAddBlockButtonProps['direction'] = 'Top'
 const BottomDirectionSelector: useAddBlockButtonProps['direction'] = 'Bottom'
-const buttonHeight = 28
+const buttonHeight = 24
 
 export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
   button.RedactorComponentWrapper--addBlock-button {
@@ -62,7 +62,7 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
     height: ${buttonHeight}px;
     border-radius: 50%;
     border: none;
-    background: #2c8ade;
+    background: none;
     color: white;
     transition-duration: 0.3s;
     pointer-events: all;
@@ -77,7 +77,6 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
 
     > svg {
       fill: white;
-      padding: 7px;
     }
     
     &:hover {

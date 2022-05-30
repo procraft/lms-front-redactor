@@ -9,10 +9,6 @@ import { SectionStyled } from '../components/Section/styles'
  * Эти стили выводятся и должны выводиться только в режиме редактирования
  */
 export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
-
-  /* * {
-    box-sizing: border-box;
-  } */
   
   [role=redactor-wrapper] * {
     box-sizing: border-box;
@@ -25,13 +21,7 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
   } */
 
   [${redactor2ComponentAttributes.component}] {
-      /* border: 1px solid #dfdfdf; */
-      /* border: 1px solid transparent; */
       min-height: 20px;
-      /* cursor: pointer; */
-      /* padding: 2px 4px; */
-
-      /* margin: 10px; */
 
       &[${redactor2ComponentAttributes.component}=HtmlTag] {
         /* font-size: 1rem; */
