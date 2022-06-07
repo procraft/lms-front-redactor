@@ -77,6 +77,8 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
 
     > svg {
       fill: white;
+      background: rgb(37, 99, 235);
+      border-radius: 50%;
     }
     
     &:hover {

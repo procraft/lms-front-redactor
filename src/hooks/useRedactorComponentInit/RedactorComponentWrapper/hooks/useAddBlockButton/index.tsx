@@ -29,10 +29,9 @@ export const useAddBlockButton: (props: useAddBlockButtonProps) => void = ({
     button.className = `RedactorComponentWrapper--addBlock-button ${direction}`
 
     button.innerHTML = `
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <rect width="24" height="24" rx="12" fill="#2563EB"/>
-      <path d="M11.375 11.375V7.625H12.625V11.375H16.375V12.625H12.625V16.375H11.375V12.625H7.625V11.375H11.375Z" fill="white"/>
-    </svg>
+      <svg width="32" height="32" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: white;">
+        <path d="M7.375 7.375V3.625H8.625V7.375H12.375V8.625H8.625V12.375H7.375V8.625H3.625V7.375H7.375Z" fill="white"></path>
+      </svg>
     `
 
     // const onMouseOver = (event: MouseEvent) => {

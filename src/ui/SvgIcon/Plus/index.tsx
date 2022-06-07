@@ -10,5 +10,6 @@ export const SvgIconPlus: React.FC = ({ ...other }) => {
     >
       <path d="M7.375 7.375V3.625H8.625V7.375H12.375V8.625H8.625V12.375H7.375V8.625H3.625V7.375H7.375Z" fill="white"/>
     </svg>
+    
   )
 }
