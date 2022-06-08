@@ -11,17 +11,6 @@ export const Modal2TitleStyled = styled.div`
     flex: 1;
     color: #333333;
   }
-
-  > hr {
-    margin-top: 0;
-    flex-basis: 100%;
-    display: block;
-    border: none;
-    border-bottom: 1px solid #e6e7e8;
-    height: 1px;
-    width: 100%;
-    margin: 12px 0;
-  }
 `
 
 export const Modal2ContentScrollerStyled = styled.div`
@@ -38,10 +27,10 @@ export const Modal2ContentStyled = styled.div`
 `
 
 export const ModalContainerStyled = styled.div`
-  padding: 8px;
-  box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 15%);
+  padding: 16px;
+  box-shadow: 0px 4px 16px rgba(148, 163, 184, 0.24);
+  border-radius: 4px;
   background-color: #fff;
-  border-radius: 10px;
   animation: fade-in 0.3s linear forwards;
   font-size: 13px;
 `
