@@ -81,7 +81,7 @@ describe('InsertBlock action', () => {
             expect(buttons).not.null
 
             const addWidgetButton = buttons?.querySelector<HTMLButtonElement>(
-              '[title="Вставить виджет"]'
+              '[title="Добавить виджет"]'
             )
 
             console.log('addWidgetButton', addWidgetButton)

@@ -99,7 +99,7 @@ describe('ContentEditor', () => {
 
     cy.wait(500)
 
-    cy.get('button[title="Вставить виджет"]')
+    cy.get('button[title="Добавить виджет"]')
       .trigger('mouseover')
       .wait(100)
       .trigger('click')

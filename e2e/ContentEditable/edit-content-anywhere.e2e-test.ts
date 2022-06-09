@@ -49,7 +49,7 @@ describe('Edit HTML content anywhere', () => {
     /**
      * Кликаем открытие модалки с кнопками вставки виджетов
      */
-    cy.get('button[title="Вставить виджет"]')
+    cy.get('button[title="Добавить виджет"]')
       .trigger('mouseover')
       .wait(100)
       .trigger('click')

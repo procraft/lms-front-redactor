@@ -131,7 +131,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
             },
             {
               value: TabState.saved,
-              label: 'Пользовательские',
+              label: 'Блоки',
             },
           ].map((n) => {
             return (
@@ -156,7 +156,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
       <AddWidgetModalStyled
         modal
         preventClickEvent
-        title="Вставить виджет"
+        title="Добавить виджет"
         closeHandler={closeHandler}
         moveable
         role="redactor--modal"

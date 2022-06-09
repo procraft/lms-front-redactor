@@ -4,5 +4,12 @@ export const TabsStyled = styled.div`
   display: flex;
   align-content: center;
   justify-content: space-around;
-  margin-bottom: 10px;
+  border-bottom: 1px solid #3B82F6;
+  & button.primary {
+    width: 50%;
+    background: #3B82F6;
+    color: white;
+    padding: 4px 16px;
+    border-radius: 4px;
+  }
 `

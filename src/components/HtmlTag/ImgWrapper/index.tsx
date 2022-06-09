@@ -117,41 +117,44 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         {active ? uploader : null}
 
         <div className="controls">
-          <TextField
-            fullWidth
-            value={object.props.style?.width || ''}
-            title="Ширина"
-            name="width"
-            onChange={onChangeStyles}
-            helperText="px, %"
-          />
+          <div className='image-inputs'>
+            <TextField
+              className='img-input'
+              value={object.props.style?.width || ''}
+              title="Ширина"
+              name="width"
+              onChange={onChangeStyles}
+              placeholder="(50px, 10%)"
+            />
 
-          <TextField
-            fullWidth
-            value={object.props.style?.maxWidth || ''}
-            title="Максимальная ширина"
-            name="maxWidth"
-            onChange={onChangeStyles}
-            helperText="px, %"
-          />
+            <TextField
+              className='img-input'
+              value={object.props.style?.maxWidth || ''}
+              title="Макс. ширина"
+              name="maxWidth"
+              onChange={onChangeStyles}
+              placeholder="(50px, 10%)"
+            />
+          </div>
+          <div className='image-inputs'>
+            <TextField
+              className='img-input'
+              value={object.props.style?.height || ''}
+              title="Высота"
+              name="height"
+              onChange={onChangeStyles}
+              placeholder="(50px, 10%)"
+            />
 
-          <TextField
-            fullWidth
-            value={object.props.style?.height || ''}
-            title="Высота"
-            name="height"
-            onChange={onChangeStyles}
-            helperText="px, %"
-          />
-
-          <TextField
-            fullWidth
-            value={object.props.style?.maxHeight || ''}
-            title="Максимальная высота"
-            name="maxHeight"
-            onChange={onChangeStyles}
-            helperText="px, %"
-          />
+            <TextField
+              className='img-input'
+              value={object.props.style?.maxHeight || ''}
+              title="Макс. высота"
+              name="maxHeight"
+              onChange={onChangeStyles}
+              placeholder="(50px, 10%)"
+            />
+          </div>
         </div>
       </ImgWrapperModalStyled>
     )
