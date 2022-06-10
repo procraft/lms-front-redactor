@@ -9,6 +9,5 @@ export type useUploaderProps = Omit<IconButtonProps, 'callback'> & {
    * Колбэк на загрузку
    */
   onUpload: (url: string) => void
-
   inputProps?: UploaderInputProps
 }

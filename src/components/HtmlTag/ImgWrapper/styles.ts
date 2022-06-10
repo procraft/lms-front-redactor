@@ -6,6 +6,7 @@ export const ImgWrapperModalStyled = styled(Modal2)`
   width: 100%;
 
   .image-block {
+    margin-bottom: 8px;
     img {
       max-width: 100%;
     }
@@ -16,7 +17,7 @@ export const ImgWrapperModalStyled = styled(Modal2)`
     justify-content: space-between;
     margin-bottom: 16px;
     &:last-child {
-      margin-botton: 0;
+      margin-botton: 0!important;
     }
 
     & .img-input {
