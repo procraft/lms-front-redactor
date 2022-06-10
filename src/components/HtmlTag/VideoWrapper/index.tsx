@@ -81,6 +81,7 @@ export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
 
   const { uploader } = useUploader({
     onUpload,
+    title: 'Загрузите видео',
     inputProps: {
       accept: 'video/*',
     },

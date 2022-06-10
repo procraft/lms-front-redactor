@@ -35,6 +35,13 @@ export const UploaderStyled = styled(IconButton)`
 
     & p {
       margin-bottom: 0;
+      text-transform: none;
+      color: #475569;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 120%;
     }
   }
 `

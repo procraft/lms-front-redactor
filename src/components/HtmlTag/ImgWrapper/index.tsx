@@ -59,6 +59,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
 
   const { uploader } = useUploader({
     onUpload,
+    title: 'Загрузите картинку',
     inputProps: {
       accept: 'image/*',
       className: 'upload-img'
