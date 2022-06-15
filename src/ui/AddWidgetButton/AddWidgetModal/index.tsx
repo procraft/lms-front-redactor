@@ -76,7 +76,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     switch (tab) {
       case TabState.default:
         tabContent = (
-          <div role="secondaryButtons">
+          <div role="secondaryButtons" className='vidgets'>
             <AddContentEditorWidgetButton
               closeHandler={closeHandler}
               object={object}
@@ -139,7 +139,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
                 key={n.value}
                 value={n.value}
                 onClick={onTabClick}
-                color={tab === n.value ? 'primary' : undefined}
+                className={tab === n.value ? 'btn active' : 'btn'}
               >
                 {n.label}
               </Button>

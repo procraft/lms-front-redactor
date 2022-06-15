@@ -5,6 +5,8 @@ export const TabsStyled = styled.div`
   align-content: center;
   justify-content: space-around;
   border-bottom: 1px solid #3B82F6;
+  margin-bottom: 16px;
+  
   & button.primary {
     width: 50%;
     background: #3B82F6;

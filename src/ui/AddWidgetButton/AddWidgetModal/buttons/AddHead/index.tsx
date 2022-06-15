@@ -41,19 +41,10 @@ export const AddHeadWidgetButton: React.FC<AddWidgetButtonButtonProps> = ({
     return (
       <>
         <AddWidgetModalButtonStyled ref={buttonState[1]} {...other}>
-          <div
-            style={{
-              border: '1px solid',
-              padding: 10,
-              width: 85,
-              margin: '0 auto',
-              borderRadius: 5,
-            }}
-          >
-            Head
-            <br />
-            <br />
-          </div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 11V4H19V21H17V13H7V21H5V4H7V11H17Z" fill="black"/>
+        </svg>
+        Заголовок
         </AddWidgetModalButtonStyled>
       </>
     )
