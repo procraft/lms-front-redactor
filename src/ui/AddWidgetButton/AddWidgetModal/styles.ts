@@ -26,6 +26,23 @@ export const AddWidgetModalStyled = styled(Modal2)`
         display: flex;
         align-items: center;
       }
+
+      & .show-more {
+        min-height: unset;
+        min-width: unset;
+        margin: 0 auto;
+        padding: 4px 8px;
+        border: 1px solid #3B82F6;
+        border-radius: 16px;
+
+        & svg {
+          margin-right: 4px;
+        }
+
+        $.hide {
+          display: none;
+        }
+      }
     }
   }
 `
