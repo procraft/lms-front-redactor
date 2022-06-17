@@ -119,43 +119,57 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
       >
         <div className="controls">
           <TextField
+            className='btn-width'
             fullWidth
             value={object.components[0].props.text || ''}
             title="Текст кнопки"
             onChange={onChangeValue}
+            placeholder="Например, отправить"
           />
           <TextField
+            className='btn-width'
             fullWidth
-            value={object.props.style?.width || ''}
-            title="Ширина кнопки"
-            name="width"
-            onChange={onChangeStyles}
-            helperText="px, %"
+            title="Размер текста"
+            value={object.props.style?.fontSize || ''}
+            onChange={onChangeValue}
+            placeholder="в пикселях или rem"
           />
-          <TextField
-            fullWidth
-            value={object.props.style?.maxWidth || ''}
-            title="Максимальная ширина"
-            name="maxWidth"
-            onChange={onChangeStyles}
-            helperText="px, %"
-          />
-
-          <div className="marginTop">
-            <label>Цвет фона</label>
-            <HuePicker
-              color={object.props.style?.backgroundColor}
-              onChange={onChangeColor('backgroundColor')}
-              width="100%"
+          <div className='btn-width'>
+            <TextField
+              className='btn-input'
+              value={object.props.style?.width || ''}
+              title="Ширина кнопки"
+              name="width"
+              onChange={onChangeStyles}
+              placeholder="50px, 10%"
+            />
+            <TextField
+              className='btn-input'
+              value={object.props.style?.maxWidth || ''}
+              title="Макс. ширина"
+              name="maxWidth"
+              onChange={onChangeStyles}
+              placeholder="50px, 10%"
             />
           </div>
-          <div className="marginTop">
-            <label>Цвет текста</label>
-            <HuePicker
-              color={object.props.style?.color}
-              onChange={onChangeColor('color')}
-              width="100%"
-            />
+
+          <div className='btn-colors'>
+            <div className="color-input">
+              <label>Цвет фона</label>
+              <HuePicker
+                color={object.props.style?.backgroundColor}
+                onChange={onChangeColor('backgroundColor')}
+                width="100%"
+              />
+            </div>
+            <div className="color-input">
+              <label>Цвет текста</label>
+              <HuePicker
+                color={object.props.style?.color}
+                onChange={onChangeColor('color')}
+                width="100%"
+              />
+            </div>
           </div>
         </div>
       </ButtonWrapperModalStyled>
