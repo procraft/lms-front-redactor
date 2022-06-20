@@ -4,6 +4,7 @@ import { RedactorComponentObject } from '../../..'
 import { AddContentEditorWidgetButton } from './buttons/AddContentEditorWidgetButton'
 import { AddHeadWidgetButton } from './buttons/AddHead'
 import { AddButtonWidgetButton } from './buttons/AddButton'
+import { AddWidgetButtonCourse } from './buttons/AddWidgetButtonCourse'
 import { AddImageWidgetButton } from './buttons/AddImageWidgetButton'
 import { AddVideoWidgetButton } from './buttons/AddVideoWidgetButton'
 import { AddWidgetModalContext } from './Context'
@@ -106,6 +107,11 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
               addComponent={addComponent}
             />
             <AddButtonWidgetButton
+              closeHandler={closeHandler}
+              object={object}
+              addComponent={addComponent}
+            />
+            <AddWidgetButtonCourse
               closeHandler={closeHandler}
               object={object}
               addComponent={addComponent}

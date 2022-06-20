@@ -3,7 +3,7 @@ import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ButtonProps } from './interfaces'
 import { ButtonWrapperModalStyled } from './styles'
 import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
-import { ColorResult, HuePicker } from 'react-color'
+import { ColorResult, TwitterPicker } from 'react-color'
 
 export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   const {
@@ -18,6 +18,8 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   } = props
 
   const [opened, openedSetter] = useState(false)
+  const [backgroundColor, setBackgroundColor] = useState(false)
+  const [textColor, setTextColor] = useState(false)
 
   const closeModal = useCallback(() => {
     openedSetter(false)
@@ -29,9 +31,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
       return
     }
 
-    /**
-     * Навешиваем событие, чтобы по клику открывался интерфейс выбор медиа
-     */
     const onClick = () => {
       openedSetter(true)
     }
@@ -43,24 +42,13 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     }
   }, [element, active])
 
-  // const onChangeStyles = useCallback(
-  //   (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     const name = event.target.name
-  //     const value = event.target.value
+  const toggleBgColor = () => {
+    setBackgroundColor(!backgroundColor)
+  }
 
-  //     name &&
-  //       updateObject(object, {
-  //         props: {
-  //           ...object.props,
-  //           style: {
-  //             ...object.props.style,
-  //             [name]: value,
-  //           },
-  //         },
-  //       })
-  //   },
-  //   [object, updateObject]
-  // )
+  const toggleTextColor = () => {
+    setTextColor(!textColor)
+  }
 
   const { onChangeStyles } = useOnChangeStyles({
     object,
@@ -70,9 +58,6 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   const onChangeValue = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value
-
-      //console.log('---value', value)
-
       updateObject(object, {
         components: [
           {
@@ -156,25 +141,35 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
           <div className='btn-colors'>
             <div className="color-input">
               <label>Цвет фона</label>
-              <HuePicker
-                color={object.props.style?.backgroundColor}
-                onChange={onChangeColor('backgroundColor')}
-                width="100%"
-              />
+              <div 
+                className='color-block'
+                onClick={toggleBgColor}>
+                  { backgroundColor ?
+                    <TwitterPicker
+                    color={object.props.style?.backgroundColor}
+                    onChange={onChangeColor('backgroundColor')}
+                  /> : null
+                  }
+              </div>
             </div>
             <div className="color-input">
               <label>Цвет текста</label>
-              <HuePicker
-                color={object.props.style?.color}
-                onChange={onChangeColor('color')}
-                width="100%"
-              />
+              <div
+                className='color-block' 
+                onClick={toggleTextColor}>
+                  { textColor ?
+                    <TwitterPicker
+                      color={object.props.style?.color}
+                      onChange={onChangeColor('color')}
+                    />  : null
+                  }
+              </div>
             </div>
           </div>
         </div>
       </ButtonWrapperModalStyled>
     )
-  }, [opened, object, closeModal, onChangeValue, onChangeStyles, onChangeColor])
+  }, [opened, object, closeModal, onChangeValue, onChangeStyles, backgroundColor, , textColor])
 
   return (
     <>
