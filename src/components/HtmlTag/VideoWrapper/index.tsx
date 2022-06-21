@@ -109,9 +109,9 @@ export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
         {active ? uploader : null}
 
         <div className="controls">
-          <div className='video-inputs'>
+          <div className="video-inputs">
             <TextField
-              className='video-input'
+              className="video-input"
               value={object.props.style?.width || ''}
               title="Ширина"
               name="width"
@@ -120,7 +120,7 @@ export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
             />
 
             <TextField
-              className='video-input'
+              className="video-input"
               value={object.props.style?.maxWidth || ''}
               title="Макс. ширина"
               name="maxWidth"
@@ -128,9 +128,9 @@ export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
               placeholder="(50px, 10%)"
             />
           </div>
-          <div className='video-inputs'>
+          <div className="video-inputs">
             <TextField
-              className='video-input'
+              className="video-input"
               value={object.props.style?.height || ''}
               title="Высота"
               name="height"
@@ -139,7 +139,7 @@ export const VideoWrapper: React.FC<VideoWrapperProps> = (props) => {
             />
 
             <TextField
-              className='video-input'
+              className="video-input"
               value={object.props.style?.maxHeight || ''}
               title="Макс. высота"
               name="maxHeight"

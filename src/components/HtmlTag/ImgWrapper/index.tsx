@@ -62,7 +62,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
     title: 'Загрузите картинку',
     inputProps: {
       accept: 'image/*',
-      className: 'upload-img'
+      className: 'upload-img',
     },
   })
 
@@ -119,9 +119,9 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
         {active ? uploader : null}
 
         <div className="controls">
-          <div className='image-inputs'>
+          <div className="image-inputs">
             <TextField
-              className='img-input'
+              className="img-input"
               value={object.props.style?.width || ''}
               title="Ширина"
               name="width"
@@ -130,7 +130,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
             />
 
             <TextField
-              className='img-input'
+              className="img-input"
               value={object.props.style?.maxWidth || ''}
               title="Макс. ширина"
               name="maxWidth"
@@ -138,9 +138,9 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
               placeholder="(50px, 10%)"
             />
           </div>
-          <div className='image-inputs'>
+          <div className="image-inputs">
             <TextField
-              className='img-input'
+              className="img-input"
               value={object.props.style?.height || ''}
               title="Высота"
               name="height"
@@ -149,7 +149,7 @@ export const ImgWrapper: React.FC<ImgProps> = (props) => {
             />
 
             <TextField
-              className='img-input'
+              className="img-input"
               value={object.props.style?.maxHeight || ''}
               title="Макс. высота"
               name="maxHeight"

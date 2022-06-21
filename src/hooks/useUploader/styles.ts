@@ -6,7 +6,7 @@ export const UploaderInputStyled = styled.input`
   /**
     На конечном сайте могут быть переопределены стили для [type="file"]
   */
- 
+
   &[type='file'] {
     display: none;
   }
@@ -24,7 +24,7 @@ export const UploaderStyled = styled(IconButton)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px dashed #CBD5E1;
+    border: 1px dashed #cbd5e1;
     border-radius: 4px;
     width: 100%;
     padding: 8px 0;

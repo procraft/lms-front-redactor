@@ -6,7 +6,7 @@ export const RedactorComponentWrapperButtonsStyled = styled.div`
   > * {
     margin: 0 2px;
   }
-  
+
   ${ButtonStyled} {
     min-width: auto;
     min-height: auto;
@@ -14,10 +14,10 @@ export const RedactorComponentWrapperButtonsStyled = styled.div`
     height: 24px;
     padding: 0;
     border-radius: 50%;
-    background: #2563EB;
+    background: #2563eb;
 
     &:active {
-      background: #1D4ED8;
+      background: #1d4ed8;
     }
 
     svg {

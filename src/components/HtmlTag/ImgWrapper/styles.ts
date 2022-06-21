@@ -17,13 +17,13 @@ export const ImgWrapperModalStyled = styled(Modal2)`
     justify-content: space-between;
     margin-bottom: 16px;
     &:last-child {
-      margin-botton: 0!important;
+      margin-botton: 0 !important;
     }
 
     & .img-input {
       width: 45%;
       & label {
-        color: #1E293B;
+        color: #1e293b;
         transform: translate(0px, 4px) scale(1);
       }
       & div {
@@ -35,7 +35,7 @@ export const ImgWrapperModalStyled = styled(Modal2)`
         padding: 8px;
 
         &::placeholder {
-          color: #94A3B8;
+          color: #94a3b8;
         }
       }
     }

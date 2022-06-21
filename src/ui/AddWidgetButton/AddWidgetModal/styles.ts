@@ -6,13 +6,12 @@ export const AddWidgetModalStyled = styled(Modal2)`
   width: auto;
 
   ${Modal2ContentStyled} {
-    
     & .btn {
       width: 50%;
 
       &.active {
-        background-color: #3B82F6!important;
-        color: #ffffff!important;
+        background-color: #3b82f6 !important;
+        color: #ffffff !important;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
       }
@@ -21,7 +20,7 @@ export const AddWidgetModalStyled = styled(Modal2)`
     & .vidgets {
       display: flex;
       flex-direction: column;
-      
+
       & button {
         display: flex;
         align-items: center;
@@ -32,7 +31,7 @@ export const AddWidgetModalStyled = styled(Modal2)`
         min-width: unset;
         margin: 0 auto;
         padding: 4px 8px;
-        border: 1px solid #3B82F6;
+        border: 1px solid #3b82f6;
         border-radius: 16px;
 
         & svg {
@@ -61,7 +60,7 @@ export const AddWidgetModalButtonStyled = styled.button`
   background-color: transparent;
 
   &:hover {
-    background-color: rgba(59, 130,	246, .2)
+    background-color: rgba(59, 130, 246, 0.2);
   }
 
   & svg {

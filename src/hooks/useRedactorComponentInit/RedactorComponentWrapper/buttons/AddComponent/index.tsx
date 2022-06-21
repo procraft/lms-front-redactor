@@ -26,7 +26,7 @@ export const RedactorComponentWrapperAddComponentButton: React.FC<
 
   return (
     <RedactorComponentWrapperAddComponentButtonStyled>
-      <Button className='vidget' title="Добавить виджет" onClick={openModal}>
+      <Button className="vidget" title="Добавить виджет" onClick={openModal}>
         <SvgIconPlus />
       </Button>
 

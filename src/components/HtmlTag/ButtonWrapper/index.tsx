@@ -130,8 +130,9 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             className="btn-width"
             fullWidth
             title="Размер текста"
+            name="fontSize"
             value={object.props.style?.fontSize || ''}
-            onChange={onChangeValue}
+            onChange={onChangeStyles}
             placeholder="в пикселях или rem"
           />
           <div className="btn-width">

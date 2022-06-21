@@ -87,7 +87,7 @@ export const RedactorComponentWrapperSaveButton: React.FC<
     <>
       <Button
         role="save-block"
-        className='vidget-btn'
+        className="vidget-btn"
         title="Сохранить блок"
         onClick={saveBlock}
         disabled={inRequest}
