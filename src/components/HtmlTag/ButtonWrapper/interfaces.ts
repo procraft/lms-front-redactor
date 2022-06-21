@@ -17,6 +17,5 @@ export type ButtonProps = {
    * Закрытие компонента
    */
   closeHandler: () => void
-
   element: HTMLElement | null
 }

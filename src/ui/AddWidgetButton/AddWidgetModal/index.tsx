@@ -63,9 +63,15 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
   const [tab, tabSetter] = useState<TabState>(TabState.default)
 
   const [showMore, setShowMore] = useState(false)
-  const showMoreButton = () => {
-    setShowMore(true)
-  }
+
+  const showMoreButton = useCallback<NonNullable<ButtonProps['onClick']>>(
+    (event) => {
+      if (event.target instanceof HTMLButtonElement) {
+        setShowMore(true)
+      }
+    },
+    []
+  )
 
   const onTabClick = useCallback<NonNullable<ButtonProps['onClick']>>(
     (event) => {
@@ -82,7 +88,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     switch (tab) {
       case TabState.default:
         tabContent = (
-          <div role="secondaryButtons" className='vidgets'>
+          <div role="secondaryButtons" className="vidgets">
             <AddContentEditorWidgetButton
               closeHandler={closeHandler}
               object={object}
@@ -120,8 +126,17 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
               className={'show-more ' + (showMore && 'hide')}
               onClick={showMoreButton}
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.33301 7.33331V3.33331H8.66634V7.33331H12.6663V8.66665H8.66634V12.6666H7.33301V8.66665H3.33301V7.33331H7.33301Z" fill="black"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.33301 7.33331V3.33331H8.66634V7.33331H12.6663V8.66665H8.66634V12.6666H7.33301V8.66665H3.33301V7.33331H7.33301Z"
+                  fill="black"
+                />
               </svg>
               Показать больше
             </Button>
@@ -169,7 +184,16 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
         {tabContent}
       </>
     )
-  }, [addComponent, buttons, closeHandler, object, onTabClick, showMore, tab])
+  }, [
+    addComponent,
+    buttons,
+    closeHandler,
+    object,
+    onTabClick,
+    showMore,
+    tab,
+    showMoreButton,
+  ])
 
   return useMemo(() => {
     return ReactDOM.createPortal(

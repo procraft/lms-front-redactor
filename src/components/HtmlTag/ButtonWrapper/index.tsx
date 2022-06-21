@@ -3,7 +3,8 @@ import { TextField } from '@procraft/ui/dist/form/TextField'
 import { ButtonProps } from './interfaces'
 import { ButtonWrapperModalStyled } from './styles'
 import { useOnChangeStyles } from '../../../hooks/useOnChangeStyles'
-import { ColorResult, TwitterPicker } from 'react-color'
+import { ColorResult, SketchPicker } from 'react-color'
+import { Button } from '@procraft/ui/dist/Button'
 
 export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   const {
@@ -42,13 +43,17 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     }
   }, [element, active])
 
-  const toggleBgColor = () => {
-    setBackgroundColor(!backgroundColor)
-  }
+  const toggleBgColor = useCallback((event: MouseEvent) => {
+    if (event.target instanceof HTMLButtonElement) {
+      setBackgroundColor((backgroundColor) => !backgroundColor)
+    }
+  }, [])
 
-  const toggleTextColor = () => {
-    setTextColor(!textColor)
-  }
+  const toggleTextColor = useCallback((event: MouseEvent) => {
+    if (event.target instanceof HTMLButtonElement) {
+      setTextColor((textColor) => !textColor)
+    }
+  }, [])
 
   const { onChangeStyles } = useOnChangeStyles({
     object,
@@ -90,6 +95,16 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
   )
 
   const buttonModal = useMemo(() => {
+    const colors = [
+      '#2563eb',
+      '#7c3aed',
+      '#db2777',
+      '#dc2626',
+      '#f97316',
+      '#facc15',
+      '#22c55e',
+      '#14b8a6',
+    ]
     if (!opened) {
       return null
     }
@@ -104,7 +119,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
       >
         <div className="controls">
           <TextField
-            className='btn-width'
+            className="btn-width"
             fullWidth
             value={object.components[0].props.text || ''}
             title="Текст кнопки"
@@ -112,16 +127,16 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             placeholder="Например, отправить"
           />
           <TextField
-            className='btn-width'
+            className="btn-width"
             fullWidth
             title="Размер текста"
             value={object.props.style?.fontSize || ''}
             onChange={onChangeValue}
             placeholder="в пикселях или rem"
           />
-          <div className='btn-width'>
+          <div className="btn-width">
             <TextField
-              className='btn-input'
+              className="btn-input"
               value={object.props.style?.width || ''}
               title="Ширина кнопки"
               name="width"
@@ -129,7 +144,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
               placeholder="50px, 10%"
             />
             <TextField
-              className='btn-input'
+              className="btn-input"
               value={object.props.style?.maxWidth || ''}
               title="Макс. ширина"
               name="maxWidth"
@@ -138,38 +153,80 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             />
           </div>
 
-          <div className='btn-colors'>
+          <div className="btn-colors">
             <div className="color-input">
               <label>Цвет фона</label>
-              <div 
-                className='color-block'
-                onClick={toggleBgColor}>
-                  { backgroundColor ?
-                    <TwitterPicker
-                    color={object.props.style?.backgroundColor}
-                    onChange={onChangeColor('backgroundColor')}
-                  /> : null
-                  }
-              </div>
+              <Button
+                style={{
+                  backgroundColor: object.props.style?.backgroundColor,
+                }}
+                className="color-block"
+                onClick={toggleBgColor}
+              />
             </div>
+            <div
+              style={{
+                position: 'absolute',
+                zIndex: '50',
+                bottom: -250,
+                left: -50,
+              }}
+            >
+              {backgroundColor ? (
+                <SketchPicker
+                  className="color-block-picker"
+                  presetColors={colors}
+                  disableAlpha={true}
+                  color={object.props.style?.backgroundColor}
+                  onChangeComplete={onChangeColor('backgroundColor')}
+                />
+              ) : null}
+            </div>
+
             <div className="color-input">
               <label>Цвет текста</label>
-              <div
-                className='color-block' 
-                onClick={toggleTextColor}>
-                  { textColor ?
-                    <TwitterPicker
-                      color={object.props.style?.color}
-                      onChange={onChangeColor('color')}
-                    />  : null
-                  }
-              </div>
+              <Button
+                style={{
+                  backgroundColor: object.props.style?.color,
+                }}
+                className="color-block"
+                onClick={toggleTextColor}
+              />
+            </div>
+            <div
+              style={{
+                position: 'absolute',
+                zIndex: '50',
+                bottom: -250,
+                right: -51,
+              }}
+            >
+              {textColor ? (
+                <SketchPicker
+                  className="color-block-picker"
+                  presetColors={colors}
+                  disableAlpha={true}
+                  color={object.props.style?.color}
+                  onChangeComplete={onChangeColor('color')}
+                />
+              ) : null}
             </div>
           </div>
         </div>
       </ButtonWrapperModalStyled>
     )
-  }, [opened, object, closeModal, onChangeValue, onChangeStyles, backgroundColor, , textColor])
+  }, [
+    opened,
+    object,
+    closeModal,
+    onChangeValue,
+    onChangeStyles,
+    backgroundColor,
+    textColor,
+    onChangeColor,
+    toggleBgColor,
+    toggleTextColor,
+  ])
 
   return (
     <>

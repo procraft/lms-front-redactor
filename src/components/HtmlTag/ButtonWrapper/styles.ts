@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Modal2 } from '../../../ui/Modal2'
 
 export const ButtonWrapperModalStyled = styled(Modal2)`
-  max-width: 320px;
+  max-width: 340px;
   width: 100%;
 
   .image-block {
@@ -17,10 +17,10 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
     margin-bottom: 16px;
 
     & label {
-      color: #1E293B;
+      color: #1e293b;
       transform: translate(0px, 4px) scale(1);
     }
-    
+
     & div {
       margin-top: 24px;
     }
@@ -34,12 +34,12 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
       padding: 8px;
 
       &::placeholder {
-        color: #94A3B8;
+        color: #94a3b8;
       }
     }
 
     & .btn-input {
-      width: 45%;
+      width: 47%;
     }
   }
 
@@ -49,14 +49,19 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
 
     & .color-input {
       width: 45%;
-      
+      position: relative;
+
       & .color-block {
         height: 32px;
         width: 100%;
-        border: 1px solid #E2E8F0;
+        border: 1px solid #e2e8f0;
         border-radius: 4px;
-        position: relative;
-       }
+        cursor: pointer;
+      }
+
+      & .color-block-picker {
+        margin: 0 4px 4px;
+      }
     }
   }
 `
