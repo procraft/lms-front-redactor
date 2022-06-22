@@ -10,7 +10,6 @@ import { RedactorComponentStyled } from '../../RedactorComponent/styles'
 import { useOpened } from '../../hooks/useOpened'
 import { Modal2 } from '../../ui/Modal2'
 import { ContentEditorHTMLEditorMonacoEditor } from '../ContentEditor/HTMLEditor/MonacoEditor'
-// import { HeadManagerContext } from 'next/dist/next-server/lib/head-manager-context'
 
 /**
  * Выводит содержимое в <head></head>
@@ -56,9 +55,6 @@ export const Head: RedactorComponent = ({
 
   _hovered
 
-  // Null
-  // _active
-
   const childrenContent = useRedactorRenderComponents({
     object,
     updateObject,
@@ -66,105 +62,20 @@ export const Head: RedactorComponent = ({
     wrapperContainer,
   })
 
-  // const title = useCallback(() => {
-  //   return <title id="title">sdfffwefewf</title>
-  // }, [])
-
   const content = useMemo(() => {
-    // return <NextHead>{childrenContent}</NextHead>
-    // return <NextHead>{object.props.content}</NextHead>
-
-    // console.log('object.props.content', object.props.content)
-
     /**
      * В режиме редактирования нам нужен исходный контент.
      * А NextHead рендерит все в head и там не найти какие именно элементы рендерятся.
      */
     return inEditMode ? childrenContent : <NextHead>{childrenContent}</NextHead>
-    // return inEditMode || !global.document?.head
-    //   ? childrenContent
-    //   : ReactDOM.createPortal(childrenContent, document.head)
-
-    // return <NextHead>{title}</NextHead>
   }, [childrenContent, inEditMode])
-
-  // const onChange = useCallback(
-  //   (content: string) => {
-  //     // console.log('onChange content', content)
-
-  //     // console.log('onChange object.components', object.components)
-
-  //     try {
-  //       if (!object.components) {
-  //         console.error('onChange object.components is empty', { ...object })
-  //         return
-  //       }
-
-  //       const contentElement = object.components[0] || {
-  //         name: 'Head',
-  //         component: 'Head',
-  //         components: [],
-  //         props: {},
-  //       }
-
-  //       if (!contentElement) {
-  //         console.error('onChange contentElement is null')
-  //         return
-  //       }
-
-  //       const data = {
-  //         components: [
-  //           {
-  //             ...contentElement,
-  //             props: {
-  //               ...contentElement.props,
-  //               text: content,
-  //             },
-  //           },
-  //         ],
-  //       }
-
-  //       // console.log('onChange data', data)
-
-  //       updateObject(object, data)
-  //     } catch (error) {
-  //       console.error('Head onChange error, object', error, { ...object })
-  //     }
-  //   },
-  //   [object, updateObject]
-  // )
-
-  // const { editor } = useMonacoEditor({
-  //   active,
-  //   editorProps: {
-  //     // source: object.components[0]?.props.text || '',
-  //     source: element?.innerHTML || '',
-  //     // ext: 'css',
-  //     // saveEditorContent,
-  //     // updateFile,
-  //     language: 'html',
-  //     onChange,
-  //   },
-  // })
 
   const { opened, closeHandler } = useOpened({
     active,
     element,
   })
 
-  // const updateObjectCustom = useCallback(function (...rest) {
-  //   console.log('updateObjectCustom arguments', rest)
-  // }, [])
-
-  // const updateParentCustom = useCallback(function (...rest) {
-  //   console.log('updateParentCustom arguments', rest)
-  // }, [])
-
   return useMemo(() => {
-    // if (!inEditMode) {
-    //   return content
-    // }
-
     return (
       <>
         {wrapperContent}

@@ -187,7 +187,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
     return [
       <Button
         key="reset"
-        variant={isDirty ? 'raised' : undefined}
+        className={'cancel ' + (!isDirty ? 'disabled' : '')}
         disabled={!isDirty}
         onClick={resetValue}
       >
@@ -195,8 +195,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
       </Button>,
       <Button
         key="save"
-        color={isDirty ? 'primary' : 'default'}
-        variant="raised"
+        className={'save ' + (!isDirty ? 'disabled' : '')}
         disabled={!isDirty}
         onClick={saveValue}
         role="save"

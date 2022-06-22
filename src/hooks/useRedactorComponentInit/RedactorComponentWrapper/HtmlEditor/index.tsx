@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { ContentEditorHTMLEditorMonacoEditor } from '../../../../components/ContentEditor/HTMLEditor/MonacoEditor'
-import { Modal2 } from '../../../../ui/Modal2'
+// import { Modal2 } from '../../../../ui/Modal2'
+import { ContentEditorStyled } from './styles'
 import { RedactorComponentWrapperHTMLEditorProps } from './interfaces'
 
 /**
@@ -21,12 +22,11 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<
   }, [htmlEditorOpenedSetter])
 
   return (
-    <Modal2
-      title=" "
+    <ContentEditorStyled
+      title="Редактирование кода"
       modal
-      moveable={false}
+      moveable
       preventClickEvent
-      fullScreen
       closeHandler={closeHandler}
       role="monaco-modal"
     >
@@ -38,6 +38,6 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<
         parent={parent}
         updateParent={updateParent}
       />
-    </Modal2>
+    </ContentEditorStyled>
   )
 }
