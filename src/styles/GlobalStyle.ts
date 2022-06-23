@@ -66,16 +66,6 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
       &[${redactor2ComponentAttributes.component}=content-editor] {
         border-color: lightgrey;
-        /* padding: 5px 10px; */
-        padding: 10px;
-
-        /* &:before {
-          content: "HTML Editor";
-
-          [${redactor2ComponentAttributes.active}=true]& {
-            content: none;
-          }
-        } */
       }
     }
 
@@ -84,11 +74,6 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
   }
 
   ${SectionStyled} {
-    /* border: 1px solid red; */
-    /* min-height: 50px; */
-    
-    padding: 15px;
-
     &:empty {
       border: 1px solid #ccc;
       background: repeating-linear-gradient(

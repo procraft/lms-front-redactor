@@ -18,6 +18,10 @@ export const AddBlockModal2ContentStyled = styled.div`
   grid-template-columns: repeat(4, 1fr);
 
   > * {
+    padding: 10px;
+  }
+
+  > * {
     > * {
       /**
       Некоторым блокам может быть указано 100% ширина.
