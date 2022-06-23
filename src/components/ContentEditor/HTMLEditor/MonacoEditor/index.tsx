@@ -25,7 +25,7 @@ import { NodeToHtml } from './helpers/NodeToHtml'
 
 export const ContentEditorHTMLEditorMonacoEditor: React.FC<
   ContentEditorHTMLEditorMonacoEditorProps
-> = ({ active, element, object, updateObject, parent, updateParent }) => {
+> = ({ active, element, object, updateObject, parent, updateParent, toggleModalCollapse }) => {
   const [source, sourceSetter] = useState<string>('')
 
   useEffect(() => {
@@ -208,7 +208,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
 
   const hideCodeEditor = useMemo(() => {
     return (
-      <Btn className="iconButton">
+      <Btn className="iconButton" onClick={toggleModalCollapse}>
         <svg
           width="24"
           height="24"
@@ -224,7 +224,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
         Скрыть редактор кода для просмотра
       </Btn>
     )
-  }, [])
+  }, [toggleModalCollapse])
   return (
     <>
       <ContentEditorHTMLEditorMonacoEditorStyled>

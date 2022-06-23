@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import ReactDOM from 'react-dom'
 import { IconButton } from '@procraft/ui/dist/IconButton'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import ReactDOM from 'react-dom'
 import { Modal2Props } from './interfaces'
+import { MoveButton } from './MoveButton'
 import {
   Modal2ContentScrollerStyled,
   Modal2ContentStyled,
   Modal2ModalWrapperStyled,
   Modal2Styled,
-  Modal2TitleStyled,
+  Modal2TitleStyled
 } from './styles'
-import { MoveButton } from './MoveButton'
 
 export * from './interfaces'
 
@@ -37,6 +37,7 @@ export const Modal2: React.FC<Modal2Props> = ({
   }, [])
 
   const [element, ref] = useState<HTMLDivElement | null>(null)
+  const [refAnchor, setRefAnchor] = useState<HTMLDivElement | null>(null)
   const wrapperState = useState<HTMLDivElement | null>(null)
 
   const preventEvents = useCallback((event: MouseEvent) => {
@@ -103,7 +104,16 @@ export const Modal2: React.FC<Modal2Props> = ({
     top: number
   } | null>(null)
 
+  const collapseController = useCollapseModal(refAnchor, stylesState)
+
   const style = useMemo(() => {
+    return {
+      ...styleProps,
+      ...collapseController.modalStyle,
+    }
+  }, [styleProps, collapseController.modalStyle])
+
+  const styleAnchor = useMemo(() => {
     return {
       ...styleProps,
       ...stylesState,
@@ -157,16 +167,20 @@ export const Modal2: React.FC<Modal2Props> = ({
     const modalWindow = (
       <Modal2Styled role={role} ref={ref} style={style} {...other}>
         {toolbar.length ? (
-          <Modal2TitleStyled>{toolbar}</Modal2TitleStyled>
+          <Modal2TitleStyled style={collapseController.openContentStyle}>{toolbar}</Modal2TitleStyled>
         ) : null}
-        <Modal2ContentScrollerStyled>
+        <Modal2ContentScrollerStyled style={collapseController.openContentStyle}>
           <Modal2ContentStyled>{children}</Modal2ContentStyled>
         </Modal2ContentScrollerStyled>
+        {other.collapsedElement && <div style={collapseController.collapsedContentStyle}>{other.collapsedElement(collapseController.toggleCollapse)}</div>}
       </Modal2Styled>
     )
 
+    const anchor = <Modal2Styled ref={setRefAnchor} style={{...styleAnchor, opacity: 0, zIndex: 0}}  {...other} />
+
     const content = modal ? (
       <Modal2ModalWrapperStyled ref={wrapperState[1]}>
+        {anchor}
         {modalWindow}
       </Modal2ModalWrapperStyled>
     ) : (
@@ -174,9 +188,129 @@ export const Modal2: React.FC<Modal2Props> = ({
     )
 
     return ReactDOM.createPortal(content, document.body)
-  }, [loaded, style, other, toolbar, children, modal, wrapperState, role])
+  }, [
+    loaded,
+    style,
+    other,
+    toolbar,
+    children,
+    modal,
+    wrapperState,
+    role,
+    collapseController.collapsedContentStyle,
+    collapseController.openContentStyle,
+    collapseController.toggleCollapse,
+    styleAnchor,
+  ])
 }
 
 Modal2.defaultProps = {
   role: 'modal-window',
+}
+
+interface useCollapseModalReturn {
+  modalStyle?: React.CSSProperties
+  openContentStyle?: React.CSSProperties
+  collapsedContentStyle?: React.CSSProperties
+  toggleCollapse: () => void
+}
+
+type CollapseType = 'Openned' | 'Opening' | 'Collapsed' | 'Collapsing'
+
+function useCollapseModal(modal: HTMLDivElement | null, modalPosition:{
+  left: number
+  top: number
+} | null): useCollapseModalReturn {
+  const [collapseType, setCollapseType] = useState<CollapseType>('Openned')
+  const [currAnchor, setCurrAnchor] = useState<'Top' | 'Bottom'>('Top')
+  const updId = useRef(0)
+  const timer = useRef<number>()
+
+  useEffect(() => {
+    if (collapseType === 'Openned') {
+      setCurrAnchor('Top')
+    }
+    if (collapseType === 'Collapsed') {
+      setCurrAnchor('Bottom')
+    }
+  },[collapseType])
+
+  const toggleCollapse = useCallback(() => {
+    setCollapseType(type => {
+      const id = ++updId.current
+      if (timer.current != null) {
+        clearTimeout(timer.current)
+      }
+
+      const setTimer = (collapseType: CollapseType) => {
+        timer.current = setTimeout(() => {
+          if (id === updId.current) {
+            setCollapseType(collapseType);
+          }
+        }, 350)}
+
+      switch(type) {
+        case 'Collapsed':
+        case 'Collapsing':
+          setTimer('Openned');
+          return 'Opening';
+        case 'Opening':
+        case 'Openned':
+          setTimer('Collapsed');
+          return 'Collapsing';
+      }
+    })
+  }, [setCollapseType, updId, timer])
+
+  const style: CSSStyleDeclaration = modal == null ? {} as CSSStyleDeclaration : window.getComputedStyle(modal)
+  const isCollapsed = collapseType === 'Collapsed' || collapseType === 'Collapsing'
+
+  const opennedPosition: React.CSSProperties = currAnchor === 'Top' ? {
+    top: modalPosition?.top,
+    left: modalPosition?.left,
+  } : {
+    top: 'unset',
+    left: 'unset',
+    bottom: window.innerHeight - (modal?.offsetHeight ?? 500) - (modal?.offsetTop ?? 0) - (parseFloat(style?.marginBottom ?? '0')),
+    right: window.innerWidth - (modal?.offsetWidth ?? 800) - (modal?.offsetLeft ?? 0) - (parseFloat(style?.marginRight ?? '0')),
+  }
+
+  const marginRight = parseFloat(style?.marginRight ?? '0')
+  const marginBottom = parseFloat(style?.marginBottom ?? '0')
+
+  const collapsedPosition: React.CSSProperties = currAnchor === 'Top' ? {
+    top: window.innerHeight - 112,
+    left: window.innerWidth - 112,
+  } : {
+    top: 'unset',
+    left: 'unset',
+    bottom: 32 - (Number.isNaN(marginBottom) ? 0 : marginBottom),
+    right: 32 - (Number.isNaN(marginRight) ? 0 : marginRight),
+  }
+
+  const positionStyle = isCollapsed ? collapsedPosition : opennedPosition
+
+  const modalStyle: React.CSSProperties = {
+    transition: collapseType === 'Openned' ? void 0 : 'all 350ms',
+    overflow: 'hidden',
+    width: isCollapsed ? 80 : void 0,
+    height: isCollapsed ? 80 : void 0,
+    boxShadow: isCollapsed ? '0px 4px 16px rgb(59 130 246 / 24%)' : void 0,
+    borderRadius: isCollapsed ? 8 : void 0,
+    ...positionStyle
+  }
+
+  const openContentStyle: React.CSSProperties = {
+    transition: collapseType === 'Openned' ? void 0 : 'all 350ms',
+    opacity: isCollapsed ? 0 : 1,
+    display: collapseType === 'Collapsed' ? 'none' : void 0,
+  }
+
+  const collapsedContentStyle: React.CSSProperties = {
+    transition: collapseType === 'Openned' ? void 0 : 'all 350ms',
+    opacity: isCollapsed ? 1 : 0,
+    display: collapseType === 'Openned' ? 'none' : void 0,
+  }
+
+  return {modalStyle, openContentStyle, collapsedContentStyle, toggleCollapse}
 }
