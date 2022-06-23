@@ -7,7 +7,7 @@ export const ContentEditorHTMLEditorMonacoEditorStyled = styled.div`
 
   .buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 8px 0 0;
 
@@ -31,12 +31,26 @@ export const ContentEditorHTMLEditorMonacoEditorStyled = styled.div`
         background: #ffffff;
         border: 1px solid #dc2626;
         color: #dc2626;
+        margin-right: 16px;
       }
 
       &.disabled {
         background: #cbd5e1;
         color: #ffffff;
         border: transparent;
+      }
+
+      &.iconButton {
+        min-width: 220px;
+        padding: 8px;
+        margin: 0;
+        color: #000000;
+        text-align: unset;
+        text-transform: none;
+        & svg {
+          width: 32px;
+          margin-right: 8px;
+        }
       }
     }
 
