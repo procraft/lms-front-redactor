@@ -21,8 +21,6 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<
     htmlEditorOpenedSetter(false)
   }, [htmlEditorOpenedSetter])
 
-  const isEditorHide = true
-
   return (
     <EditorStyled>
       <ContentEditorStyled
@@ -42,7 +40,7 @@ export const RedactorComponentWrapperHTMLEditor: React.FC<
           updateParent={updateParent}
         />
       </ContentEditorStyled>
-      <Button className={'showCodeEditor ' + (isEditorHide ? 'hide' : '')}>
+      <Button className={'showCodeEditor'}>
         <svg
           width="24"
           height="24"

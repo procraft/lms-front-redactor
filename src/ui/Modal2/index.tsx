@@ -88,7 +88,7 @@ export const Modal2: React.FC<Modal2Props> = ({
         )
       }
 
-      event.stopPropagation()
+      // event.stopPropagation()
     }
 
     element.addEventListener('click', onClick)
