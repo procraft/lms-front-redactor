@@ -21,6 +21,7 @@ export const EditorStyled = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 120%;
+    z-index: 5555;
 
     &:hover {
       background-color: #2563eb;
@@ -37,7 +38,6 @@ export const EditorStyled = styled.div`
 `
 export const ContentEditorStyled = styled(Modal2)`
     width: 800px;
-    height: 500px !important;
     left: 20%;
     display: flex;
     flex-direction: column;

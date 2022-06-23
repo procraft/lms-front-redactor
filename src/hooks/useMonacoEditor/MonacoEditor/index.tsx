@@ -103,7 +103,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
       <div
         ref={editorContainerRef}
         style={{
-          minHeight: '40vh',
+          minHeight: '100%',
           height: '360',
         }}
       >
