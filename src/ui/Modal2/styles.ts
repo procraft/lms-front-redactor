@@ -10,7 +10,7 @@ export const Modal2TitleStyled = styled.div`
     font-size: 18px;
     flex: 1;
     color: #333333;
-    margin: 16px;
+    margin: 8px 16px;
   }
 `
 
