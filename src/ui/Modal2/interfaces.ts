@@ -9,6 +9,8 @@ export type Modal2Props = React.HTMLAttributes<HTMLDivElement> & {
   // onMouseDown?: (event: React.MouseEvent<HTMLDivElement>) => void
   modal: boolean
 
+  collapsedElement?: (toggleCollapse: () => void) => React.ReactNode
+
   /**
    * Прерываем обработчики на клик (чтобы за пределами окна ничего не срабатывало)
    */

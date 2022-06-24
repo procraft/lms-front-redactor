@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const ContentEditorHTMLEditorMonacoEditorStyled = styled.div`
   display: flex;
   flex-direction: column;
-  height: 375px;
+  height: 410px;
 
   .buttons {
     display: flex;

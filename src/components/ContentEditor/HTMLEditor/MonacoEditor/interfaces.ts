@@ -15,4 +15,6 @@ export type ContentEditorHTMLEditorMonacoEditorProps = {
   // TODO пока сделал необязательными эти параметры, но в дальнейшем надо будет сделать обязательными
   parent?: RedactorComponentProps['parent']
   updateParent?: RedactorComponentProps['updateParent']
+
+  toggleModalCollapse?: () => void
 }
