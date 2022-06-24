@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Modal2 } from '../../../../../src/ui/Modal2'
+import { Modal2 } from '../../../../ui/Modal2'
 
 export const EditorStyled = styled.div`
   & .showCodeEditor {
