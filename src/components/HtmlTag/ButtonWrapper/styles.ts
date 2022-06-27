@@ -4,6 +4,11 @@ import { Modal2 } from '../../../ui/Modal2'
 export const ButtonWrapperModalStyled = styled(Modal2)`
   max-width: 340px;
   width: 100%;
+  overflow: visible !important;
+
+  & div {
+    overflow: visible !important;
+  }
 
   .image-block {
     img {
@@ -46,6 +51,7 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
   & .btn-colors {
     display: flex;
     justify-content: space-between;
+    position: relative;
 
     & .color-input {
       width: 45%;

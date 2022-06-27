@@ -168,8 +168,8 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             <div
               style={{
                 position: 'absolute',
-                zIndex: '50',
-                bottom: -250,
+                zIndex: '550',
+                bottom: -260,
                 left: -50,
               }}
             >
@@ -198,7 +198,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
               style={{
                 position: 'absolute',
                 zIndex: '50',
-                bottom: -250,
+                bottom: -260,
                 right: -51,
               }}
             >
