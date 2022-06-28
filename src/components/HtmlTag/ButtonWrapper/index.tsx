@@ -7,16 +7,8 @@ import { ColorResult, SketchPicker } from 'react-color'
 import { Button } from '@procraft/ui/dist/Button'
 
 export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
-  const {
-    // src,
-    children,
-    object,
-    // forwardedRef,
-    updateObject,
-    active,
-    closeHandler,
-    element,
-  } = props
+  const { children, object, updateObject, active, closeHandler, element } =
+    props
 
   const [opened, openedSetter] = useState(false)
   const [backgroundColor, setBackgroundColor] = useState(false)
@@ -79,6 +71,19 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     [object, updateObject]
   )
 
+  const onChangeLink = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
+      updateObject(object, {
+        props: {
+          ...object.props,
+          href: value,
+        },
+      })
+    },
+    [object, updateObject]
+  )
+
   const onChangeColor = useCallback(
     (name: string) => (color: ColorResult) => {
       updateObject(object, {
@@ -125,6 +130,14 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             title="Текст кнопки"
             onChange={onChangeValue}
             placeholder="Например, отправить"
+          />
+          <TextField
+            className="btn-width"
+            fullWidth
+            value={object.components[0].props.href || ''}
+            title="Ссылка для кнопки"
+            onChange={onChangeLink}
+            placeholder="https://..."
           />
           <TextField
             className="btn-width"
@@ -221,6 +234,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     object,
     closeModal,
     onChangeValue,
+    onChangeLink,
     onChangeStyles,
     backgroundColor,
     textColor,
