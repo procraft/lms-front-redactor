@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@procraft/ui/dist/Button'
 import { SvgIconCode } from '../../../../../ui/SvgIcon/Code'
 import { RedactorComponentWrapperAddComponentButton } from '../../buttons/AddComponent'
-import { RedactorComponentWrapperSaveButton } from '../../buttons/Save'
+// import { RedactorComponentWrapperSaveButton } from '../../buttons/Save'
 import { RedactorComponentWrapperProps } from '../../interfaces'
 import {
   RedactorComponentWrapperButtonsStyled,
@@ -44,9 +44,9 @@ export const RedactorComponentWrapperToolbar: React.FC<
   updateObject,
   openHtmlEditor,
   parent,
-  updateParent,
-  isDirty,
-  updateTemplate,
+  // updateParent,
+  // isDirty,
+  // updateTemplate,
   removeObjectHandler,
   closeEditor,
 }) => {
@@ -89,16 +89,17 @@ export const RedactorComponentWrapperToolbar: React.FC<
             <SvgIconCode />
           </Button>
         ) : null}
-        {parent ? (
-          <RedactorComponentWrapperSaveButton
-            object={object}
-            updateObject={updateObject}
-            parent={parent}
-            updateParent={updateParent}
-            isDirty={isDirty}
-            updateTemplate={updateTemplate}
-          />
-        ) : null}
+        {parent
+          ? // <RedactorComponentWrapperSaveButton
+            //   object={object}
+            //   updateObject={updateObject}
+            //   parent={parent}
+            //   updateParent={updateParent}
+            //   isDirty={isDirty}
+            //   updateTemplate={updateTemplate}
+            // />
+            null
+          : null}
         {parent ? (
           <Button
             className="vidget"
