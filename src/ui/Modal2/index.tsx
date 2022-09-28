@@ -241,7 +241,7 @@ function useCollapseModal(
   const [collapseType, setCollapseType] = useState<CollapseType>('Openned')
   const [currAnchor, setCurrAnchor] = useState<'Top' | 'Bottom'>('Top')
   const updId = useRef(0)
-  const timer = useRef<number>()
+  const timer = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
     if (collapseType === 'Openned') {
