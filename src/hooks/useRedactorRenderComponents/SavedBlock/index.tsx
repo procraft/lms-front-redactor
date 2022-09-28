@@ -1,5 +1,9 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useState } from 'react'
+import {
+  RedactorComponentUpdatedObjectEventDetail,
+  RedactorComponentUpdateObjectEventDetail,
+} from '../../../FrontEditor/Context'
 import { useTemplateQuery } from '../../../gql/template'
 import { useUpdateLandingTemplateMutation } from '../../../gql/updateLandingTemplate'
 import { RedactorComponentProps } from '../../../RedactorComponent/interfaces'
@@ -13,10 +17,45 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
 }) => {
   const [dirty, dirtySetter] = useState<typeof object>()
 
+  const unsetDirty = useCallback(() => {
+    /**
+     * При сбросе измененных данных надо выкинуть событие,
+     * чтобы в самом лендинге удалить шаблон из списка измененных в кнопке "Сохранить все"
+     */
+    const updateEvent =
+      new CustomEvent<RedactorComponentUpdatedObjectEventDetail>(
+        'redactorComponentUpdatedObjectEvent',
+        {
+          detail: {
+            object,
+          },
+        }
+      )
+
+    global.document.dispatchEvent(updateEvent)
+
+    dirtySetter(undefined)
+  }, [object])
+
+  const onSave = unsetDirty
+
   const updateObject = useCallback<RedactorComponentProps['updateObject']>(
-    (_current, data) => {
+    (current, data) => {
+      const updateEvent =
+        new CustomEvent<RedactorComponentUpdateObjectEventDetail>(
+          'redactorComponentUpdateObjectEvent',
+          {
+            detail: {
+              object: current,
+              data,
+            },
+          }
+        )
+
+      global.document.dispatchEvent(updateEvent)
+
       dirtySetter({
-        ...(dirty ?? _current),
+        ...(dirty ?? current),
         ...data,
       })
     },
@@ -68,12 +107,27 @@ export const SavedBlock: React.FC<SavedBlockProps> = ({
     }).then(async (r) => {
       if (r.data?.updateLandingTemplate) {
         await client.resetStore().catch(console.error)
-        dirtySetter(undefined)
+        onSave()
       }
 
       return r
     })
-  }, [client, dirty, object.id, updateTemplateMutation])
+  }, [client, dirty, object.id, onSave, updateTemplateMutation])
+
+  /**
+   * В @procraft/landing у нас есть единая кнопка сохранения всех измененных шаблонов.
+   * src/components/Landing/RootTemplate/RedactorHelpers/ControlsModal/Controls/SaveTemplates/index.tsx
+   * При клике по ней надо сохранить шаблон, если он изменный, так как кнопку самостоятельную не видно.
+   */
+  useEffect(() => {
+    const onCallSave = updateTemplate
+
+    document.addEventListener('redactorComponentSaveAllEvent', onCallSave)
+
+    return () => {
+      document.removeEventListener('redactorComponentSaveAllEvent', onCallSave)
+    }
+  }, [updateTemplate])
 
   return useMemo(() => {
     if (!response.data?.template) {
