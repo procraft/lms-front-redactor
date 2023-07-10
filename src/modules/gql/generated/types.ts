@@ -1,8 +1,8 @@
 /* eslint-disable */
 
-/** 
-* ФАЙЛ ГЕНЕРИРУЕТСЯ АВТОМАТИЧЕСКИ, ПРАВИТЬ ЕГО НЕ НУЖНО 
-* Команда для генерирования этого файла: "yarn generate:types" 
+/**
+* ФАЙЛ ГЕНЕРИРУЕТСЯ АВТОМАТИЧЕСКИ, ПРАВИТЬ ЕГО НЕ НУЖНО
+* Команда для генерирования этого файла: "yarn generate:types"
 */
 
 
@@ -299,6 +299,18 @@ export interface ItemOrderConditionData {
   catalogItems: Array<OrderCatalogItemFragment>;
 }
 
+export enum PriceOrderConditionKind {
+  BETWEEN = 'Between',
+  TO = 'To',
+  FROM = 'From'
+}
+
+export interface PriceOrderConditionData {
+  __typename?: 'PriceOrderConditionData';
+  kind: PriceOrderConditionKind;
+  from?: Maybe<Scalars['BigDecimal']>;
+  to?: Maybe<Scalars['BigDecimal']>;
+}
 
 export interface LandingCardField {
   __typename?: 'LandingCardField';
@@ -564,7 +576,7 @@ export interface OrderCondition {
   data?: Maybe<OrderConditionData>;
 }
 
-export type OrderConditionData = ItemOrderConditionData;
+export type OrderConditionData = ItemOrderConditionData | PriceOrderConditionData;
 
 export interface OrderCustom {
   __typename?: 'OrderCustom';

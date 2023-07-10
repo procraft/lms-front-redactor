@@ -389,6 +389,19 @@ export interface ItemOrderConditionData {
   shouldContainAll: Scalars['Boolean']
 }
 
+export enum PriceOrderConditionKind {
+  BETWEEN = 'Between',
+  TO = 'To',
+  FROM = 'From'
+}
+
+export interface PriceOrderConditionData {
+  __typename?: 'PriceOrderConditionData';
+  kind: PriceOrderConditionKind;
+  from?: Maybe<Scalars['BigDecimal']>;
+  to?: Maybe<Scalars['BigDecimal']>;
+}
+
 export interface LandingCardField {
   __typename?: 'LandingCardField'
   name: CardFieldName
@@ -653,7 +666,7 @@ export interface OrderCondition {
   kind: Scalars['String']
 }
 
-export type OrderConditionData = ItemOrderConditionData
+export type OrderConditionData = ItemOrderConditionData | PriceOrderConditionData
 
 export interface OrderCustom {
   __typename?: 'OrderCustom'
