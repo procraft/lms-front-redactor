@@ -123,6 +123,8 @@ export enum CatalogFieldValueType {
   COURSE = 'Course',
   /** Подписка */
   SUBSCRIPTION = 'Subscription',
+  /** Число занятий */
+  LESSONCOUNT = 'LessonCount',
   /** Неизвестный тип */
   UNKNOWN = 'Unknown',
 }
@@ -303,6 +305,7 @@ export interface CourseTariffPriceDetailsChangeByTimeItem {
 export enum CourseTariffPriceKind {
   CHANGESBYSALES = 'ChangesBySales',
   CHANGESBYTIME = 'ChangesByTime',
+  FIXEDBYOPTION = 'FixedByOption',
   FIXED = 'Fixed',
   FREE = 'Free',
   SUBSCRIPTION = 'Subscription',
