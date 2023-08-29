@@ -306,6 +306,7 @@ export enum CourseTariffPriceKind {
   CHANGESBYSALES = 'ChangesBySales',
   CHANGESBYTIME = 'ChangesByTime',
   FIXEDBYOPTION = 'FixedByOption',
+  FREEBYOPTION = 'FreeByOption',
   FIXED = 'Fixed',
   FREE = 'Free',
   SUBSCRIPTION = 'Subscription',
