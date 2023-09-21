@@ -647,6 +647,7 @@ export interface OrderCatalogItemFragment {
   /** Количество отзывов */
   reviewsCount?: Maybe<Scalars['Int']>
   sales?: Maybe<Array<SaleCustom>>
+
   /** @deprecated Заголовки для формирования заказа */
   title: Array<Scalars['String']>
   uid: Scalars['Int']
