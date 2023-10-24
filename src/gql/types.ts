@@ -246,9 +246,28 @@ export interface CoursePublicCustom {
   kind?: Maybe<CourseKind>
   name: Scalars['String']
   subKind?: Maybe<CourseSubKind>
+  subKindLabel?: Maybe<LangRussianNoun>
   tariffPerFlowDataItems?: Maybe<Array<CourseTariffFlowPublic>>
   tariffs?: Maybe<Array<CourseTariffPublicCustom>>
   uid: Scalars['Int']
+}
+
+export enum LangGender {
+  FEMININE = 'Feminine',
+  MASCULINE = 'Masculine',
+  NEUTER = 'Neuter'
+}
+
+export interface LangRussianNoun {
+  __typename?: 'LangRussianNoun';
+  valueNominative: Scalars['String'];
+  valueGenitive: Scalars['String'];
+  valueAccusative: Scalars['String'];
+  valueDative: Scalars['String'];
+  valueInstrumental: Scalars['String'];
+  valuePrepositional: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  gender: LangGender;
 }
 
 export enum CourseSubKind {
