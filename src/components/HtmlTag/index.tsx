@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-// import NextHead from 'next/head'
+import NextHead from 'next/head'
 import useRedactorComponentInit from '../../hooks/useRedactorComponentInit'
 import { useRedactorComponentRef } from '../../hooks/useRedactorComponentRef'
 import useRedactorRenderComponents from '../../hooks/useRedactorRenderComponents'
@@ -33,7 +33,7 @@ export const HtmlTag: RedactorComponent = ({
     className: componentClassName,
     query: _query,
     first: _first,
-    ...otherProps
+    ...tagProps
   } = object.props
 
   _query
@@ -135,58 +135,33 @@ export const HtmlTag: RedactorComponent = ({
       return <>{text}</>
     }
 
-    const tagProps = Object.assign(
-      {},
-      {
-        className: componentClassName,
-      },
-      otherProps
-    )
+    const renderSimpleTag = () => {
+      const __html = object.components[0]?.props.text ?? ''
+      return React.createElement(Tag, { ...tagProps, dangerouslySetInnerHTML: { __html } })
+    }
+
+    const tagPropsExt = {className: componentClassName, controls: undefined, ...tagProps}
+
+    // Если нужно что-то отрендерить в <head>, ищем атрибут "data-head"
+    const renderToHead = tagProps.hasOwnProperty('data-head')
+    if (renderToHead && !inEditMode) {
+      return <NextHead>{renderSimpleTag()}</NextHead>
+    }
 
     switch (Tag.toLowerCase()) {
-      case 'title': {
-        return (
-          <title {...otherProps}>
-            {object.components[0]?.props.text || ''}
-          </title>
-        )
-      }
-      case 'script': {
-        return (
-          <script
-            {...otherProps}
-            dangerouslySetInnerHTML={{
-              __html: object.components[0]?.props.text || '',
-            }}
-          />
-        )
-      }
-      case 'style': {
-        // https://github.com/vercel/next.js/issues/21862
-        return React.createElement('style', {
-          ...otherProps,
-          dangerouslySetInnerHTML: object.components[0]?.props.text
-            ? {
-                __html: object.components[0]?.props.text,
-              }
-            : undefined,
-        })
-      }
-      // case 'link':
-      //   return (
-      //     <NextHead>
-      //       <link {...tagProps}>{childrenContent}</link>
-      //     </NextHead>
-      //   )
+      case 'title': return renderSimpleTag()
+      case 'script': return renderSimpleTag()
+      // https://github.com/vercel/next.js/issues/21862
+      case 'style': return renderSimpleTag()
 
       case 'video': {
         return (
           <>
             <video
-              {...tagProps}
+              {...tagPropsExt}
               ref={ref as React.LegacyRef<HTMLVideoElement> | undefined}
               controls={
-                inEditMode && !childrenContent ? undefined : tagProps.controls
+                inEditMode && !childrenContent ? undefined : tagPropsExt.controls
               }
             >
               {childrenContent}
@@ -217,7 +192,7 @@ export const HtmlTag: RedactorComponent = ({
       <Tag
         // @ts-expect-error
         ref={ref as (el: any) => void}
-        {...tagProps}
+        {...tagPropsExt}
       >
         {object.props.children || childrenContent}
       </Tag>
@@ -225,7 +200,7 @@ export const HtmlTag: RedactorComponent = ({
   }, [
     Tag,
     componentClassName,
-    otherProps,
+    tagProps,
     ref,
     object,
     childrenContent,
@@ -262,7 +237,7 @@ export const HtmlTag: RedactorComponent = ({
 
     const renderProps = {
       ref,
-      ...otherProps,
+      ...tagProps,
       ...otherInitProps,
       [redactor2ComponentAttributes.component]: 'HtmlTag',
       [redactor2ComponentAttributes.tag]: object.props.tag,
@@ -418,7 +393,7 @@ export const HtmlTag: RedactorComponent = ({
     content,
     object,
     ref,
-    otherProps,
+    tagProps,
     otherInitProps,
     preventDefault,
     inEditMode,
