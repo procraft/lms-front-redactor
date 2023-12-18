@@ -135,9 +135,16 @@ export const HtmlTag: RedactorComponent = ({
       return <>{text}</>
     }
 
+    const tagLower = Tag.toLowerCase()
+
     const renderSimpleTag = () => {
-      const __html = object.components[0]?.props.text ?? ''
-      return React.createElement(Tag, { ...tagProps, dangerouslySetInnerHTML: { __html } })
+      const extraProps = (() => {
+        if (['link', 'meta'].includes(tagLower)) return null
+        const __html = object.components[0]?.props.text ?? ''
+        return {dangerouslySetInnerHTML: {__html}}
+      })()
+
+      return React.createElement(Tag, { ...tagProps, ...extraProps })
     }
 
     const tagPropsExt = {className: componentClassName, controls: undefined, ...tagProps}
@@ -148,7 +155,7 @@ export const HtmlTag: RedactorComponent = ({
       return <NextHead>{renderSimpleTag()}</NextHead>
     }
 
-    switch (Tag.toLowerCase()) {
+    switch (tagLower) {
       case 'title': return renderSimpleTag()
       case 'script': return renderSimpleTag()
       // https://github.com/vercel/next.js/issues/21862
