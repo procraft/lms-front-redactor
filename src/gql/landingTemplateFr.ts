@@ -21,5 +21,6 @@ export const LandingTemplateFrFragmentDoc = gql`
     component
     components
     props
+    favicon {url}
   }
 `
