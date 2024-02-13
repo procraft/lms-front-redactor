@@ -214,6 +214,20 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
     ]
   }, [isDirty, resetValue, saveValue])
 
+  const copyTemplateCode = useCallback(() => {
+    const {component, components, name, props} = object
+    const code = JSON.stringify({component, components, name, props}, null, 2)
+    navigator.clipboard.writeText(code)
+  }, [element])
+
+  const copyTemplateCodeBtn = useMemo(() => {
+    return (
+      <Btn className="iconButton" onClick={copyTemplateCode}>
+        &lt;/&gt; Code
+      </Btn>
+    )
+  }, [])
+
   const hideCodeEditor = useMemo(() => {
     return (
       <Btn className="iconButton" onClick={toggleModalCollapse}>
@@ -229,24 +243,24 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
             fill="black"
           />
         </svg>
-        Скрыть редактор кода для просмотра
+        Свернуть редактор
       </Btn>
     )
   }, [toggleModalCollapse])
+
   return (
     <>
       <ContentEditorHTMLEditorMonacoEditorStyled>
-        <div
-          style={{
-            flex: 1,
-          }}
-        >
+        <div style={{ flex: 1 }}>
           {editor}
         </div>
 
         <div className="buttons">
-          <div>{hideCodeEditor}</div>
           <div>
+            {hideCodeEditor}
+            {process.env.NODE_ENV === 'development' && copyTemplateCodeBtn}
+          </div>
+          <div style={{whiteSpace: 'nowrap'}}>
             {error ? <div className="error">{error.message}</div> : null}
             {buttons}
           </div>
