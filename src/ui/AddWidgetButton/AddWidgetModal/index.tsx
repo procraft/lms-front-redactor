@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { RedactorComponentObject } from '../../..'
-import { AddContentEditorWidgetButton } from './buttons/AddContentEditorWidgetButton'
 import { AddHeadWidgetButton } from './buttons/AddHead'
 import { AddButtonWidgetButton } from './buttons/AddButton'
 import { AddWidgetButtonCourse } from './buttons/AddWidgetButtonCourse'
@@ -10,11 +9,10 @@ import { AddVideoWidgetButton } from './buttons/AddVideoWidgetButton'
 import { AddWidgetModalContext } from './Context'
 import { AddWidgetModalProps } from './interfaces'
 import { AddWidgetModalStyled } from './styles'
-import { Tabs } from '../../Tabs'
 import { Button, ButtonProps } from '@procraft/ui/dist/Button'
 import { AddWidgetModalSavedBlocks } from './tabs/Saved'
+import { EditorBlockTextButton } from './buttons/EditorBlockText'
 
-// type TabState = 'default' | 'saved'
 enum TabState {
   default = 'default',
   saved = 'saved',
@@ -84,44 +82,19 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
 
   const tabs = useMemo(() => {
     let tabContent: JSX.Element | null = null
+    const props = { addComponent, object, closeHandler }
 
     switch (tab) {
       case TabState.default:
         tabContent = (
           <div role="secondaryButtons" className="vidgets">
-            <AddContentEditorWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              // updateObject={updateObject}
-              addComponent={addComponent}
-            />
-            <AddImageWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              // updateObject={updateObject}
-              addComponent={addComponent}
-            />
-            <AddVideoWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              // updateObject={updateObject}
-              addComponent={addComponent}
-            />
-            <AddHeadWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              addComponent={addComponent}
-            />
-            <AddButtonWidgetButton
-              closeHandler={closeHandler}
-              object={object}
-              addComponent={addComponent}
-            />
-            <AddWidgetButtonCourse
-              closeHandler={closeHandler}
-              object={object}
-              addComponent={addComponent}
-            />
+            <EditorBlockTextButton {...props} />
+            <AddImageWidgetButton {...props} />
+            <AddVideoWidgetButton {...props} />
+            <AddHeadWidgetButton {...props} />
+            <AddButtonWidgetButton {...props} />
+            <AddWidgetButtonCourse {...props} />
+
             <Button
               className={'show-more ' + (showMore && 'hide')}
               onClick={showMoreButton}
@@ -158,6 +131,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
 
     return (
       <>
+        {/*
         <Tabs value={tab}>
           {[
             {
@@ -181,6 +155,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
             )
           })}
         </Tabs>
+        */}
         {tabContent}
       </>
     )
