@@ -12,6 +12,7 @@ import { AddWidgetModalStyled } from './styles'
 import { Button, ButtonProps } from '@procraft/ui/dist/Button'
 import { AddWidgetModalSavedBlocks } from './tabs/Saved'
 import { EditorBlockTextButton } from './buttons/EditorBlockText'
+import { EditorBlockAccordionButton } from './buttons/EditorBlockAccordion'
 
 enum TabState {
   default = 'default',
@@ -94,6 +95,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
             <AddHeadWidgetButton {...props} />
             <AddButtonWidgetButton {...props} />
             <AddWidgetButtonCourse {...props} />
+            <EditorBlockAccordionButton {...props} />
 
             <Button
               className={'show-more ' + (showMore && 'hide')}
