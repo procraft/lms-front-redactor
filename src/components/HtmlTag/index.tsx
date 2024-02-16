@@ -150,7 +150,7 @@ export const HtmlTag: RedactorComponent = ({
     const tagPropsExt = {className: componentClassName, controls: undefined, ...tagProps}
 
     // Если нужно что-то отрендерить в <head>, ищем атрибут "data-head"
-    const renderToHead = tagProps.hasOwnProperty('data-head')
+    const renderToHead = Object.prototype.hasOwnProperty.call(tagProps, 'data-head')
     if (renderToHead && !inEditMode) {
       return <NextHead>{renderSimpleTag()}</NextHead>
     }

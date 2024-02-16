@@ -27,11 +27,11 @@ export const CustomBlockButton: React.FC<CustomBlockButtonProps> = (
     return () => {
       button.removeEventListener('click', onClick)
     }
-  }, [buttonState, object, component, closeHandler, addComponent])
+  }, [button, buttonState, object, component, closeHandler, addComponent])
 
   return useMemo(() => (
     <AddWidgetModalButtonStyled ref={buttonState[1]} role="addHtmlEditor" {...other}>
       {title}
     </AddWidgetModalButtonStyled>
-  ), [buttonState, other])
+  ), [buttonState, title, other])
 }

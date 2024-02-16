@@ -218,7 +218,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
     const {component, components, name, props} = object
     const code = JSON.stringify({component, components, name, props}, null, 2)
     navigator.clipboard.writeText(code)
-  }, [element])
+  }, [object])
 
   const copyTemplateCodeBtn = useMemo(() => {
     return (
@@ -226,7 +226,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
         &lt;/&gt; Code
       </Btn>
     )
-  }, [])
+  }, [copyTemplateCode])
 
   const hideCodeEditor = useMemo(() => {
     return (
