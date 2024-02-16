@@ -72,14 +72,14 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     []
   )
 
-  const onTabClick = useCallback<NonNullable<ButtonProps['onClick']>>(
-    (event) => {
-      if (event.target instanceof HTMLButtonElement) {
-        tabSetter(event.target.value as TabState)
-      }
-    },
-    []
-  )
+  // const onTabClick = useCallback<NonNullable<ButtonProps['onClick']>>(
+  //   (event) => {
+  //     if (event.target instanceof HTMLButtonElement) {
+  //       tabSetter(event.target.value as TabState)
+  //     }
+  //   },
+  //   []
+  // )
 
   const tabs = useMemo(() => {
     let tabContent: JSX.Element | null = null
