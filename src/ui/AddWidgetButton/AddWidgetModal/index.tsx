@@ -59,7 +59,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     })
   }, [addComponent, closeHandler, context?.buttons, object])
 
-  const [tab, tabSetter] = useState<TabState>(TabState.default)
+  const [tab] = useState<TabState>(TabState.default)
 
   const [showMore, setShowMore] = useState(false)
 
