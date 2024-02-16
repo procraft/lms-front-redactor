@@ -17,6 +17,6 @@ export const IconText = () => (
 
 export const IconAccordion = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-    <path d="M19 12 5 3v18l14-9z" stroke="#000" stroke-width="2" />
+    <path d="M19 12 5 3v18l14-9z" stroke="#000" strokeWidth="2" />
   </svg>
 )

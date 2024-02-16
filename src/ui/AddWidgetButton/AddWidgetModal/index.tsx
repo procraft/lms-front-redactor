@@ -166,7 +166,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     buttons,
     closeHandler,
     object,
-    onTabClick,
+    // onTabClick,
     showMore,
     tab,
     showMoreButton,
