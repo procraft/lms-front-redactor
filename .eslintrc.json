@@ -20,6 +20,7 @@
   "rules": {
     "react-hooks/rules-of-hooks": "error", // Проверяем правила хуков
     "react-hooks/exhaustive-deps": "error", // Проверяем зависимости эффекта
+    "cypress/unsafe-to-chain-command": 0,
     "react/react-in-jsx-scope": 0,
     "react/display-name": 0,
     "react/prop-types": 0,
