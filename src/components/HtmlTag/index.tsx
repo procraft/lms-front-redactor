@@ -141,7 +141,7 @@ export const HtmlTag: RedactorComponent = ({
       const extraProps = (() => {
         if (['link', 'meta'].includes(tagLower)) return null
         let __html = object.components[0]?.props.text ?? ''
-        if (tagLower==='style') __html =  text ?? ''
+        if (tagLower==='style' || tagLower==='script') __html = text ?? ''
         return {dangerouslySetInnerHTML: {__html}}
       })()
 
