@@ -75,6 +75,7 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
 
   ${SectionStyled} {
     &:empty {
+      width: 100%;
       border: 1px solid #ccc;
       background: repeating-linear-gradient(
 45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 10px, rgba(0, 0, 0, 0.05) 10px, rgba(0, 0, 0, 0.05) 20px);
