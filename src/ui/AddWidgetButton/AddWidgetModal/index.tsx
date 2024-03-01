@@ -12,6 +12,7 @@ import { AddWidgetModalStyled } from './styles'
 import { Button, ButtonProps } from '@procraft/ui/dist/Button'
 import { AddWidgetModalSavedBlocks } from './tabs/Saved'
 import { EditorBlockTextButton } from './buttons/EditorBlockText'
+import { EditorBlockAccordionButton } from './buttons/EditorBlockAccordion'
 
 enum TabState {
   default = 'default',
@@ -58,7 +59,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     })
   }, [addComponent, closeHandler, context?.buttons, object])
 
-  const [tab, tabSetter] = useState<TabState>(TabState.default)
+  const [tab] = useState<TabState>(TabState.default)
 
   const [showMore, setShowMore] = useState(false)
 
@@ -71,14 +72,14 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     []
   )
 
-  const onTabClick = useCallback<NonNullable<ButtonProps['onClick']>>(
-    (event) => {
-      if (event.target instanceof HTMLButtonElement) {
-        tabSetter(event.target.value as TabState)
-      }
-    },
-    []
-  )
+  // const onTabClick = useCallback<NonNullable<ButtonProps['onClick']>>(
+  //   (event) => {
+  //     if (event.target instanceof HTMLButtonElement) {
+  //       tabSetter(event.target.value as TabState)
+  //     }
+  //   },
+  //   []
+  // )
 
   const tabs = useMemo(() => {
     let tabContent: JSX.Element | null = null
@@ -94,6 +95,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
             <AddHeadWidgetButton {...props} />
             <AddButtonWidgetButton {...props} />
             <AddWidgetButtonCourse {...props} />
+            <EditorBlockAccordionButton {...props} />
 
             <Button
               className={'show-more ' + (showMore && 'hide')}
@@ -164,7 +166,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
     buttons,
     closeHandler,
     object,
-    onTabClick,
+    // onTabClick,
     showMore,
     tab,
     showMoreButton,
