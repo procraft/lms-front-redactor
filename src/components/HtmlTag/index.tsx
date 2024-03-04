@@ -140,8 +140,8 @@ export const HtmlTag: RedactorComponent = ({
     const renderSimpleTag = () => {
       const extraProps = (() => {
         if (['link', 'meta'].includes(tagLower)) return null
-        const __html = object.components[0]?.props.text ?? ''
-        // if (tagLower === 'style' || tagLower === 'script') __html = text ?? ''
+        let __html = object.components[0]?.props.text ?? ''
+        if (tagLower === 'style' || tagLower === 'script') __html = text ?? __html
         return {dangerouslySetInnerHTML: {__html}}
       })()
 
