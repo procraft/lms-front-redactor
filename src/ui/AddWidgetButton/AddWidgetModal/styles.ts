@@ -20,6 +20,7 @@ export const AddWidgetModalStyled = styled(Modal2)`
     & .vidgets {
       display: flex;
       flex-direction: column;
+      color: #000000;
 
       & button {
         display: flex;

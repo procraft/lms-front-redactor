@@ -11,6 +11,7 @@ import { SectionStyled } from '../components/Section/styles'
 export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
   
   [role=redactor-wrapper] * {
+    font-size: 14px;
     box-sizing: border-box;
   }
 
