@@ -68,14 +68,14 @@ export const RedactorComponentWrapper: React.FC<
 
     const titleNode = document.createElement('span')
     titleNode.innerHTML = `
-      <span>${
+      <span style="font-family:'Inter';font-size:12px;color:white">${
         wrapperTitle
           ? wrapperTitle
           : `${object.name} ${
               object.name !== object.component ? ` (${object.component})` : ''
             }`
       }</span>
-      <span>${object.props.tag || ''}</span>
+      <span style="font-family:'Inter';font-size:12px;color:white">${object.props.tag || ''}</span>
     `
 
     const titleStyle: Partial<CSSStyleDeclaration> = {
@@ -83,6 +83,7 @@ export const RedactorComponentWrapper: React.FC<
       backgroundColor: '#252424',
       color: 'white',
       padding: '2px 5px',
+      fontFamily: 'Inter sans-serif',
       fontSize: '12px',
       top: '-25px',
       // bottom: '0px',

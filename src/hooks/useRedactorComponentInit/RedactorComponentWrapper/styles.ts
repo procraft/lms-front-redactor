@@ -15,6 +15,7 @@ export const RedactorComponentWrapperButtonsStyled = styled.div`
     padding: 0;
     border-radius: 50%;
     background: #2563eb;
+    border: 1px solid #ffffff;
 
     &:active {
       background: #1d4ed8;
@@ -41,7 +42,8 @@ export const RedactorComponentWrapperStyled = styled.div`
   ${RedactorComponentWrapperButtonsStyled} {
     position: absolute;
     bottom: calc(100% - 14px);
-    right: 14px;
+    right: 50%;
+    transform: translateX(50%);
     display: flex;
   }
 
@@ -106,6 +108,7 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
       fill: white;
       background: rgb(37, 99, 235);
       border-radius: 50%;
+      border: 1px solid white;
     }
     
     &:hover {
