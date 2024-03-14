@@ -61,6 +61,7 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
             name: 'HtmlTag',
             component: 'HtmlTag',
             props: {
+              ...object.components[0].props,
               text: value,
             },
             components: [],
@@ -75,10 +76,22 @@ export const ButtonWrapper: React.FC<ButtonProps> = (props) => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value
       updateObject(object, {
-        props: {
+        components: [
+          {
+            name: 'HtmlTag',
+            component: 'HtmlTag',
+            props: {
+              ...object.components[0].props,
+              href: value,
+            },
+            components: [],
+          },
+        ],
+        props:{
           ...object.props,
-          href: value,
-        },
+          // Добавила аттрибут чтобы передать его в onClick
+          "data-href": value,
+        }
       })
     },
     [object, updateObject]
