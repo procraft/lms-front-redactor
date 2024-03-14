@@ -1,3 +1,4 @@
+// !Убрала возможность добавлять компонент Head, т.к. он добавлялся пустым
 import React, { useEffect, useMemo, useState } from 'react'
 import { AddWidgetModalButtonStyled } from '../../styles'
 import { AddWidgetButtonButtonProps } from '../interfaces'
