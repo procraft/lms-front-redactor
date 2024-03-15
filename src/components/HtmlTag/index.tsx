@@ -199,13 +199,13 @@ export const HtmlTag: RedactorComponent = ({
      */
     
     // Добавила пустой обьект для хранения функции
-    let useclick = {};
+    let clickProp = {}
     // Проверяем тег элемента
     if (tagLower === 'button') {
       // Если элемент кнопка и у него есть аттрибут data-href, то добавляем функцию перехода по ссылке, указанной пользователем
       if (object.props['data-href']) {
         if (!inEditMode) {
-          useclick = {
+          clickProp = {
             onClick:() => {
             window.location.href = object.props['data-href']
             }
@@ -220,7 +220,7 @@ export const HtmlTag: RedactorComponent = ({
         ref={ref as (el: any) => void}
         {...tagPropsExt}
         // Добавляем клик
-        {...useclick}
+        {...clickProp}
       >
         {object.props.children || childrenContent}
       </Tag>
