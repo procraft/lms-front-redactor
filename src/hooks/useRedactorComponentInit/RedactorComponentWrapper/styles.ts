@@ -41,9 +41,8 @@ export const RedactorComponentWrapperStyled = styled.div`
 
   ${RedactorComponentWrapperButtonsStyled} {
     position: absolute;
-    bottom: calc(100% - 14px);
-    right: 50%;
-    transform: translateX(50%);
+    bottom: calc(100% - 5px);
+    right: 14px;
     display: flex;
   }
 
@@ -112,7 +111,7 @@ export const RedactorComponentWrapperGlobalStyled = createGlobalStyle`
     }
     
     &:hover {
-      transform: scale(1.2);
+      transform: scale(1.07);
     }
     
     &.${TopDirectionSelector} {

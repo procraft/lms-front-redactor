@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { RedactorComponentObject } from '../../..'
-import { AddHeadWidgetButton } from './buttons/AddHead'
+// import { AddHeadWidgetButton } from './buttons/AddHead'
 import { AddButtonWidgetButton } from './buttons/AddButton'
 import { AddWidgetButtonCourse } from './buttons/AddWidgetButtonCourse'
 import { AddImageWidgetButton } from './buttons/AddImageWidgetButton'
@@ -11,7 +11,9 @@ import { AddWidgetModalProps } from './interfaces'
 import { AddWidgetModalStyled } from './styles'
 import { Button, ButtonProps } from '@procraft/ui/dist/Button'
 import { AddWidgetModalSavedBlocks } from './tabs/Saved'
-import { EditorBlockTextButton } from './buttons/EditorBlockText'
+import { EditorBlockTitleH1 } from './buttons/EditorBlockTitleH1'
+import { EditorBlockTitleH2 } from './buttons/EditorBlockTitleH2'
+import { EditorBlockText } from './buttons/EditorBlockText'
 import { EditorBlockAccordionButton } from './buttons/EditorBlockAccordion'
 
 enum TabState {
@@ -89,10 +91,13 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
       case TabState.default:
         tabContent = (
           <div role="secondaryButtons" className="vidgets">
-            <EditorBlockTextButton {...props} />
+            <EditorBlockTitleH1 {...props} />
+            <EditorBlockTitleH2 {...props} />
+            <EditorBlockText {...props} />
             <AddImageWidgetButton {...props} />
             <AddVideoWidgetButton {...props} />
-            <AddHeadWidgetButton {...props} />
+            {/* убрала возможность добавлять компонент Head, т.к. он добавлялся пустым */}
+            {/* <AddHeadWidgetButton {...props} /> */}
             <AddButtonWidgetButton {...props} />
             <AddWidgetButtonCourse {...props} />
             <EditorBlockAccordionButton {...props} />

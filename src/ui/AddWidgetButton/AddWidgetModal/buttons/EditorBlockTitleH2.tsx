@@ -2,13 +2,13 @@ import React, { useMemo } from 'react'
 import { CustomBlockButton } from './CustomBlock'
 import { AddWidgetButtonButtonProps } from './interfaces'
 import { RedactorComponentObject } from '../../../..'
-import { IconText } from './buttonIcons'
+import { IconTitleH2 } from './buttonIcons'
 
-export const EditorBlockText = (props: AddWidgetButtonButtonProps) => {
+export const EditorBlockTitleH2 = (props: AddWidgetButtonButtonProps) => {
   const title = useMemo(
     () => (
       <>
-        <IconText /> Текст
+        <IconTitleH2 /> Второстепенный заголовок
       </>
     ),
     []
@@ -26,14 +26,14 @@ export const EditorBlockText = (props: AddWidgetButtonButtonProps) => {
         name: 'HtmlTag',
         component: 'HtmlTag',
         props: {
-          tag: 'p',
+          tag: 'h2',
         },
         components: [
           {
             name: 'HtmlTag',
             component: 'HtmlTag',
             props: {
-              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+              text: 'Heading 2',
             },
             components: [],
           },
