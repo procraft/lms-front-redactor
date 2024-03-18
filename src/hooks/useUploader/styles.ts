@@ -8,6 +8,7 @@ export const UploaderInputStyled = styled.input`
   */
 
   &[type='file'] {
+    color: #1e293b;
     display: none;
   }
 `

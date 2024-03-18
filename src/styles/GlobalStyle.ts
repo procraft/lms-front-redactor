@@ -54,6 +54,7 @@ export const LmsFrontRedactorGlobalStyle = createGlobalStyle`
       &:before {
         display: block;
         color: #333;
+        font-family: 'Inter', sans-serif;
         font-size: 14px;
         font-style: italic;
       }

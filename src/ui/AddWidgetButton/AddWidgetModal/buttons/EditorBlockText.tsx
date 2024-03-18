@@ -27,6 +27,10 @@ export const EditorBlockText = (props: AddWidgetButtonButtonProps) => {
         component: 'HtmlTag',
         props: {
           tag: 'p',
+          style: {
+            fontSize: '16px',
+            fontWeight: '400',
+          }
         },
         components: [
           {

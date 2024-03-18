@@ -19,6 +19,7 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
   & .btn-width {
     display: flex;
     justify-content: space-between;
+    color: #1e293b;
     margin-bottom: 16px;
 
     & label {
@@ -35,6 +36,7 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
     }
 
     & input {
+      color: #1e293b;
       border-width: 1px;
       padding: 8px;
 
@@ -51,6 +53,7 @@ export const ButtonWrapperModalStyled = styled(Modal2)`
   & .btn-colors {
     display: flex;
     justify-content: space-between;
+    color: #1e293b;
     position: relative;
 
     & .color-input {

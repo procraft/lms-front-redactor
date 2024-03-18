@@ -15,6 +15,7 @@ export const ImgWrapperModalStyled = styled(Modal2)`
   & .image-inputs {
     display: flex;
     justify-content: space-between;
+    color: #1e293b;
     margin-bottom: 16px;
     &:last-child {
       margin-botton: 0 !important;
@@ -31,6 +32,7 @@ export const ImgWrapperModalStyled = styled(Modal2)`
       }
 
       & input {
+        color: #1e293b;
         border-width: 1px;
         padding: 8px;
 
