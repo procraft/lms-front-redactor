@@ -50,7 +50,15 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
 
     if (s && s.rangeCount > 0) {
       const r = s.getRangeAt(0)
-
+      // Проверка на наличие ссылки в выбранном тексте. Если она есть - в поле ввода отобразить ссылку
+      if (s.anchorNode) {
+        const anchor = s.anchorNode.parentElement?.closest(
+          'a'
+        ) as HTMLAnchorElement | null
+        if (anchor) {
+          linkSetter(anchor.href)
+        }
+      }
       rangeSetter(r)
     }
 
@@ -88,6 +96,15 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
     const result = document.execCommand('createLink', false, link)
 
     if (result) {
+      // Всем ссылкам по умолчанию добавляем target="_blank"
+      if (selection.anchorNode) {
+        if (
+          selection.anchorNode.parentElement &&
+          selection.anchorNode.parentElement instanceof HTMLAnchorElement
+        ) {
+          selection.anchorNode.parentElement.target = '_blank'
+        }
+      }
       /**
        * Снимаем все селекшены.
        * Действие не обязательное, но вроде так юзабельней.
@@ -157,7 +174,13 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
   return (
     <>
       <LinkFormStyled>
-        <Grid container spacing={8}>
+        <Grid
+          container
+          spacing={8}
+          style={{
+            margin: '0',
+          }}
+        >
           <Grid
             item
             xs={12}
@@ -169,6 +192,11 @@ export const LinkForm: React.FC<LinkFormProps> = ({ opened, closePopover }) => {
                 onChange={onChangeLink}
                 label="Адрес ссылки"
                 fullWidth
+                style={{
+                  minWidth: '250px',
+                  maxWidth: '350px',
+                  marginRight: '20px',
+                }}
               />{' '}
               {uploader}
             </LinkFormLinkWrapperStyled>

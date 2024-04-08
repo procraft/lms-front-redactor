@@ -9,7 +9,7 @@ export const useUploader = ({
   onUpload,
   inputProps,
   disabled,
-  title,
+  // title,
   ...other
 }: useUploaderProps) => {
   const client = useApolloClient()
@@ -98,28 +98,38 @@ export const useUploader = ({
         <UploaderStyled
           callback={onClick}
           disabled={loading ? true : disabled}
+          style={{
+            width: '120px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            margin: '0',
+          }}
           {...other}
         >
           <div className="wrapper">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8.66634 6.66667H11.9997L7.99967 10.6667L3.99967 6.66667H7.33301V2H8.66634V6.66667ZM2.66634 12.6667H13.333V8H14.6663V13.3333C14.6663 13.5101 14.5961 13.6797 14.4711 13.8047C14.3461 13.9298 14.1765 14 13.9997 14H1.99967C1.82286 14 1.65329 13.9298 1.52827 13.8047C1.40325 13.6797 1.33301 13.5101 1.33301 13.3333V8H2.66634V12.6667Z"
-                fill="#475569"
-              />
-            </svg>
-            <p>{title}</p>
+            {loading ? (
+              <span style={{ textTransform: 'none' }}>Загрузка</span>
+            ) : (
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ margin: '0' }}
+              >
+                <path
+                  d="M8.66634 6.66667H11.9997L7.99967 10.6667L3.99967 6.66667H7.33301V2H8.66634V6.66667ZM2.66634 12.6667H13.333V8H14.6663V13.3333C14.6663 13.5101 14.5961 13.6797 14.4711 13.8047C14.3461 13.9298 14.1765 14 13.9997 14H1.99967C1.82286 14 1.65329 13.9298 1.52827 13.8047C1.40325 13.6797 1.33301 13.5101 1.33301 13.3333V8H2.66634V12.6667Z"
+                  fill="#475569"
+                />
+              </svg>
+            )}
+            {/* <p>{title}</p> */}
           </div>
         </UploaderStyled>
-        {loading ? ' Loading...' : null}
+        {/* {loading ? ' Loading...' : null} */}
       </>
     )
-  }, [inputProps, onChange, onClick, loading, disabled, title, other])
+  }, [inputProps, onChange, onClick, loading, disabled, other])
 
   return useMemo(() => {
     return {

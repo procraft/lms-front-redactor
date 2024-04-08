@@ -105,9 +105,11 @@ export const CreateLinkButton: React.FC<CreateLinkButtonProps> = ({
           left: clickCoords.x,
           top: clickCoords.y,
         }}
-        // onClick={preventDefault}
+        // Чтобы при клике вне модалки - она закрывалась
+        // eslint-disable-next-line react/jsx-no-bind
+        onClick={(event) => event.stopPropagation()}
         // onMouseUp={onMouseUp}
-        preventClickEvent={true}
+        preventClickEvent={false}
         modal={false}
         moveable
       >
@@ -141,13 +143,11 @@ export const useCreateLinkButton: (
   const [clickCoords, clickCoordsSetter] = useState<
     CreateLinkButtonProps['clickCoords'] | null
   >(null)
-
   const onClick = useCallback(
     (event: MouseEvent) => {
-      // console.log('onClick event', event)
-
-      openedSetter(!opened)
-
+      // Поправила поведение, когда модалка открывалась и сразу же закрывалась
+      event.preventDefault()
+      event.stopPropagation()
       if (!opened) {
         clickCoordsSetter({
           // TODO Получать координаты с учетом ширины самой всплывашки
@@ -155,8 +155,9 @@ export const useCreateLinkButton: (
           y: event.clientY + 30,
         })
       }
+      openedSetter(!opened)
     },
-    [opened]
+    [opened, openedSetter, clickCoordsSetter]
   )
 
   // console.log('useCreateLinkButton hasSelection', hasSelection)
