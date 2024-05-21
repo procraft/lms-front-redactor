@@ -15,13 +15,13 @@ export const UploaderInputStyled = styled.input`
 
 export const UploaderStyled = styled(IconButton)`
   border-radius: 4px;
-  box-shadow: 0px 4px 4px rgba(148, 163, 184, 0.24);
+  box-shadow: 0px 0px 4px rgba(148, 163, 184, 0.24);
   padding: 8px;
   height: auto;
   width: 100%;
-  margin-bottom: 16px;
+  margin-block: 10px;
 
-  & .wrapper {
+  & .upload-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;

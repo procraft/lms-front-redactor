@@ -98,14 +98,14 @@ export const useUploader = ({
         <UploaderStyled
           callback={onClick}
           disabled={loading ? true : disabled}
-          style={{
-            width: '120px',
-            cursor: loading ? 'not-allowed' : 'pointer',
-            margin: '0',
-          }}
+          // style={{
+          //   width: '120px',
+          //   cursor: loading ? 'not-allowed' : 'pointer',
+          //   margin: '0',
+          // }}
           {...other}
         >
-          <div className="wrapper">
+          <div className="upload-wrapper">
             {loading ? (
               <span style={{ textTransform: 'none' }}>Загрузка</span>
             ) : (
