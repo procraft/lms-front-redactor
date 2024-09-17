@@ -18,6 +18,7 @@ export const Section: RedactorComponent = ({
   updateParent,
   isDirty,
   updateTemplate,
+  tagsDisabled,
   ...other
 }) => {
   const { ref, element, active, activeSetter } =
@@ -48,6 +49,7 @@ export const Section: RedactorComponent = ({
     updateObject,
     inEditMode,
     wrapperContainer,
+    tagsDisabled,
   })
 
   const content = useMemo(() => {

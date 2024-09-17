@@ -14,4 +14,6 @@ export type useRedactorRenderComponentsProps = {
   updateObject: RedactorComponentProps['updateObject']
 
   wrapperContainer: RedactorComponentWrapperProps['container']
+
+  tagsDisabled?: RedactorComponentProps['tagsDisabled']
 }

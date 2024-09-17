@@ -49,6 +49,7 @@ export type RedactorComponentProps<P = {}> = {
 
   isDirty: RedactorComponentWrapperProps['isDirty']
   updateTemplate: RedactorComponentWrapperProps['updateTemplate']
+  tagsDisabled?: Set<string>
 }
 
 export type RedactorComponent<

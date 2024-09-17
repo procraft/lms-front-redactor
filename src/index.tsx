@@ -26,6 +26,7 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
   objectTemplates,
   linksList,
   showHiddenTags,
+  tagsDisabled,
 }) => {
   const context = useMemo<LmsFrontRedactorContextValue>(() => {
     return {
@@ -64,9 +65,10 @@ const LmsFrontRedactor: React.FC<LmsFrontRedactorProps> = ({
         wrapperContainer={undefined}
         isDirty={undefined}
         updateTemplate={undefined}
+        tagsDisabled={tagsDisabled}
       />
     )
-  }, [object, getRedactorObjectComponent, updateObject, inEditMode])
+  }, [object, getRedactorObjectComponent, updateObject, inEditMode, tagsDisabled])
 
   const redactorContent = useMemo(() => {
     return (

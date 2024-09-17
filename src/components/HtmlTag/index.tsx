@@ -23,6 +23,7 @@ export const HtmlTag: RedactorComponent = ({
   updateParent,
   isDirty,
   updateTemplate,
+  tagsDisabled,
   // ...other
 }) => {
   _children
@@ -128,6 +129,7 @@ export const HtmlTag: RedactorComponent = ({
     updateObject,
     inEditMode,
     wrapperContainer,
+    tagsDisabled,
   })
 
   const content = useMemo<JSX.Element | null>(() => {
@@ -153,6 +155,12 @@ export const HtmlTag: RedactorComponent = ({
 
     // Если нужно что-то отрендерить в <head>, ищем атрибут "data-head"
     const renderToHead = Object.prototype.hasOwnProperty.call(tagProps, 'data-head')
+
+    // Возможность отключить какие-то теги через hash, например '#no-script'
+    if (tagsDisabled?.has(tagLower)) {
+      return null
+    }
+
     if (renderToHead && !inEditMode) {
       return <NextHead>{renderSimpleTag()}</NextHead>
     }
@@ -238,6 +246,7 @@ export const HtmlTag: RedactorComponent = ({
     active,
     closeHandler,
     element,
+    tagsDisabled,
   ])
 
   // TODO: Было: Пока отключил этот перехватчик, но надо будет понаблюдать (за кнопками, селектами и т.п.)

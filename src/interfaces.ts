@@ -19,4 +19,6 @@ export type LmsFrontRedactorProps = {
   linksList: LmsFrontRedactorContextValue['linksList']
 
   showHiddenTags: boolean
+
+  tagsDisabled?: Set<string>
 }

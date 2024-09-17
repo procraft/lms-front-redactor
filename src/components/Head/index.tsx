@@ -25,6 +25,7 @@ export const Head: RedactorComponent = ({
   updateParent,
   isDirty,
   updateTemplate,
+  tagsDisabled,
   ...other
 }) => {
   const { ref, element, active, activeSetter } =
@@ -60,6 +61,7 @@ export const Head: RedactorComponent = ({
     updateObject,
     inEditMode,
     wrapperContainer,
+    tagsDisabled,
   })
 
   const content = useMemo(() => {

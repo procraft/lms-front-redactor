@@ -12,6 +12,7 @@ const useRedactorRenderComponents = ({
   object,
   updateObject,
   inEditMode,
+  tagsDisabled,
   wrapperContainer,
 }: useRedactorRenderComponentsProps) => {
   const context = useContext(LmsFrontRedactorContext)
@@ -113,11 +114,12 @@ const useRedactorRenderComponents = ({
         const renderProps = {
           object: next,
           updateObject: updateObjectChildComponent,
-          inEditMode: inEditMode,
-          wrapperContainer: wrapperContainer,
+          inEditMode,
+          wrapperContainer,
           parent: object,
           // updateParent: updateObject,
           updateParent: updateObjectRef.current,
+          tagsDisabled,
         }
 
         curr.push(
