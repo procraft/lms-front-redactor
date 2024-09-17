@@ -15,6 +15,7 @@ import { EditorBlockTitleH1 } from './buttons/EditorBlockTitleH1'
 import { EditorBlockTitleH2 } from './buttons/EditorBlockTitleH2'
 import { EditorBlockText } from './buttons/EditorBlockText'
 import { EditorBlockAccordionButton } from './buttons/EditorBlockAccordion'
+import { EditorBlockSlider } from "./buttons/EditorBlockSlider"
 
 enum TabState {
   default = 'default',
@@ -101,6 +102,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
             <AddButtonWidgetButton {...props} />
             <AddWidgetButtonCourse {...props} />
             <EditorBlockAccordionButton {...props} />
+            <EditorBlockSlider {...props} />
 
             <Button
               className={'show-more ' + (showMore && 'hide')}
