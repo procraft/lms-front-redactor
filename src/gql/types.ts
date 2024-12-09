@@ -177,6 +177,8 @@ export interface ClientFormQuestion {
 }
 
 export enum ClientFormQuestionKind {
+  INT = 'Int',
+  NUMBER = 'Number',
   FILELIST = 'FileList',
   MULTIVARIANT = 'MultiVariant',
   PARAGRAPH = 'Paragraph',
