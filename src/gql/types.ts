@@ -749,6 +749,7 @@ export interface OrderReviewCustom {
   meetExpectation?: Maybe<MeetExpectation>
   rating: Scalars['Int']
   text?: Maybe<Scalars['String']>
+  reply?: Maybe<Scalars['String']>
   timeCreated: Scalars['DateTime']
   uid: Scalars['Int']
 }
