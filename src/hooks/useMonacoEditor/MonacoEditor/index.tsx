@@ -3,18 +3,19 @@ import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 
 import loader from '@monaco-editor/loader'
 import { MonacoEditorProps } from './interfaces'
+import { HtmlTextarea } from './HtmlTextarea'
 
 export const Editor: React.FC<MonacoEditorProps> = ({
-  source,
   language,
+  value,
   onChange,
+  onClose,
   onEditorInit,
 }) => {
-  const [editorContainer, editorContainerSetter] =
-    useState<HTMLDivElement | null>(null)
+  const [editorContainer, setEditorContainer] = useState<HTMLDivElement | null>(null)
 
   const editorContainerRef = useCallback((el: HTMLDivElement) => {
-    editorContainerSetter(el)
+    setEditorContainer(el)
   }, [])
 
   /**
@@ -23,12 +24,7 @@ export const Editor: React.FC<MonacoEditorProps> = ({
    * а когда мы начинаем редактирование. На слобом интернете задержка очень ощутимая,
    * долгое время редактор выглядит пустым.
    */
-  const [editorInited, editorInitedSetter] = useState(false)
-
-  /**
-   * Init editor
-   */
-  // TODO Сейчас у нас редактор не реагирует на изменения извне
+  const [inited, setInited] = useState(false)
 
   /**
    * Очень важно: если извне передаются переменные, обновляемые при каждом изменении в редакторе,
@@ -43,11 +39,11 @@ export const Editor: React.FC<MonacoEditorProps> = ({
     let editorInstance: monacoEditor.editor.IStandaloneCodeEditor | null = null
     let model: monacoEditor.editor.ITextModel | null = null
 
+    // Инициализация строго один раз!
     loader.init().then((monaco: typeof monacoEditor) => {
-      editorInitedSetter(true)
-
+      setInited(true)
       editorInstance = monaco.editor.create(editorContainer, {
-        value: source,
+        value,
         language,
         formatOnPaste: true,
         // formatOnType: true,
@@ -55,76 +51,34 @@ export const Editor: React.FC<MonacoEditorProps> = ({
         insertSpaces: true,
         tabSize: 2,
         wordWrap: 'on',
-        minimap: {
-          enabled: false,
-        },
+        minimap: { enabled: false },
       })
 
-      // console.log('editorInstance._actions["editor.action.formatDocument"]', editorInstance._actions["editor.action.formatDocument"]);
-
-      // model = monaco.editor.getModels()[0]
       model = editorInstance.getModel()
-
-      // model?.onDidChangeContent((_event) => {
-      //   // console.log('onDidChangeContent event', event)
-      //   // console.log(
-      //   //   'onDidChangeContent editorInstance',
-      //   //   editorInstance?.getValue()
-      //   //   editorInitedSetter(true)
-      //   // )
-      //   editorInstance && onChange(editorInstance.getValue())
-      // })
-
       onEditorInit && onEditorInit(editorInstance)
     })
 
+    // При закрытии редактора
     return () => {
-      /**
-       * Если есть измененный контент, сохраняем его
-       */
-      if (model) {
-        const value = model.getValue()
-
-        if (value !== source) {
-          onChange && onChange(value)
-        }
-      }
-
-      /**
-       * Destroy editor
-       */
+      onClose && onClose()
       editorInstance?.dispose()
       model?.dispose()
     }
-  }, [source, editorContainer, language, onChange, onEditorInit])
+  }, [editorContainer])
 
   return useMemo(() => {
     return (
-      <div
-        ref={editorContainerRef}
-        style={{
-          minHeight: '100%',
-          height: '360',
-        }}
-      >
-        {/* 
-        Пока редактор не загрузился, выводим исходный код
-        */}
-        {!editorInited ? (
+      <div ref={editorContainerRef} style={{ minHeight: '100%', height: '360' }}>
+        {/* Пока редактор не загрузился, выводим фолбечный редактор (вдруг так и не загрузится) */}
+        {!inited && (
           <>
-            <div
-              style={{
-                marginBottom: 15,
-              }}
-            >
-              Редактор загружается...
-            </div>
-            {source}
+            <div>Редактор загружается...</div>
+            {onChange && <HtmlTextarea value={value} onChange={onChange} />}
           </>
-        ) : null}
+        )}
       </div>
     )
-  }, [editorContainerRef, editorInited, source])
+  }, [editorContainerRef, inited, value, onChange])
 }
 
 export default Editor

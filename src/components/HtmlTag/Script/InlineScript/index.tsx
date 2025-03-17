@@ -12,18 +12,6 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
   closeHandler,
   element,
 }) => {
-  /**
-   * Editor
-   */
-
-  // const saveEditorContent = useCallback((data: string) => {
-  //   console.log('saveEditorContent data', data)
-  // }, [])
-
-  // const updateFile = useCallback((data: string) => {
-  //   console.log('updateFile data', data)
-  // }, [])
-
   const onChange = useCallback(
     (content: string) => {
       const contentElement = object.components[0] || {
@@ -50,16 +38,11 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
     [object, updateObject]
   )
 
-  const { editor } = useMonacoEditor({
+  const { editorJsx } = useMonacoEditor({
     active,
-    editorProps: {
-      source,
-      // ext: 'css',
-      // saveEditorContent,
-      // updateFile,
-      language: 'javascript',
-      onChange,
-    },
+    source,
+    language: 'javascript',
+    onChange,
   })
 
   const { opened } = useOpened({
@@ -81,9 +64,9 @@ export const InlineScript: React.FC<InlineScriptProps> = ({
           modal={true}
           moveable={false}
         >
-          {editor}
+          {editorJsx}
         </MonacoEditorModal>
       </>
     )
-  }, [active, closeHandler, editor, opened])
+  }, [active, closeHandler, editorJsx, opened])
 }

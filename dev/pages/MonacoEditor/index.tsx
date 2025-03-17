@@ -8,12 +8,10 @@ export const DevMonacoPage: Page = () => {
   <h1 data-redactor--component="HtmlTag" data-redactor--component-tag="h1">Heading</h1><p data-redactor--component="HtmlTag" data-redactor--component-tag="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
   `)
 
-  const { editor } = useMonacoEditor({
+  const editorJsx = useMonacoEditor({
     active: true,
-    editorProps: {
-      language: 'html',
-      source,
-    },
+    language: 'html',
+    source,
   })
 
   const [container, containerSetter] = useState<HTMLDivElement | null>(null)
@@ -57,10 +55,10 @@ export const DevMonacoPage: Page = () => {
             }}
             ref={containerSetter}
           >
-            {editor}
+            {editorJsx}
           </div>
         </Modal2>
       </>
     )
-  }, [editor])
+  }, [editorJsx])
 }

@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
-import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 import { useMonacoEditor } from '../../../../hooks/useMonacoEditor'
 import { ContentEditorHTMLEditorMonacoEditorProps } from './interfaces'
 import nodeToEditorComponentObject from '../../ContentProxy/hooks/useContentEditable/helpers/nodeToEditorComponentObject'
@@ -34,81 +33,40 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
   updateParent,
   toggleModalCollapse,
 }) => {
-  const [source, sourceSetter] = useState<string>('')
+  const [source, setSource] = useState(NodeToHtml(element))
+  const [error, setError] = useState<Error | null>(null)
+  const [isDirty, setIsDirty] = useState(false)
 
+  // Отслеживаем измненения в объекте
   useEffect(() => {
-    /**
-     * Нужен для отслеживания изменений на объекте
-     */
     object
+    setSource(NodeToHtml(element))
+  }, [element, object, setSource])
 
-    sourceSetter(NodeToHtml(element))
-  }, [element, object])
-
-  const [error, errorSetter] = useState<Error | null>(null)
-
-  const [isDirty, isDirtySetter] = useState(false)
-
-  /**
-   * Если устанавливается новый контент, то сбрасываем флаг
-   */
-  useEffect(() => {
-    source
-
-    isDirtySetter(false)
-  }, [source])
-
-  const [editorInstance, editorInstanceSetter] =
-    useState<monacoEditor.editor.IStandaloneCodeEditor | null>(null)
-
-  useEffect(() => {
-    if (!editorInstance) {
-      return
-    }
-
-    const model = editorInstance.getModel()
-
-    const modelOnChange = model?.onDidChangeContent((_event) => {
-      const value = model.getValue()
-
-      isDirtySetter(value !== source)
-
-      errorSetter(null)
-    })
-
-    return () => {
-      modelOnChange?.dispose()
-    }
-  }, [editorInstance, source])
-
-  const onEditorInit = useCallback(
-    (editorInstance: monacoEditor.editor.IStandaloneCodeEditor) => {
-      editorInstanceSetter(editorInstance)
-    },
-    []
-  )
-
-  const { editor } = useMonacoEditor({
+  const { editorJsx, resetValue, getValue, editor } = useMonacoEditor({
     active,
-    editorProps: {
-      language: 'html',
-      source,
-      onEditorInit,
-    },
+    language: 'html',
+    source,
   })
 
-  /**
-   * Восстановление изменений
-   */
-  const resetValue = useCallback(() => {
-    const model = editorInstance?.getModel()
+  useEffect(() => {
+    setIsDirty(getValue() !== source)
+  }, [getValue, source])
 
-    if (!model) {
-      throw new Error('Can not get monaco editor model')
+  useEffect(() => {
+    const model = editor?.getModel()
+    if (model) {
+      setIsDirty(model.getValue() !== source)
+
+      const modelOnChange = model.onDidChangeContent((_event) => {
+        const v = model.getValue()
+        setIsDirty(v !== source)
+        setError(null)
+      })
+
+      return () => modelOnChange.dispose()
     }
-
-    model.setValue(source)
-  }, [editorInstance, source])
+  }, [editor, source])
 
   /**
    * Сохранение изменений
@@ -118,36 +76,20 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
       /**
        * Создаем ноду и передаем содержимое как HTML
        */
-
-      const model = editorInstance?.getModel()
-
-      if (!model) {
-        throw new Error('Can not get monaco editor model')
-      }
-
-      const value = model.getValue().trim()
-
-      // console.log('saveValue value', value)
-
+      const value = getValue()
       const template = global.document.createElement('div')
-
       template.innerHTML = value
-
       const newObject = nodeToEditorComponentObject(template)
 
       if (!newObject) {
-        errorSetter(new Error('Не был получен объект'))
+        setError(new Error('Не был получен объект'))
         return
       }
 
       const components = newObject.components
 
-      // console.log('saveValue components', components)
-
       if (components.length === 1) {
-        const component = components[0]
-
-        updateObject(object, component)
+        updateObject(object, components[0])
       } else {
         /**
          * Если нет родительского объекта, то выдаем ошибку
@@ -159,16 +101,15 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
 
           console.error(error, value, template.children)
 
-          errorSetter(error)
+          setError(error)
 
           return
         } else {
           const parentComponents = [...parent.components]
-
           const index = parentComponents.findIndex((n) => n === object)
 
           if (index === -1) {
-            errorSetter(new Error('Не был найден индекс текущего объекта'))
+            setError(new Error('Не найден индекс текущего объекта'))
             return
           }
 
@@ -188,9 +129,9 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
         }
       }
     } catch (error) {
-      errorSetter(error as Error)
+      setError(error as Error)
     }
-  }, [editorInstance, object, parent, updateObject, updateParent])
+  }, [object, parent, updateObject, updateParent, getValue])
 
   const buttons = useMemo(() => {
     return [
@@ -223,7 +164,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
   const copyTemplateCodeBtn = useMemo(() => {
     return (
       <Btn className="iconButton" onClick={copyTemplateCode}>
-        &lt;/&gt; Code
+        &lt;/&gt; Код в буфер (разр.)
       </Btn>
     )
   }, [copyTemplateCode])
@@ -252,7 +193,7 @@ export const ContentEditorHTMLEditorMonacoEditor: React.FC<
     <>
       <ContentEditorHTMLEditorMonacoEditorStyled>
         <div style={{ flex: 1 }}>
-          {editor}
+          {editorJsx}
         </div>
 
         <div className="buttons">

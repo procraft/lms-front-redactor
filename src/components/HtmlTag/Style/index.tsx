@@ -55,27 +55,18 @@ export const Style: React.FC<StyleProps> = ({
     [object, updateObject]
   )
 
-  const { editor } = useMonacoEditor({
+  const { editorJsx } = useMonacoEditor({
     active,
-    editorProps: {
-      source: object.components[0]?.props.text || '',
-      // ext: 'css',
-      // saveEditorContent,
-      // updateFile,
-      language: 'css',
-      onChange,
-    },
+    source: object.components[0]?.props.text || '',
+    language: 'css',
+    onChange,
   })
 
-  const { opened } = useOpened({
-    active,
-    element,
-  })
+  const { opened } = useOpened({ active, element })
 
   return (
     <>
       <div
-        // {...renderProps}
         {...other}
         /**
          * Иначе не срабатывает клик по инпуту
@@ -105,7 +96,7 @@ export const Style: React.FC<StyleProps> = ({
             modal={true}
             moveable={false}
           >
-            {editor}
+            {editorJsx}
           </MonacoEditorModal>
         ) : (
           children

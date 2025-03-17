@@ -45,7 +45,7 @@
     "@procraft/ui": "~1.4.0",
     "@mui/material": "^5.8.4",
     "latinize": "^0.5.0",
-    "monaco-editor": "~0.25.0",
+    "monaco-editor": "~0.39.0",
     "react": "^17.0.1",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.1",

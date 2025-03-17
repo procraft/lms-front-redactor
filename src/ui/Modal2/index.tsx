@@ -81,12 +81,9 @@ export const Modal2: React.FC<Modal2Props> = ({
     const onClick = (event: MouseEvent) => {
       if (process.env.NODE_ENV === 'development') {
         // eslint-disable-next-line no-console
-        console.log('Modal2 onClick stopPropagation target', event.target)
+        console.log('Modal2 onClick stopPropagation target', event.target, event.currentTarget)
         // eslint-disable-next-line no-console
-        console.log(
-          'Modal2 onClick stopPropagation currentTarget',
-          event.currentTarget
-        )
+        //console.log('Modal2 onClick stopPropagation currentTarget', event.currentTarget)
       }
 
       // event.stopPropagation()

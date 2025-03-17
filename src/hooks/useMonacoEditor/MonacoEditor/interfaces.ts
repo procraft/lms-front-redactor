@@ -1,18 +1,9 @@
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
 
 export type MonacoEditorProps = {
-  source: string
+  value: string
+  onChange: (value: string) => void
   language: 'javascript' | 'css' | 'html'
-
-  /**
-   * Коллбэк на изменение контента
-   */
-  onChange?: (content: string) => void
-
-  /**
-   * Коллбэк на инициализацию редактора
-   */
-  onEditorInit?: (
-    editorInstance: monacoEditor.editor.IStandaloneCodeEditor
-  ) => void
+  onEditorInit?: (editorInstance: monacoEditor.editor.IStandaloneCodeEditor) => void
+  onClose?: () => void
 }
