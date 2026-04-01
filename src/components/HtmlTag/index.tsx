@@ -12,6 +12,7 @@ import { Script } from './Script'
 import { Style } from './Style'
 import { VideoWrapper } from './VideoWrapper'
 import { HtmlTagContentEditable } from './ContentEditable'
+import { RawHtmlTag } from './RawHtmlTag'
 
 export const HtmlTag: RedactorComponent = ({
   object,
@@ -139,22 +140,36 @@ export const HtmlTag: RedactorComponent = ({
 
     const tagLower = Tag.toLowerCase()
 
+    const isRawHtmlBlock = object.props['data-raw-html'] !== undefined
+
+    if (isRawHtmlBlock && !inEditMode) {
+      return <RawHtmlTag object={object} className={componentClassName} />
+    }
+
     const renderSimpleTag = () => {
       const extraProps = (() => {
         if (['link', 'meta'].includes(tagLower)) return null
         let __html = object.components[0]?.props.text ?? ''
         // добавила проверку чтобы при создании нового компонента, в него можно было добавлять теги style и script
-        if (tagLower === 'style' || tagLower === 'script') __html = text ?? __html
-        return {dangerouslySetInnerHTML: {__html}}
+        if (tagLower === 'style' || tagLower === 'script')
+          __html = text ?? __html
+        return { dangerouslySetInnerHTML: { __html } }
       })()
 
       return React.createElement(Tag, { ...tagProps, ...extraProps })
     }
 
-    const tagPropsExt = {className: componentClassName, controls: undefined, ...tagProps}
+    const tagPropsExt = {
+      className: componentClassName,
+      controls: undefined,
+      ...tagProps,
+    }
 
     // Если нужно что-то отрендерить в <head>, ищем атрибут "data-head"
-    const renderToHead = Object.prototype.hasOwnProperty.call(tagProps, 'data-head')
+    const renderToHead = Object.prototype.hasOwnProperty.call(
+      tagProps,
+      'data-head'
+    )
 
     // Возможность отключить какие-то теги через hash, например '#no-script'
     if (tagsDisabled?.has(tagLower)) {
@@ -166,10 +181,13 @@ export const HtmlTag: RedactorComponent = ({
     }
 
     switch (tagLower) {
-      case 'title': return renderSimpleTag()
-      case 'script': return renderSimpleTag()
+      case 'title':
+        return renderSimpleTag()
+      case 'script':
+        return renderSimpleTag()
       // https://github.com/vercel/next.js/issues/21862
-      case 'style': return renderSimpleTag()
+      case 'style':
+        return renderSimpleTag()
 
       case 'video': {
         return (
@@ -178,7 +196,9 @@ export const HtmlTag: RedactorComponent = ({
               {...tagPropsExt}
               ref={ref as React.LegacyRef<HTMLVideoElement> | undefined}
               controls={
-                inEditMode && !childrenContent ? undefined : tagPropsExt.controls
+                inEditMode && !childrenContent
+                  ? undefined
+                  : tagPropsExt.controls
               }
             >
               {childrenContent}
@@ -205,7 +225,7 @@ export const HtmlTag: RedactorComponent = ({
     /**
      * Если у компонента есть props.children, то выводим props.children
      */
-    
+
     // Добавила пустой обьект для хранения функции
     let clickProp = {}
     // Проверяем тег элемента
@@ -214,14 +234,14 @@ export const HtmlTag: RedactorComponent = ({
       if (object.props['data-href']) {
         if (!inEditMode) {
           clickProp = {
-            onClick:() => {
-            window.location.href = object.props['data-href']
-            }
+            onClick: () => {
+              window.location.href = object.props['data-href']
+            },
           }
         }
       }
     }
-    
+
     return (
       <Tag
         // @ts-expect-error
@@ -278,7 +298,9 @@ export const HtmlTag: RedactorComponent = ({
       ...otherInitProps,
       [redactor2ComponentAttributes.component]: 'HtmlTag',
       [redactor2ComponentAttributes.tag]: object.props.tag,
-      onClick: preventDefault,
+    }
+    if (inEditMode) {
+      Object.assign(renderProps, { onClick: preventDefault })
     }
 
     // let elementContent: JSX.Element = React.cloneElement(content, renderProps)
