@@ -143,7 +143,7 @@ export const HtmlTag: RedactorComponent = ({
     const isRawHtmlBlock = object.props['data-raw-html'] !== undefined
 
     if (isRawHtmlBlock && !inEditMode) {
-      return <RawHtmlTag object={object} className={componentClassName} />
+      return <RawHtmlTag object={object} />
     }
 
     const renderSimpleTag = () => {
