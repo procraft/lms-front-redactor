@@ -1,8 +1,8 @@
 /* eslint-disable */
 
-/**
-* ФАЙЛ ГЕНЕРИРУЕТСЯ АВТОМАТИЧЕСКИ, ПРАВИТЬ ЕГО НЕ НУЖНО
-* Команда для генерирования этого файла: "yarn generate:types"
+/** 
+* ФАЙЛ ГЕНЕРИРУЕТСЯ АВТОМАТИЧЕСКИ, ПРАВИТЬ ЕГО НЕ НУЖНО 
+* Команда для генерирования этого файла: "yarn generate:types" 
 */
 
 
@@ -43,6 +43,25 @@ export interface AddressInput {
   primary?: Maybe<Scalars['Boolean']>;
 }
 
+export enum AuthMethod {
+  SMS = 'Sms',
+  EMAIL = 'Email',
+  PASSWORD = 'Password',
+  TIMELIMITTOKEN = 'TimeLimitToken'
+}
+
+
+export interface BookingClientInput {
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  attachments?: Maybe<Array<PhotoDataInput>>;
+  patchMessengers?: Maybe<Array<MessengerPatch>>;
+  patchSocials?: Maybe<Array<SocialPatch>>;
+}
 
 export enum CardFieldName {
   SOCIALTWITTER = 'SocialTwitter',
@@ -58,8 +77,16 @@ export enum CardFieldName {
   MESSENGERHANGOUTS = 'MessengerHangouts',
   MESSENGERFACEBOOK = 'MessengerFacebook',
   ATTACHMENTS = 'Attachments',
+  PHONE = 'Phone',
+  CHILDPHONE = 'ChildPhone',
+  COMMENT = 'Comment',
   EMAIL = 'Email',
-  MIDDLENAME = 'MiddleName'
+  CHILDEMAIL = 'ChildEmail',
+  LASTNAME = 'LastName',
+  MIDDLENAME = 'MiddleName',
+  ACCEPTAGREEMENTBYDEFAULT = 'AcceptAgreementByDefault',
+  SEPARATECHECKBOXONDOCUMENT = 'SeparateCheckboxOnDocument',
+  NOTIAMWILLBESTUDY = 'NotIamWillBeStudy'
 }
 
 export enum CardFieldState {
@@ -86,7 +113,9 @@ export interface CatalogFieldValue {
   fieldName: Scalars['String'];
   optionName: Scalars['String'];
   optionValue?: Maybe<Scalars['String']>;
+  parents?: Maybe<Scalars['String']>;
   isSelected: Scalars['Boolean'];
+  isDisplayRemainder?: Maybe<Scalars['Boolean']>;
   isDefault?: Maybe<Scalars['Boolean']>;
   /** Используется для группировки по табам */
   groupName?: Maybe<Scalars['String']>;
@@ -97,6 +126,7 @@ export interface CatalogFieldValue {
   extraWorkPercentage: Scalars['BigDecimal'];
   /** Количество оставшихся мест */
   availableCount?: Maybe<Scalars['Int']>;
+  params?: Maybe<Scalars['String']>;
   /** Кастомный признак типа записи */
   type: CatalogFieldValueType;
 }
@@ -106,11 +136,19 @@ export interface CatalogFieldValueInput {
   fieldName?: Maybe<Scalars['String']>;
   optionName: Scalars['String'];
   optionValue?: Maybe<Scalars['String']>;
+  parents?: Maybe<Scalars['String']>;
   isSelected?: Maybe<Scalars['Boolean']>;
   extraPay?: Maybe<Scalars['BigDecimal']>;
   extraPayPercentage?: Maybe<Scalars['BigDecimal']>;
   extraWork?: Maybe<Scalars['BigDecimal']>;
   extraWorkPercentage?: Maybe<Scalars['BigDecimal']>;
+  params?: Maybe<CatalogFieldValueParamsInput>;
+}
+
+export interface CatalogFieldValueParamsInput {
+  optionUid?: Maybe<Scalars['String']>;
+  exactDay?: Maybe<Scalars['Int']>;
+  trialDays?: Maybe<Scalars['Int']>;
 }
 
 /** Тип поля */
@@ -120,7 +158,123 @@ export enum CatalogFieldValueType {
   /** Базовая покупка курса */
   COURSE = 'Course',
   /** Подписка */
-  SUBSCRIPTION = 'Subscription'
+  SUBSCRIPTION = 'Subscription',
+  /** Число занятий */
+  LESSONCOUNT = 'LessonCount'
+}
+
+export interface CatalogItem {
+  __typename?: 'CatalogItem';
+  internalId?: Maybe<Scalars['Int']>;
+}
+
+export interface CheckoutPosition {
+  __typename?: 'CheckoutPosition';
+  uid: Scalars['Int'];
+  catalogItemId?: Maybe<Scalars['Int']>;
+  products?: Maybe<Array<CheckoutProduct>>;
+}
+
+export interface CheckoutPriceDetails {
+  __typename?: 'CheckoutPriceDetails';
+  strokePrice?: Maybe<Scalars['BigDecimal']>;
+  catalogPrice?: Maybe<Scalars['BigDecimal']>;
+  price?: Maybe<Scalars['BigDecimal']>;
+  saleDiscount?: Maybe<Scalars['BigDecimal']>;
+  promoCodeDiscount?: Maybe<Scalars['BigDecimal']>;
+  subscriptionPrice?: Maybe<Scalars['BigDecimal']>;
+  subscriptionFirstPrice?: Maybe<Scalars['BigDecimal']>;
+  hasInstallment: Scalars['Boolean'];
+  denyReason?: Maybe<Scalars['String']>;
+}
+
+export interface CheckoutProduct {
+  __typename?: 'CheckoutProduct';
+  name: Scalars['String'];
+  amount: Scalars['BigDecimal'];
+}
+
+export interface ClientForm {
+  __typename?: 'ClientForm';
+  id: Scalars['ID'];
+  uid: Scalars['Int'];
+  name: Scalars['String'];
+  orgId: Scalars['Int'];
+  isDraft: Scalars['Boolean'];
+  createdAt: Scalars['DateTime'];
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  kind: ClientFormKind;
+}
+
+export interface ClientFormAnswer {
+  __typename?: 'ClientFormAnswer';
+  uid: Scalars['Int'];
+  responseId: Scalars['Int'];
+  questionId: Scalars['Int'];
+  answer?: Maybe<Scalars['String']>;
+  variantId?: Maybe<Scalars['Int']>;
+  createdAt: Scalars['DateTime'];
+  files?: Maybe<Array<FileMeta>>;
+}
+
+export interface ClientFormClientAnswer {
+  questionId: Scalars['Int'];
+  answer?: Maybe<Scalars['String']>;
+  files?: Maybe<Array<FileMetaInput>>;
+  variants?: Maybe<Array<Scalars['Int']>>;
+}
+
+export enum ClientFormKind {
+  NEWMEMBER = 'NewMember',
+  DEFAULT = 'Default'
+}
+
+export interface ClientFormQuestion {
+  __typename?: 'ClientFormQuestion';
+  uid: Scalars['Int'];
+  formId: Scalars['Int'];
+  question: Scalars['String'];
+  isMandatory: Scalars['Boolean'];
+  kind: ClientFormQuestionKind;
+  createdAt: Scalars['DateTime'];
+  orderIndex: Scalars['Float'];
+  variants: Array<ClientFormQuestionVariant>;
+}
+
+export enum ClientFormQuestionKind {
+  INT = 'Int',
+  NUMBER = 'Number',
+  FILELIST = 'FileList',
+  MULTIVARIANT = 'MultiVariant',
+  SINGLEVARIANT = 'SingleVariant',
+  PARAGRAPH = 'Paragraph',
+  SINGLELINE = 'SingleLine'
+}
+
+export interface ClientFormQuestionVariant {
+  __typename?: 'ClientFormQuestionVariant';
+  uid: Scalars['Int'];
+  questionId: Scalars['Int'];
+  name: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  orderIndex: Scalars['Float'];
+}
+
+export interface ClientFormSubmitExtraFieldsInput {
+  isDraft?: Maybe<Scalars['Boolean']>;
+  answers: Array<ClientFormClientAnswer>;
+}
+
+export interface ClientFormSubmitExtraFieldsPayload {
+  __typename?: 'ClientFormSubmitExtraFieldsPayload';
+  clientForms: Array<ClientForm>;
+}
+
+/** Профиль клиента */
+export interface ClientProfile {
+  __typename?: 'ClientProfile';
+  id: Scalars['ID'];
+  hasSelfSubmittedOrder: Scalars['Boolean'];
 }
 
 /** Контакты пользователя */
@@ -150,6 +304,18 @@ export interface CourseItem {
   tariffId?: Maybe<Scalars['Int']>;
   /** На сколько дней продление. Нужно для prolongation. */
   prolongationDays?: Maybe<Scalars['Int']>;
+  financeDocumentIds: Array<Scalars['Int']>;
+  courseMeta?: Maybe<CourseItemMeta>;
+}
+
+export interface CourseItemMeta {
+  __typename?: 'CourseItemMeta';
+  courseName: Scalars['String'];
+  courseKind: CourseKind;
+  courseSubKindLabel?: Maybe<LangRussianNoun>;
+  courseSubKind: CourseSubKind;
+  webinarStartsAt?: Maybe<Scalars['String']>;
+  webinarHasPassed?: Maybe<Scalars['Boolean']>;
 }
 
 export enum CourseKind {
@@ -169,19 +335,24 @@ export interface CoursePublicCustom {
   tariffPerFlowDataItems?: Maybe<Array<CourseTariffFlowPublic>>;
   kind?: Maybe<CourseKind>;
   subKind?: Maybe<CourseSubKind>;
+  subKindLabel?: Maybe<LangRussianNoun>;
 }
 
 export enum CourseSubKind {
   ABONNEMENT = 'Abonnement',
   CLUB = 'Club',
   SUBSCRIPTION = 'Subscription',
+  FORUM = 'Forum',
+  OTHER = 'Other',
   WORKSHOP = 'Workshop',
   MASTERCLASS = 'MasterClass',
   WEBINAR = 'Webinar',
   FACULTY = 'Faculty',
+  PRERECORDING = 'PreRecording',
   MARATHON = 'Marathon',
   INTENSIVE = 'Intensive',
-  COURSE = 'Course'
+  COURSE = 'Course',
+  TRAINING = 'Training'
 }
 
 export enum CourseTariffFlowBehaviour {
@@ -195,16 +366,10 @@ export interface CourseTariffFlowPublic {
   courseId: Scalars['Int'];
   courseTariffId: Scalars['Int'];
   flowId: Scalars['Int'];
-  /** Количество свободных мест в потоке */
-  computed?: Maybe<CourseTariffFlowPublicViewComputed>;
   priceDetails: CourseTariffPriceDetails;
   /** Условия продления курса */
   prolongation: CourseTariffProlongation;
-}
-
-export interface CourseTariffFlowPublicViewComputed {
-  __typename?: 'CourseTariffFlowPublicViewComputed';
-  capacityRemainder?: Maybe<Scalars['Int']>;
+  marketingBenefitsComputed: Array<Scalars['String']>;
 }
 
 export interface CourseTariffPriceDetails {
@@ -232,6 +397,8 @@ export enum CourseTariffPriceKind {
   SUBSCRIPTION = 'Subscription',
   CHANGESBYSALES = 'ChangesBySales',
   CHANGESBYTIME = 'ChangesByTime',
+  FIXEDBYOPTION = 'FixedByOption',
+  FREEBYOPTION = 'FreeByOption',
   FIXED = 'Fixed',
   FREE = 'Free'
 }
@@ -255,6 +422,8 @@ export interface CourseTariffPublicCustom {
   courseId: Scalars['Int'];
   position: Scalars['Int'];
   isActive: Scalars['Boolean'];
+  ratesVisible: Scalars['Boolean'];
+  withClientForm: Scalars['Boolean'];
   flowBehaviour: CourseTariffFlowBehaviour;
   marketingBenefits: Array<Scalars['String']>;
 }
@@ -268,8 +437,13 @@ export interface CreateLandingOrderInput {
   isMultiday?: Maybe<Scalars['Boolean']>;
   clientMutationId?: Maybe<Scalars['String']>;
   promoCode?: Maybe<Scalars['String']>;
+  paymentSchemaUid?: Maybe<Scalars['String']>;
+  paymentSchemaIndexes?: Maybe<Array<Scalars['Int']>>;
   /** Поэтапная оплата */
   partialPayment?: Maybe<Scalars['Boolean']>;
+  sourceUrl: Scalars['String'];
+  timezoneOffset?: Maybe<Scalars['Int']>;
+  timezoneName?: Maybe<Scalars['String']>;
 }
 
 export interface CreateLandingTemplateInput {
@@ -280,6 +454,47 @@ export interface CreateLandingTemplateInput {
 export interface Email {
   __typename?: 'Email';
   email: Scalars['String'];
+  primary: Scalars['Boolean'];
+}
+
+export interface EmailTransport {
+  __typename?: 'EmailTransport';
+  email: Scalars['String'];
+}
+
+export interface FileData {
+  __typename?: 'FileData';
+  url: Scalars['String'];
+  fileName?: Maybe<Scalars['String']>;
+}
+
+export interface FileMeta {
+  __typename?: 'FileMeta';
+  size: Scalars['Int'];
+  url: Scalars['String'];
+  mimeType: Scalars['String'];
+  name: Scalars['String'];
+  lastModified: Scalars['Float'];
+  customInfo?: Maybe<Scalars['String']>;
+}
+
+export interface FileMetaInput {
+  size: Scalars['Int'];
+  url: Scalars['String'];
+  mimeType: Scalars['String'];
+  name: Scalars['String'];
+  lastModified: Scalars['Float'];
+  customInfo?: Maybe<Scalars['String']>;
+}
+
+export interface FinanceDocument {
+  __typename?: 'FinanceDocument';
+  uid: Scalars['Int'];
+  url: Scalars['String'];
+  fileName: Scalars['String'];
+  name: Scalars['String'];
+  kind: Scalars['String'];
+  required: Scalars['Boolean'];
 }
 
 export interface FlowPublicCustom {
@@ -299,18 +514,6 @@ export interface ItemOrderConditionData {
   catalogItems: Array<OrderCatalogItemFragment>;
 }
 
-export enum PriceOrderConditionKind {
-  BETWEEN = 'Between',
-  TO = 'To',
-  FROM = 'From'
-}
-
-export interface PriceOrderConditionData {
-  __typename?: 'PriceOrderConditionData';
-  kind: PriceOrderConditionKind;
-  from?: Maybe<Scalars['BigDecimal']>;
-  to?: Maybe<Scalars['BigDecimal']>;
-}
 
 export interface LandingCardField {
   __typename?: 'LandingCardField';
@@ -321,13 +524,18 @@ export interface LandingCardField {
 export interface LandingOrderPayload {
   __typename?: 'LandingOrderPayload';
   order?: Maybe<OrderCustom>;
+  denyReason?: Maybe<Scalars['String']>;
 }
 
 export interface LandingSite {
   __typename?: 'LandingSite';
   id: Scalars['ID'];
+  registerAuthMethod?: Maybe<AuthMethod>;
   cardFields: Array<LandingCardField>;
   background?: Maybe<PhotoData>;
+  extraScript?: Maybe<Scalars['String']>;
+  verificationCode?: Maybe<Scalars['String']>;
+  showFeedbackWidget?: Maybe<Scalars['Boolean']>;
 }
 
 export interface LandingSitePrivate {
@@ -366,6 +574,8 @@ export interface LandingTemplateFragment {
   components: Scalars['Json'];
   props: Scalars['Json'];
   uri?: Maybe<Scalars['String']>;
+  /** Иконка сайта */
+  favicon?: Maybe<PhotoData>;
 }
 
 /** Роль пользователя */
@@ -373,18 +583,10 @@ export interface LandingViewerUserRoleFragment {
   __typename?: 'LandingViewerUserRole_Fragment';
   id?: Maybe<Scalars['ID']>;
   uid: Scalars['Int'];
-  roles: LandingViewerUserRolesFragment;
+  auths: Array<UserAuth>;
   human: UserHuman;
   contacts: ContactsProfile;
-}
-
-/** Роли пользователя */
-export interface LandingViewerUserRolesFragment {
-  __typename?: 'LandingViewerUserRoles_Fragment';
-  admin: Scalars['Boolean'];
-  client: Scalars['Boolean'];
-  master: Scalars['Boolean'];
-  partner: Scalars['Boolean'];
+  client: ClientProfile;
 }
 
 export interface LandintTemplatePayload {
@@ -392,15 +594,45 @@ export interface LandintTemplatePayload {
   landingTemplate: LandingTemplateFragment;
 }
 
+export enum LangGender {
+  FEMININE = 'Feminine',
+  MASCULINE = 'Masculine',
+  NEUTER = 'Neuter'
+}
+
+export interface LangRussianNoun {
+  __typename?: 'LangRussianNoun';
+  valueNominative: Scalars['String'];
+  valueGenitive: Scalars['String'];
+  valueAccusative: Scalars['String'];
+  valueDative: Scalars['String'];
+  valueInstrumental: Scalars['String'];
+  valuePrepositional: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  gender: LangGender;
+}
+
+export interface MasterClientProfileCommon {
+  __typename?: 'MasterClientProfileCommon';
+  id: Scalars['ID'];
+  uid: Scalars['Int'];
+  extraFieldsAnswers: Array<ClientFormAnswer>;
+  supervised: Array<UserProfileCustom>;
+}
+
+export interface MasterClientRole {
+  __typename?: 'MasterClientRole';
+  uid: Scalars['Int'];
+  userId?: Maybe<Scalars['Int']>;
+}
+
 export interface MasterProfileCustom {
   __typename?: 'MasterProfileCustom';
   id: Scalars['ID'];
   uid: Scalars['Int'];
   label?: Maybe<Scalars['String']>;
-  /** Ссылка на договор оферты */
-  pdfContractOffer?: Maybe<Scalars['String']>;
-  /** Ссылка на политику безопасности */
-  pdfPrivacyPolicy?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<FinanceDocument>>;
+  installmentComment: Scalars['String'];
   currency: Scalars['String'];
   cashPaymentAliases: Array<CashPaymentAlias>;
   /** Лого организации */
@@ -431,6 +663,7 @@ export enum MessengerServices {
   WHATSAPP = 'WhatsApp',
   VIBER = 'Viber',
   TELEGRAM = 'Telegram',
+  MAH = 'Mah',
   SKYPE = 'Skype',
   IMESSAGE = 'IMessage',
   HANGOUTS = 'Hangouts',
@@ -451,11 +684,15 @@ export interface Mutation {
   login?: Maybe<RestApiPayload>;
   /** Регистрация или авторизация клиента по телефону */
   authClientByPhone?: Maybe<RestApiPayload>;
+  /** Регистрация или авторизация кастомера по телефону */
+  authCustomer?: Maybe<RestApiPayload>;
   deleteLandingTemplateCustom: Scalars['Boolean'];
   /** Создание шаблона */
   createLandingTemplate?: Maybe<LandintTemplatePayload>;
   /** Обновление шаблона */
   updateLandingTemplate?: Maybe<LandintTemplatePayload>;
+  /** @deprecated Больше не нужно */
+  clientFormSubmitExtraFields: ClientFormSubmitExtraFieldsPayload;
   /** Получаем подписанный УРЛ для загрузки файлов */
   s3getSignedUrl: Scalars['String'];
   /**
@@ -482,6 +719,7 @@ export type MutationSubmitLandingOrderArgs = {
 
 
 export type MutationSendSmsCodeArgs = {
+  token?: Maybe<Scalars['String']>;
   shouldExist?: Maybe<Scalars['Boolean']>;
   phone: Scalars['String'];
   promoCode?: Maybe<Scalars['String']>;
@@ -503,6 +741,18 @@ export type MutationAuthClientByPhoneArgs = {
 };
 
 
+export type MutationAuthCustomerArgs = {
+  orgId: Scalars['Int'];
+  phone?: Maybe<Scalars['String']>;
+  smsCode?: Maybe<Scalars['String']>;
+  smsToken?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  login?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+};
+
+
 export type MutationDeleteLandingTemplateCustomArgs = {
   id: Scalars['ID'];
 };
@@ -515,6 +765,11 @@ export type MutationCreateLandingTemplateArgs = {
 
 export type MutationUpdateLandingTemplateArgs = {
   input: UpdateLandingTemplateInput;
+};
+
+
+export type MutationClientFormSubmitExtraFieldsArgs = {
+  input: ClientFormSubmitExtraFieldsInput;
 };
 
 
@@ -532,6 +787,29 @@ export interface OrderCatalogItemMaster {
   __typename?: 'OrderCatalogItemMaster';
   id: Scalars['ID'];
   uid: Scalars['Int'];
+  currency: Scalars['String'];
+}
+
+export interface OrderCatalogItemOrg {
+  __typename?: 'OrderCatalogItemOrg';
+  contacts: OrderCatalogItemOrgContacts;
+  sendingTransport?: Maybe<OrderCatalogItemOrgSendingTransport>;
+  language?: Maybe<Scalars['String']>;
+}
+
+export interface OrderCatalogItemOrgContacts {
+  __typename?: 'OrderCatalogItemOrgContacts';
+  primaryEmail?: Maybe<Scalars['String']>;
+}
+
+export interface OrderCatalogItemOrgEmailTransport {
+  __typename?: 'OrderCatalogItemOrgEmailTransport';
+  email?: Maybe<Scalars['String']>;
+}
+
+export interface OrderCatalogItemOrgSendingTransport {
+  __typename?: 'OrderCatalogItemOrgSendingTransport';
+  emailTransport?: Maybe<OrderCatalogItemOrgEmailTransport>;
 }
 
 export interface OrderCatalogItemFragment {
@@ -545,8 +823,11 @@ export interface OrderCatalogItemFragment {
   unitPrice?: Maybe<Scalars['Float']>;
   /** Старая цена */
   unitPriceOriginal?: Maybe<Scalars['Float']>;
+  org?: Maybe<OrderCatalogItemOrg>;
   master?: Maybe<OrderCatalogItemMaster>;
   course?: Maybe<CourseItem>;
+  /** Тариф */
+  Tariff?: Maybe<CourseTariffPublicCustom>;
   sales?: Maybe<Array<SaleCustom>>;
   /** Примененный промокод */
   promoCode?: Maybe<PromoCodeFragment>;
@@ -558,6 +839,7 @@ export interface OrderCatalogItemFragment {
   reviews?: Maybe<OrderReviewsConnection>;
   /** Опции с ценами */
   fieldValues?: Maybe<Array<CatalogFieldValue>>;
+  partialPayment?: Maybe<PartialPayment>;
 }
 
 
@@ -568,6 +850,11 @@ export type OrderCatalogItemFragmentPromoCodeArgs = {
 
 export type OrderCatalogItemFragmentPriceWithPromoCodeArgs = {
   code: Scalars['String'];
+};
+
+
+export type OrderCatalogItemFragmentPartialPaymentArgs = {
+  fieldValues?: Maybe<Scalars['String']>;
 };
 
 export interface OrderCondition {
@@ -586,14 +873,22 @@ export interface OrderCustom {
   /** Цена с учетом всех скидок */
   salePrice?: Maybe<Scalars['Float']>;
   /** Оригинальная цена без каких-либо скидок */
+  strokePrice?: Maybe<Scalars['Float']>;
+  /** Оригинальная цена без каких-либо скидок */
   catalogPrice?: Maybe<Scalars['Float']>;
+  saleDiscount?: Maybe<Scalars['BigDecimal']>;
+  promoCodeDiscount?: Maybe<Scalars['BigDecimal']>;
+  availableBonusDiscount?: Maybe<Scalars['BigDecimal']>;
+  subscriptionPrice?: Maybe<Scalars['BigDecimal']>;
+  subscriptionFirstPrice?: Maybe<Scalars['BigDecimal']>;
   status: OrderStatus;
   paymentUrl?: Maybe<Scalars['String']>;
   /** Суммы поэтапной оплаты */
   partialPrices: Array<PartialPrice>;
   isMultiday?: Maybe<Scalars['Boolean']>;
-  /** Признак того, что указана оплата в несколько этапов */
-  partialPayment: Scalars['Boolean'];
+  contractOfferIds: Array<Scalars['Int']>;
+  /** Схема платы заказа */
+  usedPartialPayment?: Maybe<UsedPartialPayment>;
   positions: Array<OrderPosition>;
   promoCode?: Maybe<PromoCodeFragment>;
 }
@@ -609,6 +904,9 @@ export interface OrderPosition {
   catalogItemId?: Maybe<Scalars['Int']>;
   parentId?: Maybe<Scalars['Int']>;
   sales: Array<SaleOrderPosition>;
+  partialPayment: PartialPayment;
+  item?: Maybe<CatalogItem>;
+  checkoutProducts?: Maybe<Array<CheckoutProduct>>;
 }
 
 export interface OrderPositionInput {
@@ -633,8 +931,9 @@ export interface OrderReviewCustom {
   rating: Scalars['Int'];
   timeCreated: Scalars['DateTime'];
   text?: Maybe<Scalars['String']>;
+  reply?: Maybe<Scalars['String']>;
   meetExpectation?: Maybe<MeetExpectation>;
-  client: UserProfileCustom;
+  client: Scalars['String'];
 }
 
 export interface OrderReviewsConnection {
@@ -672,6 +971,22 @@ export enum OrderStatus {
   DRAFT = 'Draft'
 }
 
+export interface PartialPayment {
+  __typename?: 'PartialPayment';
+  kind: Scalars['String'];
+  complex?: Maybe<Array<PartialPaymentComplexItem>>;
+  complexDefaultUid?: Maybe<Scalars['String']>;
+  firstPayment?: Maybe<Scalars['BigDecimal']>;
+}
+
+export interface PartialPaymentComplexItem {
+  __typename?: 'PartialPaymentComplexItem';
+  uid: Scalars['String'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+  triggerKind: Scalars['String'];
+}
+
 /** Этап оплаты */
 export interface PartialPrice {
   __typename?: 'PartialPrice';
@@ -679,6 +994,8 @@ export interface PartialPrice {
   amount: Scalars['Float'];
   /** Крайний срок оплаты */
   deadline?: Maybe<Scalars['DateTime']>;
+  selectionUnitNames: Array<Scalars['String']>;
+  priority: Scalars['Int'];
 }
 
 export interface Phone {
@@ -701,21 +1018,36 @@ export interface PhotoDataInput {
   height?: Maybe<Scalars['Int']>;
 }
 
+export interface PriceOrderConditionData {
+  __typename?: 'PriceOrderConditionData';
+  kind: PriceOrderConditionKind;
+  from?: Maybe<Scalars['BigDecimal']>;
+  to?: Maybe<Scalars['BigDecimal']>;
+}
+
+export enum PriceOrderConditionKind {
+  FROM = 'From',
+  TO = 'To',
+  BETWEEN = 'Between'
+}
+
 /** Текущий авторизованный пользователь */
 export interface PrivateApiLandingViewer {
   __typename?: 'PrivateApiLandingViewer';
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   /** Пользователь имеет право редактировать сайт */
   isEditor: Scalars['Boolean'];
   user?: Maybe<LandingViewerUserRoleFragment>;
   landing?: Maybe<LandingSitePrivate>;
+  masterClientCommon?: Maybe<MasterClientProfileCommon>;
 }
 
 export interface PromoCodeFragment {
   __typename?: 'PromoCode_Fragment';
   id: Scalars['ID'];
   code: Scalars['String'];
-  discountPercent: Scalars['Float'];
+  value: Scalars['Float'];
+  unit: Scalars['String'];
   activeFrom?: Maybe<Scalars['String']>;
   activeTill?: Maybe<Scalars['String']>;
   isActive: Scalars['Boolean'];
@@ -729,12 +1061,22 @@ export interface PublicLandingViewer {
   foo?: Maybe<Scalars['Boolean']>;
   master: PublicMasterRole;
   landing?: Maybe<LandingSite>;
+  checkoutPriceDetails?: Maybe<CheckoutPriceDetails>;
+  registerAuthMethod?: Maybe<AuthMethod>;
+  checkoutPositions: Array<CheckoutPosition>;
+  sendingTransport?: Maybe<SendingTransport>;
+  org?: Maybe<ViewerOrgProfile>;
 }
 
 export interface PublicMasterRole {
   __typename?: 'PublicMasterRole';
   uid: Scalars['Int'];
+  hasPromoCode: Scalars['Boolean'];
   master: MasterProfileCustom;
+  contacts: ContactsProfile;
+  sendingTransport?: Maybe<SendingTransport>;
+  /** Ссылка на приложение студента */
+  studentUrl?: Maybe<Scalars['String']>;
 }
 
 export interface Query {
@@ -747,13 +1089,23 @@ export interface Query {
   /** Шаблон */
   template?: Maybe<LandingTemplateFragment>;
   courses: Array<CoursePublicCustom>;
+  course?: Maybe<CoursePublicCustom>;
   /** Элемент каталога в заказе */
   orderCatalogItem?: Maybe<OrderCatalogItemFragment>;
   /** Список файлов и папок в заданной директории */
   staticFiles: Array<StaticFile>;
+  /** Вопросы анкет для новых пользователей */
+  extraFieldsQuestions?: Maybe<Array<ClientFormQuestion>>;
   /** Поиск промокода */
   promoCode?: Maybe<OrderCatalogItemFragment>;
 }
+
+
+export type QueryViewerArgs = {
+  positions?: Maybe<Array<Maybe<OrderPositionInput>>>;
+  saleId?: Maybe<Scalars['Int']>;
+  promoCode?: Maybe<Scalars['String']>;
+};
 
 
 export type QueryTemplatesArgs = {
@@ -771,9 +1123,16 @@ export type QueryCoursesArgs = {
 };
 
 
+export type QueryCourseArgs = {
+  id: Scalars['Int'];
+  code: Scalars['String'];
+};
+
+
 export type QueryOrderCatalogItemArgs = {
   gid: Scalars['ID'];
   code: Scalars['String'];
+  fieldValues?: Maybe<Scalars['String']>;
 };
 
 
@@ -784,6 +1143,7 @@ export type QueryStaticFilesArgs = {
 
 export type QueryPromoCodeArgs = {
   catalogItemGid: Scalars['ID'];
+  fieldValues?: Maybe<Scalars['String']>;
   code: Scalars['String'];
   saleId?: Maybe<Scalars['ID']>;
 };
@@ -794,12 +1154,15 @@ export interface RestApiPayload {
   error: Scalars['Boolean'];
   message: Scalars['String'];
   token?: Maybe<Scalars['String']>;
+  customerId?: Maybe<Scalars['Int']>;
+  methods?: Maybe<Array<Scalars['String']>>;
 }
 
 export enum SaleBenefitKind {
   GIFTITEMS = 'GiftItems',
   ALLPRODUCTS = 'AllProducts',
   ALLCRAFTS = 'AllCrafts',
+  ALLITEMS = 'AllItems',
   DISCOUNTITEMS = 'DiscountItems',
   CONDITIONITEMS = 'ConditionItems'
 }
@@ -830,6 +1193,7 @@ export interface SaleOrderPosition {
   saleName: Scalars['String'];
   benefitAmount: Scalars['Float'];
   benefitUnit: SaleBenefitUnit;
+  isBest?: Maybe<Scalars['Boolean']>;
 }
 
 export interface SaleOrderPositionInput {
@@ -838,6 +1202,14 @@ export interface SaleOrderPositionInput {
   saleName: Scalars['String'];
   benefitAmount: Scalars['BigDecimal'];
   benefitUnit: SaleBenefitUnit;
+  isBest?: Maybe<Scalars['Boolean']>;
+}
+
+export interface SendingTransport {
+  __typename?: 'SendingTransport';
+  emailTransport?: Maybe<EmailTransport>;
+  telegramTransport?: Maybe<TelegramTransport>;
+  whatsAppTransport?: Maybe<WhatsAppTransport>;
 }
 
 export interface Social {
@@ -875,16 +1247,20 @@ export enum StaticFileType {
 
 export interface SubmitLandingOrderInput {
   orderId: Scalars['Int'];
-  firstName?: Maybe<Scalars['String']>;
-  middleName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  notes?: Maybe<Scalars['String']>;
-  address?: Maybe<AddressInput>;
-  attachments?: Maybe<Array<PhotoDataInput>>;
-  email?: Maybe<Scalars['String']>;
+  customerId?: Maybe<Scalars['Int']>;
+  customerToken?: Maybe<Scalars['String']>;
+  customerLogin?: Maybe<Scalars['String']>;
+  isSupervisor: Scalars['Boolean'];
+  extraFields: Array<ClientFormClientAnswer>;
+  client: BookingClientInput;
+  customer?: Maybe<BookingClientInput>;
   clientMutationId?: Maybe<Scalars['String']>;
-  patchMessengers?: Maybe<Array<MessengerPatch>>;
-  patchSocials?: Maybe<Array<SocialPatch>>;
+  address?: Maybe<AddressInput>;
+}
+
+export interface TelegramTransport {
+  __typename?: 'TelegramTransport';
+  botUsername: Scalars['String'];
 }
 
 export interface TemplateWhereInput {
@@ -921,24 +1297,20 @@ export interface TimeUnitWithAmountInput {
 
 export interface UpdateLandingOrderInput {
   orderId: Scalars['Int'];
+  client: BookingClientInput;
   positions: Array<OrderPositionInput>;
   locationId?: Maybe<Scalars['Int']>;
   address?: Maybe<AddressInput>;
   deliveryId?: Maybe<Scalars['Int']>;
+  customParams?: Maybe<Scalars['String']>;
   selectedTime?: Maybe<Array<OrderSelectedTimeInput>>;
   isMultiday?: Maybe<Scalars['Boolean']>;
-  firstName?: Maybe<Scalars['String']>;
-  middleName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  notes?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  attachments?: Maybe<Array<PhotoDataInput>>;
   clientMutationId?: Maybe<Scalars['String']>;
   promoCode?: Maybe<Scalars['String']>;
+  paymentSchemaUid?: Maybe<Scalars['String']>;
+  paymentSchemaIndexes?: Maybe<Array<Scalars['Int']>>;
   /** Поэтапная оплата */
   partialPayment?: Maybe<Scalars['Boolean']>;
-  patchMessengers?: Maybe<Array<MessengerPatch>>;
-  patchSocials?: Maybe<Array<SocialPatch>>;
 }
 
 export interface UpdateLandingTemplateInput {
@@ -946,6 +1318,24 @@ export interface UpdateLandingTemplateInput {
   patch: LandingTemplateUpdateInput;
 }
 
+
+export interface UsedPartialPayment {
+  __typename?: 'UsedPartialPayment';
+  kind: Scalars['String'];
+  complex?: Maybe<UsedPartialPaymentComplex>;
+}
+
+export interface UsedPartialPaymentComplex {
+  __typename?: 'UsedPartialPaymentComplex';
+  item: PartialPaymentComplexItem;
+  firstPaymentIndexes?: Maybe<Array<Scalars['Int']>>;
+}
+
+export interface UserAuth {
+  __typename?: 'UserAuth';
+  method: Scalars['String'];
+  key: Scalars['String'];
+}
 
 export interface UserHuman {
   __typename?: 'UserHuman';
@@ -963,8 +1353,19 @@ export interface UserProfileCustom {
   __typename?: 'UserProfileCustom';
   id: Scalars['ID'];
   uid: Scalars['Int'];
-  login: Scalars['String'];
+  auths: Array<UserAuth>;
   name: Scalars['String'];
   shortName: Scalars['String'];
   avatarUrl?: Maybe<Scalars['String']>;
+  client?: Maybe<MasterClientRole>;
+}
+
+export interface ViewerOrgProfile {
+  __typename?: 'ViewerOrgProfile';
+  language?: Maybe<Scalars['String']>;
+}
+
+export interface WhatsAppTransport {
+  __typename?: 'WhatsAppTransport';
+  name: Scalars['String'];
 }
