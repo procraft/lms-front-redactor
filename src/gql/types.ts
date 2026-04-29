@@ -56,7 +56,7 @@ export enum CardFieldName {
   MESSENGERIMESSAGE = 'MessengerIMessage',
   MESSENGERSKYPE = 'MessengerSkype',
   MESSENGERTELEGRAM = 'MessengerTelegram',
-  MESSENGERMAX = 'MessengerMah',
+  MESSENGERMAH = 'MessengerMah',
   MESSENGERVIBER = 'MessengerViber',
   MESSENGERWHATSAPP = 'MessengerWhatsApp',
   MIDDLENAME = 'MiddleName',
